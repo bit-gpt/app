@@ -1,12 +1,10 @@
-# Tauri + React + Typescript
+# Prem AI ❤️
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+> Prem: A Privacy-Centric Open-Source AI Cloud Infrastructure Powered by Nostr. A cutting-edge, open-source AI platform designed with privacy at its core. Leveraging state-of-the-art Large Language Models (LLMs), Prem provides a secure and flexible environment for self-hosting AI models or utilizing our privacy-focused cloud infrastructure.
 
-## Recommended IDE Setup
+## Getting Started
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
-
-## Running the backend
+## Run the Backend
 
 > Hardware requirements: at least 10gb of system memory.
 
@@ -18,3 +16,15 @@ git clone git@github.com:premAI-io/the-ai-box.git
 cd ./the-ai-box/
 docker-compose up --build -d
 ```
+### Run the Frontend
+
+```bash
+npm run tauri dev
+```
+
+## Features & Roadmap
+
+- [x] 😃 Prem Chat
+- [ ] 🎨 Prem Michelangelo
+- [ ] 🤖 Prem Agent
+- [ ] 💻 Prem Copilot

@@ -12,10 +12,22 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
+      "fs": {
+        "all": true,
+        "scope": ["**"],
+        "readDir": true
+      },
+      "process": {
+        "all": true
+      },
+      "dialog": {
+        "all": true
+      },
       "shell": {
-        "all": false,
-        "open": true
+        "all": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {
