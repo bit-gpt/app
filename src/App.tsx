@@ -8,10 +8,14 @@ import Chat from "./pages/Chat";
 function App() {
   const [isDockerRunning, setIsDockerRunning] = useState(false);
 
-  useEffect(() => {
+  const handleCheckIsDockerRunning = () => {
     checkIsDockerRunning().then((result) => {
       setIsDockerRunning(result);
-    });    
+    });
+  }
+
+  useEffect(() => {
+    handleCheckIsDockerRunning();
   }, []);
 
 
@@ -27,9 +31,9 @@ function App() {
           <h1>Docker not Detected</h1>
           <p>In order to run Prem App you need to have Docker installed and running. If you don't have Docker Desktop installed, you can go to the link below.</p>
           <div className="row">
-            <button onClick={(e) => setIsDockerRunning(true)}>
+            <a href="https://www.docker.com/products/docker-desktop/" target="_blank">
               Download Docker Desktop
-            </button>
+            </a>
           </div>
           <div className="row">
             <h3>Dependencies</h3>
@@ -37,6 +41,9 @@ function App() {
           <div className="row">
             <p>Docker</p>
           </div>
+          <button onClick={(e) => handleCheckIsDockerRunning()}>
+            Check Again
+          </button>
         </div>
       )}
     </Router>

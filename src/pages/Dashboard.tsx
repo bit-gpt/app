@@ -16,26 +16,30 @@ function Dashboard() {
 
   useEffect(() => {
     async function fetchPremChatModelStatus (){
-      console.log("Waiting for APIs to be ready...");
-  
+      try {
         const response = await fetch('http://localhost:8002/v1/status/', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           }
         });
-  
         if (response.ok) {
           setIsPremChatModelReady(true);
-          console.log("APIs are ready!");
+          console.log("Model ready to generate.");
         } else {
           try {
             const data = await response.json();
             console.log(`APIs are not ready yet! Amount completed ${data.percentate}%`);
             setPremChatPercentage(data.percentage);
-          } catch (e) { }
-          setTimeout(fetchPremChatModelStatus, 3000);
-        }    
+          } catch (e) { 
+            console.log(`APIs are not ready yet! ${e}`);
+          }
+          setTimeout(fetchPremChatModelStatus, 1000);
+        }   
+      } catch (e) {
+        console.log(`Server not ready yet ${e}`);
+        setTimeout(fetchPremChatModelStatus, 1000);
+      }
     }
     fetchPremChatModelStatus();
   }, []);
