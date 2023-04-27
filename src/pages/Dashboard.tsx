@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Route } from "react-router-dom";
 
 import { runDockerContainer } from "../utils";
+import AppCard from "../components/dashboard/AppCard";
 
 
 function Dashboard() {
@@ -17,7 +18,7 @@ function Dashboard() {
   useEffect(() => {
     async function fetchPremChatModelStatus (){
       try {
-        const response = await fetch('http://localhost:8002/v1/status/', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/v1/status/`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -58,30 +59,17 @@ function Dashboard() {
         <p>The Best in Prompting</p>
         {runPremChatContainer ? (
           isPremChatModelReady ? (
-            <Link to="/chat"> 
+            <Link to="/prem-chat"> 
               <button>Start</button>
             </Link>) : (<p> Downloading... {premChatPercentage}% </p>)
         ): <div> <button onClick={(e) => handleRunContainer()}> Download </button></div>}
         
       </div>
       
-      <div>
-        <h3>Prem Michelangelo</h3>
-        <p>The Best in Prompting</p>
-        <button> Download </button>
-      </div>
       
-      <div>
-        <h3>Prem Agent</h3>
-        <p>The Best in Prompting</p>
-        <button> Download </button>
-      </div>
-      
-      <div>
-        <h3>Prem Copilot</h3>
-        <p>The Best in Prompting</p>
-        <button> Download </button>
-      </div>
+      <AppCard title="Prem Michelangelo" description="The Best in Prompting"  />
+      <AppCard title="Prem Agent" description="The Best in Prompting"  />
+      <AppCard title="Prem Copilot" description="The Best in Prompting"  />
       
     </div>
   );

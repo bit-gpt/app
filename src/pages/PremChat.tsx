@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 
-function Chat() {
+function PremChat() {
   return (
     <div className="container">
         <h1>Prem Chat</h1>
@@ -10,4 +10,4 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default PremChat;
