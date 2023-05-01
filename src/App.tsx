@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import PremChat from "./pages/PremChat";
 import DownloadDockerWall from "./shared/components/DownloadDockerWall";
 import NotFound from "./shared/components/NotFound";
-import useDocker from "./hooks/useDocker";
+import useDocker from "./shared/hooks/useDocker";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient({
@@ -32,6 +32,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/prem-chat" element={<PremChat />} />
+          <Route path="/prem-chat/:chatId" element={<PremChat />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
