@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Pretendard';
+  src: url('../fonts/Pretendard-Medium.otf') format(opentype);
+}
+@font-face {
+  font-family: 'ProximaNova-Regular';
+  src: url('../fonts/ProximaNovaRegular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}

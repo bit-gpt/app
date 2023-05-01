@@ -1,0 +1,68 @@
+@import url("./fonts.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  font-family: 'Pretendard';
+}
+.font-proximaNova-regular {
+  font-family: 'ProximaNova-Regular';
+}
+
+header {
+  @apply h-[70px] mx-[19px] flex items-center;
+}
+header img {
+  @apply w-[140px];
+}
+
+.docker-not-detected {
+  @apply dark:bg-darkjunglegreen;
+}
+
+.bg-lines::before {
+  content: "";
+  opacity: 0.1;
+  background: url("../images/lines-bg.png") no-repeat;
+  background-position: 50% 100%;
+  @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
+}
+
+.docker-not-detected__modal {
+  @apply text-white relative;
+  background: #26262A;
+  margin: 1.5px;
+}
+.docker-modal-wrap {
+  background: linear-gradient(131.93deg, rgba(245, 142, 142, 0.6) 11.72%, rgba(246, 162, 148, 0.23) 38.41%, rgba(248, 190, 157, 0.23) 66.36%, rgba(249, 212, 164, 0.6) 91.8%);
+}
+.docker-not-detected__modal::before {
+  content: "";
+  @apply absolute right-0 opacity-50;
+  bottom: 77px;
+  height: 500px;
+  width: 600px;
+  background: url("../images/gradient-shap.png") no-repeat;
+}
+
+.docker-not-detected__modal hr {
+  border-color:rgba(237, 237, 237, 0.34);
+}
+
+.modal-height {
+  height: calc(100vh - 70px);
+}
+
+.btn-outline {
+  padding: 8px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  transition: 0.4s;
+}
+.btn-outline:hover {
+  @apply border-tulip text-white;
+}
