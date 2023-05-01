@@ -23,6 +23,16 @@ header img {
   @apply dark:bg-darkjunglegreen min-h-screen;
 }
 
+@media (min-width: 768px) {
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
 .bg-lines::before {
   content: "";
   opacity: 0.1;
@@ -53,8 +63,8 @@ header img {
 }
 
 .modal-height {
-  margin-bottom: 40px;
-  height: calc(100% - 40px);
+  margin-bottom: 20px;
+  /* height: calc(100% - 40px); */
 }
 
 .btn-outline {
