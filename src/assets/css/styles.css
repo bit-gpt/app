@@ -20,7 +20,7 @@ header img {
 }
 
 .docker-not-detected {
-  @apply dark:bg-darkjunglegreen;
+  @apply dark:bg-darkjunglegreen min-h-screen;
 }
 
 .bg-lines::before {
@@ -53,7 +53,8 @@ header img {
 }
 
 .modal-height {
-  height: calc(100vh - 70px);
+  margin-bottom: 40px;
+  height: calc(100% - 40px);
 }
 
 .btn-outline {

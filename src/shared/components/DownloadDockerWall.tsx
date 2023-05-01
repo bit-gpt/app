@@ -13,7 +13,7 @@ const DownloadDockerWall = ({
     <section className="docker-not-detected flex flex-wrap bg-lines relative">
       <Header />
       <div className="flex items-center w-full modal-height">
-        <div className="docker-modal-wrap mx-auto w-[45%] rounded-xl">
+        <div className="docker-modal-wrap mx-auto max-w-[600px] w-full rounded-xl">
           <div className="docker-not-detected__modal rounded-xl p-[18px]">
             <div className="max-w-[450px] mx-auto relative z-10">
               <img className="mx-auto w-[109px] h-[109px] mt-[30px]" src={WarningLogo} alt="WarningLogo" />
@@ -48,7 +48,7 @@ const DownloadDockerWall = ({
             <div className="text-right">
               <button className="btn-outline" onClick={(e) => handleCheckIsDockerRunning()}>
                 Check Again
-              </button>
+              </button>``
             </div>
           </div>
         </div>
