@@ -48,7 +48,7 @@ const DownloadDockerWall = ({
             <div className="text-right">
               <button className="btn-outline" onClick={(e) => handleCheckIsDockerRunning()}>
                 Check Again
-              </button>``
+              </button>
             </div>
           </div>
         </div>
