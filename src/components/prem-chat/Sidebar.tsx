@@ -1,10 +1,18 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import usePremChatStore from "../../shared/store/prem-chat";
 import orderBy from "lodash/orderBy";
+import { shallow } from "zustand/shallow";
 
 const Sidebar = () => {
-  const history = usePremChatStore((state) => state.history) || [];
-  const deleteHistory = usePremChatStore((state) => state.deleteHistory);
+  const { history, deleteHistory, clearHistory } = usePremChatStore(
+    (state) => ({
+      history: state.history,
+      deleteHistory: state.deleteHistory,
+      clearHistory: state.clearHistory,
+    }),
+    shallow
+  );
+
   const { chatId } = useParams();
   const navigate = useNavigate();
 
@@ -13,6 +21,11 @@ const Sidebar = () => {
     if (chatId === id) {
       navigate("/prem-chat");
     }
+  };
+
+  const onClearClick = () => {
+    clearHistory();
+    navigate("/prem-chat");
   };
 
   return (
@@ -28,6 +41,11 @@ const Sidebar = () => {
           </p>
         );
       })}
+      {history.length > 0 && (
+        <p>
+          <button onClick={onClearClick}>Clear Chat</button>
+        </p>
+      )}
     </div>
   );
 };
