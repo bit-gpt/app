@@ -46,7 +46,7 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
             id: newConversationId,
             model,
             title: tempConversation[0].content,
-            messages: tempConversation,
+            messages: [...tempConversation],
             timestamp: Date.now(),
           });
           navigate(`/prem-chat/${newConversationId}`);

@@ -96,8 +96,8 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
         addHistory({
           id: newChatId,
           model,
-          title: question,
-          messages: [...messages, ...tempConversation],
+          title: tempConversation[0].content,
+          messages: [...tempConversation],
           timestamp: Date.now(),
         });
         navigate(`/prem-chat/${newChatId}`);
