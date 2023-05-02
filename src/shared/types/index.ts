@@ -23,4 +23,5 @@ export type PremChatResponse = {
   setQuestion: (question: string) => void;
   isLoading: boolean;
   isError: boolean;
+  onRegenerate: () => void;
 };
