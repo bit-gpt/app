@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { checkIsDockerRunning } from "../utils";
+import { checkIsDockerRunning } from "../../utils";
 
 const useDocker = () => {
   const [isDockerRunning, setIsDockerRunning] = useState(false);
