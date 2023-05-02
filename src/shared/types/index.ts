@@ -13,4 +13,14 @@ export type PremChatHistory = {
   model: string;
   title: string;
   messages: Message[];
+  timestamp: number;
+};
+
+export type PremChatResponse = {
+  chatMessages: Message[];
+  onSubmit: (e: React.FormEvent) => void;
+  question: string;
+  setQuestion: (question: string) => void;
+  isLoading: boolean;
+  isError: boolean;
 };

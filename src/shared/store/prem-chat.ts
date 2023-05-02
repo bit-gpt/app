@@ -7,6 +7,8 @@ export type PremChatStore = {
   setModel: (model: string) => void;
   history: PremChatHistory[];
   setHistory: (history: PremChatHistory[]) => void;
+  addHistory: (newHistory: PremChatHistory) => void;
+  updateHistoryMessages: (id: string, messages: Message[]) => void;
 };
 
 const usePremChatStore = create<PremChatStore>()(
@@ -16,6 +18,21 @@ const usePremChatStore = create<PremChatStore>()(
       setModel: (model) => set(() => ({ model })),
       history: [],
       setHistory: (history) => set(() => ({ history })),
+      addHistory: (newHistory: PremChatHistory) =>
+        set((state) => ({ history: [...state.history, newHistory] })),
+      updateHistoryMessages: (id, messages) =>
+        set((state) => ({
+          history: state.history.map((_history) => {
+            if (_history.id === id) {
+              return {
+                ..._history,
+                timestamp: Date.now(),
+                messages,
+              };
+            }
+            return _history;
+          }),
+        })),
     }),
     {
       name: "prem-chat",
