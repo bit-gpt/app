@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 function PremChat() {
   const { chatId } = useParams();
 
-  const { chatMessages, onSubmit, question, setQuestion, isLoading, error } =
+  const { chatMessages, onSubmit, question, setQuestion, isLoading, isError } =
     usePremChat(chatId || null);
 
   return (
@@ -22,7 +22,7 @@ function PremChat() {
         <h1>Prem Chat</h1>
         <div>
           <ModelSelectionDropdown />
-          {!!error && <div>Something went wrong</div>}
+          {isError && <div>Something went wrong</div>}
           {chatMessages.map((message, index) => (
             <div key={index}>
               {message.role === "user" ? (
