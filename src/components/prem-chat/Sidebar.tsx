@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import usePremChatStore from "../../shared/store/prem-chat";
 import orderBy from "lodash/orderBy";
 import { shallow } from "zustand/shallow";
+import { useState } from "react";
 
 const Sidebar = () => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
@@ -12,6 +13,8 @@ const Sidebar = () => {
     }),
     shallow
   );
+
+  const [search, setSearch] = useState("");
 
   const { chatId } = useParams();
   const navigate = useNavigate();
@@ -28,12 +31,18 @@ const Sidebar = () => {
     navigate("/prem-chat");
   };
 
+  const filteredHistory = history.filter((item) => {
+    return item.title.toLowerCase().includes(search.toLowerCase());
+  });
+
+
   return (
     <div>
       <p>
         <Link to={`/prem-chat`}>New Conversation</Link>
       </p>
-      {orderBy(history, "timestamp", "desc").map((item) => {
+      <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)} />
+      {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
         return (
           <p key={item.id}>
             <Link to={`/prem-chat/${item.id}`}>{item.title}</Link>
@@ -41,7 +50,7 @@ const Sidebar = () => {
           </p>
         );
       })}
-      {history.length > 0 && (
+      {filteredHistory.length > 0 && (
         <p>
           <button onClick={onClearClick}>Clear Chat</button>
         </p>
