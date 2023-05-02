@@ -12,6 +12,7 @@ export default {
         brightgray:"#EDEDED",
         americanpink: "#F49893",
         tulip: "#F58E8E",
+        lightsalmonpink: "#F49E97",
       }
     },
   },

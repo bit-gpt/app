@@ -8,3 +8,9 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'ProximaNova-bold';
+  src: url('../fonts/ProximaNovaBold.otf') format(opentype);
+  font-weight: normal;
+  font-style: normal;
+}

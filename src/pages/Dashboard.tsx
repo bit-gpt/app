@@ -5,6 +5,11 @@ import { fetchStatus } from "../shared/api";
 import { runDockerContainer } from "../utils";
 import AppCard from "../components/dashboard/AppCard";
 import { AxiosError } from "axios";
+import Header from "../shared/components/headers/Header";
+import chatLogo from "../assets/images/chat.svg";
+import diffusionLogo from "../assets/images/diffusion.svg";
+import premAgentLogo from "../assets/images/prem-agent.svg";
+import copilotLogo from "../assets/images/copilot.svg";
 
 function Dashboard() {
   const [runPremChatContainer, setRunPremChatContainer] = useState(false);
@@ -32,44 +37,90 @@ function Dashboard() {
   };
 
   return (
-    <div className="container">
-      <h1>Prem.AI</h1>
-      <h2 className="header-container">Your Own AGI in your Pocket.</h2>
-      <p>
-        Self-Sovereign & Composable AI infrastructure: empowering developers and
-        organizations to own their own locally run AGI, accessed securely on
-        your trustless and encrypted Premcloud
-      </p>
-      <button>Learn More about Prem</button>
+    <section className="dashboard min-h-screen relative">
+      <Header />
+      <div className="container px-3 mx-auto z-10 relative">
+        <div className="dashboard-top max-w-[600px]">
+          <h1 className="dark:text-white">Prem.AI</h1>
+          <h2 className="dark:text-white">Your Own AGI in your Pocket.</h2>
+          <p className="dark:text-white font-proximaNova-regular">
+            Self-Sovereign & Composable AI infrastructure: empowering developers
+            and organizations to own their own locally run AGI, accessed
+            securely on your trustless and encrypted Premcloud
+          </p>
+          <button className="mt-8 btn-outline-circle !px-7 border-[2.5px] dark:text-lightsalmonpink dark:border-tulip hover:dark:border-white hover:dark:text-white">
+            Learn More <span className="ml-3">&#10230;</span>
+          </button>
+        </div>
+        {/* Apps */}
 
-      {/* Apps */}
-
-      <AppCard title="Prem Chat" description="The Best in Prompting">
-        {runPremChatContainer ? (
-          isPremChatModelReady ? (
-            <Link to="/prem-chat">
-              <button>Start</button>
-            </Link>
-          ) : (
-            <p> Downloading... {premChatPercentage}% </p>
-          )
-        ) : (
-          <div>
-            <button onClick={(e) => handleRunContainer()}> Download </button>
-          </div>
-        )}
-      </AppCard>
-
-      <AppCard title="Prem Michelangelo" description="The Best in Prompting">
-        <button> Download </button>
-      </AppCard>
-      <AppCard title="Prem Agent" description="The Best in Prompting">
-        <button> Download </button>
-      </AppCard>
-      <AppCard title="Prem Copilot" description="The Best in Prompting">
-        <button> Download </button>
-      </AppCard>
-    </div>
+        <div className="dashboard__popular-app mt-[55px] mb-[49px]">
+          <h2 className="font-bold text-[30px] leading-8">Top Popular Apps</h2>
+        </div>
+        <div className="dashboard-bottom">
+          <AppCard
+            icon={chatLogo}
+            className="dashboard-bottom__card"
+            title="Prem Chat"
+            description="The Best in Prompting"
+          >
+            {runPremChatContainer ? (
+              isPremChatModelReady ? (
+                <Link to="/prem-chat">
+                  <button className="btn-outline-circle">Open</button>
+                </Link>
+              ) : (
+                <button className="btn-outline-circle"> Downloading... {premChatPercentage}% </button>
+              )
+            ) : (
+              <button
+                className="btn-outline-circle"
+                onClick={(e) => handleRunContainer()}
+              >
+                Download
+                <span className="ml-3">&#10230;</span>
+              </button>
+            )}
+          </AppCard>
+          <AppCard
+            icon={diffusionLogo}
+            className="dashboard-bottom__card"
+            title="Prem Michelangelo"
+            description="The Best in Prompting"
+          >
+            <button className="btn-outline-circle">
+              {" "}
+              Download
+              <span className="ml-3">&#10230;</span>
+            </button>
+          </AppCard>
+          <AppCard
+            icon={premAgentLogo}
+            className="dashboard-bottom__card"
+            title="Prem Agent"
+            description="The Best in Prompting"
+          >
+            <button className="btn-outline-circle">
+              {" "}
+              Download
+              <span className="ml-3">&#10230;</span>
+            </button>
+          </AppCard>
+          <AppCard
+            icon={copilotLogo}
+            className="dashboard-bottom__card"
+            title="Prem Copilot"
+            description="The Best in Prompting"
+          >
+            <button className="btn-outline-circle">
+              {" "}
+              Download
+              <span className="ml-3">&#10230;</span>
+            </button>
+          </AppCard>
+        </div>
+      </div>
+    </section>
   );
 }
 
