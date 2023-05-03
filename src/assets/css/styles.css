@@ -159,3 +159,12 @@ header img {
 .dashboard-bottom__card .btn-outline-circle:hover {
   @apply border-tulip text-tulip;
 }
+
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+  .dashboard-bottom {
+    @apply gap-4;
+  }
+  .dashboard-bottom__card {
+    width: 238px;
+  }
+}
