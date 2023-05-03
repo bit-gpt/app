@@ -61,17 +61,21 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      const query = question.trim();
-      if (!query) {
-        return;
-      }
-      const newMessages = [...messages, { role: "user", content: query }];
-      setQuestion("");
-      setTempQuestion(query);
-      mutate(newMessages);
+      processQuestion(question);
     },
-    [question, mutate, messages, setQuestion, setTempQuestion]
+    [question]
   );
+
+  const processQuestion = (question: string) => {
+    const query = question.trim();
+    if (!query) {
+      return;
+    }
+    const newMessages = [...messages, { role: "user", content: query }];
+    setQuestion("");
+    setTempQuestion(query);
+    mutate(newMessages);
+  };
 
   const chatMessages = useMemo(() => {
     if (tempQuestion) {
@@ -80,6 +84,15 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
     return messages;
   }, [messages, tempQuestion]);
 
+  const onRegenerate = useCallback(() => {
+    const newMessages = [...messages];
+    const lastConversation = newMessages.splice(-2);
+    if (chatId) {
+      updateHistoryMessages(chatId, newMessages);
+      processQuestion(lastConversation[0].content);
+    }
+  }, [messages]);
+
   return {
     chatMessages: chatMessages,
     onSubmit,
@@ -87,6 +100,7 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
     setQuestion,
     isLoading,
     isError,
+    onRegenerate,
   };
 };
 

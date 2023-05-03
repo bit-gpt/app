@@ -31,53 +31,65 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      const query = question.trim();
-      if (!query) {
-        return;
-      }
-      setTempQuestion(query);
-      setQuestion("");
-      const newMessage = { role: "user", content: query };
-      setPending(undefined);
-      setLoading(true);
-      const ctrl = new AbortController();
-
-      try {
-        fetchEventSource(
-          `${import.meta.env.VITE_BACKEND_NEW_URL}/v1/chat/completions`,
-          {
-            method: "POST",
-            openWhenHidden: true,
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + import.meta.env.VITE_BACKEND_TOKEN,
-            },
-            body: JSON.stringify({
-              model,
-              messages: [...messages, newMessage],
-              stream: true,
-            }),
-            signal: ctrl.signal,
-            onmessage: (event) => {
-              if (event.data === "[DONE]") {
-                setLoading(false);
-              } else {
-                const data = JSON.parse(event.data);
-                setPending(
-                  (state) =>
-                    (state ?? "") + (data.choices[0].delta.content || "")
-                );
-              }
-            },
-          }
-        );
-      } catch (e) {
-        setLoading(false);
-        setIsError(true);
-      }
+      processQuestion(question);
     },
-    [pending, question, model, messages, setLoading, setIsError, setPending]
+    [question]
   );
+
+  const processQuestion = (question: string) => {
+    const query = question.trim();
+    if (!query) {
+      return;
+    }
+    setTempQuestion(query);
+    setQuestion("");
+    const newMessage = { role: "user", content: query };
+    setPending(undefined);
+    setLoading(true);
+    const ctrl = new AbortController();
+
+    try {
+      fetchEventSource(
+        `${import.meta.env.VITE_BACKEND_NEW_URL}/v1/chat/completions`,
+        {
+          method: "POST",
+          openWhenHidden: true,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + import.meta.env.VITE_BACKEND_TOKEN,
+          },
+          body: JSON.stringify({
+            model,
+            messages: [...messages, newMessage],
+            stream: true,
+          }),
+          signal: ctrl.signal,
+          onmessage: (event) => {
+            if (event.data === "[DONE]") {
+              setLoading(false);
+            } else {
+              const data = JSON.parse(event.data);
+              setPending(
+                (state) => (state ?? "") + (data.choices[0].delta.content || "")
+              );
+            }
+          },
+        }
+      );
+    } catch (e) {
+      setLoading(false);
+      setIsError(true);
+    }
+  };
+
+  const onRegenerate = useCallback(() => {
+    const newMessages = [...messages];
+    const lastConversation = newMessages.splice(-2);
+    if (chatId) {
+      updateHistoryMessages(chatId, newMessages);
+      processQuestion(lastConversation[0].content);
+    }
+  }, [messages]);
 
   const tempConversation = [
     { role: "user", content: tempQuestion },
@@ -117,7 +129,15 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
     return messages;
   }, [messages, pending, tempQuestion]);
 
-  return { chatMessages, onSubmit, question, setQuestion, isLoading, isError };
+  return {
+    chatMessages,
+    onSubmit,
+    question,
+    setQuestion,
+    isLoading,
+    isError,
+    onRegenerate,
+  };
 };
 
 export default usePremChatStream;
