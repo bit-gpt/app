@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchStatus } from "../shared/api";
-import { runDockerContainer } from "../utils";
+import { checkIsDockerRunning, runDockerContainer } from "../utils";
 import AppCard from "../components/dashboard/AppCard";
 import { AxiosError } from "axios";
 import Header from "../shared/components/headers/Header";
@@ -35,6 +35,14 @@ function Dashboard() {
     runDockerContainer();
     setRunPremChatContainer(true);
   };
+
+  useEffect(() => {
+    const checkIfDockerContainerIsRunning = async () => {
+      const isRunning = await checkIsDockerRunning();
+      setRunPremChatContainer(isRunning);
+    };
+    checkIfDockerContainerIsRunning();
+  }, []);
 
   return (
     <section className="dashboard min-h-screen relative">
