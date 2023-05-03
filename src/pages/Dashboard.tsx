@@ -10,6 +10,9 @@ import chatLogo from "../assets/images/chat.svg";
 import diffusionLogo from "../assets/images/diffusion.svg";
 import premAgentLogo from "../assets/images/prem-agent.svg";
 import copilotLogo from "../assets/images/copilot.svg";
+import OutlineCircleButton from "../shared/components/OutlineCircleButton";
+import DownloadButton from "../components/dashboard/DownloadButton";
+import Spinner from "../shared/components/Spinner";
 
 function Dashboard() {
   const [runPremChatContainer, setRunPremChatContainer] = useState(false);
@@ -48,9 +51,9 @@ function Dashboard() {
             and organizations to own their own locally run AGI, accessed
             securely on your trustless and encrypted Premcloud
           </p>
-          <button className="mt-8 btn-outline-circle !px-7 border-[2.5px] dark:text-lightsalmonpink dark:border-tulip hover:dark:border-white hover:dark:text-white">
+          <OutlineCircleButton className="mt-8 !px-7 border-[2.5px] dark:text-lightsalmonpink dark:border-tulip hover:dark:border-white hover:dark:text-white">
             Learn More <span className="ml-3">&#10230;</span>
-          </button>
+          </OutlineCircleButton>
         </div>
         {/* Apps */}
 
@@ -67,42 +70,16 @@ function Dashboard() {
             {runPremChatContainer ? (
               isPremChatModelReady ? (
                 <Link to="/prem-chat">
-                  <button className="btn-outline-circle">Open</button>
+                  <OutlineCircleButton>Open</OutlineCircleButton>
                 </Link>
               ) : (
-                <button className="btn-outline-circle flex items-center">
-                  {" "}
+                <OutlineCircleButton className="flex items-center">
                   Downloading... {premChatPercentage}%
-                  <svg
-                    className="animate-spin ml-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="#F49E97"
-                      stroke-width="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="#F49E97"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                </button>
+                  <Spinner className="ml-3 h-5 w-5" />
+                </OutlineCircleButton>
               )
             ) : (
-              <button
-                className="btn-outline-circle"
-                onClick={(e) => handleRunContainer()}
-              >
-                Download
-                <span className="ml-3">&#10230;</span>
-              </button>
+              <DownloadButton onClick={() => handleRunContainer()} />
             )}
           </AppCard>
           <AppCard
@@ -111,11 +88,7 @@ function Dashboard() {
             title="Prem Michelangelo"
             description="The Best in Prompting"
           >
-            <button className="btn-outline-circle">
-              {" "}
-              Download
-              <span className="ml-3">&#10230;</span>
-            </button>
+            <DownloadButton />
           </AppCard>
           <AppCard
             icon={premAgentLogo}
@@ -123,11 +96,7 @@ function Dashboard() {
             title="Prem Agent"
             description="The Best in Prompting"
           >
-            <button className="btn-outline-circle">
-              {" "}
-              Download
-              <span className="ml-3">&#10230;</span>
-            </button>
+            <DownloadButton />
           </AppCard>
           <AppCard
             icon={copilotLogo}
@@ -135,11 +104,7 @@ function Dashboard() {
             title="Prem Copilot"
             description="The Best in Prompting"
           >
-            <button className="btn-outline-circle">
-              {" "}
-              Download
-              <span className="ml-3">&#10230;</span>
-            </button>
+            <DownloadButton />
           </AppCard>
         </div>
       </div>
