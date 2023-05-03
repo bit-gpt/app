@@ -168,3 +168,27 @@ header img {
     width: 238px;
   }
 }
+
+.sidebar {
+  @apply bg-darkjunglegreen w-[400px];
+}
+.main-content {
+  @apply bg-[#20232B] w-full;
+}
+.sidebar li {
+  @apply flex items-center py-[15px] px-5 hover:bg-[#1A1E23];
+}
+.sidebar li a {
+  @apply w-full block dark:text-cultured text-base font-proximaNova-regular;
+}
+.sidebar__search input {
+  @apply font-proximaNova-regular text-manatee text-base;
+  background-color: rgba(77, 77, 79, 0.22);
+}
+.sidebar__search button {
+  @apply bg-darkliver w-[65px] rounded-md flex items-center justify-center;
+}
+
+.sidebar-toggle {
+  @apply text-base font-proximaNova-regular dark:text-cultured;
+}

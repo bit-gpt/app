@@ -22,39 +22,41 @@ function PremChat() {
   } = usePremChat(chatId || null);
 
   return (
-    <div className="container sidebar">
-      <aside className="sidebar__sidebar">
-        <Sidebar />
-      </aside>
-      <div className="sidebar__main">
-        <h1>Prem Chat</h1>
-        <div>
-          {!chatId && <ModelSelectionDropdown />}
-          {isError && <div>Something went wrong</div>}
-          {chatMessages.map((message, index) => (
-            <div key={index}>
-              {message.role === "user" ? (
-                <UserReply reply={message.content} />
-              ) : (
-                <BotReply reply={message.content} />
-              )}
-            </div>
-          ))}
-          {chatMessages.length > 0 && !isLoading && !isError && (
-            <div style={{ margin: "10px" }}>
-              <RegenerateButton onRgenerateClick={onRegenerate} />
-            </div>
-          )}
-          <form onSubmit={onSubmit}>
-            <InputBox
-              question={question}
-              setQuestion={setQuestion}
-              disabled={isLoading}
-            />
-          </form>
+    <section>
+      <div className="flex h-screen z-10 relative">
+        <aside className="h-full sidebar">
+          <Sidebar />
+        </aside>
+        <div className="main-content bg-lines relative">
+          <h1>Prem Chat</h1>
+          <div>
+            {!chatId && <ModelSelectionDropdown />}
+            {isError && <div>Something went wrong</div>}
+            {chatMessages.map((message, index) => (
+              <div key={index}>
+                {message.role === "user" ? (
+                  <UserReply reply={message.content} />
+                ) : (
+                  <BotReply reply={message.content} />
+                )}
+              </div>
+            ))}
+            {chatMessages.length > 0 && !isLoading && !isError && (
+              <div style={{ margin: "10px" }}>
+                <RegenerateButton onRgenerateClick={onRegenerate} />
+              </div>
+            )}
+            <form onSubmit={onSubmit}>
+              <InputBox
+                question={question}
+                setQuestion={setQuestion}
+                disabled={isLoading}
+              />
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
