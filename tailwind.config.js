@@ -17,7 +17,15 @@ export default {
         manatee: "#9597A3",
         cultured: "#F5F5F5",
         Onyx: "#383838",
-        timberwolf: "DBD5D5",
+        timberwolf: "#DBD5D5",
+        sonicsilver: "#797979",
+        antiflashwhite: "#F1F2F4",
+        lavendergray: "#C5C5D2",
+        darkcharcoal: "#302F32",
+        philippinegray: "#8F8F95",
+        ghostwhite: "#F7F7FD",
+        ruddypink: "#EA938E",
+        isabelline:"#F7F0ED"
       }
     },
   },
