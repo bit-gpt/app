@@ -1,30 +1,31 @@
-# Prem AI ❤️
+# Prem App ❤️
 
-> Prem: A Privacy-Centric Open-Source AI Cloud Infrastructure Powered by Nostr. A cutting-edge, open-source AI platform designed with privacy at its core. Leveraging state-of-the-art Large Language Models (LLMs), Prem provides a secure and flexible environment for self-hosting AI models or utilizing our privacy-focused cloud infrastructure.
+> Note: this repository is the main user interface to interact with ai-box. Please refer to https://github.com/premAI-io/ai-box for a more complete documentation.
+
+## Demo
 
 ## Getting Started
 
-## Run the Backend
-
-> Hardware requirements: at least 10gb of system memory.
+### Run the Backend
 
 ```bash
 # clone the backend repo
 git clone git@github.com:premAI-io/the-ai-box.git
 
-# changed directory and run the backend with docker-compose
+# change directory and run the backend with docker-compose
 cd ./the-ai-box/
-docker-compose up --build -d
+docker-compose up --build -d controller
 ```
-### Run the Frontend
+### Run the app with Tauri
 
 ```bash
+npm i
 npm run tauri dev
 ```
 
-## Features & Roadmap
+### Run the app with React
 
-- [x] 😃 Prem Chat
-- [ ] 🎨 Prem Michelangelo
-- [ ] 🤖 Prem Agent
-- [ ] 💻 Prem Copilot
+```bash
+npm i
+npm run start
+```
