@@ -71,7 +71,9 @@ function PremChat() {
                         setQuestion={setQuestion}
                         disabled={isLoading || !model}
                         placeholder={
-                          model
+                          isLoading
+                            ? "Fetching response..."
+                            : model
                             ? "Type a message or type to select a prompt"
                             : "Please select a model to get started"
                         }
