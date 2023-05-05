@@ -174,15 +174,11 @@ header img {
 }
 
 .sidebar li {
-  @apply flex items-center hover:bg-darkjunglegreen rounded-md;
+  @apply flex items-center py-[15px] px-5 hover:bg-darkjunglegreen rounded-md;
 }
 .sidebar li a {
-  @apply w-full flex dark:text-cultured text-base font-proximaNova-regular py-[15px] px-5;
+  @apply w-full flex dark:text-cultured text-base font-proximaNova-regular;
 }
-.sidebar li button {
-  @apply pr-3;
-}
-
 .sidebar__search input {
   @apply font-proximaNova-regular text-manatee text-base;
   background-color: rgba(77, 77, 79, 0.22);
@@ -283,4 +279,19 @@ header img {
   box-shadow: 10.4294px 10.4294px 26.0736px rgba(112, 124, 151, 0.05), 15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
+}
+
+.right-sidebar__list li p {
+  @apply font-proximaNova-regular text-base justify-between flex;
+}
+
+.right-sidebar__list li span:first-child {
+  @apply text-cultured ;
+}
+.right-sidebar__list li span:last-child {
+  @apply text-spanishgray;
+}
+
+.progress-bar {
+  @apply rounded-md;
 }
