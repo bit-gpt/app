@@ -6,9 +6,13 @@ export type Message = {
 export type ChatCompletion = {
   model: string;
   messages: Message[];
+  temperature?: number;
+  max_tokens?: number;
+  top_p?: number;
+  frequency_penalty?: number;
 };
 
-export type PremChatHistory = {
+export interface PremChatHistory {
   id: string;
   model: string;
   title: string;
@@ -25,3 +29,8 @@ export type PremChatResponse = {
   isError: boolean;
   onRegenerate: () => void;
 };
+
+export interface PremChatHistoryNavigator extends PremChatHistory {
+  next?: PremChatHistory;
+  prev?: PremChatHistory;
+}

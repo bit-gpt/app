@@ -2,8 +2,9 @@ type InputBox = {
   question: string;
   setQuestion: (question: string) => void;
   disabled?: boolean;
+  placeholder?: string;
 };
-const InputBox = ({ question, setQuestion, disabled }: InputBox) => {
+const InputBox = ({ question, setQuestion, disabled, placeholder }: InputBox) => {
   return (
     <div className="prem-chat-input flex items-center relative">
       <input
@@ -11,8 +12,8 @@ const InputBox = ({ question, setQuestion, disabled }: InputBox) => {
         name="question"
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
-        placeholder="Type a message or type to select a prompt"
         disabled={disabled}
+        placeholder={placeholder}
       />
       <button>
         <svg

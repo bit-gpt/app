@@ -19,10 +19,6 @@ const ModelSelectionDropdown = () => {
     setModel(event.target.value);
   };
 
-  if (isLoading) {
-    return <div>Fetching Models...</div>;
-  }
-
   return (
     <div className="custom-select">
       <select onChange={onModelChange} value={model}>
@@ -41,7 +37,7 @@ const ModelSelectionDropdown = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M1 1L4.5 4.5L8 1" stroke="white" stroke-width="1.5" />
+          <path d="M1 1L4.5 4.5L8 1" stroke="white" strokeWidth="1.5" />
         </svg>
       </button>
     </div>
