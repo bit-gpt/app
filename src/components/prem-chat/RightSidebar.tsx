@@ -3,19 +3,20 @@ import leftArrow from "../../assets/images/left-arrow.svg";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 
-const RightSidebar = () => {
+const RightSidebar = ({setRightSidebar}: any) => {
   return (
-    <div className="bg-darkgunmetal flex-col px-4 flex h-screen">
+    <div className="bg-darkgunmetal flex-col px-4 flex h-screen w-[260px]">
       <div className="sidebar-toggle__btn !mt-5 !ml-3">
         <button
-          // onClick={() => setSidebarToggle(!sidebarToggle)}
+          onClick={() => setRightSidebar(false)}
           className="bg-Onyx px-[8.4px] mr-3 -ml-[6px] py-[10px] rounded-md"
         >
           <img src={leftArrow} alt="leftArrow" width={16} height={16} />
         </button>
         <span>Close Sidebar</span>
       </div>
-      <div className="my-[18px]">
+
+      <div className="mb-[18px] mt-[42px]">
         <p className="text-spanishgray text-base font-proximaNova-regular mb-[18px]">
           Preset
         </p>
@@ -36,10 +37,71 @@ const RightSidebar = () => {
           </svg>
         </p>
       </div>
-      <ul className="my-[18px] right-sidebar__list">
+      <div className="border border-timberwolf -mx-4 opacity-30"/>
+      <ul className="my-[18px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
           <p>
             <span>Temperature</span>
+            <span>0.75</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            defaultValue={[0, 50]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+          />
+        </li>
+        <li>
+          <p>
+            <span>Max new tokens</span>
+            <span>0.75</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            defaultValue={[0, 50]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+          />
+        </li>
+        <li>
+          <p>
+            <span>Top P</span>
+            <span>0.75</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            defaultValue={[0, 50]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+          />
+        </li>
+        <li>
+          <p>
+            <span>Repetition Penalty</span>
+            <span>0.75</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            defaultValue={[0, 50]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+          />
+        </li>
+        <li>
+          <p>
+            <span>Top K</span>
+            <span>0.75</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            defaultValue={[0, 50]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+          />
+        </li>
+        <li>
+          <p>
+            <span>Typical P</span>
             <span>0.75</span>
           </p>
           <RangeSlider

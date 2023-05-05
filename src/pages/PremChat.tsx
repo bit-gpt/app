@@ -15,6 +15,7 @@ import usePremChatStore from "../shared/store/prem-chat";
 function PremChat() {
   const { chatId } = useParams();
   const model = usePremChatStore((state) => state.model);
+  const [rightSidebar, setRightSidebar] = useState(false);
 
   const {
     chatMessages,
@@ -35,7 +36,7 @@ function PremChat() {
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none">
-              <Header />
+              <Header setRightSidebar={setRightSidebar} rightSidebar={rightSidebar}/>
               <div className="z-10 relative mt-[40px] flex flex-col prem-chat-body">
                 <h1 className="text-antiflashwhite text-3xl text-center">
                   Prem Chat
@@ -91,7 +92,7 @@ function PremChat() {
           </div>
         </div>
         <div>
-          <RightSidebar />
+         {rightSidebar && <RightSidebar setRightSidebar={setRightSidebar}/>}
         </div>
       </div>
     </section>

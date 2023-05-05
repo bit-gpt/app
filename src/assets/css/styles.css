@@ -171,6 +171,10 @@ header img {
 
 .sidebar {
   background-color: rgba(32, 35, 43,1);
+  @apply w-[260px];
+}
+.sidebar-toggle .sidebar {
+  @apply w-auto;
 }
 
 .sidebar li {
@@ -280,7 +284,9 @@ header img {
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
 }
-
+.right-sidebar__list li {
+  @apply mb-[18px];
+}
 .right-sidebar__list li p {
   @apply font-proximaNova-regular text-base justify-between flex mb-6;
 }
@@ -293,7 +299,7 @@ header img {
 }
 
 .range-slider {
-  @apply h-[3px] mb-[18px];
+  @apply h-[3px];
   background-color: rgba(237, 237, 237, 0.1);
 }
 
