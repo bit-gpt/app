@@ -12,22 +12,42 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
   const [tempQuestion, setTempQuestion] = useState("");
   const navigate = useNavigate();
 
-  const { model, history, addHistory, updateHistoryMessages } =
-    usePremChatStore(
-      (state) => ({
-        model: state.model,
-        history: state.history,
-        addHistory: state.addHistory,
-        updateHistoryMessages: state.updateHistoryMessages,
-      }),
-      shallow
-    );
+  const {
+    model,
+    history,
+    addHistory,
+    updateHistoryMessages,
+    temperature,
+    max_tokens,
+    top_p,
+    frequency_penalty,
+  } = usePremChatStore(
+    (state) => ({
+      model: state.model,
+      history: state.history,
+      addHistory: state.addHistory,
+      updateHistoryMessages: state.updateHistoryMessages,
+      temperature: state.temperature,
+      max_tokens: state.max_tokens,
+      top_p: state.top_p,
+      frequency_penalty: state.frequency_penalty,
+    }),
+    shallow
+  );
 
   const messages =
     history.find((_history) => _history.id === chatId)?.messages || [];
 
   const { isLoading, isError, mutate } = useMutation(
-    (messages: Message[]) => chatCompletion({ messages, model }),
+    (messages: Message[]) =>
+      chatCompletion({
+        messages,
+        model,
+        temperature,
+        max_tokens,
+        top_p,
+        frequency_penalty
+      }),
     {
       onSuccess: (response) => {
         const tempConversation = [

@@ -14,16 +14,28 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
   const navigate = useNavigate();
   const [pending, setPending] = useState<string | null>();
 
-  const { model, history, addHistory, updateHistoryMessages } =
-    usePremChatStore(
-      (state) => ({
-        model: state.model,
-        history: state.history,
-        addHistory: state.addHistory,
-        updateHistoryMessages: state.updateHistoryMessages,
-      }),
-      shallow
-    );
+  const {
+    model,
+    history,
+    addHistory,
+    updateHistoryMessages,
+    temperature,
+    max_tokens,
+    top_p,
+    frequency_penalty,
+  } = usePremChatStore(
+    (state) => ({
+      model: state.model,
+      history: state.history,
+      addHistory: state.addHistory,
+      updateHistoryMessages: state.updateHistoryMessages,
+      temperature: state.temperature,
+      max_tokens: state.max_tokens,
+      top_p: state.top_p,
+      frequency_penalty: state.frequency_penalty,
+    }),
+    shallow
+  );
 
   const messages =
     history.find((_history) => _history.id === chatId)?.messages || [];
@@ -62,6 +74,10 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
             model,
             messages: [...messages, newMessage],
             stream: true,
+            temperature,
+            max_tokens,
+            top_p,
+            frequency_penalty,
           }),
           signal: ctrl.signal,
           onmessage: (event) => {
