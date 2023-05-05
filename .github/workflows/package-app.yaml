@@ -1,0 +1,99 @@
+name: Package Tauri App
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  publish-tauri:
+    permissions: write-all
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-20.04]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create the .env file from example
+        run: cp .env.example .env
+
+      - name: Install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        # You can remove libayatana-appindicator3-dev if you don't use the system tray feature.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: tag
+        id: next_tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: version
+        id: next_version
+        run: |
+          tag=${{ steps.next_tag.outputs.tag }}
+          echo "version=${tag:1}" >> $GITHUB_OUTPUT
+
+      - name: Git config and pull
+        run: |
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+          git config pull.rebase true
+          git fetch origin main
+          git pull origin main
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.20.1
+        id: go
+
+      - name: Install dasel
+        run: |
+          go install github.com/tomwright/dasel/cmd/dasel@latest
+
+      - name: Increment version
+        run: |
+          dasel put string -f package.json ".version" "${{ steps.next_version.outputs.version }}"
+          dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ steps.next_version.outputs.version }}"
+          dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ steps.next_version.outputs.version }}"
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ steps.next_tag.outputs.tag }}
+          releaseName: "PremAI App ${{ steps.next_tag.outputs.tag }}"
+          releaseBody: "See the assets to download and install this version."
+          includeDebug: true
+
+      # Commit package.json, tauri.conf.json and Cargo.toml to master
+      - name: Commit & Push
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          git add .
+          git commit -m "${{ steps.next_tag.outputs.tag }}"
+          git push origin HEAD:main
