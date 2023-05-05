@@ -5,7 +5,7 @@ import HistoryNavigator from "./HistoryNavigator";
 
 const Header = ({setRightSidebar, rightSidebar}: any) => {
   return (
-    <div className="border-b border-light w-full h-[77px] py-3 flex">
+    <div className="border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0">
       <HistoryNavigator />
       <div className="border-l border-light pl-6 flex items-center ml-auto max-w-max w-full absolute right-0">
         <button
