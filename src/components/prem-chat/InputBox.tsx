@@ -9,8 +9,9 @@ const InputBox = ({ question, setQuestion, disabled }: InputBox) => {
       <input
         type="text"
         name="question"
-        value={question || "Type a message or type to select a prompt"}
+        value={question}
         onChange={(e) => setQuestion(e.target.value)}
+        placeholder="Type a message or type to select a prompt"
         disabled={disabled}
       />
       <button>
