@@ -54,7 +54,11 @@ const Sidebar = () => {
             <img src={cross} alt="cross-logo" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
-          <img className={clsx(sidebarToggle ? "mx-auto" : "hidden")} src={brandLogo} alt="brandLogo" />
+          <img
+            className={clsx(sidebarToggle ? "mx-auto" : "hidden")}
+            src={brandLogo}
+            alt="brandLogo"
+          />
         </div>
         <div className="flex mt-8 sidebar__search relative">
           <img
@@ -78,7 +82,10 @@ const Sidebar = () => {
         <ul className="mt-6 overflow-y-auto flex-grow scrollbar-none">
           {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
             return (
-              <li key={item.id}>
+              <li
+                key={item.id}
+                className={clsx({ "bg-darkjunglegreen": chatId === item.id })}
+              >
                 <Link to={`/prem-chat/${item.id}`}>
                   <img
                     src={msg}
@@ -184,7 +191,7 @@ const Sidebar = () => {
                 alt="exportData"
                 width={20}
                 height={20}
-                 className={clsx(!sidebarToggle && "mr-3")}
+                className={clsx(!sidebarToggle && "mr-3")}
               />
 
               <span>Export data</span>
@@ -197,7 +204,7 @@ const Sidebar = () => {
                 alt="importData"
                 width={20}
                 height={20}
-                 className={clsx(!sidebarToggle && "mr-3")}
+                className={clsx(!sidebarToggle && "mr-3")}
               />
               <span>Import data</span>
             </Link>
