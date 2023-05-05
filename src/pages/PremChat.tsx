@@ -44,7 +44,7 @@ function PremChat() {
                   <p className="text-spanishgray text-base font-proximaNova-regular mb-[6px]">
                     Model
                   </p>
-                  {!chatId && <ModelSelectionDropdown />}
+                  <ModelSelectionDropdown />
                   {isError && <div>Something went wrong</div>}
                 </div>
                 <div className="md:w-[65%] w-[90%] mx-auto mt-8">
