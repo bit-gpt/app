@@ -69,7 +69,6 @@ function PremChat() {
                       <InputBox
                         question={question}
                         setQuestion={setQuestion}
-                        disabled={isLoading}
                         disabled={isLoading || !model}
                         placeholder={
                           model
