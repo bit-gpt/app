@@ -25,7 +25,8 @@ export default {
         philippinegray: "#8F8F95",
         ghostwhite: "#F7F7FD",
         ruddypink: "#EA938E",
-        isabelline:"#F7F0ED"
+        isabelline:"#F7F0ED",
+        arsenic: "#3C3D49"
       }
     },
   },

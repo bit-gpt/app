@@ -170,13 +170,11 @@ header img {
 }
 
 .sidebar {
-  @apply bg-darkjunglegreen;
+  background-color: rgba(32, 35, 43,1);
 }
-/* .main-content {
-  @apply bg-[#20232B];
-} */
+
 .sidebar li {
-  @apply flex items-center py-[15px] px-5 hover:bg-[#1A1E23];
+  @apply flex items-center py-[15px] px-5 hover:bg-darkjunglegreen rounded-md;
 }
 .sidebar li a {
   @apply w-full flex dark:text-cultured text-base font-proximaNova-regular;
@@ -234,7 +232,15 @@ header img {
   @apply mt-8 border-2 border-lavendergray rounded-md;
 }
 .prem-chat select {
-  @apply bg-transparent border border-lavendergray text-cultured w-full;
+  @apply bg-transparent font-proximaNova-regular cursor-pointer border border-lavendergray text-cultured w-full z-10 px-4 py-[6px] appearance-none;
+}
+
+.custom-select {
+  @apply relative;
+}
+
+.custom-select button {
+  @apply absolute right-0 bottom-0 top-0 p-4 z-[-1];
 }
 
 .prem-chat-input input {
@@ -253,21 +259,24 @@ header img {
   height: calc(100vh - 116px);
 }
 
-.user-reply {
-  @apply flex mb-[40px];
+.bot-reply {
+  @apply flex mb-[40px] mr-[70px];
 }
-.user-reply p {
+.bot-reply p {
   background: linear-gradient(90.54deg, #E9928E 0%, #F49893 100%);
   border-radius: 0px 10.4294px 10.4294px 10.4294px;
   @apply py-[14px] ml-[23px] w-full px-[22px];
   @apply text-ghostwhite font-proximaNova-regular text-lg;
 }
-.user-reply span {
+.bot-reply span {
   @apply bg-ruddypink w-[38px] h-[38px] rounded-full flex justify-center items-center;
 }
-
-.bot-Reply {
-  @apply bg-isabelline border;
+.user-reply {
+  @apply flex items-end mb-[40px];
+}
+.user-reply p {
+  @apply bg-isabelline border py-4 px-[22px] ml-auto max-w-fit font-proximaNova-regular text-base text-arsenic;
   box-shadow: 10.4294px 10.4294px 26.0736px rgba(112, 124, 151, 0.05), 15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
+  border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
 }

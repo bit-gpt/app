@@ -1,5 +1,4 @@
-import chatReplay from "../../assets/images/chat-replay.svg";
-import copy from "../../assets/images/copy.svg";
+import user from "../../assets/images/user.svg";
 
 type UserReply = {
   reply: string;
@@ -8,21 +7,12 @@ type UserReply = {
 const UserReply = ({ reply }: UserReply) => {
   return (
     <div className="user-reply">
-      <span>
-        <img
-          className="mx-[22px]"
-          src={chatReplay}
-          alt="chatReplay"
-          width={18}
-          height={18}
-        />
-      </span>
       <p>{reply}</p>
-      <button className="ml-3 bg-white rounded-[12px] h-[38px] w-[50px]">
+      <button className="bg-isabelline ml-3 rounded-full min-w-[35px] h-[35px]">
         <img
-          className="mx-3"
-          src={copy}
-          alt="copy"
+          className="mx-auto"
+          src={user}
+          alt="chatReplay"
           width={16}
           height={16}
         />

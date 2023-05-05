@@ -28,7 +28,7 @@ function PremChat() {
         <div>
           <Sidebar />
         </div>
-        <div className="bg-lines bg-[#20232B] relative h-full w-full">
+        <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
           <div className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none">
             <div className="border-b border-light w-full h-[77px] py-3 flex">
               <div className="border-l border-light pl-6 flex items-center ml-auto max-w-max">
@@ -51,14 +51,14 @@ function PremChat() {
               <h1 className="text-antiflashwhite text-3xl text-center">
                 Prem Chat
               </h1>
-              <div className="prem-chat p-4 pb-7 w-[600px] mx-auto">
+              <div className="prem-chat p-4 pb-7 md:w-[55%] w-[85%] mx-auto">
                 <p className="text-[#999999] text-base font-proximaNova-regular mb-[6px]">
                   Model
                 </p>
                 {!chatId && <ModelSelectionDropdown />}
                 {isError && <div>Something went wrong</div>}
               </div>
-              <div className="w-[600px] mx-auto">
+              <div className="md:w-[65%] w-[90%] mx-auto">
               {chatMessages.map((message, index) => (
                   <div key={index}>
                     {message.role === "user" ? (
@@ -70,7 +70,7 @@ function PremChat() {
                 ))}
               </div>
             <div className="prem-chat-bottom border-transparent bg-gradient-to-b from-transparent via-white to-white dark:via-[#20232B] dark:to-[#20232B]">
-            <div className="max-w-[55%] mx-auto">
+            <div className="md:w-[55%] w-[85%] mx-auto">
               {chatMessages.length > 0 && !isLoading && !isError && (
                 <div>
                   <RegenerateButton onRgenerateClick={onRegenerate} />
