@@ -46,11 +46,18 @@ const Sidebar = () => {
     return item.title.toLowerCase().includes(search.toLowerCase());
   });
 
+  const onCloseClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className={clsx(sidebarToggle && "sidebar-toggle")}>
       <div className="pt-[18px] pb-[70px] flex-col px-[10px] flex h-screen sidebar">
         <div className={clsx(sidebarToggle ? "flex-col flex" : "flex")}>
-          <button className={clsx(sidebarToggle ? "mx-auto my-5" : "ml-4")}>
+          <button
+            className={clsx(sidebarToggle ? "mx-auto my-5" : "ml-4")}
+            onClick={onCloseClick}
+          >
             <img src={cross} alt="cross-logo" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
