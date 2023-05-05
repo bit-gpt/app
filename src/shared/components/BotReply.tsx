@@ -1,3 +1,4 @@
+import CopyToClipboard from "react-copy-to-clipboard";
 import chatReplay from "../../assets/images/chat-replay.svg";
 import copy from "../../assets/images/copy.svg";
 
@@ -18,9 +19,17 @@ const BotReply = ({ reply }: BotReply) => {
         />
       </span>
       <p>{reply}</p>
-      <button className="ml-3 bg-white rounded-[12px] h-[38px] min-w-[35px]">
-        <img className="mx-auto" src={copy} alt="copy" width={16} height={16} />
-      </button>
+      <CopyToClipboard text={reply}>
+        <button className="ml-3 bg-white rounded-[12px] h-[38px] min-w-[35px]">
+          <img
+            className="mx-auto"
+            src={copy}
+            alt="copy"
+            width={16}
+            height={16}
+          />
+        </button>
+      </CopyToClipboard>
     </div>
   );
 };

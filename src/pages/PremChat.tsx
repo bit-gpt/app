@@ -10,9 +10,11 @@ import RegenerateButton from "../components/prem-chat/RegenerateButton";
 import Header from "../components/prem-chat/Header";
 import RightSidebar from "../components/prem-chat/RightSidebar";
 
+import usePremChatStore from "../shared/store/prem-chat";
 
 function PremChat() {
   const { chatId } = useParams();
+  const model = usePremChatStore((state) => state.model);
 
   const {
     chatMessages,
@@ -42,7 +44,7 @@ function PremChat() {
                   <p className="text-spanishgray text-base font-proximaNova-regular mb-[6px]">
                     Model
                   </p>
-                  {!chatId && <ModelSelectionDropdown />}
+                  <ModelSelectionDropdown />
                   {isError && <div>Something went wrong</div>}
                 </div>
                 <div className="md:w-[65%] w-[90%] mx-auto mt-8">
@@ -67,13 +69,18 @@ function PremChat() {
                       <InputBox
                         question={question}
                         setQuestion={setQuestion}
-                        disabled={isLoading}
+                        disabled={isLoading || !model}
+                        placeholder={
+                          model
+                            ? "Type a message or type to select a prompt"
+                            : "Please select a model to get started"
+                        }
                       />
                     </form>
                     <p className="text-philippinegray mt-3 text-[10px] font-proximaNova-regular text-center">
                       ChatBot UI. Chat bot UI is an advanced chatbot kit for
-                      OpenAI'a chat models aiming to mimic ChatGPT's interface and
-                      functionality.
+                      OpenAI'a chat models aiming to mimic ChatGPT's interface
+                      and functionality.
                     </p>
                   </div>
                 </div>
