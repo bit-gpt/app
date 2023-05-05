@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import InputBox from "../components/prem-chat/InputBox";
 import ModelSelectionDropdown from "../components/prem-chat/ModelSelectionDropdown";
 import UserReply from "../shared/components/UserReply";
@@ -16,6 +16,7 @@ function PremChat() {
   const { chatId } = useParams();
   const model = usePremChatStore((state) => state.model);
   const [rightSidebar, setRightSidebar] = useState(false);
+  const chatMessageListRef = useRef<HTMLDivElement>(null);
 
   const {
     chatMessages,
@@ -27,6 +28,12 @@ function PremChat() {
     onRegenerate,
   } = usePremChat(chatId || null);
 
+  useEffect(() => {
+    if (chatMessageListRef.current) {
+      chatMessageListRef.current.scrollTop = chatMessageListRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
+
   return (
     <section>
       <div className="flex h-screen w-full relative">
@@ -35,7 +42,7 @@ function PremChat() {
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
-            <div className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none">
+            <div className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none" ref={chatMessageListRef}>
               <Header setRightSidebar={setRightSidebar} rightSidebar={rightSidebar}/>
               <div className="z-10 relative mt-[40px] flex flex-col prem-chat-body">
                 <h1 className="text-antiflashwhite text-3xl text-center">
@@ -60,7 +67,7 @@ function PremChat() {
                   ))}
                 </div>
                 <div className="prem-chat-bottom border-transparent bg-gradient-to-b from-transparent via-white to-white dark:via-[#20232B] dark:to-[#20232B]">
-                  <div className="md:w-[55%] w-[85%] mx-auto">
+                  <div className="md:w-[55%] w-[85%] mx-auto" >
                     {chatMessages.length > 0 && !isLoading && !isError && (
                       <div>
                         <RegenerateButton onRgenerateClick={onRegenerate} />
