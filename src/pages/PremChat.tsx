@@ -39,13 +39,13 @@ function PremChat() {
                   Prem Chat
                 </h1>
                 <div className="prem-chat p-4 pb-7 md:w-[55%] w-[85%] mx-auto">
-                  <p className="text-[#999999] text-base font-proximaNova-regular mb-[6px]">
+                  <p className="text-spanishgray text-base font-proximaNova-regular mb-[6px]">
                     Model
                   </p>
                   {!chatId && <ModelSelectionDropdown />}
                   {isError && <div>Something went wrong</div>}
                 </div>
-                <div className="md:w-[65%] w-[90%] mx-auto">
+                <div className="md:w-[65%] w-[90%] mx-auto mt-8">
                   {chatMessages.map((message, index) => (
                     <div key={index}>
                       {message.role === "user" ? (

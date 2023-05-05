@@ -282,7 +282,7 @@ header img {
 }
 
 .right-sidebar__list li p {
-  @apply font-proximaNova-regular text-base justify-between flex;
+  @apply font-proximaNova-regular text-base justify-between flex mb-6;
 }
 
 .right-sidebar__list li span:first-child {
@@ -290,8 +290,4 @@ header img {
 }
 .right-sidebar__list li span:last-child {
   @apply text-spanishgray;
-}
-
-.progress-bar {
-  @apply rounded-md;
 }

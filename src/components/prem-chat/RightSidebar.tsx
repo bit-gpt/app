@@ -29,7 +29,7 @@ const RightSidebar = () => {
             <path
               d="M1 9.25L5.125 5.125L1 1"
               stroke="white"
-              stroke-width="1.76786"
+              strokeWidth="1.76786"
             />
           </svg>
         </p>
@@ -40,12 +40,7 @@ const RightSidebar = () => {
             <span>Temperature</span>
             <span>0.75</span>
           </p>
-          <div className="progress-bar">
-            <div
-              className="bg-blue-600 h-2.5 rounded-full"
-              style={{ width: "45%" }}
-            ></div>
-          </div>
+
         </li>
       </ul>
     </div>

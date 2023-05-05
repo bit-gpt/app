@@ -37,7 +37,7 @@ const Header = () => {
           </svg>
         </button>
       </div>
-      <div className="border-l border-light pl-6 flex items-center ml-auto max-w-max w-full">
+      <div className="border-l border-light pl-6 flex items-center ml-auto max-w-max w-full right-0 absolute">
         <button
           type="button"
           className="bg-sonicsilver py-3 px-4 rounded-md text-lg font-proximaNova-regular text-white"
