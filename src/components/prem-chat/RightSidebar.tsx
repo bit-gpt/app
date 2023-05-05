@@ -1,5 +1,7 @@
 import React from "react";
 import leftArrow from "../../assets/images/left-arrow.svg";
+import RangeSlider from "react-range-slider-input";
+import "react-range-slider-input/dist/style.css";
 
 const RightSidebar = () => {
   return (
@@ -40,7 +42,12 @@ const RightSidebar = () => {
             <span>Temperature</span>
             <span>0.75</span>
           </p>
-
+          <RangeSlider
+            className="single-thumb"
+            defaultValue={[0, 50]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+          />
         </li>
       </ul>
     </div>

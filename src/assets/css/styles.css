@@ -291,3 +291,25 @@ header img {
 .right-sidebar__list li span:last-child {
   @apply text-spanishgray;
 }
+
+.range-slider {
+  @apply h-[3px] mb-[18px];
+  background-color: rgba(237, 237, 237, 0.1);
+}
+
+.range-slider .range-slider__range {
+  background-color: rgba(245, 142, 142, 1);
+}
+.range-slider .range-slider__thumb {
+  @apply h-3 w-3;
+  background: linear-gradient(146.31deg, #F58E8E 28.33%, #F5C58C 71.67%);
+}
+.range-slider .range-slider__thumb:first-child {
+  @apply hidden;
+}
+
+.range-slider .range-slider__thumb::before {
+  content: "";
+  background: rgba(249, 201, 161, 0.4);
+  @apply absolute right-[-2px] left-[-2px] bottom-[-2px] top-[-2px] rounded-full;
+}
