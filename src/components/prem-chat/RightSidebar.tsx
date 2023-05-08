@@ -77,7 +77,8 @@ const RightSidebar = ({ setRightSidebar }: any) => {
           >
             <div
               onClick={(e) => {
-                setIsSelected(e.target.textContent);
+                const target = e.target as HTMLElement;
+                setIsSelected(target.textContent || "");
                 setIsActive(!isActive);
               }}
               className="item"
@@ -87,7 +88,8 @@ const RightSidebar = ({ setRightSidebar }: any) => {
             <div
               className="item"
               onClick={(e) => {
-                setIsSelected(e.target.textContent);
+                const target = e.target as HTMLElement;
+                setIsSelected(target.textContent || "");
                 setIsActive(!isActive);
               }}
             >
@@ -96,7 +98,8 @@ const RightSidebar = ({ setRightSidebar }: any) => {
             <div
               className="item"
               onClick={(e) => {
-                setIsSelected(e.target.textContent);
+                const target = e.target as HTMLElement;
+                setIsSelected(target.textContent || "");
                 setIsActive(!isActive);
               }}
             >
@@ -150,7 +153,7 @@ const RightSidebar = ({ setRightSidebar }: any) => {
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
             min={0}
-            max={2}
+            max={1}
             step={0.1}
             onInput={(value: number[]) => setTopP(value[1])}
           />
