@@ -150,7 +150,7 @@ const RightSidebar = ({ setRightSidebar }: any) => {
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
             min={0}
-            max={2}
+            max={1}
             step={0.1}
             onInput={(value: number[]) => setTopP(value[1])}
           />
