@@ -77,7 +77,8 @@ const RightSidebar = ({ setRightSidebar }: any) => {
           >
             <div
               onClick={(e) => {
-                setIsSelected(e.target.textContent);
+                const target = e.target as HTMLElement;
+                setIsSelected(target.textContent || "");
                 setIsActive(!isActive);
               }}
               className="item"
@@ -87,7 +88,8 @@ const RightSidebar = ({ setRightSidebar }: any) => {
             <div
               className="item"
               onClick={(e) => {
-                setIsSelected(e.target.textContent);
+                const target = e.target as HTMLElement;
+                setIsSelected(target.textContent || "");
                 setIsActive(!isActive);
               }}
             >
@@ -96,7 +98,8 @@ const RightSidebar = ({ setRightSidebar }: any) => {
             <div
               className="item"
               onClick={(e) => {
-                setIsSelected(e.target.textContent);
+                const target = e.target as HTMLElement;
+                setIsSelected(target.textContent || "");
                 setIsActive(!isActive);
               }}
             >
