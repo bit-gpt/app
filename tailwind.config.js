@@ -29,6 +29,7 @@ export default {
         arsenic: "#3C3D49",
         darkgunmetal: "#20232B",
         spanishgray: "#999999",
+        charlestongreen: "#29292D",
       }
     },
   },

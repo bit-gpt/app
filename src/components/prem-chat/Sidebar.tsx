@@ -52,7 +52,7 @@ const Sidebar = () => {
 
   return (
     <div className={clsx(sidebarToggle && "sidebar-toggle")}>
-      <div className="pt-[18px] pb-[70px] flex-col px-[10px] flex h-screen sidebar">
+      <div className="pt-[18px] pb-[70px] flex-col px-2 flex h-screen sidebar">
         <div className={clsx(sidebarToggle ? "flex-col flex" : "flex")}>
           <button
             className={clsx(sidebarToggle ? "mx-auto my-5" : "ml-4")}
@@ -86,7 +86,7 @@ const Sidebar = () => {
           </button>
         </div>
 
-        <ul className="mt-6 overflow-y-auto flex-grow scrollbar-none">
+        <ul className="my-6 overflow-y-auto flex-grow scrollbar-none">
           {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
             return (
               <li
@@ -146,14 +146,14 @@ const Sidebar = () => {
           })}
         </ul>
         <ul>
-          <div className="border-t border-timberwolf opacity-30 -mx-2"></div>
+          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
           {filteredHistory.length > 0 && (
-            <li className="!pt-[30px]">
+            <li>
               <Link to={`/prem-chat/`} onClick={onClearClick}>
                 <svg
-                  className={clsx(!sidebarToggle && "mr-3")}
-                  width="23"
-                  height="23"
+                  className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
+                  width="20"
+                  height="20"
                   viewBox="0 0 18 18"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,7 @@ const Sidebar = () => {
                 alt="exportData"
                 width={20}
                 height={20}
-                className={clsx(!sidebarToggle && "mr-3")}
+                className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
               />
 
               <span>Export data</span>
@@ -211,7 +211,7 @@ const Sidebar = () => {
                 alt="importData"
                 width={20}
                 height={20}
-                className={clsx(!sidebarToggle && "mr-3")}
+                className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
               />
               <span>Import data</span>
             </Link>
