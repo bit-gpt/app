@@ -20,7 +20,7 @@ const BotReply = ({ reply }: BotReply) => {
       </span>
       <p>{reply}</p>
       <CopyToClipboard text={reply}>
-        <button className="ml-3 bg-white rounded-[12px] h-[38px] min-w-[35px]">
+        <button className="ml-3 bg-white mt-auto rounded-[12px] h-[38px] min-w-[35px]">
           <img
             className="mx-auto"
             src={copy}
