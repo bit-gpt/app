@@ -4,7 +4,7 @@ import ModelSelectionDropdown from "../components/prem-chat/ModelSelectionDropdo
 import UserReply from "../shared/components/UserReply";
 import BotReply from "../shared/components/BotReply";
 import usePremChat from "../shared/hooks/usePremChat";
-import Sidebar from "../components/prem-chat/Sidebar";
+import PremChatSidebar from "../components/prem-chat/PremChatSidebar";
 import { useParams } from "react-router-dom";
 import RegenerateButton from "../components/prem-chat/RegenerateButton";
 import Header from "../components/prem-chat/Header";
@@ -38,7 +38,7 @@ function PremChat() {
     <section>
       <div className="flex h-screen w-full relative">
         <div>
-          <Sidebar />
+          <PremChatSidebar />
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
