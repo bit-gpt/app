@@ -12,9 +12,9 @@ import msg from "../../assets/images/msg.svg";
 import searchIcon from "../../assets/images/search.svg";
 import exportData from "../../assets/images/export-data.svg";
 import importData from "../../assets/images/import-data.svg";
-import leftArrow from "../../assets/images/left-arrow.svg";
+import { LeftArrow } from "../../shared/Icon";
 
-const Sidebar = () => {
+const PremChatSidebar = () => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -223,7 +223,7 @@ const Sidebar = () => {
           onClick={() => setSidebarToggle(!sidebarToggle)}
           className="bg-Onyx px-[8.4px] mr-3 -ml-[6px] py-[10px] rounded-md"
         >
-          <img src={leftArrow} alt="leftArrow" width={16} height={16} />
+          <LeftArrow />
         </button>
         <span>Close Sidebar</span>
       </div>
@@ -231,4 +231,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default PremChatSidebar;

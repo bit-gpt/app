@@ -6,18 +6,25 @@ import { runDockerContainer } from "../utils";
 import AppCard from "../components/dashboard/AppCard";
 import { AxiosError } from "axios";
 import Header from "../shared/components/headers/Header";
-import chatLogo from "../assets/images/chat.svg";
 import diffusionLogo from "../assets/images/diffusion.svg";
 import premAgentLogo from "../assets/images/prem-agent.svg";
+import chatLogo from "../assets/images/chat.svg";
 import copilotLogo from "../assets/images/copilot.svg";
+import premEmbeddingsLogo from "../assets/images/prem-embeddings.svg";
+import audioLogo from "../assets/images/audio.svg";
 import OutlineCircleButton from "../shared/components/OutlineCircleButton";
 import DownloadButton from "../components/dashboard/DownloadButton";
 import Spinner from "../shared/components/Spinner";
+import Sidebar from "../shared/components/Sidebar";
+import clsx from "clsx";
+import ServicesRunning from "../components/dashboard/ServicesRunning";
+import Pipelines from "../components/dashboard/Pipelines";
 
 function Dashboard() {
   const [runPremChatContainer, setRunPremChatContainer] = useState(false);
   const [isPremChatModelReady, setIsPremChatModelReady] = useState(false);
   const [premChatPercentage, setPremChatPercentage] = useState(0);
+  const [sidebarToggle, setSidebarToggle] = useState(false);
 
   useQuery(["modelStatus"], fetchStatus, {
     refetchInterval: isPremChatModelReady ? false : 1000,
@@ -40,9 +47,17 @@ function Dashboard() {
   };
 
   return (
-    <section className="dashboard min-h-screen relative">
-      <Header />
-      <div className="container px-3 mx-auto z-10 relative">
+    <section className="dashboard min-h-screen flex w-full relative">
+      <Sidebar
+        setSidebarToggle={setSidebarToggle}
+        sidebarToggle={sidebarToggle}
+      />
+      <div
+        className={clsx(
+          "container pt-[80px] px-3 mx-auto z-10 relative",
+          !sidebarToggle ? "ml-[300px]" : "ml-[100px]"
+        )}
+      >
         <div className="dashboard-top max-w-[600px]">
           <h1 className="dark:text-white">PremAI</h1>
           <h2 className="dark:text-white">Your Own AGI in your Pocket.</h2>
@@ -70,17 +85,16 @@ function Dashboard() {
         </div>
         {/* Apps */}
 
-        <div className="dashboard__popular-app mt-[55px] mb-[49px]">
-          <h2 className="font-bold text-[30px] leading-8">Top Popular Apps</h2>
+        <div className="mask-heading mb-[49px]">
+          <h2>Apps</h2>
         </div>
         <div className="dashboard-bottom">
           <AppCard
             icon={chatLogo}
             className="dashboard-bottom__card"
             title="Prem Chat"
-            description="The Best in Prompting"
           >
-            {runPremChatContainer ? (
+            {/* {runPremChatContainer ? (
               isPremChatModelReady ? (
                 <Link to="/prem-chat">
                   <OutlineCircleButton className="bg-brightgray !border-transparent !text-charlestongreen">
@@ -108,33 +122,40 @@ function Dashboard() {
               )
             ) : (
               <DownloadButton onClick={() => handleRunContainer()} />
-            )}
+            )} */}
           </AppCard>
           <AppCard
             icon={diffusionLogo}
             className="dashboard-bottom__card"
             title="Prem Michelangelo"
-            description="The Best in Prompting"
           >
-            <DownloadButton />
-          </AppCard>
-          <AppCard
-            icon={premAgentLogo}
-            className="dashboard-bottom__card"
-            title="Prem Agent"
-            description="The Best in Prompting"
-          >
-            <DownloadButton />
+            {/* <DownloadButton /> */}
           </AppCard>
           <AppCard
             icon={copilotLogo}
             className="dashboard-bottom__card"
             title="Prem Copilot"
-            description="The Best in Prompting"
           >
-            <DownloadButton />
+            {/* <DownloadButton /> */}
+          </AppCard>
+          <AppCard
+            icon={premEmbeddingsLogo}
+            className="dashboard-bottom__card"
+            title="Prem Embeddings"
+          >
+            {/* <DownloadButton /> */}
+          </AppCard>
+          <AppCard
+            icon={audioLogo}
+            className="dashboard-bottom__card"
+            title="Prem Audio"
+          >
+            {/* <DownloadButton /> */}
           </AppCard>
         </div>
+
+        <ServicesRunning />
+        <Pipelines />
       </div>
     </section>
   );

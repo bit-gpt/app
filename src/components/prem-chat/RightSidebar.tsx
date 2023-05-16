@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import leftArrow from "../../assets/images/left-arrow.svg";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import usePremChatStore from "../../shared/store/prem-chat";
 import { shallow } from "zustand/shallow";
+import { LeftArrow } from "../../shared/Icon";
 
 const RightSidebar = ({ setRightSidebar }: any) => {
   const [isActive, setIsActive] = useState(false);
@@ -39,7 +39,7 @@ const RightSidebar = ({ setRightSidebar }: any) => {
           onClick={() => setRightSidebar(false)}
           className="bg-Onyx px-[8.4px] mr-3 -ml-[6px] py-[10px] rounded-md"
         >
-          <img src={leftArrow} alt="leftArrow" width={16} height={16} />
+          <LeftArrow />
         </button>
         <span>Close Sidebar</span>
       </div>
