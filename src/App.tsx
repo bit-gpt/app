@@ -6,19 +6,21 @@ import DownloadDockerWall from "./shared/components/DownloadDockerWall";
 import NotFound from "./shared/components/NotFound";
 import useDocker from "./shared/hooks/useDocker";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { isDesktopEnv } from "./utils";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-    }
-  }
+    },
+  },
 });
 
 function App() {
   const { isDockerRunning, handleCheckIsDockerRunning } = useDocker();
+  const isDesktop = isDesktopEnv();
 
-  if (!isDockerRunning) {
+  if (isDesktop && !isDockerRunning) {
     return (
       <DownloadDockerWall
         handleCheckIsDockerRunning={handleCheckIsDockerRunning}
