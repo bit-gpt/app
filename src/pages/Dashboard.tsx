@@ -47,7 +47,7 @@ function Dashboard() {
   };
 
   return (
-    <section className={"dashboard min-h-screen flex w-full relative"}>
+    <section className="dashboard min-h-screen flex w-full relative">
       <Sidebar
         setSidebarToggle={setSidebarToggle}
         sidebarToggle={sidebarToggle}

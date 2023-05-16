@@ -32,7 +32,7 @@ const Sidebar = ({ setSidebarToggle, sidebarToggle }: any) => {
             </Link>
           </li>
           <li>
-            <Link to={`/`}>
+            <Link to={`/service`}>
               <Services className={clsx(!sidebarToggle && "mr-4")} />
               <span>Services</span>
             </Link>

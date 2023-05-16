@@ -1,6 +1,4 @@
 import chatLogo from "../../assets/images/chat.svg";
-import AppCard from "./AppCard";
-import { Delete, Play, Stop } from "../../shared/Icon";
 import ServicesCard from "../../shared/components/ServicesCard";
 
 const ServicesRunning = () => {

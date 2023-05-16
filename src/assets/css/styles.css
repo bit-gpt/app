@@ -449,9 +449,13 @@ header img {
   }
 }
 
-
 .services-running::after {
   content: "";
   @apply absolute inset-0 rounded-xl rotate-180 shadow-default;
   background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
+}
+
+.search-filter {
+  @apply rounded-sm max-w-[70%] w-full mx-auto py-2 px-5 text-manatee;
+  background-color: rgba(77, 77, 79, 0.22);
 }
