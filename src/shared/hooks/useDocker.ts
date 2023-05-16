@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { checkIsDockerRunning } from "../../utils";
+import { checkIsDockerRunning, isDesktopEnv } from "../../utils";
 
 const useDocker = () => {
+  const isDesktop = isDesktopEnv();
   const [isDockerRunning, setIsDockerRunning] = useState(false);
 
   const handleCheckIsDockerRunning = useCallback(() => {
@@ -11,10 +12,15 @@ const useDocker = () => {
   }, [setIsDockerRunning]);
 
   useEffect(() => {
-    handleCheckIsDockerRunning();
+    if (isDesktop) {
+      handleCheckIsDockerRunning();
+    }
   }, []);
 
-  return { isDockerRunning, handleCheckIsDockerRunning };
+  return {
+    isDockerRunning: isDockerRunning,
+    handleCheckIsDockerRunning,
+  };
 };
 
 export default useDocker;
