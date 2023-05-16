@@ -6,9 +6,9 @@ import { runDockerContainer } from "../utils";
 import AppCard from "../components/dashboard/AppCard";
 import { AxiosError } from "axios";
 import Header from "../shared/components/headers/Header";
-import chatLogo from "../assets/images/chat.svg";
 import diffusionLogo from "../assets/images/diffusion.svg";
 import premAgentLogo from "../assets/images/prem-agent.svg";
+import chatLogo from "../assets/images/chat.svg";
 import copilotLogo from "../assets/images/copilot.svg";
 import premEmbeddingsLogo from "../assets/images/prem-embeddings.svg";
 import audioLogo from "../assets/images/audio.svg";
@@ -17,6 +17,8 @@ import DownloadButton from "../components/dashboard/DownloadButton";
 import Spinner from "../shared/components/Spinner";
 import Sidebar from "../shared/components/Sidebar";
 import clsx from "clsx";
+import ServicesRunning from "../components/dashboard/ServicesRunning";
+import Pipelines from "../components/dashboard/Pipelines";
 
 function Dashboard() {
   const [runPremChatContainer, setRunPremChatContainer] = useState(false);
@@ -151,44 +153,9 @@ function Dashboard() {
             {/* <DownloadButton /> */}
           </AppCard>
         </div>
-        <div className="mask-heading mb-[29px]">
-          <h2>Services Running</h2>
-        </div>
-        <AppCard
-          icon={chatLogo}
-          className="dashboard-bottom__card flex-wrap"
-          title="Vicuna 7B 4-Bit"
-        >
-          {" "}
-          {/* <DownloadButton /> */}
-        </AppCard>
-        <div className="mask-heading mb-[29px]">
-          <h2>Pipelines</h2>
-        </div>
-        <div className="flex flex-wrap items-center coming-soon gap-6">
-          <h1 className="text-3xl text-white font-bold">Coming Soon...</h1>
-          <div className="coming-soon__box">
-            <div className="coming-soon__box-left"></div>
-            <div className="flex flex-col justify-center">
-              <p></p>
-              <p className="coming-soon__box-line"></p>
-            </div>
-          </div>
-          <div className="coming-soon__box">
-            <div className="coming-soon__box-left"></div>
-            <div className="flex flex-col justify-center">
-              <p></p>
-              <p className="coming-soon__box-line"></p>
-            </div>
-          </div>
-          <div className="coming-soon__box">
-            <div className="coming-soon__box-left"></div>
-            <div className="flex flex-col justify-center">
-              <p></p>
-              <p className="coming-soon__box-line"></p>
-            </div>
-          </div>
-        </div>
+
+        <ServicesRunning />
+        <Pipelines />
       </div>
     </section>
   );

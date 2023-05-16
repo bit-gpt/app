@@ -448,3 +448,10 @@ header img {
     background-position: 268px;
   }
 }
+
+
+.services-running::after {
+  content: "";
+  @apply absolute inset-0 rounded-xl rotate-180 shadow-default;
+  background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
+}
