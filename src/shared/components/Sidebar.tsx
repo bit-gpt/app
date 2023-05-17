@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/images/logo.svg";
 import brandLogo from "../../assets/images/brand-logo.svg";
 import {
@@ -12,6 +12,7 @@ import {
 } from "../Icon";
 
 const Sidebar = ({ setSidebarToggle, sidebarToggle }: any) => {
+
   return (
     <div className={clsx(sidebarToggle && "sidebar-toggle", "sidebar-main")}>
       <div className="pt-[18px] pb-[70px] flex-col px-2 flex h-screen sidebar">
@@ -23,25 +24,33 @@ const Sidebar = ({ setSidebarToggle, sidebarToggle }: any) => {
             alt="brandLogo"
           />
         </div>
-
         <ul className="my-6 overflow-y-auto flex-grow scrollbar-none">
-          <li className={"bg-[#323232]"}>
-            <Link to={`/prem-chat`}>
+          <li>
+            <NavLink
+              to={`/`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
               <DashboardIcon className={clsx(!sidebarToggle && "mr-4")} />
               <span>Dashboard</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={`/service`}>
+            <NavLink
+              to={`/service`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
               <Services className={clsx(!sidebarToggle && "mr-4")} />
               <span>Services</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={`/`}>
+            <NavLink
+              to={`/pipeline`}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
               <Pipeline className={clsx(!sidebarToggle && "mr-4")} />
               <span>Pipeline</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
         <ul>

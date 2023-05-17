@@ -153,9 +153,6 @@ header img {
   .dashboard-bottom {
     @apply gap-4;
   }
-  .dashboard-bottom__card {
-    width: 238px;
-  }
 }
 
 .sidebar {
@@ -167,7 +164,7 @@ header img {
 }
 
 .sidebar li {
-  @apply flex items-center py-[15px] px-5 hover:bg-darkjunglegreen rounded-md;
+  @apply flex items-center py-[13px] px-5 hover:bg-darkjunglegreen rounded-md;
 }
 .sidebar li a {
   @apply w-full flex dark:text-cultured text-base font-proximaNova-regular;
@@ -362,18 +359,30 @@ header img {
 .sidebar-main .sidebar {
   @apply bg-[#28292D];
 }
-.sidebar-main .sidebar li a {
-  @apply text-lg items-center;
+.sidebar-main .sidebar li {
+  @apply cursor-pointer p-0 mb-2;
 }
-
+.sidebar-main .sidebar li a {
+  @apply text-lg items-center py-3 md:px-5 rounded-md;
+}
+.sidebar-main.sidebar-toggle li a {
+  @apply h-auto w-auto;
+}
 .sidebar-main .sidebar li:hover svg.svg-stroke path {
   @apply fill-[none] stroke-[#FF7E7B];
+}
+.sidebar-main .sidebar li a.active svg path {
+  @apply fill-[#FF7E7B] stroke-[#FF7E7B];
 }
 .sidebar-main {
   @apply fixed z-[111];
 }
 .sidebar-main .sidebar-toggle__btn {
   @apply relative z-10;
+}
+
+.active {
+  @apply bg-[#323232];
 }
 
 .coming-soon {
@@ -457,7 +466,41 @@ header img {
 .search-filter {
   @apply max-w-[70%]  mx-auto;
 }
-.search-filter input {
+.search-filter > input {
   @apply rounded-sm w-full py-2 text-manatee px-12 focus:shadow-none focus:outline-none;
   background-color: rgba(77, 77, 79, 0.22);
+}
+.dropdown-menu {
+  @apply bg-darkjunglegreen border py-4 pl-6 pr-3 invisible rounded-lg opacity-0 top-[50px] right-0 w-[244px] absolute translate-y-[-20px];
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  border-color: rgba(149, 151, 163, 0.5);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+.dropdown-menu.dropdown-active {
+  @apply opacity-100 visible translate-y-0 z-[11];
+}
+.dropdown-menu li {
+  @apply text-spanishgray flex cursor-pointer;
+}
+.dropdown-menu input[type="checkbox"] {
+  @apply w-4 h-4 border border-lavendergray;
+}
+.dropdown-menu input[type="checked"] {
+  @apply bg-tulip;
+}
+.dropdown-menu li label {
+  @apply flex items-center cursor-pointer w-full pb-4 text-sm;
+}
+.dropdown-menu li label span {
+  @apply font-proximaNova-regular select-none;
+}
+.dropdown-menu li input[type="checkbox"] {
+  @apply border mr-4 border-lavendergray w-5 h-5 appearance-none cursor-pointer rounded-sm;
+}
+.dropdown-menu li input:checked {
+  @apply relative border-transparent bg-tulip;
+}
+.dropdown-menu li input:checked::before {
+  content: "\2713";
+  @apply absolute top-[-1px] right-[1px] text-[1.1rem] text-darkcharcoal;
 }
