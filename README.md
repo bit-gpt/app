@@ -13,10 +13,8 @@
 ```bash
 # clone the backend repo
 git clone git@github.com:premAI-io/prem-box.git
-
-# change directory and run the backend with docker-compose
 cd ./prem-box/
-docker-compose up --build -d controller
+docker-compose up --build -d prem_controller
 ```
 ### Run the app with Tauri
 
