@@ -38,4 +38,7 @@ export interface PremChatHistoryNavigator extends PremChatHistory {
 export type App = {
   id: string;
   name: string;
+  icon: string;
+  playground: boolean;
+  documentation: string;
 }

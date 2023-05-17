@@ -1,12 +1,13 @@
-import AppCard from "./AppCard";
-import chatLogo from "../../assets/images/chat.svg";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApps } from "../../shared/api";
+import AppCard from "./AppCard";
+import chatLogo from "../../assets/images/chat.svg";
 import { App } from "../../shared/types";
+import { BACKEND_URL } from "../../utils";
 const Apps = () => {
   const { data: response } = useQuery(["getApps"], fetchApps);
-  const apps: App[] = response?.data || [];
-  
+  const apps = response?.data || [];
+
   return (
     <>
       <div className="mask-heading mb-[49px]">
@@ -16,7 +17,7 @@ const Apps = () => {
         {apps.map((app) => (
           <AppCard
             key={app.id}
-            icon={chatLogo}
+            icon={`${BACKEND_URL}${app.icon}`}
             className="dashboard-bottom__card"
             title={app.name}
           />

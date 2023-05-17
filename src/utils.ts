@@ -21,3 +21,5 @@ export const isBrowserEnv = () => {
 export const isDesktopEnv = () => {
   return import.meta.env.VITE_DESTINATION === "desktop";
 };
+
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;

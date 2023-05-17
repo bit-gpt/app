@@ -1,4 +1,4 @@
-import { ChatCompletion } from "../types";
+import { App, ChatCompletion } from "../types";
 import api from "./api";
 
 export const fetchModels = async () => {
@@ -13,5 +13,5 @@ export const chatCompletion = async (data: ChatCompletion) => {
 };
 
 export const fetchApps = async () => {
-  return api.get("api/v1/apps/");
+  return api.get<App[]>("api/v1/apps/");
 };
