@@ -1,10 +1,10 @@
 import { useState } from "react";
 import chatLogo from "../assets/images/chat.svg";
 import searchLogo from "../assets/images/search.svg";
+import filterLogo from "../assets/images/filter.svg";
 import Sidebar from "../shared/components/Sidebar";
 import ServicesCard from "../shared/components/ServicesCard";
 import clsx from "clsx";
-
 
 const Service = () => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
@@ -23,9 +23,24 @@ const Service = () => {
         <div className="mask-heading text-center mb-[29px]">
           <h2>Select a Service Type</h2>
         </div>
-        <div className="text-center relative">
-        <img src={searchLogo} alt="search" width="18" height="18" className="absolute left-[20px] top-[15px]" />
-          <input placeholder="Search" className="search-filter mb-16"/>
+        <div className="relative search-filter">
+          <img
+            src={searchLogo}
+            alt="search"
+            width="18"
+            height="18"
+            className="absolute left-[20px] top-[10px]"
+          />
+          <input placeholder="Search" className="mb-16" />
+          <button className="absolute right-[5px] top-0 w-[40px] h-[40px] text-center">
+            <img
+              src={filterLogo}
+              alt="filter"
+              width="18"
+              height="18"
+              className="mx-auto"
+            />
+          </button>
         </div>
         <div className="flex gap-[22px] flex-wrap">
           <ServicesCard
