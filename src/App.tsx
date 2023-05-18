@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/prem-chat" element={<PremChat />} />
           <Route path="/prem-chat/:chatId" element={<PremChat />} />
-          <Route path="/service" element={<Service />} />
+          <Route path="/services" element={<Service />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
