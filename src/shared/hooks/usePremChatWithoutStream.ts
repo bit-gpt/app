@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { chatCompletion } from "../api";
-import { Message, PremChatResponse } from "../types";
-import usePremChatStore from "../store/prem-chat";
 import { v4 as uuid } from "uuid";
-import { shallow } from "zustand/shallow";
 import { useNavigate } from "react-router-dom";
+import { shallow } from "zustand/shallow";
+import { Message, PremChatResponse } from "modules/prem-chat/types";
+import { getChatCompletion } from "modules/prem-chat/api";
+import usePremChatStore from "../store/prem-chat";
 
 const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
@@ -40,13 +40,13 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
 
   const { isLoading, isError, mutate } = useMutation(
     (messages: Message[]) =>
-      chatCompletion({
+      getChatCompletion({
         messages,
         model,
         temperature,
         max_tokens,
         top_p,
-        frequency_penalty
+        frequency_penalty,
       }),
     {
       onSuccess: (response) => {

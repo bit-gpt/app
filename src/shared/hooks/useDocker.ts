@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { checkIsDockerRunning, isDesktopEnv } from "../../utils";
+import { checkIsDockerRunning, isDesktopEnv } from "../helpers/utils";
 
 const useDocker = () => {
   const isDesktop = isDesktopEnv();

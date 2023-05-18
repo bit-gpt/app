@@ -1,8 +1,6 @@
-type Spinner = {
-  className?: string;
-};
+import { SpinnerProps } from "shared/types";
 
-const Spinner = ({ className }: Spinner) => {
+const Spinner = ({ className }: SpinnerProps) => {
   return (
     <svg
       className={`animate-spin ${className || ""}`}

@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import Dashboard from "./pages/Dashboard";
-import PremChat from "./pages/PremChat";
-import DownloadDockerWall from "./shared/components/DownloadDockerWall";
-import NotFound from "./shared/components/NotFound";
-import useDocker from "./shared/hooks/useDocker";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { isDesktopEnv } from "./utils";
-import Service from "./pages/Service";
+
+import NotFound from "shared/components/NotFound";
+import useDocker from "shared/hooks/useDocker";
+import DownloadDockerWall from "shared/components/DownloadDockerWall";
+import { isDesktopEnv } from "shared/helpers/utils";
+
+import Dashboard from "modules/dashboard/components/Dashboard";
+import PremChat from "modules/prem-chat/components/PremChat";
+import Service from "modules/service/components/Service";
 
 const queryClient = new QueryClient({
   defaultOptions: {

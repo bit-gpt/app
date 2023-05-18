@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Message, PremChatHistory } from "../types";
+import { Message, PremChatHistory } from "modules/prem-chat/types";
 
 export type PremChatStore = {
   model: string;

@@ -1,15 +1,11 @@
-import Header from "./headers/Header";
-import WarningLogo from "../../assets/images/warning.svg";
-import commentInfo from "../../assets/images/comment-info.svg";
-import appleLogo from "../../assets/images/apple.svg";
-
-type DownloadDockerWall = {
-  handleCheckIsDockerRunning: () => void;
-};
+import { DownloadDockerWallProps } from "shared/types";
+import WarningLogo from "assets/images/warning.svg";
+import appleLogo from "assets/images/apple.svg";
+import Header from "./Header";
 
 const DownloadDockerWall = ({
   handleCheckIsDockerRunning,
-}: DownloadDockerWall) => {
+}: DownloadDockerWallProps) => {
   return (
     <section className="docker-not-detected flex flex-wrap bg-lines relative">
       <Header />
@@ -45,17 +41,9 @@ const DownloadDockerWall = ({
                 <h3 className="text-[20px]">Dependencies</h3>
                 <div className="flex mt-4">
                   <p className="w-full text-[#CFCFCF] text-base">Docker</p>
-                  <p className="text-[#2ED291] text-base">&#10003;&nbsp;Found</p>
-                  {/* <p className="text-[#F9B96D] text-base flex items-center whitespace-nowrap">
-                    <button className="mr-3 w-4 h-5 tooltip">
-                      <img src={commentInfo} alt="comment-info" />
-                      <span className="tooltip-text">
-                        In order to run Prem App you need to have <br/>
-                        Docker installed and running.{" "}
-                      </span>
-                    </button>
-                    Not Found
-                  </p> */}
+                  <p className="text-[#2ED291] text-base">
+                    &#10003;&nbsp;Found
+                  </p>
                 </div>
               </div>
             </div>
