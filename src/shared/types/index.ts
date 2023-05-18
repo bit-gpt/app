@@ -13,8 +13,8 @@ export type ServicesCardProps = {
 };
 
 export type SidebarProps = {
-  sidebarToggle: boolean;
-  setSidebarToggle: (value: boolean) => void;
+  toggleStatus: boolean;
+  toggle: () => void;
 };
 
 export type SpinnerProps = {
@@ -47,4 +47,10 @@ export type SettingIconProps = {
 
 export type CloseIconProps = {
   className: string;
+};
+
+export type NavLinkItemProps = {
+  icon: React.ReactNode;
+  label: string;
+  to: string;
 };
