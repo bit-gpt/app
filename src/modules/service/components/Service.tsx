@@ -1,62 +1,75 @@
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
+import { useMemo, useState } from "react";
 import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
+import { getApps } from "modules/dashboard/api";
 import chatLogo from "assets/images/chat.svg";
-import searchLogo from "assets/images/search.svg";
-import filterLogo from "assets/images/filter.svg";
+import SearchFilter from "./SearchFilter";
 import Dropdown from "./Dropdown";
+import { getServices } from "../api";
 
 const Service = () => {
-  const [isActive, setIsActive] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const toggleDropdown = () => setOpenDropdown((value) => !value);
+  const { data: response } = useQuery(["getServices"], getServices);
+  const { data: appResponse, isSuccess } = useQuery(["getApps"], getApps);
+  const [filter, setFilter] = useState(new Map<string, boolean>());
+  const services = response?.data || [];
+  const apps = appResponse?.data || [];
+
+  const filteredServices = useMemo(() => {
+    if (filter.size === 0) return services;
+    return services.filter((service) => {
+      const filterdApps = apps.filter((app) => service.apps.includes(app.id));
+      return filterdApps.reduce((acc, app) => {
+        return acc || (filter.get(app.id) as boolean);
+      }, false);
+    });
+  }, [services, filter]);
+
+  const onStart = (id: string) => {
+    console.log("onStart", id);
+  };
+
+  const onStop = (id: string) => {
+    console.log("onStop", id);
+  };
+
+  const onDelete = (id: string) => {
+    console.log("onDelete", id);
+  };
+
   return (
     <AppContainer>
       <div className="mask-heading text-center mb-[29px]">
         <h2>Select a Service Type</h2>
       </div>
-      <div className="relative search-filter">
-        <img
-          src={searchLogo}
-          alt="search"
-          width="18"
-          height="18"
-          className="absolute left-[20px] top-[10px]"
-        />
-        <input placeholder="Search" className="mb-16" />
-        <button
-          onClick={() => setIsActive(!isActive)}
-          className="absolute right-[5px] top-0 w-[40px] h-[40px] text-center"
-        >
-          <img
-            src={filterLogo}
-            alt="filter"
-            width="18"
-            height="18"
-            className="mx-auto"
+      <SearchFilter toggleDropdown={toggleDropdown}>
+        {isSuccess && (
+          <Dropdown
+            open={openDropdown}
+            close={() => setOpenDropdown(false)}
+            apps={apps}
+            onFilterChange={setFilter}
           />
-        </button>
-        <Dropdown isActive={isActive} setIsActive={setIsActive} />
-      </div>
+        )}
+      </SearchFilter>
       <div className="flex gap-[22px] flex-wrap justify-center">
-        <ServicesCard
-          icon={chatLogo}
-          className="dashboard-bottom__card flex-wrap !pr-5"
-          title="Vicuna 7B 4-Bit"
-        />
-        <ServicesCard
-          icon={chatLogo}
-          className="dashboard-bottom__card flex-wrap !pr-5 services-running"
-          title="Vicuna 7B 4-Bit"
-        />
-        <ServicesCard
-          icon={chatLogo}
-          className="dashboard-bottom__card flex-wrap !pr-5"
-          title="Vicuna 7B 4-Bit"
-        />
-        <ServicesCard
-          icon={chatLogo}
-          className="dashboard-bottom__card flex-wrap !pr-5"
-          title="Vicuna 7B 4-Bit"
-        />
+        {filteredServices.map((service) => (
+          <ServicesCard
+            key={service.id}
+            icon={chatLogo}
+            className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
+              "services-running": service.running,
+            })}
+            title={service.name}
+            isRunning={service.running}
+            onStart={() => onStart(service.id)}
+            onStop={() => onStop(service.id)}
+            onDelete={() => onDelete(service.id)}
+          />
+        ))}
       </div>
     </AppContainer>
   );

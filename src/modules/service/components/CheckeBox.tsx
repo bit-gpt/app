@@ -1,21 +1,14 @@
-import { useState } from "react";
 import clsx from "clsx";
 import { CheckeBoxProps } from "../types";
 
-const CheckeBox = ({ label, checked }: CheckeBoxProps) => {
-  const [isChecked, setIsChecked] = useState(checked);
-
-  const toggle = () => {
-    setIsChecked((prev) => !prev);
-  };
-
+const CheckeBox = ({ label, checked, onChange }: CheckeBoxProps) => {
   return (
     <label>
       <input
         type="checkbox"
-        onChange={toggle}
-        className={clsx({ checked: isChecked })}
-        checked={isChecked}
+        onChange={onChange}
+        className={clsx({ checked })}
+        checked={checked}
       />
       <span>{label}</span>
     </label>

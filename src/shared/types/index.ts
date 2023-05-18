@@ -10,6 +10,10 @@ export type ServicesCardProps = {
   title: string;
   className: string;
   icon: string;
+  isRunning: boolean;
+  onStart: () => void;
+  onStop: () => void;
+  onDelete: () => void;
 };
 
 export type SidebarProps = {
