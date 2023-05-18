@@ -1,10 +1,7 @@
-import user from "../../assets/images/user.svg";
+import { UserReplyProps } from "shared/types";
+import user from "assets/images/user.svg";
 
-type UserReply = {
-  reply: string;
-};
-
-const UserReply = ({ reply }: UserReply) => {
+const UserReply = ({ reply }: UserReplyProps) => {
   return (
     <div className="user-reply">
       <p>{reply}</p>

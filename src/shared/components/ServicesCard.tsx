@@ -1,12 +1,8 @@
-import { Delete, Stop } from "../Icon";
+import { ServicesCardProps } from "shared/types";
+import DeleteIcon from "./DeleteIcon";
+import StopIcon from "./StopIcon";
 
-type ServicesCard = {
-  title: string;
-  className: string;
-  icon: string;
-};
-
-const ServicesCard = ({ title, className, icon }: ServicesCard) => {
+const ServicesCard = ({ title, className, icon }: ServicesCardProps) => {
   return (
     <div className={className}>
       <div className="flex gap-8 items-start flex-wrap w-full z-10 relative">
@@ -18,11 +14,11 @@ const ServicesCard = ({ title, className, icon }: ServicesCard) => {
             Running
           </button>
           <button>
-            <Stop />
+            <StopIcon />
             {/* <Play /> */}
           </button>
           <button>
-            <Delete />
+            <DeleteIcon />
           </button>
         </div>
       </div>

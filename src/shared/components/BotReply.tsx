@@ -1,12 +1,9 @@
 import CopyToClipboard from "react-copy-to-clipboard";
-import chatReplay from "../../assets/images/chat-replay.svg";
-import copy from "../../assets/images/copy.svg";
+import { BotReplyProps } from "shared/types";
+import chatReplay from "assets/images/chat-replay.svg";
+import copy from "assets/images/copy.svg";
 
-type BotReply = {
-  reply: string;
-};
-
-const BotReply = ({ reply }: BotReply) => {
+const BotReply = ({ reply }: BotReplyProps) => {
   return (
     <div className="bot-reply">
       <span>

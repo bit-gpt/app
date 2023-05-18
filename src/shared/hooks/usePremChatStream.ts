@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-import { PremChatResponse } from "../types";
-import usePremChatStore from "../store/prem-chat";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 import { useNavigate } from "react-router-dom";
+import { PremChatResponse } from "modules/prem-chat/types";
+import usePremChatStore from "../store/prem-chat";
 
 const usePremChatStream = (chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");

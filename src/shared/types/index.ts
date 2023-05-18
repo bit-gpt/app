@@ -1,44 +1,50 @@
-export type Message = {
-  role: string;
-  content: string;
+export type BotReplyProps = {
+  reply: string;
 };
 
-export type ChatCompletion = {
-  model: string;
-  messages: Message[];
-  temperature?: number;
-  max_tokens?: number;
-  top_p?: number;
-  frequency_penalty?: number;
+export type DownloadDockerWallProps = {
+  handleCheckIsDockerRunning: () => void;
 };
 
-export interface PremChatHistory {
-  id: string;
-  model: string;
+export type ServicesCardProps = {
   title: string;
-  messages: Message[];
-  timestamp: number;
-};
-
-export type PremChatResponse = {
-  chatMessages: Message[];
-  onSubmit: (e: React.FormEvent) => void;
-  question: string;
-  setQuestion: (question: string) => void;
-  isLoading: boolean;
-  isError: boolean;
-  onRegenerate: () => void;
-};
-
-export interface PremChatHistoryNavigator extends PremChatHistory {
-  next?: PremChatHistory;
-  prev?: PremChatHistory;
-}
-
-export type App = {
-  id: string;
-  name: string;
+  className: string;
   icon: string;
-  playground: boolean;
-  documentation: string;
-}
+};
+
+export type SidebarProps = {
+  sidebarToggle: boolean;
+  setSidebarToggle: (value: boolean) => void;
+};
+
+export type SpinnerProps = {
+  className?: string;
+};
+
+export type UserReplyProps = {
+  reply: string;
+};
+
+export type DashboardIconPorps = {
+  className: string;
+};
+
+export type ServiceIconPorps = {
+  className: string;
+};
+
+export type PipelineIconProps = {
+  className: string;
+};
+
+export type DocumentationIconProps = {
+  className: string;
+};
+
+export type SettingIconProps = {
+  className: string;
+};
+
+export type CloseIconProps = {
+  className: string;
+};

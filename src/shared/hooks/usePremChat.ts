@@ -1,4 +1,4 @@
-import { PremChatResponse } from "../types";
+import { PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStream from "./usePremChatStream";
 import usePremChatWithoutStream from "./usePremChatWithoutStream";
 
