@@ -11,6 +11,7 @@ export type DropdownProps = {
   close: () => void;
   apps: App[];
   onFilterChange: (e: Map<string, boolean>) => void;
+  appId: string;
 };
 
 type ModelInfo = {

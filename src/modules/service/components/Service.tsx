@@ -8,8 +8,10 @@ import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
 import Dropdown from "./Dropdown";
 import { getServices } from "../api";
+import { useParams } from "react-router-dom";
 
 const Service = () => {
+  const { appId } = useParams();
   const [openDropdown, setOpenDropdown] = useState(false);
   const toggleDropdown = () => setOpenDropdown((value) => !value);
   const { data: response } = useQuery(["getServices"], getServices);
@@ -52,6 +54,7 @@ const Service = () => {
             close={() => setOpenDropdown(false)}
             apps={apps}
             onFilterChange={setFilter}
+            appId={appId as string}
           />
         )}
       </SearchFilter>
@@ -70,6 +73,9 @@ const Service = () => {
             onDelete={() => onDelete(service.id)}
           />
         ))}
+        {filteredServices.length === 0 && (
+          <div className="text-center text-[#8C8C8C]">No services found</div>
+        )}
       </div>
     </AppContainer>
   );
