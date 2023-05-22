@@ -427,7 +427,6 @@ header img {
     rgba(217, 217, 217, 0.39) -4.93%,
     rgba(217, 217, 217, 0) 95.33%
   );
-  animation: coming-soon 6s infinite ease-out;
 }
 .coming-soon__box-line {
   @apply w-[38px] h-4 mt-1;
@@ -436,7 +435,6 @@ header img {
     rgba(217, 217, 217, 0.39) -4.93%,
     rgba(217, 217, 217, 0) 95.33%
   );
-  animation: coming-soon 6s infinite ease-out;
 }
 
 .coming-soon__box-left {
@@ -446,17 +444,8 @@ header img {
     rgba(217, 217, 217, 0.39) -4.93%,
     rgba(217, 217, 217, 0) 95.33%
   );
-  animation: coming-soon 6s infinite ease-out;
 }
 
-@keyframes coming-soon {
-  0% {
-    background-position: -268px;
-  }
-  100% {
-    background-position: 268px;
-  }
-}
 
 .services-running::after {
   content: "";
@@ -503,4 +492,63 @@ header img {
 .dropdown-menu li input:checked::before {
   content: "\2713";
   @apply absolute top-[-1px] right-[1px] text-[1.1rem] text-darkcharcoal;
+}
+
+
+.settings-card h3 {
+  background-color: rgba(77, 77, 79, 0.22);
+  @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg border-b-2;
+  border-color: rgba(219, 213, 213, 0.2);
+}
+
+.progress {
+  @apply border w-full overflow-hidden rounded-[2px];
+}
+.progress-container {
+  @apply h-5 bg-lightsalmonpink;
+  transform: skew(-20deg) translateX(-10px);
+}
+.settings-card ul {
+  background: rgba(77, 77, 79, 0.2);
+  @apply py-5 px-8 rounded-bl-lg rounded-br-lg;
+}
+.settings-card li {
+  @apply w-full;
+}
+.settings-card li span {
+  @apply text-brightgray font-semibold text-[13px] pb-3;
+}
+
+.form-control {
+  background: rgba(77, 77, 79, 0.22);
+  color: rgba(255, 255, 255, 0.6);
+  @apply rounded-md py-3 px-5 w-full;
+}
+.form-control::placeholder,
+.select-control select {
+  @apply text-sm;
+  color: rgba(255, 255, 255, 0.6);
+}
+.form-label {
+  @apply font-semibold text-sm text-white;
+}
+.form-control[disabled]::placeholder {
+  @apply opacity-20;
+}
+
+.settings::after {
+  content: "";
+  background: url("../images/bottom-gradient.png") no-repeat;
+  @apply max-xl:bg-bottom bg-contain w-full h-[75%] opacity-80 z-[-1];
+  @apply absolute bottom-0 xl:w-[80%] xl:bg-cover left-[-150px] right-0 mx-auto
+  ;
+}
+.select-control {
+  @apply w-full;
+}
+.select-control select {
+  background: url('../images/down.svg') no-repeat 100% 50%;
+  background-color: rgba(77, 77, 79, 0.22);
+  background-position-x: 95%;
+  @apply appearance-none h-full;
 }
