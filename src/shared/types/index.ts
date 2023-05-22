@@ -4,6 +4,7 @@ export type BotReplyProps = {
 
 export type DownloadDockerWallProps = {
   handleCheckIsDockerRunning: () => void;
+  isDockerRunning: boolean;
 };
 
 export type ServicesCardProps = {

@@ -26,6 +26,7 @@ function App() {
     return (
       <DownloadDockerWall
         handleCheckIsDockerRunning={handleCheckIsDockerRunning}
+        isDockerRunning={isDockerRunning}
       />
     );
   }

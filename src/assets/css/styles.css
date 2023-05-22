@@ -504,3 +504,8 @@ header img {
   content: "\2713";
   @apply absolute top-[-1px] right-[1px] text-[1.1rem] text-darkcharcoal;
 }
+
+
+.topltip {
+  @apply !text-[10px] !text-brightgray rounded-md;
+}
