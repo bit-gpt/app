@@ -1,6 +1,6 @@
 # Prem App ❤️
 
-> Note: this repository is the main user interface to interact with ai-box. Please refer to https://github.com/premAI-io/prem-box for a more complete documentation.
+> Note: this represents the main user interface to interact with prem-box. Please refer to https://github.com/premAI-io/prem-box for a more complete documentation.
 
 ## Demo
 
