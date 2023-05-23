@@ -12,6 +12,7 @@ export type ServicesCardProps = {
   className: string;
   icon: string;
   isRunning: boolean;
+  isWarning: boolean;
   onStart: () => void;
   onStop: () => void;
   onDelete: () => void;
@@ -59,4 +60,9 @@ export type NavLinkItemProps = {
   icon: React.ReactNode;
   label: string;
   to: string;
+};
+
+export type WarningModalProps = {
+  isOpen: boolean;
+  setIsOpen: (showing: boolean)=> void;
 };
