@@ -552,3 +552,6 @@ header img {
   background-position-x: 95%;
   @apply appearance-none h-full;
 }
+.topltip {
+  @apply !text-[10px] !text-brightgray rounded-md;
+}

@@ -1,13 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import CloseIcon from "shared/components/CloseIcon";
 import CheckeBox from "./CheckeBox";
 import { DropdownProps } from "../types";
 
-const Dropdown = ({ open, close, apps, onFilterChange }: DropdownProps) => {
-  const [search, setSearch] = useState(
-    new Map<string, boolean>(apps.map((app) => [app.id, true]))
-  );
+const Dropdown = ({
+  open,
+  close,
+  apps,
+  onFilterChange,
+  appId,
+}: DropdownProps) => {
+  const [search, setSearch] = useState(new Map());
+
+  useEffect(() => {
+    setSearch(
+      new Map<string, boolean>(
+        apps.map((app) => [app.id, !appId || app.id === appId])
+      )
+    );
+  }, [appId]);
+
+  const handleSearch = (appId: string, status: boolean) => {
+    const newSearch = new Map(search.entries());
+    newSearch.set(appId, status);
+    setSearch(newSearch);
+  };
+
+  useEffect(() => {
+    onFilterChange(search);
+  }, [search]);
+
+  if (search.size === 0) return null;
 
   return (
     <nav className={clsx(`dropdown-menu`, { "dropdown-active": open })}>
@@ -22,9 +46,7 @@ const Dropdown = ({ open, close, apps, onFilterChange }: DropdownProps) => {
           <li key={app.id}>
             <CheckeBox
               onChange={(e) => {
-                search.set(app.id, e.target.checked);
-                setSearch(new Map(search.entries()));
-                onFilterChange(search);
+                handleSearch(app.id, e.target.checked);
               }}
               label={app.name}
               checked={search.get(app.id) as boolean}
