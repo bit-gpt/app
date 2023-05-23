@@ -12,8 +12,8 @@ import { useParams } from "react-router-dom";
 
 const Service = () => {
   const { appId } = useParams();
-  const { data: response } = useQuery(["getServices"], getServices);
-  const { data: appResponse, isSuccess } = useQuery(["getApps"], getApps);
+  const { data: response, isLoading: isServicesLoading } = useQuery(["getServices"], getServices);
+  const { data: appResponse } = useQuery(["getApps"], getApps);
   const [filter, setFilter] = useState(new Map<string, boolean>());
   const services = response?.data || [];
   const apps = appResponse?.data || [];
@@ -69,7 +69,7 @@ const Service = () => {
             onDelete={() => onDelete(service.id)}
           />
         ))}
-        {filteredServices.length === 0 && (
+        {!isServicesLoading && filteredServices.length === 0 && (
           <div className="text-center text-[#8C8C8C]">No services found</div>
         )}
       </div>
