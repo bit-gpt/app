@@ -6,7 +6,6 @@ import AppContainer from "shared/components/AppContainer";
 import { getApps } from "modules/dashboard/api";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
-import Dropdown from "./Dropdown";
 import { getServices } from "../api";
 import { useParams } from "react-router-dom";
 

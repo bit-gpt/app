@@ -3,70 +3,11 @@ import filterLogo from "assets/images/filter.svg";
 import Dropdown from "./Dropdown";
 import { useEffect, useMemo, useState } from "react";
 import Select, {
-  CSSObjectWithLabel,
-  ControlProps,
   MultiValue,
 } from "react-select";
 import { Option, SearchFilterProps } from "../types";
 import MultiValueRemove from "./MultiValueRemove";
-
-const selectStyles = {
-  control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
-    ...base,
-    backgroundColor: "rgba(77, 77, 79, 0.22)",
-    borderColor: state.isFocused ? "transparent" : "transparent",
-    padding: 3,
-    paddingLeft: 40,
-    "&:hover": {
-      cursor: "pointer",
-      "state.isFocused": {
-        borderColor: "transparent",
-        backgroundColor: "rgba(77, 77, 79, 0.22)",
-        boxShadown: "0",
-      },
-    },
-  }),
-  multiValue: (base: CSSObjectWithLabel) => ({
-    ...base,
-    backgroundColor: "transparent",
-    border: "1px solid #EDEDED",
-    borderRadius: 4,
-    padding: "3px 8px",
-    alignItems: "center",
-    fontFamily: "ProximaNova-Regular",
-  }),
-  multiValueLabel: (base: CSSObjectWithLabel) => ({
-    ...base,
-    color: "#EDEDED",
-    padding: "3px 8px",
-    fontSize: 12,
-  }),
-  multiValueRemove: () => ({
-    "&:hover": {
-      backgroundColor: "transparent",
-    },
-  }),
-  menuList: (base: CSSObjectWithLabel) => ({
-    ...base,
-    paddingTop: 0,
-    paddingBottom: 0,
-    borderRadius: 0,
-  }),
-  noOptionsMessage: (base: CSSObjectWithLabel) => ({
-    ...base,
-    backgroundColor: "#20232b",
-  }),
-  option: (base: CSSObjectWithLabel) => ({
-    ...base,
-    backgroundColor: "#20232b",
-    color: "#EDEDED",
-    fontSize: 12,
-    fontFamily: "ProximaNova-Regular",
-    "&:hover": {
-      backgroundColor: "#323232",
-    },
-  }),
-};
+import { serviceSearchStyle } from "shared/helpers/utils";
 
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -121,7 +62,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
         className="absolute left-[20px] top-[12px]"
       />
       <Select
-        styles={selectStyles}
+        styles={serviceSearchStyle}
         options={options}
         isMulti
         placeholder="Search"
