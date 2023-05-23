@@ -10,8 +10,8 @@ export type DropdownProps = {
   open: boolean;
   close: () => void;
   apps: App[];
-  onFilterChange: (e: Map<string, boolean>) => void;
-  appId: string;
+  search: Map<string, boolean>;
+  onChange: (appId: string, status: boolean) => void;
 };
 
 type ModelInfo = {
@@ -36,4 +36,15 @@ export type Service = {
   modelInfo: ModelInfo;
   name: string;
   running: boolean;
+};
+
+export type SearchFilterProps = {
+  apps: App[];
+  onFilterChange: (e: Map<string, boolean>) => void;
+  appId: string;
+};
+
+export type Option = {
+  label: string;
+  value: string;
 };

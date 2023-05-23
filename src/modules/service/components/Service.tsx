@@ -6,16 +6,13 @@ import AppContainer from "shared/components/AppContainer";
 import { getApps } from "modules/dashboard/api";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
-import Dropdown from "./Dropdown";
 import { getServices } from "../api";
 import { useParams } from "react-router-dom";
 
 const Service = () => {
   const { appId } = useParams();
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const toggleDropdown = () => setOpenDropdown((value) => !value);
-  const { data: response } = useQuery(["getServices"], getServices);
-  const { data: appResponse, isSuccess } = useQuery(["getApps"], getApps);
+  const { data: response, isLoading: isServicesLoading } = useQuery(["getServices"], getServices);
+  const { data: appResponse } = useQuery(["getApps"], getApps);
   const [filter, setFilter] = useState(new Map<string, boolean>());
   const services = response?.data || [];
   const apps = appResponse?.data || [];
@@ -47,17 +44,15 @@ const Service = () => {
       <div className="mask-heading text-center mb-[29px]">
         <h2>Select a Service Type</h2>
       </div>
-      <SearchFilter toggleDropdown={toggleDropdown}>
-        {isSuccess && (
-          <Dropdown
-            open={openDropdown}
-            close={() => setOpenDropdown(false)}
-            apps={apps}
-            onFilterChange={setFilter}
-            appId={appId as string}
-          />
-        )}
-      </SearchFilter>
+      
+      {apps.length > 0 && (
+        <SearchFilter
+          onFilterChange={setFilter}
+          appId={appId as string}
+          apps={apps}
+        />
+      )}
+
       <div className="flex gap-[22px] flex-wrap justify-center">
         {filteredServices.map((service) => (
           <ServicesCard
@@ -73,7 +68,7 @@ const Service = () => {
             onDelete={() => onDelete(service.id)}
           />
         ))}
-        {filteredServices.length === 0 && (
+        {!isServicesLoading && filteredServices.length === 0 && (
           <div className="text-center text-[#8C8C8C]">No services found</div>
         )}
       </div>
