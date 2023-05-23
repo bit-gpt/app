@@ -9,6 +9,7 @@ import { isDesktopEnv } from "shared/helpers/utils";
 import Dashboard from "modules/dashboard/components/Dashboard";
 import PremChat from "modules/prem-chat/components/PremChat";
 import Service from "modules/service/components/Service";
+import Settings from "modules/settings/components/Settings";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/prem-chat" element={<PremChat />} />
           <Route path="/prem-chat/:chatId" element={<PremChat />} />
           <Route path="/services" element={<Service />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/:appId/services" element={<Service />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
