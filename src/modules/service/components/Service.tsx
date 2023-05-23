@@ -12,8 +12,6 @@ import { useParams } from "react-router-dom";
 
 const Service = () => {
   const { appId } = useParams();
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const toggleDropdown = () => setOpenDropdown((value) => !value);
   const { data: response } = useQuery(["getServices"], getServices);
   const { data: appResponse, isSuccess } = useQuery(["getApps"], getApps);
   const [filter, setFilter] = useState(new Map<string, boolean>());
@@ -47,17 +45,15 @@ const Service = () => {
       <div className="mask-heading text-center mb-[29px]">
         <h2>Select a Service Type</h2>
       </div>
-      <SearchFilter toggleDropdown={toggleDropdown}>
-        {isSuccess && (
-          <Dropdown
-            open={openDropdown}
-            close={() => setOpenDropdown(false)}
-            apps={apps}
-            onFilterChange={setFilter}
-            appId={appId as string}
-          />
-        )}
-      </SearchFilter>
+      
+      {apps.length > 0 && (
+        <SearchFilter
+          onFilterChange={setFilter}
+          appId={appId as string}
+          apps={apps}
+        />
+      )}
+
       <div className="flex gap-[22px] flex-wrap justify-center">
         {filteredServices.map((service) => (
           <ServicesCard

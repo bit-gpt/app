@@ -4,35 +4,7 @@ import CloseIcon from "shared/components/CloseIcon";
 import CheckeBox from "./CheckeBox";
 import { DropdownProps } from "../types";
 
-const Dropdown = ({
-  open,
-  close,
-  apps,
-  onFilterChange,
-  appId,
-}: DropdownProps) => {
-  const [search, setSearch] = useState(new Map());
-
-  useEffect(() => {
-    setSearch(
-      new Map<string, boolean>(
-        apps.map((app) => [app.id, !appId || app.id === appId])
-      )
-    );
-  }, [appId]);
-
-  const handleSearch = (appId: string, status: boolean) => {
-    const newSearch = new Map(search.entries());
-    newSearch.set(appId, status);
-    setSearch(newSearch);
-  };
-
-  useEffect(() => {
-    onFilterChange(search);
-  }, [search]);
-
-  if (search.size === 0) return null;
-
+const Dropdown = ({ open, close, apps, search, onChange }: DropdownProps) => {
   return (
     <nav className={clsx(`dropdown-menu`, { "dropdown-active": open })}>
       <div className="text-right">
@@ -46,7 +18,7 @@ const Dropdown = ({
           <li key={app.id}>
             <CheckeBox
               onChange={(e) => {
-                handleSearch(app.id, e.target.checked);
+                onChange(app.id, e.target.checked);
               }}
               label={app.name}
               checked={search.get(app.id) as boolean}
