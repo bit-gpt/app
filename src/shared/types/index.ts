@@ -59,3 +59,8 @@ export type NavLinkItemProps = {
   label: string;
   to: string;
 };
+
+export type WarningModalProps = {
+  isOpen: boolean;
+  setIsOpen: (showing: boolean)=> void;
+};

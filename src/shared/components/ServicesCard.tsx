@@ -16,7 +16,8 @@ const ServicesCard = ({
   onStop,
   onDelete,
 }: ServicesCardProps) => {
-  const [isShowing, setIsShowing] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={className}>
@@ -24,7 +25,7 @@ const ServicesCard = ({
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt="icon" />
         </div>
-        <div className="flex gap-4 xl:ml-auto">
+        <div className="flex gap-4 md:ml-auto">
           {isRunning && (
             <>
               <button className="border-[0.5px] border-brightgray rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular">
@@ -44,15 +45,15 @@ const ServicesCard = ({
             <DeleteIcon />
           </button>
           {!isWarning && (
-            <button onClick={() => setIsShowing(!isShowing)}>
+            <button onClick={() => setIsOpen(!isOpen)}>
               <WarningIcon />
             </button>
           )}
         </div>
       </div>
       <h3>{title}</h3>
-      {isShowing && (
-        <WarningModal isShowing={isShowing} setIsShowing={setIsShowing} />
+      {isOpen && (
+        <WarningModal isOpen={isOpen} setIsOpen={setIsOpen} />
       )}
     </div>
   );

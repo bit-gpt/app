@@ -1,11 +1,12 @@
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 import WarningShapeIcon from "shared/components/WarningShapeIcon";
+import { WarningModalProps } from "shared/types";
 
-const WarningModal = ({ isShowing, setIsShowing }: any) => {
+const WarningModal = ({ isOpen, setIsOpen }: WarningModalProps) => {
   return (
     <>
-      {isShowing && (
+      {isOpen && (
         <>
           <div
             className="warning-modal"
@@ -30,7 +31,7 @@ const WarningModal = ({ isShowing, setIsShowing }: any) => {
               <div className="hr" />
               <div className="warning-modal__footer">
                 <OutlineCircleButton
-                  onClick={() => setIsShowing(false)}
+                  onClick={() => setIsOpen(false)}
                   className="!rounded-md !border h-[43px] !mt-0 justify-center opacity-70 w-full"
                 >
                   Cancel
