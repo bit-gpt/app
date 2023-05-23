@@ -508,3 +508,22 @@ header img {
 .topltip {
   @apply !text-[10px] !text-brightgray rounded-md;
 }
+
+.service-detail .card {
+  @apply mt-[62px] rounded-md shadow-default;
+  background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
+}
+.service-detail .card h3 {
+  @apply text-brightgray font-bold text-xl;
+}
+.service-detail .card h4 {
+  @apply font-bold text-base text-brightgray mt-8 mb-6;
+  font-family: "ProximaNova-bold";
+}
+
+.service-detail ul {
+  @apply ml-4;
+}
+.service-detail li {
+  @apply text-brightgray font-proximaNova-regular text-sm leading-7;
+}
