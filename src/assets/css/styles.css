@@ -111,7 +111,7 @@ header img {
 
 .dashboard-bottom__card {
   box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
-  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[20px] w-[282px];
+  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[20px] w-[282px] z-0;
 }
 .dashboard-bottom__card::before {
   content: "";
@@ -464,7 +464,7 @@ header img {
   background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
 }
 .search-filter {
-  @apply max-w-[70%]  mx-auto;
+  @apply max-w-[70%] h-[50px] mx-auto mb-16;
 }
 .search-filter > input {
   @apply rounded-sm w-full py-2 text-manatee px-12 focus:shadow-none focus:outline-none;
