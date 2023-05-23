@@ -8,10 +8,11 @@ import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
 import Dropdown from "./Dropdown";
 import { getServices } from "../api";
-import { useParams } from "react-router-dom";
+import { useParams, redirect, useNavigate } from "react-router-dom";
 
 const Service = () => {
   const { appId } = useParams();
+  const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(false);
   const toggleDropdown = () => setOpenDropdown((value) => !value);
   const { data: response } = useQuery(["getServices"], getServices);
@@ -42,6 +43,10 @@ const Service = () => {
     console.log("onDelete", id);
   };
 
+  const OnClickRedirect = (id: string) => {
+    navigate(`/services/${id}/detail`);
+  };
+
   return (
     <AppContainer>
       <div className="mask-heading text-center mb-[29px]">
@@ -68,6 +73,7 @@ const Service = () => {
             })}
             title={service.name}
             isRunning={service.running}
+            OnClickRedirect={()=> OnClickRedirect(service.id)}
             onStart={() => onStart(service.id)}
             onStop={() => onStop(service.id)}
             onDelete={() => onDelete(service.id)}

@@ -15,6 +15,7 @@ export type ServicesCardProps = {
   onStart: () => void;
   onStop: () => void;
   onDelete: () => void;
+  OnClickRedirect: ()=> void;
 };
 
 export type SidebarProps = {

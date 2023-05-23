@@ -11,10 +11,11 @@ const ServicesCard = ({
   onStart,
   onStop,
   onDelete,
+  OnClickRedirect,
 }: ServicesCardProps) => {
   return (
     <div className={className}>
-      <div className="flex gap-8 items-start flex-wrap w-full z-10 relative">
+      <div onClick={OnClickRedirect} className="flex gap-8 items-start flex-wrap w-full z-10 relative">
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt="icon" />
         </div>
