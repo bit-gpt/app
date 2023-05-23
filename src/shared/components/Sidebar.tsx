@@ -19,7 +19,10 @@ const Sidebar = ({ toggle, toggleStatus }: SidebarProps) => {
         <div className={clsx("flex", { "flex-col": toggleStatus })}>
           <img className="sidebar__logo" src={Logo} alt="logo" />
           <img
-            className={clsx({ "mx-auto": toggleStatus }, { hidden: !toggleStatus })}
+            className={clsx(
+              { "mx-auto": toggleStatus },
+              { hidden: !toggleStatus }
+            )}
             src={brandLogo}
             alt="brandLogo"
           />
@@ -42,23 +45,25 @@ const Sidebar = ({ toggle, toggleStatus }: SidebarProps) => {
           />
         </NavLinkContainer>
 
-        <ul>
+        <NavLinkContainer>
           <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
-          <li>
-            <Link to={`/`}>
+          <NavLinkItem
+            to="/documentation"
+            label="Documentation"
+            icon={
               <DocumentationIcon className={clsx({ "mr-4": !toggleStatus })} />
-              <span>Documentation</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/`}>
+            }
+          />
+          <NavLinkItem
+            to="/settings"
+            label="Settings"
+            icon={
               <SettingIcon
                 className={clsx({ "mr-4": !toggleStatus }, "svg-stroke")}
               />
-              <span>Settings</span>
-            </Link>
-          </li>
-        </ul>
+            }
+          />
+        </NavLinkContainer>
       </div>
       <div className="sidebar-toggle__btn">
         <button
