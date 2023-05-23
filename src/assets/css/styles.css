@@ -545,3 +545,6 @@ header img {
 .polygon-shape  svg {
   @apply w-[22px] h-[22px] mt-[14px];
 }
+.topltip {
+  @apply !text-[10px] !text-brightgray rounded-md;
+}

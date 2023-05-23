@@ -26,6 +26,7 @@ function App() {
     return (
       <DownloadDockerWall
         handleCheckIsDockerRunning={handleCheckIsDockerRunning}
+        isDockerRunning={isDockerRunning}
       />
     );
   }
@@ -38,6 +39,7 @@ function App() {
           <Route path="/prem-chat" element={<PremChat />} />
           <Route path="/prem-chat/:chatId" element={<PremChat />} />
           <Route path="/services" element={<Service />} />
+          <Route path="/:appId/services" element={<Service />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
