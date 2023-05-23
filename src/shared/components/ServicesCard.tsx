@@ -2,16 +2,22 @@ import { ServicesCardProps } from "shared/types";
 import DeleteIcon from "./DeleteIcon";
 import StopIcon from "./StopIcon";
 import PlayIcon from "./PlayIcon";
+import { useState } from "react";
+import WarningModal from "components/service/WarningModal";
+import WarningIcon from "./WarningIcon";
 
 const ServicesCard = ({
   title,
   className,
   icon,
   isRunning,
+  isWarning,
   onStart,
   onStop,
   onDelete,
 }: ServicesCardProps) => {
+  const [isShowing, setIsShowing] = useState(false);
+
   return (
     <div className={className}>
       <div className="flex gap-8 items-start flex-wrap w-full z-10 relative">
@@ -37,9 +43,17 @@ const ServicesCard = ({
           <button onClick={onDelete}>
             <DeleteIcon />
           </button>
+          {!isWarning && (
+            <button onClick={() => setIsShowing(!isShowing)}>
+              <WarningIcon />
+            </button>
+          )}
         </div>
       </div>
       <h3>{title}</h3>
+      {isShowing && (
+        <WarningModal isShowing={isShowing} setIsShowing={setIsShowing} />
+      )}
     </div>
   );
 };

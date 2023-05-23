@@ -11,6 +11,7 @@ export type ServicesCardProps = {
   className: string;
   icon: string;
   isRunning: boolean;
+  isWarning: boolean;
   onStart: () => void;
   onStop: () => void;
   onDelete: () => void;
