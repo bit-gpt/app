@@ -2,22 +2,30 @@ import { ServicesCardProps } from "shared/types";
 import DeleteIcon from "./DeleteIcon";
 import StopIcon from "./StopIcon";
 import PlayIcon from "./PlayIcon";
-import { useState } from "react";
-import WarningModal from "components/service/WarningModal";
-import WarningIcon from "./WarningIcon";
+import WarningState from "modules/service/components/WarningState";
+import DownloadIcon from "./DownloadIcon";
 
 const ServicesCard = ({
   title,
   className,
   icon,
-  isRunning,
-  isWarning,
-  onStart,
-  onStop,
-  onDelete,
+  status,
 }: ServicesCardProps) => {
+  const onStop = () => {
+    console.log("onStop");
+  };
 
-  const [isOpen, setIsOpen] = useState(false);
+  const onStart = () => {
+    console.log("onStart");
+  };
+
+  const onDelete = () => {
+    console.log("onDelete");
+  };
+
+  const onDownload = () => {
+    console.log("onDownload");
+  };
 
   return (
     <div className={className}>
@@ -26,7 +34,7 @@ const ServicesCard = ({
           <img src={icon} alt="icon" />
         </div>
         <div className="flex gap-4 md:ml-auto">
-          {isRunning && (
+          {status === "running" && (
             <>
               <button className="border-[0.5px] border-brightgray rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular">
                 Running
@@ -36,25 +44,28 @@ const ServicesCard = ({
               </button>
             </>
           )}
-          {!isRunning && (
-            <button onClick={onStart}>
-              <PlayIcon />
+          {status === "stopped" && (
+            <>
+              <button onClick={onStart}>
+                <PlayIcon />
+              </button>
+              <button onClick={onDelete}>
+                <DeleteIcon />
+              </button>
+            </>
+          )}
+
+          {status === "not_downloaded" && (
+            <button onClick={onDownload}>
+              <DownloadIcon />
             </button>
           )}
-          <button onClick={onDelete}>
-            <DeleteIcon />
-          </button>
-          {!isWarning && (
-            <button onClick={() => setIsOpen(!isOpen)}>
-              <WarningIcon />
-            </button>
-          )}
+
+          {(status === "available_memory_less_than_container" ||
+            status === "system_memory_less_than_container") && <WarningState />}
         </div>
       </div>
       <h3>{title}</h3>
-      {isOpen && (
-        <WarningModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      )}
     </div>
   );
 };

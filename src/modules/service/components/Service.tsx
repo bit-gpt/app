@@ -7,6 +7,8 @@ import SearchFilter from "./SearchFilter";
 import { useParams } from "react-router-dom";
 import useApps from "shared/hooks/useApps";
 import useServices from "shared/hooks/useServices";
+import { Service as ServiceResponse } from "../types";
+import { ServicesCardProps } from "shared/types";
 
 const Service = () => {
   const { appId } = useParams();
@@ -26,16 +28,16 @@ const Service = () => {
     });
   }, [services, filter]);
 
-  const onStart = (id: string) => {
-    console.log("onStart", id);
-  };
+  const getStatus = (service: ServiceResponse): ServicesCardProps["status"] => {
+    if (!service.downloaded) {
+      return "not_downloaded";
+    } else if (service.running) {
+      return "running";
+    }
 
-  const onStop = (id: string) => {
-    console.log("onStop", id);
-  };
+    // other status will go here
 
-  const onDelete = (id: string) => {
-    console.log("onDelete", id);
+    return "stopped";
   };
 
   return (
@@ -43,7 +45,7 @@ const Service = () => {
       <div className="mask-heading text-center mb-[29px]">
         <h2>Select a Service Type</h2>
       </div>
-      
+
       {apps.length > 0 && (
         <SearchFilter
           onFilterChange={setFilter}
@@ -61,10 +63,7 @@ const Service = () => {
               "services-running": service.running,
             })}
             title={service.name}
-            isRunning={service.running}
-            onStart={() => onStart(service.id)}
-            onStop={() => onStop(service.id)}
-            onDelete={() => onDelete(service.id)}
+            status={getStatus(service)}
           />
         ))}
         {!isServicesLoading && filteredServices.length === 0 && (

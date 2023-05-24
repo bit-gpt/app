@@ -24,10 +24,7 @@ const ServicesRunning = () => {
           icon={chatLogo}
           className="dashboard-bottom__card flex-wrap !pr-5 services-running"
           title="Vicuna 7B 4-Bit"
-          isRunning={true}
-          onDelete={() => console.log("onDelete")}
-          onStart={() => console.log("onStart")}
-          onStop={() => console.log("onStop")}
+          status="running"
         />
       )}
       {
