@@ -1,9 +1,9 @@
 import { ServicesCardProps } from "shared/types";
-import DeleteIcon from "./DeleteIcon";
-import StopIcon from "./StopIcon";
-import PlayIcon from "./PlayIcon";
+import DeleteIcon from "../../../shared/components/DeleteIcon";
+import StopIcon from "../../../shared/components/StopIcon";
+import PlayIcon from "../../../shared/components/PlayIcon";
 import WarningState from "modules/service/components/WarningState";
-import DownloadIcon from "./DownloadIcon";
+import DownloadIcon from "../../../shared/components/DownloadIcon";
 import { useMutation } from "@tanstack/react-query";
 import downloadService from "modules/service/api/downloadService";
 
@@ -14,7 +14,7 @@ const ServicesCard = ({
   status,
   serviceId,
 }: ServicesCardProps) => {
-  const { mutate: downloadMutate } = useMutation(() =>
+  const { mutate: downloadMutate, isLoading: downloadLoading } = useMutation(() =>
     downloadService(serviceId)
   );
 
@@ -68,9 +68,14 @@ const ServicesCard = ({
           )}
 
           {status === "not_downloaded" && (
-            <button onClick={onDownload}>
+            <>
+            {
+              downloadLoading ? <span className="text-[10px] font-proximaNova-regular">Downloading...</span> :
+              <button onClick={onDownload}>
               <DownloadIcon />
             </button>
+            }
+            </>
           )}
 
           {(status === "available_memory_less_than_container" ||

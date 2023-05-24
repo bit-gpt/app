@@ -1,4 +1,4 @@
-import ServicesCard from "shared/components/ServicesCard";
+import ServicesCard from "modules/service/components/ServicesCard";
 import chatLogo from "assets/images/chat.svg";
 import useServices from "shared/hooks/useServices";
 

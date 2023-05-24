@@ -2,18 +2,21 @@ import searchLogo from "assets/images/search.svg";
 import filterLogo from "assets/images/filter.svg";
 import Dropdown from "./Dropdown";
 import { useEffect, useMemo, useState } from "react";
-import Select, {
-  MultiValue,
-} from "react-select";
+import Select, { MultiValue } from "react-select";
 import { Option, SearchFilterProps } from "../types";
 import MultiValueRemove from "./MultiValueRemove";
 import { serviceSearchStyle } from "shared/helpers/utils";
 
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [search, setSearch] = useState(
-    new Map(apps.map((app) => [app.id, !appId || app.id === appId]))
-  );
+  const [search, setSearch] = useState(new Map());
+
+  useEffect(() => {
+    const newSearch = new Map(
+      apps.map((app) => [app.id, !appId || app.id === appId])
+    );
+    setSearch(newSearch);
+  }, [appId]);
 
   useEffect(() => {
     onFilterChange(search);
@@ -51,6 +54,8 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
       .filter((app) => search.get(app.id) as boolean)
       .map((app) => ({ value: app.id, label: app.name }));
   }, [apps, search]);
+
+  if (search.size === 0) return null;
 
   return (
     <div className="relative search-filter">

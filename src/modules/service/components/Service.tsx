@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useMemo, useState } from "react";
-import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
@@ -9,6 +8,7 @@ import useApps from "shared/hooks/useApps";
 import useServices from "shared/hooks/useServices";
 import { Service as ServiceResponse } from "../types";
 import { ServicesCardProps } from "shared/types";
+import ServicesCard from "./ServicesCard";
 
 const Service = () => {
   const { appId } = useParams();
