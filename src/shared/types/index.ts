@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export type BotReplyProps = {
   reply: string;
 };
@@ -16,6 +18,7 @@ export type ServicesCardProps = {
   onStart: () => void;
   onStop: () => void;
   onDelete: () => void;
+  OnClickRedirect: MouseEventHandler<HTMLDivElement>;
 };
 
 export type SidebarProps = {

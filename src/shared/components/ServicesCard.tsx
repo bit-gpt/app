@@ -2,7 +2,7 @@ import { ServicesCardProps } from "shared/types";
 import DeleteIcon from "./DeleteIcon";
 import StopIcon from "./StopIcon";
 import PlayIcon from "./PlayIcon";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import WarningModal from "components/service/WarningModal";
 import WarningIcon from "./WarningIcon";
 
@@ -15,13 +15,19 @@ const ServicesCard = ({
   onStart,
   onStop,
   onDelete,
+  OnClickRedirect,
 }: ServicesCardProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const warningMsgHandle = (event:MouseEvent) => {
+    event.stopPropagation();
+    setIsOpen(!isOpen);
+  }
+
   return (
     <div className={className}>
-      <div className="flex gap-8 items-start flex-wrap w-full z-10 relative">
+      <div onClick={OnClickRedirect} className="flex gap-8 items-start flex-wrap w-full z-10 relative">
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt="icon" />
         </div>
@@ -45,7 +51,7 @@ const ServicesCard = ({
             <DeleteIcon />
           </button>
           {!isWarning && (
-            <button onClick={() => setIsOpen(!isOpen)}>
+            <button onClick={warningMsgHandle}>
               <WarningIcon />
             </button>
           )}

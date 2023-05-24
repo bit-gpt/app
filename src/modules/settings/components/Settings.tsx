@@ -8,7 +8,7 @@ const Settings = () => {
       <div className="mask-heading mb-14">
         <h2>Settings</h2>
       </div>
-      <div className="max-w-[80%] mx-auto settings">
+      <div className="lg:max-w-[80%] mx-auto settings">
         <Resources />
         <SettingsForm />
       </div>

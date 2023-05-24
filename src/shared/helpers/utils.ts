@@ -68,6 +68,10 @@ export const serviceSearchStyle =  {
     paddingBottom: 0,
     borderRadius: 0,
   }),
+  menu: (base: CSSObjectWithLabel) => ({
+    ...base,
+    zIndex: 100,
+  }),
   noOptionsMessage: (base: CSSObjectWithLabel) => ({
     ...base,
     backgroundColor: "#20232b",

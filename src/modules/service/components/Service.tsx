@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useMemo, useState } from "react";
+import { MouseEvent, useMemo, useState } from "react";
 import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
 import { getApps } from "modules/dashboard/api";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
 import { getServices } from "../api";
-import { useParams } from "react-router-dom";
+import { useParams, redirect, useNavigate } from "react-router-dom";
 
 const Service = () => {
   const { appId } = useParams();
+  const navigate = useNavigate();
   const { data: response, isLoading: isServicesLoading } = useQuery(["getServices"], getServices);
   const { data: appResponse } = useQuery(["getApps"], getApps);
   const [filter, setFilter] = useState(new Map<string, boolean>());
@@ -39,12 +40,18 @@ const Service = () => {
     console.log("onDelete", id);
   };
 
+  const OnClickRedirect = (e: MouseEvent<HTMLDivElement>,id: string) => {
+    const classAdd = e.target as HTMLDivElement;
+    classAdd.parentElement?.classList.add('z-11');
+    navigate(`/services/${id}/detail`);
+  };
+
   return (
     <AppContainer>
       <div className="mask-heading text-center mb-[29px]">
         <h2>Select a Service Type</h2>
       </div>
-      
+
       {apps.length > 0 && (
         <SearchFilter
           onFilterChange={setFilter}
@@ -53,7 +60,7 @@ const Service = () => {
         />
       )}
 
-      <div className="flex gap-[22px] flex-wrap justify-center">
+      <div className="flex gap-[22px] flex-wrap justify-center mt-16">
         {filteredServices.map((service) => (
           <ServicesCard
             key={service.id}
@@ -61,8 +68,10 @@ const Service = () => {
             className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
               "services-running": service.running,
             })}
+            isWarning={false}
             title={service.name}
             isRunning={service.running}
+            OnClickRedirect={(e)=> OnClickRedirect(e,service.id)}
             onStart={() => onStart(service.id)}
             onStop={() => onStop(service.id)}
             onDelete={() => onDelete(service.id)}
