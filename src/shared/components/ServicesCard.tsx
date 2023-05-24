@@ -4,13 +4,20 @@ import StopIcon from "./StopIcon";
 import PlayIcon from "./PlayIcon";
 import WarningState from "modules/service/components/WarningState";
 import DownloadIcon from "./DownloadIcon";
+import { useMutation } from "@tanstack/react-query";
+import downloadService from "modules/service/api/downloadService";
 
 const ServicesCard = ({
   title,
   className,
   icon,
   status,
+  serviceId,
 }: ServicesCardProps) => {
+  const { mutate: downloadMutate } = useMutation(() =>
+    downloadService(serviceId)
+  );
+
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("onStop");
@@ -28,6 +35,7 @@ const ServicesCard = ({
 
   const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    downloadMutate();
     console.log("onDownload");
   };
 

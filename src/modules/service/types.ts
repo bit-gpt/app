@@ -57,3 +57,7 @@ export type Stats = {
   storage_limit: number;
   storage_percentage: number;
 }
+
+export type Message = {
+  message: string;
+}

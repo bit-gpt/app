@@ -12,6 +12,7 @@ export type ServicesCardProps = {
   className: string;
   icon: string;
   status: "running" | "stopped" | "not_downloaded" | "downloading" | "available_memory_less_than_container" | "system_memory_less_than_container";
+  serviceId: string;
 };
 
 export type SidebarProps = {

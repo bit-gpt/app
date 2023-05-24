@@ -64,6 +64,7 @@ const Service = () => {
               })}
               title={service.name}
               status={getStatus(service)}
+              serviceId={service.id}
             />
           </Link>
         ))}
