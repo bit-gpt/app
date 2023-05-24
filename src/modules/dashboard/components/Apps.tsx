@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { BACKEND_URL } from "shared/helpers/utils";
 import AppCard from "./AppCard";
-import { getApps } from "../api";
 import { Link } from "react-router-dom";
+import useApps from "shared/hooks/useApps";
 
 const Apps = () => {
-  const { data: response } = useQuery(["getApps"], getApps);
+  const { data: response } = useApps();
   const apps = response?.data || [];
 
   return (
