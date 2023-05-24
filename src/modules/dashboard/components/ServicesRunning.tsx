@@ -19,19 +19,18 @@ const ServicesRunning = () => {
           <label className="text-[#8C8C8C]">Loading ..</label>
         </div>
       )}
-      {runningServices.length > 0 && (
+      {runningServices.map((service) => (
         <ServicesCard
           icon={chatLogo}
           className="dashboard-bottom__card flex-wrap !pr-5 services-running"
           title="Vicuna 7B 4-Bit"
           status="running"
+          serviceId={service.id}
         />
+      ))}
+      {!isLoading && runningServices.length === 0 && (
+        <div className="text-[#8C8C8C]">No services found</div>
       )}
-      {
-        !isLoading && runningServices.length === 0 && (
-          <div className="text-[#8C8C8C]">No services found</div>
-        )
-      }
     </>
   );
 };
