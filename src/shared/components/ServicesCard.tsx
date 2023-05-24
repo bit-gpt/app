@@ -33,7 +33,7 @@ const ServicesCard = ({
 
   return (
     <div className={className}>
-      <div className="flex gap-8 items-start flex-wrap w-full z-10 relative">
+      <div className="flex gap-8 items-start flex-wrap w-full relative">
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt="icon" />
         </div>
