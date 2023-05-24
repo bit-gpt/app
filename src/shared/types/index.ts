@@ -58,9 +58,11 @@ export type NavLinkItemProps = {
 };
 
 export type WarningModalProps = {
-  onCancel: () => void;
-  onOk: () => void;
+  onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onOk: (e: React.MouseEvent<HTMLButtonElement>) => void;
   cancelButtonText?: string;
   okButtonText?: string;
   icon?: React.ReactNode;
+  title?: string;
+  description: string;
 };

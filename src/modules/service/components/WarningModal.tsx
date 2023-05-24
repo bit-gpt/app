@@ -9,6 +9,8 @@ const WarningModal = ({
   cancelButtonText = "Cancel",
   okButtonText = "Ok",
   icon,
+  title = "Warning",
+  description,
 }: WarningModalProps) => {
   return (
     <div
@@ -22,11 +24,8 @@ const WarningModal = ({
         <div className="flex gap-[24px]">
           <div className="polygon-shape">{icon || <WarningShapeIcon />}</div>
           <div>
-            <h2>Warning</h2>
-            <p className="!text-base">
-              You don't have enough memory to run this service, stop another
-              service in order to run it
-            </p>
+            <h2>{title}</h2>
+            <p className="!text-base">{description}</p>
           </div>
         </div>
         <div className="hr" />

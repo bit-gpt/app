@@ -11,19 +11,23 @@ const ServicesCard = ({
   icon,
   status,
 }: ServicesCardProps) => {
-  const onStop = () => {
+  const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     console.log("onStop");
   };
 
-  const onStart = () => {
+  const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     console.log("onStart");
   };
 
-  const onDelete = () => {
+  const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     console.log("onDelete");
   };
 
-  const onDownload = () => {
+  const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     console.log("onDownload");
   };
 

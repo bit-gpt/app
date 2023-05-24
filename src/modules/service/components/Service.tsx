@@ -4,7 +4,7 @@ import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useApps from "shared/hooks/useApps";
 import useServices from "shared/hooks/useServices";
 import { Service as ServiceResponse } from "../types";
@@ -54,18 +54,20 @@ const Service = () => {
         />
       )}
 
-      <div className="flex gap-[22px] flex-wrap justify-center">
+      <div className="flex gap-[22px] flex-wrap justify-center mt-16">
         {filteredServices.map((service) => (
-          <ServicesCard
-            key={service.id}
-            icon={chatLogo}
-            className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
-              "services-running": service.running,
-            })}
-            title={service.name}
-            status={getStatus(service)}
-          />
+          <Link to={`/services/${service.id}/detail`} key={service.id}>
+            <ServicesCard
+              icon={chatLogo}
+              className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
+                "services-running": service.running,
+              })}
+              title={service.name}
+              status={getStatus(service)}
+            />
+          </Link>
         ))}
+
         {!isServicesLoading && filteredServices.length === 0 && (
           <div className="text-center text-[#8C8C8C]">No services found</div>
         )}

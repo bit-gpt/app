@@ -5,17 +5,31 @@ import WarningModal from "./WarningModal";
 const WarningState = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeWarningModal = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const closeWarningModal = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setIsOpen(false);
+    },
+    []
+  );
 
   return (
     <>
-      <button onClick={() => setIsOpen(!isOpen)}>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          setIsOpen(true);
+        }}
+      >
         <WarningIcon />
       </button>
       {isOpen && (
-        <WarningModal onCancel={closeWarningModal} onOk={closeWarningModal} />
+        <WarningModal
+          description="You don't have enough memory to run this service, stop another
+        service in order to run it"
+          onCancel={closeWarningModal}
+          onOk={closeWarningModal}
+        />
       )}
     </>
   );
