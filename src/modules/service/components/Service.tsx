@@ -1,19 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { MouseEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
-import { getApps } from "modules/dashboard/api";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
-import { getServices } from "../api";
-import { useParams, redirect, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useApps from "shared/hooks/useApps";
+import useServices from "shared/hooks/useServices";
+import { Service as ServiceResponse } from "../types";
+import { ServicesCardProps } from "shared/types";
 
 const Service = () => {
   const { appId } = useParams();
-  const navigate = useNavigate();
-  const { data: response, isLoading: isServicesLoading } = useQuery(["getServices"], getServices);
-  const { data: appResponse } = useQuery(["getApps"], getApps);
+  const { data: response, isLoading: isServicesLoading } = useServices();
+  const { data: appResponse } = useApps();
   const [filter, setFilter] = useState(new Map<string, boolean>());
   const services = response?.data || [];
   const apps = appResponse?.data || [];
@@ -28,22 +28,16 @@ const Service = () => {
     });
   }, [services, filter]);
 
-  const onStart = (id: string) => {
-    console.log("onStart", id);
-  };
+  const getStatus = (service: ServiceResponse): ServicesCardProps["status"] => {
+    if (!service.downloaded) {
+      return "not_downloaded";
+    } else if (service.running) {
+      return "running";
+    }
 
-  const onStop = (id: string) => {
-    console.log("onStop", id);
-  };
+    // other status will go here
 
-  const onDelete = (id: string) => {
-    console.log("onDelete", id);
-  };
-
-  const OnClickRedirect = (e: MouseEvent<HTMLDivElement>,id: string) => {
-    const classAdd = e.target as HTMLDivElement;
-    classAdd.parentElement?.classList.add('z-11');
-    navigate(`/services/${id}/detail`);
+    return "stopped";
   };
 
   return (
@@ -62,21 +56,19 @@ const Service = () => {
 
       <div className="flex gap-[22px] flex-wrap justify-center mt-16">
         {filteredServices.map((service) => (
-          <ServicesCard
-            key={service.id}
-            icon={chatLogo}
-            className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
-              "services-running": service.running,
-            })}
-            isWarning={false}
-            title={service.name}
-            isRunning={service.running}
-            OnClickRedirect={(e)=> OnClickRedirect(e,service.id)}
-            onStart={() => onStart(service.id)}
-            onStop={() => onStop(service.id)}
-            onDelete={() => onDelete(service.id)}
-          />
+          <Link to={`/services/${service.id}/detail`} key={service.id}>
+            <ServicesCard
+              icon={chatLogo}
+              className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
+                "services-running": service.running,
+              })}
+              title={service.name}
+              status={getStatus(service)}
+              serviceId={service.id}
+            />
+          </Link>
         ))}
+
         {!isServicesLoading && filteredServices.length === 0 && (
           <div className="text-center text-[#8C8C8C]">No services found</div>
         )}

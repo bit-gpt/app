@@ -48,3 +48,16 @@ export type Option = {
   label: string;
   value: string;
 };
+
+export type Stats = {
+  cpu_percentage: number;
+  memory_usage: number;
+  memory_limit: number;
+  storage_usage: number;
+  storage_limit: number;
+  storage_percentage: number;
+}
+
+export type Message = {
+  message: string;
+}

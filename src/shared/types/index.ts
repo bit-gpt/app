@@ -1,5 +1,3 @@
-import { MouseEventHandler } from "react";
-
 export type BotReplyProps = {
   reply: string;
 };
@@ -13,12 +11,8 @@ export type ServicesCardProps = {
   title: string;
   className: string;
   icon: string;
-  isRunning: boolean;
-  isWarning: boolean;
-  onStart: () => void;
-  onStop: () => void;
-  onDelete: () => void;
-  OnClickRedirect: MouseEventHandler<HTMLDivElement>;
+  status: "running" | "stopped" | "not_downloaded" | "downloading" | "available_memory_less_than_container" | "system_memory_less_than_container";
+  serviceId: string;
 };
 
 export type SidebarProps = {
@@ -65,6 +59,11 @@ export type NavLinkItemProps = {
 };
 
 export type WarningModalProps = {
-  isOpen: boolean;
-  setIsOpen: (showing: boolean)=> void;
+  onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onOk: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  cancelButtonText?: string;
+  okButtonText?: string;
+  icon?: React.ReactNode;
+  title?: string;
+  description: string;
 };

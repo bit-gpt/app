@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { BACKEND_URL } from "shared/helpers/utils";
 import AppCard from "./AppCard";
-import { getApps } from "../api";
 import { Link } from "react-router-dom";
+import useApps from "shared/hooks/useApps";
 
 const Apps = () => {
-  const { data: response } = useQuery(["getApps"], getApps);
+  const { data: response, isLoading } = useApps();
   const apps = response?.data || [];
 
   return (
@@ -13,6 +12,11 @@ const Apps = () => {
       <div className="mask-heading mb-[49px]">
         <h2>Apps</h2>
       </div>
+      {isLoading && (
+        <div className="flex">
+          <label className="text-[#8C8C8C]">Loading ...</label>
+        </div>
+      )}
       <div className="dashboard-bottom">
         {apps.map((app) => (
           <Link to={`/${app.id}/services`} key={app.id}>
@@ -24,6 +28,9 @@ const Apps = () => {
           </Link>
         ))}
       </div>
+      {!isLoading && apps.length === 0 && (
+        <div className="text-[#8C8C8C]">No apps found</div>
+      )}
     </>
   );
 };
