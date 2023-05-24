@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useMemo, useState } from "react";
+import { MouseEvent, useMemo, useState } from "react";
 import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
 import { getApps } from "modules/dashboard/api";
@@ -40,7 +40,9 @@ const Service = () => {
     console.log("onDelete", id);
   };
 
-  const OnClickRedirect = (id: string) => {
+  const OnClickRedirect = (e: MouseEvent<HTMLDivElement>,id: string) => {
+    const classAdd = e.target as HTMLDivElement;
+    classAdd.parentElement?.classList.add('z-11');
     navigate(`/services/${id}/detail`);
   };
 
@@ -69,7 +71,7 @@ const Service = () => {
             isWarning={false}
             title={service.name}
             isRunning={service.running}
-            OnClickRedirect={()=> OnClickRedirect(service.id)}
+            OnClickRedirect={(e)=> OnClickRedirect(e,service.id)}
             onStart={() => onStart(service.id)}
             onStop={() => onStop(service.id)}
             onDelete={() => onDelete(service.id)}

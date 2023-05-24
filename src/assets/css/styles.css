@@ -115,7 +115,7 @@ header img {
 
 .dashboard-bottom__card {
   box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
-  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[20px] w-[282px] z-0;
+  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[20px] w-[282px];
 }
 .dashboard-bottom__card::before,
 .modal::before {

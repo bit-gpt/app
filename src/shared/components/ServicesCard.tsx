@@ -2,7 +2,7 @@ import { ServicesCardProps } from "shared/types";
 import DeleteIcon from "./DeleteIcon";
 import StopIcon from "./StopIcon";
 import PlayIcon from "./PlayIcon";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import WarningModal from "components/service/WarningModal";
 import WarningIcon from "./WarningIcon";
 
@@ -19,6 +19,11 @@ const ServicesCard = ({
 }: ServicesCardProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const warningMsgHandle = (event:MouseEvent) => {
+    event.stopPropagation();
+    setIsOpen(!isOpen);
+  }
 
   return (
     <div className={className}>
@@ -46,7 +51,7 @@ const ServicesCard = ({
             <DeleteIcon />
           </button>
           {!isWarning && (
-            <button onClick={() => setIsOpen(!isOpen)}>
+            <button onClick={warningMsgHandle}>
               <WarningIcon />
             </button>
           )}
