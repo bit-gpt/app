@@ -585,9 +585,12 @@ header img {
 .topltip {
   @apply !text-[10px] !text-brightgray rounded-md;
 }
+.service-detail {
+  @apply flex gap-4;
+}
 
 .service-detail .card {
-  @apply mt-[62px] rounded-md shadow-default;
+  @apply rounded-md shadow-default;
   background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
 }
 .service-detail .card h3 {
@@ -603,4 +606,11 @@ header img {
 }
 .service-detail li {
   @apply text-brightgray font-proximaNova-regular text-sm leading-7;
+}
+
+.right-top-card p {
+  @apply text-brightgray text-sm mb-2;
+}
+.right-top-card .progress-container {
+  @apply transform-none;
 }
