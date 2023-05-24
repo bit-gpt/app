@@ -1,6 +1,6 @@
-const Documentation = () => {
+const ServicesDetailLeft = () => {
   return (
-    <div className="card px-16 py-8 max-w-[60%]">
+    <div className="card xl:px-16 px-10 py-8 xl:max-w-[60%]">
       <h3>Documentation</h3>
       <h4>Example Usage</h4>
       <ul className="list-disc">
@@ -51,4 +51,4 @@ const Documentation = () => {
   );
 };
 
-export default Documentation;
+export default ServicesDetailLeft;

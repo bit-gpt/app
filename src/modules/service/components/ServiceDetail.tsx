@@ -1,15 +1,15 @@
 import AppContainer from "shared/components/AppContainer";
-import icon from "../../../../assets/images/chat.svg";
+import icon from "../../../assets/images/chat.svg";
 import TagsOutline from "shared/components/TagsOutline";
 import DeleteIcon from "shared/components/DeleteIcon";
 import PlayIcon from "shared/components/PlayIcon";
-import Documentation from "./Documentation";
-import RightSidebar from "./RightSidebar";
+import ServicesDetailLeft from "./ServicesDetailLeft";
+import ServicesDetailRight from "./ServicesDetailRight";
 
 const ServiceDetail = () => {
   return (
     <AppContainer>
-      <div className="flex items-start mb-[62px]">
+      <div className="flex flex-wrap items-start mb-[62px]">
         <div className="flex">
           <div className="dashboard-bottom__card-box w-[50px] h-[60px]">
             <img
@@ -44,8 +44,8 @@ const ServiceDetail = () => {
         </div>
       </div>
       <div className="service-detail">
-        <Documentation />
-        <RightSidebar />
+        <ServicesDetailLeft />
+        <ServicesDetailRight />
       </div>
     </AppContainer>
   );

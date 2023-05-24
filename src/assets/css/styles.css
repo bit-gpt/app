@@ -85,7 +85,7 @@ header img {
   @apply bg-darkjunglegreen pb-12;
 }
 
-.dashboard::after {
+.gradient-effect::after {
   content: "";
   background: url("../images/gradient1.png") no-repeat;
   @apply max-xl:bg-bottom bg-contain w-full h-[70%] xl:left-[300px];
@@ -457,7 +457,7 @@ header img {
   background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
 }
 .search-filter {
-  @apply max-w-[70%] h-[50px] mx-auto mb-16;
+  @apply max-w-[70%] lg:h-[50px] mx-auto;
 }
 .search-filter > input {
   @apply rounded-sm w-full py-2 text-manatee px-12 focus:shadow-none focus:outline-none;
@@ -586,7 +586,7 @@ header img {
   @apply !text-[10px] !text-brightgray rounded-md;
 }
 .service-detail {
-  @apply flex gap-4;
+  @apply flex gap-4 max-lg:flex-wrap max-lg:gap-8;
 }
 
 .service-detail .card {
@@ -613,4 +613,10 @@ header img {
 }
 .right-top-card .progress-container {
   @apply transform-none;
+}
+.right-general-card {
+  @apply flex gap-7 mb-3;
+}
+.right-general-card span {
+  @apply text-brightgray font-proximaNova-regular text-base w-1/2;
 }

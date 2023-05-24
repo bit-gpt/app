@@ -10,12 +10,12 @@ const AppContainer = ({ children }: PropsWithChildren) => {
   }, [setSidebarToggle]);
 
   return (
-    <section className="bg-darkjunglegreen min-h-screen flex w-full relative">
+    <section className="bg-darkjunglegreen min-h-screen flex w-full relative gradient-effect">
       <Sidebar toggle={toggle} toggleStatus={sidebarToggle} />
       <div
         className={clsx(
           "container pt-[80px] pb-[60px] px-3 mx-auto z-10 relative",
-          !sidebarToggle ? "ml-[300px]" : "ml-[100px]"
+          !sidebarToggle ? "ml-[300px] mr-[40px]" : "ml-[120px] mr-[40px]"
         )}
       >
         {children}

@@ -60,7 +60,7 @@ const Service = () => {
         />
       )}
 
-      <div className="flex gap-[22px] flex-wrap justify-center">
+      <div className="flex gap-[22px] flex-wrap justify-center mt-16">
         {filteredServices.map((service) => (
           <ServicesCard
             key={service.id}

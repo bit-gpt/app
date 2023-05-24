@@ -18,9 +18,9 @@ const Resources = () => {
   return (
     <div className="settings-card">
       <h3>Resources</h3>
-      <ul className="flex gap-6">
+      <ul className="flex items-end max-lg:flex-wrap gap-6">
         <li>
-          <div className="flex justify-between">
+          <div className="flex flex-wrap justify-between">
             <span className="flex items-center">
               Memory&nbsp;
               <Icon />{" "}
@@ -32,7 +32,7 @@ const Resources = () => {
           </div>
         </li>
         <li>
-          <div className="flex justify-between">
+          <div className="flex flex-wrap justify-between">
             <span className="flex items-center">
               CPU&nbsp;
               <Icon />{" "}
@@ -44,7 +44,7 @@ const Resources = () => {
           </div>
         </li>
         <li>
-          <div className="flex justify-between">
+          <div className="flex flex-wrap justify-between">
             <span className="flex items-center">
               Storage&nbsp;
               <Icon />{" "}
