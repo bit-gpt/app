@@ -1,13 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import downloadService from "../api/downloadService";
-import { SERVICES_KEY } from "shared/hooks/useServices";
 import DownloadIcon from "shared/components/DownloadIcon";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 
-const NotDownloadedServiceState = ({ serviceId }: ServiceStateProps) => {
-  const queryClient = useQueryClient();
-
+const NotDownloadedServiceState = ({
+  serviceId,
+  refetch,
+}: ServiceStateProps) => {
   const { mutate, isLoading } = useMutation((id: string) =>
     downloadService(id)
   );
@@ -15,9 +15,7 @@ const NotDownloadedServiceState = ({ serviceId }: ServiceStateProps) => {
   const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(serviceId, {
-      onSuccess: () => {
-        queryClient.refetchQueries([SERVICES_KEY]);
-      },
+      onSuccess: refetch,
     });
   };
 

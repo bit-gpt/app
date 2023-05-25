@@ -1,5 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SERVICES_KEY } from "shared/hooks/useServices";
+import { useMutation } from "@tanstack/react-query";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import deleteService from "../api/deleteService";
@@ -9,8 +8,7 @@ import DeleteIcon from "shared/components/DeleteIcon";
 import { useState } from "react";
 import WarningModal from "./WarningModal";
 
-const StoppedServiceState = ({ serviceId }: ServiceStateProps) => {
-  const queryClient = useQueryClient();
+const StoppedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation(
@@ -24,9 +22,7 @@ const StoppedServiceState = ({ serviceId }: ServiceStateProps) => {
   const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     startMutate(serviceId, {
-      onSuccess: () => {
-        queryClient.refetchQueries([SERVICES_KEY]);
-      },
+      onSuccess: refetch,
     });
   };
 
@@ -39,9 +35,7 @@ const StoppedServiceState = ({ serviceId }: ServiceStateProps) => {
     e.preventDefault();
     setOpenDeleteModal(false);
     deleteMutate(serviceId, {
-      onSuccess: () => {
-        queryClient.refetchQueries([SERVICES_KEY]);
-      },
+      onSuccess: refetch,
     });
   };
 
@@ -64,7 +58,7 @@ const StoppedServiceState = ({ serviceId }: ServiceStateProps) => {
       </button>
       {openDeleteModal && (
         <WarningModal
-        icon={<DeleteIcon />}
+          icon={<DeleteIcon />}
           description="Are you sure you want to remove this service from your list?"
           okButtonText="Yes"
           title="Warning"

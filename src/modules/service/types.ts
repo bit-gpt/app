@@ -1,4 +1,5 @@
 import { App } from "modules/dashboard/types";
+import { PropsWithChildren } from "react";
 
 export type CheckeBoxProps = {
   label: string;
@@ -14,7 +15,7 @@ export type DropdownProps = {
   onChange: (appId: string, status: boolean) => void;
 };
 
-type ModelInfo = {
+export type ModelInfo = {
   devices: string[];
   inferenceTime: string;
   maxLength: number;
@@ -56,13 +57,35 @@ export type Stats = {
   storage_usage: number;
   storage_limit: number;
   storage_percentage: number;
-}
+};
 
 export type Message = {
   message: string;
-}
-
+};
 
 export type ServiceStateProps = {
   serviceId: string;
+  refetch: () => void;
 };
+
+export type ServiceStatus =
+  | "running"
+  | "stopped"
+  | "not_downloaded"
+  | "downloading"
+  | "available_memory_less_than_container"
+  | "system_memory_less_than_container";
+
+export type ServiceCardProps = {
+  title: string;
+  className: string;
+  icon: string;
+  status: ServiceStatus;
+  serviceId: string;
+};
+
+export type ServiceActionsProps = PropsWithChildren<{
+  status: ServiceStatus;
+  serviceId: string;
+  refetch: () => void;
+}>;
