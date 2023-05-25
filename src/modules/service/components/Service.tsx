@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import AppContainer from "shared/components/AppContainer";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useApps from "shared/hooks/useApps";
 import useServices from "shared/hooks/useServices";
 import { Service as ServiceResponse } from "../types";
@@ -20,6 +20,9 @@ const Service = () => {
 
   const filteredServices = useMemo(() => {
     if (filter.size === 0) return services;
+
+    if (![...filter.values()].includes(true)) return services;
+    
     return services.filter((service) => {
       const filterdApps = apps.filter((app) => service.apps.includes(app.id));
       return filterdApps.reduce((acc, app) => {
