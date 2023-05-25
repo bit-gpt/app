@@ -26,7 +26,10 @@ const Dropdown = ({ open, close, apps, search, onChange }: DropdownProps) => {
           </li>
         ))}
         <li className="mt-[10px]">
-          <button className="bg-americanpink p-2 font-proximaNova-regular text-[10px] text-white rounded-md w-full">
+          <button
+            onClick={close}
+            className="bg-americanpink p-2 font-proximaNova-regular text-[10px] text-white rounded-md w-full"
+          >
             Show Search Filter
           </button>
         </li>

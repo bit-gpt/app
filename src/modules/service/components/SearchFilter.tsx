@@ -12,9 +12,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   const [search, setSearch] = useState(new Map());
 
   useEffect(() => {
-    const newSearch = new Map(
-      apps.map((app) => [app.id, !appId || app.id === appId])
-    );
+    const newSearch = new Map(apps.map((app) => [app.id, app.id === appId]));
     setSearch(newSearch);
   }, [appId]);
 
