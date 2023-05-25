@@ -1,4 +1,4 @@
-const ServicesDetailLeft = () => {
+const ServiceDocumentation = () => {
   return (
     <div className="card xl:px-16 px-10 py-8 xl:max-w-[60%]">
       <h3>Documentation</h3>
@@ -51,4 +51,4 @@ const ServicesDetailLeft = () => {
   );
 };
 
-export default ServicesDetailLeft;
+export default ServiceDocumentation;
