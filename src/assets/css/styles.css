@@ -162,7 +162,7 @@ header img {
 
 .sidebar {
   background-color: rgba(32, 35, 43, 1);
-  @apply w-[260px];
+  @apply w-[218px];
 }
 .sidebar-toggle .sidebar {
   @apply w-auto;
@@ -172,7 +172,7 @@ header img {
   @apply flex items-center py-[13px] px-5 hover:bg-darkjunglegreen rounded-md;
 }
 .sidebar li a {
-  @apply w-full flex dark:text-cultured text-base font-proximaNova-regular;
+  @apply w-full flex dark:text-cultured text-base font-medium;
 }
 .sidebar__search input {
   @apply font-proximaNova-regular text-manatee text-base;
@@ -356,7 +356,7 @@ header img {
   @apply visible;
 }
 .sidebar-main .sidebar li:hover {
-  @apply bg-[#323232];
+  @apply bg-[#323232] font-semibold;
 }
 .sidebar-main .sidebar li:hover svg path {
   @apply fill-[#FF7E7B] transition-all;
@@ -552,13 +552,14 @@ header img {
 .form-control {
   background: rgba(77, 77, 79, 0.22);
   color: rgba(255, 255, 255, 0.6);
-  @apply rounded-md py-3 px-5 w-full;
+  @apply rounded-md py-3 px-5 w-full focus:!ring-0 focus:outline-none;
 }
 .form-control::placeholder,
 .select-control select {
   @apply text-sm;
   color: rgba(255, 255, 255, 0.6);
 }
+
 .form-label {
   @apply font-semibold text-sm text-white;
 }

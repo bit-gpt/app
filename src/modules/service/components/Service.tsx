@@ -43,7 +43,7 @@ const Service = () => {
   return (
     <AppContainer>
       <div className="mask-heading text-center mb-[29px]">
-        <h2>Select a Service Type</h2>
+        <h2 className="!mt-[30px]">Select a Service Type</h2>
       </div>
 
       {apps.length > 0 && (

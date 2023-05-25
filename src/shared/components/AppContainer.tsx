@@ -14,8 +14,8 @@ const AppContainer = ({ children }: PropsWithChildren) => {
       <Sidebar toggle={toggle} toggleStatus={sidebarToggle} />
       <div
         className={clsx(
-          "container pt-[80px] pb-[60px] px-3 mx-auto z-10 relative",
-          !sidebarToggle ? "ml-[300px] mr-[40px]" : "ml-[120px] mr-[40px]"
+          "container pb-[60px] px-3 mx-auto z-10 relative",
+          !sidebarToggle ? "ml-[260px] mr-[40px]" : "ml-[120px] mr-[40px]"
         )}
       >
         {children}

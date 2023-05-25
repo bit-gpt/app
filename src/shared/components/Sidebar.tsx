@@ -17,11 +17,10 @@ const Sidebar = ({ toggle, toggleStatus }: SidebarProps) => {
     <div className={clsx({ "sidebar-toggle": toggleStatus }, "sidebar-main")}>
       <div className="pt-[18px] pb-[70px] flex-col px-2 flex h-screen sidebar">
         <div className={clsx("flex", { "flex-col": toggleStatus })}>
-          <img className="sidebar__logo" src={Logo} alt="logo" />
           <img
             className={clsx(
               { "mx-auto": toggleStatus },
-              { hidden: !toggleStatus }
+              "ml-[10px]"
             )}
             src={brandLogo}
             alt="brandLogo"
@@ -37,11 +36,6 @@ const Sidebar = ({ toggle, toggleStatus }: SidebarProps) => {
             to="/services"
             icon={<ServiceIcon className={clsx({ "mr-4": !toggleStatus })} />}
             label="Services"
-          />
-          <NavLinkItem
-            to="/pipeline"
-            icon={<PipelineIcon className={clsx({ "mr-4": !toggleStatus })} />}
-            label="Pipeline"
           />
         </NavLinkContainer>
 
