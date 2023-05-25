@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useMemo, useState } from "react";
-import ServicesCard from "shared/components/ServicesCard";
 import AppContainer from "shared/components/AppContainer";
 import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
@@ -9,6 +8,7 @@ import useApps from "shared/hooks/useApps";
 import useServices from "shared/hooks/useServices";
 import { Service as ServiceResponse } from "../types";
 import { ServicesCardProps } from "shared/types";
+import ServicesCard from "./ServicesCard";
 
 const Service = () => {
   const { appId } = useParams();
@@ -56,17 +56,16 @@ const Service = () => {
 
       <div className="flex gap-[22px] flex-wrap justify-center mt-16">
         {filteredServices.map((service) => (
-          <Link to={`/services/${service.id}/detail`} key={service.id}>
-            <ServicesCard
-              icon={chatLogo}
-              className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
-                "services-running": service.running,
-              })}
-              title={service.name}
-              status={getStatus(service)}
-              serviceId={service.id}
-            />
-          </Link>
+          <ServicesCard
+            key={service.id}
+            icon={chatLogo}
+            className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
+              "services-running": service.running,
+            })}
+            title={service.name}
+            status={getStatus(service)}
+            serviceId={service.id}
+          />
         ))}
 
         {!isServicesLoading && filteredServices.length === 0 && (
