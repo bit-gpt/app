@@ -56,17 +56,16 @@ const Service = () => {
 
       <div className="flex gap-[22px] flex-wrap justify-center mt-16">
         {filteredServices.map((service) => (
-          <Link to={`/services/${service.id}/detail`} key={service.id}>
-            <ServicesCard
-              icon={chatLogo}
-              className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
-                "services-running": service.running,
-              })}
-              title={service.name}
-              status={getStatus(service)}
-              serviceId={service.id}
-            />
-          </Link>
+          <ServicesCard
+            key={service.id}
+            icon={chatLogo}
+            className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
+              "services-running": service.running,
+            })}
+            title={service.name}
+            status={getStatus(service)}
+            serviceId={service.id}
+          />
         ))}
 
         {!isServicesLoading && filteredServices.length === 0 && (

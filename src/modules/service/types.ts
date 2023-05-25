@@ -61,3 +61,8 @@ export type Stats = {
 export type Message = {
   message: string;
 }
+
+
+export type ServiceStateProps = {
+  serviceId: string;
+};

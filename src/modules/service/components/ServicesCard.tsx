@@ -1,11 +1,9 @@
 import { ServicesCardProps } from "shared/types";
-import DeleteIcon from "../../../shared/components/DeleteIcon";
-import StopIcon from "../../../shared/components/StopIcon";
-import PlayIcon from "../../../shared/components/PlayIcon";
-import WarningState from "modules/service/components/WarningState";
-import DownloadIcon from "../../../shared/components/DownloadIcon";
-import { useMutation } from "@tanstack/react-query";
-import downloadService from "modules/service/api/downloadService";
+import NotDownloadedServiceState from "./NotDownloadedServiceState";
+import RunningServiceState from "./RunningServiceState";
+import StoppedServiceState from "./StoppedServiceState";
+import WarningServiceState from "./WarningServiceState";
+import { Link } from "react-router-dom";
 
 const ServicesCard = ({
   title,
@@ -14,76 +12,32 @@ const ServicesCard = ({
   status,
   serviceId,
 }: ServicesCardProps) => {
-  const { mutate: downloadMutate, isLoading: downloadLoading } = useMutation(() =>
-    downloadService(serviceId)
-  );
-
-  const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("onStop");
-  };
-
-  const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("onStart");
-  };
-
-  const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("onDelete");
-  };
-
-  const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    downloadMutate();
-    console.log("onDownload");
-  };
-
   return (
-    <div className={className}>
+    <Link to={`/services/${serviceId}/detail`} className={className}>
       <div className="flex gap-8 items-start flex-wrap w-full relative">
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt="icon" />
         </div>
         <div className="flex gap-4 md:ml-auto">
           {status === "running" && (
-            <>
-              <button className="border-[0.5px] border-brightgray rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular">
-                Running
-              </button>
-              <button onClick={onStop}>
-                <StopIcon />
-              </button>
-            </>
+            <RunningServiceState serviceId={serviceId} />
           )}
           {status === "stopped" && (
-            <>
-              <button onClick={onStart}>
-                <PlayIcon />
-              </button>
-              <button onClick={onDelete}>
-                <DeleteIcon />
-              </button>
-            </>
+            <StoppedServiceState serviceId={serviceId} />
           )}
 
           {status === "not_downloaded" && (
-            <>
-            {
-              downloadLoading ? <span className="text-[10px] font-proximaNova-regular">Downloading...</span> :
-              <button onClick={onDownload}>
-              <DownloadIcon />
-            </button>
-            }
-            </>
+            <NotDownloadedServiceState serviceId={serviceId} />
           )}
 
           {(status === "available_memory_less_than_container" ||
-            status === "system_memory_less_than_container") && <WarningState />}
+            status === "system_memory_less_than_container") && (
+            <WarningServiceState />
+          )}
         </div>
       </div>
       <h3>{title}</h3>
-    </div>
+    </Link>
   );
 };
 

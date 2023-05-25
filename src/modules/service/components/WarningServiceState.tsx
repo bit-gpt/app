@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import WarningIcon from "shared/components/WarningIcon";
 import WarningModal from "./WarningModal";
 
-const WarningState = () => {
+const WarningServiceState = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeWarningModal = useCallback(
@@ -35,4 +35,4 @@ const WarningState = () => {
   );
 };
 
-export default WarningState;
+export default WarningServiceState;
