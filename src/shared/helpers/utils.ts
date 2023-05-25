@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { Option } from "modules/service/types";
+import { Option, Service, ServiceStatus } from "modules/service/types";
 import { CSSObjectWithLabel, ControlProps } from "react-select";
 
 export const checkIsDockerRunning = async () => {
@@ -86,4 +86,15 @@ export const serviceSearchStyle =  {
       backgroundColor: "#323232",
     },
   }),
+};
+
+
+export const getServiceStatus = (service: Service): ServiceStatus => {
+  if (!service.downloaded) {
+    return "not_downloaded";
+  } else if (service.running) {
+    return "running";
+  }
+  // other status will go here
+  return "stopped";
 };

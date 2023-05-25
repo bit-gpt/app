@@ -1,14 +1,12 @@
 import clsx from "clsx";
 import { useMemo, useState } from "react";
 import AppContainer from "shared/components/AppContainer";
-import chatLogo from "assets/images/chat.svg";
 import SearchFilter from "./SearchFilter";
 import { useParams } from "react-router-dom";
 import useApps from "shared/hooks/useApps";
 import useServices from "shared/hooks/useServices";
-import { Service as ServiceResponse } from "../types";
-import { ServicesCardProps } from "shared/types";
-import ServicesCard from "./ServicesCard";
+import ServicesCard from "./ServiceCard";
+import { getServiceStatus } from "shared/helpers/utils";
 
 const Service = () => {
   const { appId } = useParams();
@@ -22,7 +20,7 @@ const Service = () => {
     if (filter.size === 0) return services;
 
     if (![...filter.values()].includes(true)) return services;
-    
+
     return services.filter((service) => {
       const filterdApps = apps.filter((app) => service.apps.includes(app.id));
       return filterdApps.reduce((acc, app) => {
@@ -30,18 +28,6 @@ const Service = () => {
       }, false);
     });
   }, [services, filter]);
-
-  const getStatus = (service: ServiceResponse): ServicesCardProps["status"] => {
-    if (!service.downloaded) {
-      return "not_downloaded";
-    } else if (service.running) {
-      return "running";
-    }
-
-    // other status will go here
-
-    return "stopped";
-  };
 
   return (
     <AppContainer>
@@ -61,12 +47,12 @@ const Service = () => {
         {filteredServices.map((service) => (
           <ServicesCard
             key={service.id}
-            icon={chatLogo}
+            icon={service.icon}
             className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
               "services-running": service.running,
             })}
             title={service.name}
-            status={getStatus(service)}
+            status={getServiceStatus(service)}
             serviceId={service.id}
           />
         ))}
