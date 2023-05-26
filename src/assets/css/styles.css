@@ -610,6 +610,10 @@ header img {
   @apply font-bold text-base text-brightgray mt-8 mb-6;
   font-family: "ProximaNova-bold";
 }
+.service-detail .card p {
+  color: #EDEDED;
+  font-family: "ProximaNova-Regular";
+}
 
 .service-detail ul {
   @apply ml-4;

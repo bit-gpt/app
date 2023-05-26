@@ -1,5 +1,4 @@
 import { PropsWithChildren, ReactElement, useCallback, useState } from "react";
-import clsx from "clsx";
 import Sidebar from "./Sidebar";
 
 const AppContainer = ({ children }: PropsWithChildren) => {
@@ -13,10 +12,9 @@ const AppContainer = ({ children }: PropsWithChildren) => {
     <section className="bg-darkjunglegreen min-h-screen flex w-full relative gradient-effect">
       <Sidebar toggle={toggle} toggleStatus={sidebarToggle} />
       <div
-        className={clsx(
-          "container pb-[60px] px-3 mx-auto z-10 relative",
-          !sidebarToggle ? "ml-[260px] mr-[40px]" : "ml-[120px] mr-[40px]"
-        )}
+        className={
+          "container pb-[60px] px-3 mx-auto z-10 relative ml-[120px] mr-[40px]"
+        }
       >
         {children}
       </div>
