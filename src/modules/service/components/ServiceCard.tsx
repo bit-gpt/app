@@ -4,6 +4,7 @@ import { SERVICES_KEY } from "shared/hooks/useServices";
 import { useCallback } from "react";
 import { ServiceCardProps } from "../types";
 import ServiceActions from "./ServiceActions";
+import { SERVICE_KEY } from "shared/hooks/useService";
 
 const ServiceCard = ({
   title,
@@ -16,6 +17,7 @@ const ServiceCard = ({
 
   const refetch = useCallback(() => {
     queryClient.refetchQueries([SERVICES_KEY]);
+    queryClient.invalidateQueries([SERVICE_KEY, serviceId]);
   }, []);
 
   return (

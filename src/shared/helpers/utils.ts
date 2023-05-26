@@ -26,7 +26,7 @@ export const isDesktopEnv = () => {
 
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export const serviceSearchStyle =  {
+export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
     ...base,
     backgroundColor: "rgba(77, 77, 79, 0.22)",
@@ -88,9 +88,10 @@ export const serviceSearchStyle =  {
   }),
 };
 
-
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (!service.downloaded) {
+  if (!service.supported) {
+    return "not_supported";
+  } else if (!service.downloaded) {
     return "not_downloaded";
   } else if (service.running) {
     return "running";
