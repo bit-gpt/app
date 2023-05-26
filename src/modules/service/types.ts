@@ -94,3 +94,11 @@ export type ServiceActionsProps = PropsWithChildren<{
 export type WarningServiceStateProps = {
   status: ServiceStatus;
 };
+
+export type ServiceStats = {
+  id: string;
+  cpu_percentage: number;
+  memory_usage: number;
+  memory_limit: number;
+  memory_percentage: number;
+};
