@@ -16,7 +16,6 @@ export type DropdownProps = {
 };
 
 export type ModelInfo = {
-  devices: string[];
   inferenceTime: string;
   maxLength: number;
   memoryRequirements: string;
