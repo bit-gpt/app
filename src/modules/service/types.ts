@@ -36,6 +36,7 @@ export type Service = {
   modelInfo: ModelInfo;
   name: string;
   running: boolean;
+  supported: boolean;
 };
 
 export type SearchFilterProps = {
@@ -70,10 +71,11 @@ export type ServiceStateProps = {
 export type ServiceStatus =
   | "running"
   | "stopped"
+  | "not_supported"
   | "not_downloaded"
-  | "downloading"
-  | "available_memory_less_than_container"
-  | "system_memory_less_than_container";
+  | "service_greater_than_free_memory"
+  | "service_greater_than_limit_memory";
+
 
 export type ServiceCardProps = {
   title: string;
@@ -88,3 +90,7 @@ export type ServiceActionsProps = PropsWithChildren<{
   serviceId: string;
   refetch: () => void;
 }>;
+
+export type WarningServiceStateProps = {
+  status: ServiceStatus;
+};
