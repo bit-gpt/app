@@ -32,7 +32,7 @@ const Service = () => {
   return (
     <AppContainer>
       <div className="mask-heading text-center mb-[29px]">
-        <h2 className="!mt-[30px]">Select a Service Type</h2>
+        <h2 className="!mt-5">Select a Service Type</h2>
       </div>
 
       {apps.length > 0 && (
@@ -55,7 +55,7 @@ const Service = () => {
             status={getServiceStatus(service)}
             serviceId={service.id}
           />
-        ))}
+          ))}
 
         {!isServicesLoading && filteredServices.length === 0 && (
           <div className="text-center text-[#8C8C8C]">No services found</div>

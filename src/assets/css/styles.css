@@ -110,7 +110,7 @@ header img {
   background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
-  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold text-[30px] leading-8;
+  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold text-[30px] leading-9;
 }
 
 .dashboard-bottom__card {
@@ -118,9 +118,10 @@ header img {
   @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[20px] w-[282px];
 }
 .dashboard-bottom__card::before,
-.modal::before {
+/* .modal::before, */
+.gradient-border::after {
   content: "";
-  @apply absolute inset-0 rounded-2xl p-[1.5px] pointer-events-none;
+  @apply absolute inset-0 rounded-2xl p-[2px] pointer-events-none;
   background: linear-gradient(
     131.93deg,
     rgba(245, 142, 142, 0.6) 11.72%,
@@ -376,8 +377,12 @@ header img {
 .sidebar-main .sidebar li:hover svg.svg-stroke path {
   @apply fill-[none] stroke-[#FF7E7B];
 }
+
 .sidebar-main .sidebar li a.active svg path {
-  @apply fill-[#FF7E7B] stroke-[#FF7E7B];
+  @apply fill-[#FF7E7B];
+}
+.sidebar-main .sidebar .sidebar-last__row  a.active:last-child svg path {
+  @apply stroke-[#FF7E7B] fill-none;
 }
 .sidebar-main {
   @apply fixed z-10;
@@ -507,7 +512,7 @@ header img {
   background: linear-gradient(131.09deg, rgba(29, 29, 27, 0.49) 8.8%, rgba(29, 29, 27, 0.76) 88.99%);
 }
 .warning-modal__content {
-  @apply p-6 mx-auto relative rounded-2xl z-[11] bg-[#26262A] max-w-[500px];
+  @apply p-6 mx-auto relative rounded-2xl z-[11] bg-[#26262A] max-w-[500px] text-brightgray;
 }
 .warning-modal__footer {
   @apply flex items-center gap-8;
@@ -527,7 +532,11 @@ header img {
 
 .settings-card h3 {
   background-color: rgba(77, 77, 79, 0.22);
-  @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg border-b-2;
+  @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg;
+
+}
+.settings-card__border {
+  @apply border-b-2 opacity-50;
   border-color: rgba(219, 213, 213, 0.2);
 }
 
@@ -594,10 +603,10 @@ header img {
   @apply rounded-md shadow-default;
   background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
 }
-.service-detail .card h3 {
+.service-detail .card h1 {
   @apply text-brightgray font-bold text-xl;
 }
-.service-detail .card h4 {
+.service-detail .card h2 {
   @apply font-bold text-base text-brightgray mt-8 mb-6;
   font-family: "ProximaNova-bold";
 }

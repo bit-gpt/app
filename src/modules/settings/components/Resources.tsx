@@ -18,6 +18,7 @@ const Resources = () => {
   return (
     <div className="settings-card">
       <h3>Resources</h3>
+      <div className="settings-card__border" />
       <ul className="flex items-end max-lg:flex-wrap gap-6">
         <li>
           <div className="flex flex-wrap justify-between">

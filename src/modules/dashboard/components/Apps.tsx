@@ -10,7 +10,7 @@ const Apps = () => {
   return (
     <>
       <div className="mask-heading mb-[49px]">
-        <h2 className="!mt-[30px]">Apps</h2>
+        <h2 className="!mt-5">Apps</h2>
       </div>
       {isLoading && (
         <div className="flex">

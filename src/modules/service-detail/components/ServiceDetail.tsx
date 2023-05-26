@@ -43,7 +43,7 @@ const ServiceDetail = () => {
       </div>
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
-        <div className="w-full">
+        <div>
           <ServiceResourceBars />
           <ServiceGeneralInfo service={service} />
           <ServiceDescription description={service.description} />

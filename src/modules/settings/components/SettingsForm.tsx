@@ -2,6 +2,10 @@ const SettingsForm = () => {
   return (
     <div className="lg:mt-[83px] mt-[43px]">
       <div className="grid lg:grid-cols-2 mb-9">
+        <label className="form-label">GPU</label>
+        <input className="form-control" placeholder="Not Detected" readOnly/>
+      </div>
+      <div className="grid lg:grid-cols-2 mb-9">
         <label className="form-label">Name</label>
         <input className="form-control" placeholder="Lorem Ipsum" readOnly/>
       </div>

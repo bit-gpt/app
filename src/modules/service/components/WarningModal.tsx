@@ -20,7 +20,7 @@ const WarningModal = ({
       tabIndex={-1}
       role="dialog"
     >
-      <div className="warning-modal__content">
+      <div className="warning-modal__content gradient-border">
         <div className="flex gap-[24px]">
           <div className="polygon-shape">{icon || <WarningShapeIcon />}</div>
           <div>
@@ -32,7 +32,7 @@ const WarningModal = ({
         <div className="warning-modal__footer">
           <OutlineCircleButton
             onClick={onCancel}
-            className="!rounded-md !border h-[43px] !mt-0 justify-center opacity-70 w-full"
+            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full"
           >
             {cancelButtonText}
           </OutlineCircleButton>

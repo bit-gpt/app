@@ -39,7 +39,7 @@ const Sidebar = ({ toggle, toggleStatus }: SidebarProps) => {
           />
         </NavLinkContainer>
 
-        <NavLinkContainer>
+        <NavLinkContainer className="sidebar-last__row">
           <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
           <NavLinkItem
             to="/documentation"
