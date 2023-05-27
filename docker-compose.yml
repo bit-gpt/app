@@ -3,7 +3,6 @@ version: '3.6'
 services:
   prem_app:
     container_name: prem_app
-    image: ghcr.io/premai-io/prem-app:latest
     build: .
     ports:
       - 5173:5173
