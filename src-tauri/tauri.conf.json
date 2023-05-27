@@ -1,32 +1,34 @@
 {
   "build": {
-    "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
     "withGlobalTauri": false
   },
   "package": {
     "productName": "prem-app",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
+      "dialog": {
+        "all": true
+      },
       "fs": {
         "all": true,
-        "scope": ["**"],
-        "readDir": true
+        "readDir": true,
+        "scope": [
+          "**"
+        ]
+      },
+      "path": {
+        "all": true
       },
       "process": {
         "all": true
       },
-      "dialog": {
-        "all": true
-      },
       "shell": {
-        "all": true
-      },
-      "path": {
         "all": true
       }
     },
@@ -51,10 +53,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
-        "title": "prem-app",
+        "minHeight": 600,
         "minWidth": 1080,
-        "minHeight": 600
+        "resizable": true,
+        "title": "prem-app"
       }
     ]
   }

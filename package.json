@@ -1,14 +1,4 @@
 {
-  "name": "prem-app",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "tauri": "tauri"
-  },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
     "@tanstack/react-query": "^4.29.5",
@@ -41,5 +31,15 @@
     "typescript": "^4.9.5",
     "vite": "^4.2.1",
     "vite-tsconfig-paths": "^4.2.0"
-  }
+  },
+  "name": "prem-app",
+  "private": true,
+  "scripts": {
+    "build": "tsc && vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "type": "module",
+  "version": "0.0.1"
 }
