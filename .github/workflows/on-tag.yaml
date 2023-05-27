@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-20.04]
+        platform: [macos-latest]
 
     runs-on: ${{ matrix.platform }}
 
@@ -21,13 +21,6 @@ jobs:
 
       - name: Create the .env file from example
         run: cp .env.example .env
-
-      - name: Install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-20.04'
-        # You can remove libayatana-appindicator3-dev if you don't use the system tray feature.
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
 
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
@@ -93,11 +86,11 @@ jobs:
 
       # Commit package.json, tauri.conf.json and Cargo.toml to master
       - name: Commit & Push
-        if: matrix.platform == 'ubuntu-20.04'
         run: |
           git add .
           git commit -m "${{ steps.next_tag.outputs.tag }}"
           git push origin HEAD:main
+          
   push-docker-image:
     runs-on: ubuntu-latest
     env:
