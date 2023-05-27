@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm install
 
-EXPOSE 5173
+COPY . .
+
+EXPOSE 1420
 
 CMD npm run dev -- --host
