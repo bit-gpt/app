@@ -1,13 +1,8 @@
-name: Docker
+name: Push Docker Image from branch
 
 on:
-  push:
-    branches: [ "main" ]
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build:
@@ -41,5 +36,5 @@ jobs:
           docker buildx build \
             --push \
             --file ./Dockerfile \
-            --tag ghcr.io/premai-io/prem-app:latest \
+            --tag ghcr.io/premai-io/prem-app:pr-${{ github.event.pull_request.number }} \
             --platform linux/arm64,linux/amd64 .
