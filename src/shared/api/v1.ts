@@ -1,10 +1,10 @@
 import axios from "axios";
+import { BACKEND_URL } from "../helpers/utils";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: BACKEND_URL,
   headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + import.meta.env.VITE_BACKEND_TOKEN,
+    "Content-Type": "application/json"
   },
 });
 

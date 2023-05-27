@@ -24,7 +24,8 @@ export const isDesktopEnv = () => {
   return import.meta.env.VITE_DESTINATION === "desktop";
 };
 
-export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export const IS_PACKAGED = import.meta.env.VITE_IS_PACKAGED || false;
+export const BACKEND_URL = IS_PACKAGED ? `${window.location.protocol}//${window.location.host}/api` : import.meta.env.VITE_BACKEND_URL;
 
 export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
