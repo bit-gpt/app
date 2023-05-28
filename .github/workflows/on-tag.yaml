@@ -25,6 +25,10 @@ jobs:
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Install missing Rust target for universal Mac build
+        if: matrix.platform == 'macos-latest'
+        run: rustup target add aarch64-apple-darwin
+
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
