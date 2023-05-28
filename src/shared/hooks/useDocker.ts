@@ -1,24 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
-import { checkIsDockerRunning, isDesktopEnv } from "../helpers/utils";
+import { checkIsDockerRunning, runDockerContainer, isBrowserEnv } from "../helpers/utils";
 
 const useDocker = () => {
-  const isDesktop = isDesktopEnv();
+  const isBrowser = isBrowserEnv();
   const [isDockerRunning, setIsDockerRunning] = useState(false);
-
+  const [isContainerRunning, setIsContainerRunning] = useState(false);
+  
   const handleCheckIsDockerRunning = useCallback(() => {
     checkIsDockerRunning().then((result) => {
       setIsDockerRunning(result);
+      return runDockerContainer();
+    }).then(() => {
+      setIsContainerRunning(true);
     });
-  }, [setIsDockerRunning]);
+  }, [setIsDockerRunning, setIsContainerRunning]);
 
   useEffect(() => {
-    if (isDesktop) {
+    if (!isBrowser) {
       handleCheckIsDockerRunning();
     }
   }, []);
 
   return {
     isDockerRunning: isDockerRunning,
+    isContainerRunning: isContainerRunning,
     handleCheckIsDockerRunning,
   };
 };

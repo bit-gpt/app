@@ -5,7 +5,7 @@ use std::{env, fs, net::TcpStream, thread, time::Duration};
 use tauri::api::{path, process::Command};
 
 #[tauri::command]
-fn run_container(app_handle: tauri::AppHandle) {
+fn run_container() {
     // check if docker is installed
     let docker_check = Command::new("docker")
         .args(["--version"])
@@ -36,19 +36,16 @@ fn run_container(app_handle: tauri::AppHandle) {
     }
 
     // Get app_dir
-    let app_dir = app_handle.path_resolver().app_data_dir().unwrap();
     let cmd = Command::new("docker")
         .args(&[
             "run",
             "-d",
-            "-v",
-            &format!("{}/models:/usr/src/app/models", app_dir.to_str().unwrap()),
             "-p",
-            "8002:8002",
+            "8000:8000",
             "--name",
-            "ai-box",
+            "premd",
             "--rm",
-            "ghcr.io/premai-io/ai-box:latest",
+            "ghcr.io/premai-io/premd:latest",
         ])
         .output()
         .expect("Failed to execute docker run");
@@ -61,7 +58,7 @@ fn run_container(app_handle: tauri::AppHandle) {
     
     // wait for APIs to be ready before running the app
     loop {
-        match TcpStream::connect(("127.0.0.1", 8002)) {
+        match TcpStream::connect(("127.0.0.1", 8000)) {
             Ok(_) => break,
             Err(_) => {
                 println!("API not ready yet. Waiting for 1 second...");
@@ -91,7 +88,7 @@ fn is_docker_running() -> bool {
 #[tauri::command]
 fn is_container_running() -> bool {
     let container_check = Command::new("docker")
-        .args(["ps", "-q", "-f", "name=ai-box"])
+        .args(["ps", "-q", "-f", "name=premd"])
         .output()
         .map_err(|e| {
             println!("Failed to execute docker ps: {}", e);
@@ -112,10 +109,6 @@ fn main() {
             let app_dir_str = app_dir.to_string_lossy().to_string();
             fs::create_dir_all(&app_dir).expect("Failed to create app data directory");
             println!("App directory: {}", app_dir_str);
-
-            let models_dir = app_dir.join("models");
-            fs::create_dir_all(&models_dir).expect("Failed to create /models/ directory");
-            println!("Models directory: {}", models_dir.to_str().unwrap());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
