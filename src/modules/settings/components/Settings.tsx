@@ -10,7 +10,6 @@ const Settings = () => {
       </div>
       <div className="lg:max-w-[80%] mx-auto settings">
         <Resources />
-        <SettingsForm />
       </div>
     </AppContainer>
   );

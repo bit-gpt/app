@@ -27,9 +27,9 @@ const Sidebar = () => {
         </NavLinkContainer>
 
         <NavLinkContainer className="sidebar-last__row">
-          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
+          <div className="border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
           <NavLinkItem
-            to="/documentation"
+            to="https://premai-io.github.io/prem-docs/"
             label="Documentation"
             icon={<DocumentationIcon className={""} />}
           />

@@ -24,7 +24,6 @@ const Resources = () => {
           <div className="flex flex-wrap justify-between">
             <span className="flex items-center">
               Memory&nbsp;
-              <Icon />{" "}
             </span>
             <span>6/1024 MB</span>
           </div>
@@ -36,7 +35,6 @@ const Resources = () => {
           <div className="flex flex-wrap justify-between">
             <span className="flex items-center">
               CPU&nbsp;
-              <Icon />{" "}
             </span>
             <span>3% of 0.5 vCPUs</span>
           </div>
@@ -48,7 +46,6 @@ const Resources = () => {
           <div className="flex flex-wrap justify-between">
             <span className="flex items-center">
               Storage&nbsp;
-              <Icon />{" "}
             </span>
             <span>137/1,024 MB</span>
           </div>
