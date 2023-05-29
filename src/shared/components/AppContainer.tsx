@@ -10,10 +10,10 @@ const AppContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <section className="bg-darkjunglegreen min-h-screen flex w-full relative gradient-effect">
-      <Sidebar toggle={toggle} toggleStatus={sidebarToggle} />
+      <Sidebar />
       <div
         className={
-          "container pb-[60px] px-3 mx-auto z-10 relative ml-[120px] mr-[40px]"
+          "container pb-[60px] px-3 mx-auto z-[1] relative ml-[120px] mr-[40px]"
         }
       >
         {children}

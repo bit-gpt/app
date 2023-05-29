@@ -338,24 +338,11 @@ header img {
   @apply shadow-default;
 }
 
-.tooltip {
-  @apply relative;
+.sidebar-main .sidebar li .tooltip {
+  @apply bg-[#E9928E] uppercase;
+  z-index: 100;
 }
 
-.tooltip-text {
-  word-break: break-all;
-  @apply py-[11px] left-[-100px] text-[10px] leading-4 px-[14px] top-[40px] rounded-md absolute bg-[#353539] invisible text-brightgray;
-}
-
-.tooltip-text::after {
-  content: "";
-  @apply bottom-full absolute left-1/2 -ml-4 border-[15px];
-  border-color: transparent transparent #353539 transparent;
-}
-
-.tooltip:hover .tooltip-text {
-  @apply visible;
-}
 .sidebar-main .sidebar li:hover {
   @apply bg-[#323232] font-semibold;
 }
