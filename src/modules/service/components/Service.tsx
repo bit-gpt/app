@@ -3,16 +3,19 @@ import { useMemo, useState } from "react";
 import AppContainer from "shared/components/AppContainer";
 import SearchFilter from "./SearchFilter";
 import { useParams } from "react-router-dom";
-import useApps from "shared/hooks/useApps";
+import useInterfaces from "shared/hooks/useInterfaces";
 import useServices from "shared/hooks/useServices";
 import ServicesCard from "./ServiceCard";
 import { getServiceStatus } from "shared/helpers/utils";
 
 const Service = () => {
   const { appId } = useParams();
+  
   const { data: response, isLoading: isServicesLoading } = useServices();
-  const { data: appResponse } = useApps();
+  const { data: appResponse } = useInterfaces();
+  
   const [filter, setFilter] = useState(new Map<string, boolean>());
+  
   const services = response?.data || [];
   const apps = appResponse?.data || [];
 
@@ -32,7 +35,7 @@ const Service = () => {
   return (
     <AppContainer>
       <div className="mask-heading text-center mb-[29px]">
-        <h2 className="!mt-5">Select a Service Type</h2>
+        <h2 className="!mt-5">Dashboard</h2>
       </div>
 
       {apps.length > 0 && (

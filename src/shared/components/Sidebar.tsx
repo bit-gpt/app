@@ -19,11 +19,6 @@ const Sidebar = () => {
             icon={<DashboardIcon className={""} />}
             label="Dashboard"
           />
-          <NavLinkItem
-            to="/services"
-            icon={<ServiceIcon className={""} />}
-            label="Services"
-          />
         </NavLinkContainer>
 
         <NavLinkContainer className="sidebar-last__row">
