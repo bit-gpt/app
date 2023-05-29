@@ -33,7 +33,7 @@ const ServiceDetail = () => {
       <div className="flex flex-wrap items-start mb-[62px] mt-5">
         <ServiceHeader
           title={service.name}
-          tags={service.apps}
+          tags={service.interfaces}
           icon={service.icon}
           subtitle={service.id}
         />

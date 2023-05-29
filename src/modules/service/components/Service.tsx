@@ -22,7 +22,7 @@ const Service = () => {
     if (![...filter.values()].includes(true)) return services;
 
     return services.filter((service) => {
-      const filterdApps = apps.filter((app) => service.apps.includes(app.id));
+      const filterdApps = apps.filter((app) => service.interfaces.includes(app.id));
       return filterdApps.reduce((acc, app) => {
         return acc || (filter.get(app.id) as boolean);
       }, false);

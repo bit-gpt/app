@@ -25,7 +25,7 @@ export type ModelInfo = {
 };
 
 export type Service = {
-  apps: string[];
+  interfaces: string[];
   defaultPort: number;
   description: string;
   dockerImage: string;
