@@ -346,9 +346,17 @@ header img {
 .sidebar-main .sidebar li:hover {
   @apply bg-[#323232] font-semibold;
 }
-.sidebar-main .sidebar li:hover svg path {
+.sidebar-main .sidebar li:hover svg:not(.svg-stroke) path {
   @apply fill-[#FF7E7B] transition-all;
 }
+.sidebar-main .sidebar li a.active svg path {
+  @apply fill-[#FF7E7B];
+}
+.sidebar-last__row li:last-child:hover a svg.svg-stroke path ,
+.sidebar-last__row li:last-child a.active svg.svg-stroke path {
+  @apply stroke-[#FF7E7B] !fill-none;
+}
+
 .sidebar-main .sidebar {
   @apply bg-[#28292D];
 }
@@ -361,16 +369,7 @@ header img {
 .sidebar-main.sidebar-toggle li a {
   @apply h-auto w-auto;
 }
-.sidebar-main .sidebar li:hover svg.svg-stroke path {
-  @apply fill-[none] stroke-[#FF7E7B];
-}
 
-.sidebar-main .sidebar li a.active svg path {
-  @apply fill-[#FF7E7B];
-}
-.sidebar-main .sidebar .sidebar-last__row  a.active:last-child svg path {
-  @apply stroke-[#FF7E7B] fill-none;
-}
 .sidebar-main {
   @apply fixed z-10;
 }
