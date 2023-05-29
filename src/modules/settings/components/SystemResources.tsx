@@ -1,8 +1,7 @@
 import useSystemStats from "shared/hooks/useSystemStats";
 
-const Resources = () => {
+const CPUResources = () => {
   const { data: response } = useSystemStats();
-  console.log(response?.data?.storage_percentage);
   return (
     <div className="settings-card">
       <h3>Resources</h3>
@@ -46,4 +45,4 @@ const Resources = () => {
   );
 };
 
-export default Resources;
+export default CPUResources;

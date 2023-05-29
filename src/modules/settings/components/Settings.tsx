@@ -1,5 +1,6 @@
 import AppContainer from "shared/components/AppContainer";
-import Resources from "./Resources";
+import SystemResources from "./SystemResources";
+import GPUResources from "./GPUResources";
 
 const Settings = () => {
   return (
@@ -8,7 +9,10 @@ const Settings = () => {
         <h2 className="!mt-5">Settings</h2>
       </div>
       <div className="lg:max-w-[80%] mx-auto settings">
-        <Resources />
+        <SystemResources />
+      </div>
+      <div className="lg:max-w-[80%] mx-auto settings">
+        <GPUResources />
       </div>
     </AppContainer>
   );

@@ -60,6 +60,13 @@ export type Stats = {
   storage_percentage: number;
 };
 
+export type GPUStats = {
+  gpu_name: string | null,
+  total_memory: number | null,
+  used_memory: number | null,
+  memory_percentage: number | null,
+}
+
 export type Message = {
   message: string;
 };
