@@ -51,12 +51,12 @@ const usePremChatWithoutStream = (
       getChatCompletion(service?.runningPort!, {
         messages,
         model: serviceId,
-        temperature,
-        top_p,
-        max_tokens,
+        temperature: temperature || 0.5,
+        top_p: top_p || 1.0,
+        max_tokens: max_tokens || 256,
         frequency_penalty,
         stream: false,
-        n,
+        n: n || 1,
         presence_penalty
       }),
     {
