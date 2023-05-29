@@ -9,7 +9,10 @@ export type ChatCompletionInputData = {
   temperature?: number;
   max_tokens?: number;
   top_p?: number;
-  frequency_penalty?: number;
+  frequency_penalty: number;
+  stream?: boolean;
+  n: number;
+  presence_penalty: number;
 };
 
 export interface PremChatHistory {
@@ -38,6 +41,7 @@ export interface PremChatHistoryNavigator extends PremChatHistory {
 export type HeaderProps = {
   setRightSidebar: (value: boolean) => void;
   rightSidebar: boolean;
+  title: string;
 };
 
 export type InputBoxProps = {

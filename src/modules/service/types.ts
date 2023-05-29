@@ -37,6 +37,7 @@ export type Service = {
   name: string;
   running: boolean;
   supported: boolean;
+  runningPort: number;
 };
 
 export type SearchFilterProps = {

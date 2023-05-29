@@ -6,14 +6,19 @@ import { shallow } from "zustand/shallow";
 import { Message, PremChatResponse } from "modules/prem-chat/types";
 import { getChatCompletion } from "modules/prem-chat/api";
 import usePremChatStore from "../store/prem-chat";
+import useService from "./useService";
 
-const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
+const usePremChatWithoutStream = (
+  serviceId: string,
+  chatId: string | null
+): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const navigate = useNavigate();
+  const { data: response } = useService(serviceId);
+  const service = response?.data;
 
   const {
-    model,
     history,
     addHistory,
     updateHistoryMessages,
@@ -21,9 +26,10 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
     max_tokens,
     top_p,
     frequency_penalty,
+    n,
+    presence_penalty
   } = usePremChatStore(
     (state) => ({
-      model: state.model,
       history: state.history,
       addHistory: state.addHistory,
       updateHistoryMessages: state.updateHistoryMessages,
@@ -31,6 +37,8 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
       max_tokens: state.max_tokens,
       top_p: state.top_p,
       frequency_penalty: state.frequency_penalty,
+      n: state.n,
+      presence_penalty: state.presence_penalty,
     }),
     shallow
   );
@@ -40,13 +48,16 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
 
   const { isLoading, isError, mutate } = useMutation(
     (messages: Message[]) =>
-      getChatCompletion({
+      getChatCompletion(service?.runningPort!, {
         messages,
-        model,
-        temperature,
-        max_tokens,
-        top_p,
+        model: serviceId,
+        temperature: temperature || 0.5,
+        top_p: top_p || 1.0,
+        max_tokens: max_tokens || 256,
         frequency_penalty,
+        stream: false,
+        n: n || 1,
+        presence_penalty
       }),
     {
       onSuccess: (response) => {
@@ -64,12 +75,12 @@ const usePremChatWithoutStream = (chatId: string | null): PremChatResponse => {
           const newConversationId = uuid();
           addHistory({
             id: newConversationId,
-            model,
+            model: serviceId,
             title: tempConversation[0].content,
             messages: [...tempConversation],
             timestamp: Date.now(),
           });
-          navigate(`/prem-chat/${newConversationId}`);
+          navigate(`/prem-chat/${serviceId}/${newConversationId}`);
         } else {
           updateHistoryMessages(chatId, [...messages, ...tempConversation]);
         }

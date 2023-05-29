@@ -27,19 +27,18 @@ const PremChatSidebar = () => {
   const [search, setSearch] = useState("");
   const [sidebarToggle, setSidebarToggle] = useState(false);
 
-  const { chatId } = useParams();
+  const { chatId, serviceId } = useParams();
   const navigate = useNavigate();
 
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
     if (chatId === id) {
-      navigate("/prem-chat");
+      navigate(`/prem-chat/${serviceId}`);
     }
   };
 
   const onClearClick = () => {
     clearHistory();
-    navigate("/prem-chat");
   };
 
   const filteredHistory = history.filter((item) => {
@@ -81,7 +80,7 @@ const PremChatSidebar = () => {
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={() => navigate(`/prem-chat`)}>
+          <button onClick={() => navigate(`/prem-chat/${serviceId}`)}>
             <img src={edit} alt="edit" width={18} height={18} />
           </button>
         </div>
@@ -93,7 +92,7 @@ const PremChatSidebar = () => {
                 key={item.id}
                 className={clsx({ "bg-darkjunglegreen": chatId === item.id })}
               >
-                <Link to={`/prem-chat/${item.id}`}>
+                <Link to={`/prem-chat/${serviceId}/${item.id}`}>
                   <img
                     src={msg}
                     alt="msg"
@@ -149,7 +148,7 @@ const PremChatSidebar = () => {
           <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
           {filteredHistory.length > 0 && (
             <li>
-              <Link to={`/prem-chat/`} onClick={onClearClick}>
+              <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>
                 <svg
                   className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
                   width="20"
@@ -192,7 +191,7 @@ const PremChatSidebar = () => {
             </li>
           )}
           <li>
-            <Link to={`/prem-chat/`}>
+            <Link to={`/prem-chat/${serviceId}`}>
               <img
                 src={exportData}
                 alt="exportData"
@@ -205,7 +204,7 @@ const PremChatSidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to={`/prem-chat/`}>
+            <Link to={`/prem-chat/${serviceId}`}>
               <img
                 src={importData}
                 alt="importData"

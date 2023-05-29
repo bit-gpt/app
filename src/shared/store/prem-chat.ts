@@ -3,8 +3,6 @@ import { persist } from "zustand/middleware";
 import { Message, PremChatHistory } from "modules/prem-chat/types";
 
 export type PremChatStore = {
-  model: string;
-  setModel: (model: string) => void;
   history: PremChatHistory[];
   clearHistory: () => void;
   addHistory: (newHistory: PremChatHistory) => void;
@@ -18,13 +16,15 @@ export type PremChatStore = {
   setTopP: (top_p: number) => void;
   frequency_penalty: number;
   setFrequencyPenalty: (frequency_penalty: number) => void;
+  n: number;
+  setN: (n: number) => void;
+  presence_penalty: number;
+  setPresencePenalty: (presence_penalty: number) => void;
 };
 
 const usePremChatStore = create<PremChatStore>()(
   persist(
     (set) => ({
-      model: "",
-      setModel: (model) => set(() => ({ model })),
       history: [],
       clearHistory: () => set(() => ({ history: [] })),
       addHistory: (newHistory: PremChatHistory) =>
@@ -48,13 +48,18 @@ const usePremChatStore = create<PremChatStore>()(
         })),
       temperature: 1,
       setTemperature: (temperature) => set(() => ({ temperature })),
-      max_tokens: Infinity,
+      max_tokens: 10,
       setMaxTokens: (max_tokens) => set(() => ({ max_tokens })),
       top_p: 1,
       setTopP: (top_p) => set(() => ({ top_p })),
       frequency_penalty: 0,
       setFrequencyPenalty: (frequency_penalty) =>
         set(() => ({ frequency_penalty })),
+      n: 1,
+      setN: (n) => set(() => ({ n })),
+      presence_penalty: 0,
+      setPresencePenalty: (presence_penalty) =>
+        set(() => ({ presence_penalty })),
     }),
     {
       name: "prem-chat",

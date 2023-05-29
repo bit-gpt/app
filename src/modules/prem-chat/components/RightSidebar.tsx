@@ -19,6 +19,10 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
     setTopP,
     frequency_penalty,
     setFrequencyPenalty,
+    n,
+    setN,
+    presence_penalty,
+    setPresencePenalty
   } = usePremChatStore(
     (state) => ({
       temperature: state.temperature,
@@ -29,6 +33,10 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
       setTopP: state.setTopP,
       frequency_penalty: state.frequency_penalty,
       setFrequencyPenalty: state.setFrequencyPenalty,
+      n: state.n,
+      setN: state.setN,
+      presence_penalty: state.presence_penalty,
+      setPresencePenalty: state.setPresencePenalty
     }),
     shallow
   );
@@ -161,7 +169,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         </li>
         <li>
           <p>
-            <span>Repetition Penalty</span>
+            <span>Frequency Penalty</span>
             <span>{frequency_penalty}</span>
           </p>
           <RangeSlider
@@ -197,6 +205,38 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             defaultValue={[0, 50]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
+          />
+        </li>
+        <li>
+          <p>
+            <span>N</span>
+            <span>{n}</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            value={[0, n]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+            min={0}
+            max={1}
+            step={0.1}
+            onInput={(value: number[]) => setN(value[1])}
+          />
+        </li>
+        <li>
+          <p>
+            <span>Presence Penalty</span>
+            <span>{presence_penalty}</span>
+          </p>
+          <RangeSlider
+            className="single-thumb"
+            value={[-2, presence_penalty]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+            min={-2}
+            max={2}
+            step={0.1}
+            onInput={(value: number[]) => setPresencePenalty(value[1])}
           />
         </li>
       </ul>

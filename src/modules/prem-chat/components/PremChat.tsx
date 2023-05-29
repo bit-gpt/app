@@ -3,21 +3,22 @@ import { useParams } from "react-router-dom";
 import UserReply from "shared/components/UserReply";
 import BotReply from "shared/components/BotReply";
 import usePremChat from "shared/hooks/usePremChat";
-import usePremChatStore from "shared/store/prem-chat";
 
 import InputBox from "./InputBox";
-import ModelSelectionDropdown from "./ModelSelectionDropdown";
 import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
 import Header from "./Header";
 import RightSidebar from "./RightSidebar";
 import { Message } from "../types";
+import useService from "shared/hooks/useService";
 
 function PremChat() {
-  const { chatId } = useParams();
-  const model = usePremChatStore((state) => state.model);
+  const { chatId, serviceId } = useParams();
+  const model = serviceId;
   const [rightSidebar, setRightSidebar] = useState(false);
   const chatMessageListRef = useRef<HTMLDivElement>(null);
+  const { data: response } = useService(serviceId!);
+  const service = response?.data;
 
   const {
     chatMessages,
@@ -27,7 +28,7 @@ function PremChat() {
     isLoading,
     isError,
     onRegenerate,
-  } = usePremChat(chatId || null);
+  } = usePremChat(serviceId!, chatId || null);
 
   useEffect(() => {
     if (chatMessageListRef.current) {
@@ -49,20 +50,11 @@ function PremChat() {
               ref={chatMessageListRef}
             >
               <Header
+                title={service?.name || ""}
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
               <div className="z-10 relative mt-[40px] flex flex-col prem-chat-body">
-                <h1 className="text-antiflashwhite text-3xl text-center">
-                  Prem Chat
-                </h1>
-                <div className="prem-chat p-4 pb-7 md:w-[55%] w-[85%] mx-auto">
-                  <p className="text-spanishgray text-base font-proximaNova-regular mb-[6px]">
-                    Model
-                  </p>
-                  <ModelSelectionDropdown />
-                  {isError && <div>Something went wrong</div>}
-                </div>
                 <div className="md:w-[65%] w-[90%] mx-auto mt-8">
                   {chatMessages.map((message: Message, index: number) => (
                     <div key={index}>

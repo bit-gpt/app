@@ -40,10 +40,14 @@ fn run_container() {
         .args(&[
             "run",
             "-d",
+            "-v",
+            "/var/run/docker.sock:/var/run/docker.sock",
             "-p",
             "8000:8000",
             "--name",
             "premd",
+            "-e",
+            "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-daemon/main/resources/mocks/manifests.json",
             "--rm",
             "ghcr.io/premai-io/premd:latest",
         ])
