@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NotFound from "shared/components/NotFound";
 import useDocker from "shared/hooks/useDocker";
 import DownloadDockerWall from "shared/components/DownloadDockerWall";
-import { isDesktopEnv } from "shared/helpers/utils";
+import { isBrowserEnv } from "shared/helpers/utils";
 
 import Dashboard from "modules/dashboard/components/Dashboard";
 import PremChat from "modules/prem-chat/components/PremChat";
@@ -23,9 +23,9 @@ const queryClient = new QueryClient({
 
 function App() {
   const { isDockerRunning, handleCheckIsDockerRunning } = useDocker();
-  const isDesktop = isDesktopEnv();
+  const isBrowser = isBrowserEnv();
 
-  if (isDesktop && !isDockerRunning) {
+  if (!isBrowser && !isDockerRunning) {
     return (
       <DownloadDockerWall
         handleCheckIsDockerRunning={handleCheckIsDockerRunning}

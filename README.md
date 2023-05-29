@@ -1,6 +1,4 @@
-# Prem App ❤️
-
-> Note: this represents the main user interface to interact with prem-box. Please refer to https://github.com/premAI-io/prem-box for a more complete documentation.
+# 🖥 Prem App
 
 ## Demo
 

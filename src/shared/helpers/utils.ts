@@ -24,9 +24,18 @@ export const isDesktopEnv = () => {
   return import.meta.env.VITE_DESTINATION === "desktop";
 };
 
-export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export const isPackaged = () => {
+  return import.meta.env.VITE_IS_PACKAGED === "true";
+};
 
-export const serviceSearchStyle =  {
+export const isBackendSet = () => {
+  return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
+};
+
+const REMOTE_BACKEND_URL = isBackendSet() ? import.meta.env.VITE_BACKEND_URL : "http://localhost:8000";
+export const BACKEND_URL = isPackaged() ? `${window.location.protocol}//${window.location.host}/api` : REMOTE_BACKEND_URL;
+
+export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
     ...base,
     backgroundColor: "rgba(77, 77, 79, 0.22)",
@@ -88,9 +97,10 @@ export const serviceSearchStyle =  {
   }),
 };
 
-
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (!service.downloaded) {
+  if (!service.supported) {
+    return "not_supported";
+  } else if (!service.downloaded) {
     return "not_downloaded";
   } else if (service.running) {
     return "running";

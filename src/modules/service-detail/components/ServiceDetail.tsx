@@ -10,16 +10,24 @@ import ServiceLoading from "./ServiceLoading";
 import { Service } from "modules/service/types";
 import { getServiceStatus } from "shared/helpers/utils";
 import ServiceActions from "modules/service/components/ServiceActions";
+import { useQueryClient } from "@tanstack/react-query";
+import { SERVICES_KEY } from "shared/hooks/useServices";
+import { useCallback } from "react";
 
 const ServiceDetail = () => {
+  const queryClient = useQueryClient();
   const { serviceId } = useParams();
   const { data: response, isLoading, refetch } = useService(serviceId!);
   const service = response?.data || ({} as Service);
 
-  if (isLoading) return <ServiceLoading />;
+  const refetchServices = useCallback(() => {
+    refetch();
+    queryClient.refetchQueries([SERVICES_KEY]);
+  }, [refetch]);
 
   const status = getServiceStatus(service);
 
+  if (isLoading) return <ServiceLoading />;
   return (
     <AppContainer>
       <div className="flex flex-wrap items-start mb-[62px] mt-5">
@@ -32,7 +40,7 @@ const ServiceDetail = () => {
         <ServiceActions
           serviceId={serviceId!}
           status={status}
-          refetch={refetch}
+          refetch={refetchServices}
         >
           {status === "running" && (
             <button className="bg-brightgray rounded-3xl px-6 py-[10px] text-sm">
@@ -43,8 +51,8 @@ const ServiceDetail = () => {
       </div>
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
-        <div>
-          <ServiceResourceBars />
+        <div className="w-full">
+          <ServiceResourceBars serviceId={service.id} />
           <ServiceGeneralInfo service={service} />
           <ServiceDescription description={service.description} />
         </div>

@@ -5,6 +5,6 @@ import { Message } from "../types";
 const stopService = async (
   serviceId: string
 ): Promise<AxiosResponse<Message>> =>
-  api.get(`api/v1/stop-service/${serviceId}`);
+  api.get(`v1/stop-service/${serviceId}`);
 
 export default stopService;

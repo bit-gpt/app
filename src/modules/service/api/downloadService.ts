@@ -5,6 +5,6 @@ import { Message } from "../types";
 const downloadService = async (
   serviceId: string
 ): Promise<AxiosResponse<Message>> =>
-  api.get(`api/v1/download-service/${serviceId}`);
+  api.get(`v1/download-service/${serviceId}`);
 
 export default downloadService;

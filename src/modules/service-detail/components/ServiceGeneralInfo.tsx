@@ -23,10 +23,6 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
         <span>{service.modelInfo.weightsSize || '-'}</span>
       </div>
       <div className="right-general-card">
-        <span className="opacity-70">Devices</span>
-        <span>{(service.modelInfo.devices || []).join(", ") || "-"}</span>
-      </div>
-      <div className="right-general-card">
         <span className="opacity-70">Inference Time</span>
         <span>{service.modelInfo.inferenceTime || "-"}</span>
       </div>

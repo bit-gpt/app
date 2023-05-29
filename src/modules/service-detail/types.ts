@@ -18,3 +18,7 @@ export type ServiceDescriptionProps = {
 export type ServiceGeneralInfoProps = {
     service: Service
 }
+
+export type ServiceResourceBarsProps = {
+    serviceId: string;
+}
