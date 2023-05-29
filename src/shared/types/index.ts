@@ -50,6 +50,7 @@ export type NavLinkItemProps = {
   icon: React.ReactNode;
   label: string;
   to: string;
+  target?: '_blank';
 };
 
 export type WarningModalProps = {
