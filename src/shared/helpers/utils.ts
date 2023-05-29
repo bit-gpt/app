@@ -7,13 +7,15 @@ export const checkIsDockerRunning = async () => {
   return Boolean(check);
 };
 
+export const checkIsContainerRunning = async () => {
+  const check = await invoke("is_container_running");
+  return Boolean(check);
+};
+
 export const runDockerContainer = async () => {
-  // check if container is already running
-  const containerRunning = await invoke("is_container_running");
-  if (!Boolean(containerRunning)) {
-    // if the container is not running, run it accordingly
-    await invoke("run_container");
-  }
+  const containerRunning = await checkIsContainerRunning();
+  if (Boolean(containerRunning)) return;
+  await invoke("run_container");
 };
 
 export const isBrowserEnv = () => {
