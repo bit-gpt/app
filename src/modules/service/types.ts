@@ -110,4 +110,7 @@ export type ServiceStats = {
   memory_usage: number;
   memory_limit: number;
   memory_percentage: number;
+  storage_percentage: number;
+  storage_usage: number;
+  storage_limit: number;
 };
