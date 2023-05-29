@@ -5,17 +5,20 @@ import { shallow } from "zustand/shallow";
 import { useNavigate } from "react-router-dom";
 import { PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStore from "../store/prem-chat";
+import useService from "./useService";
+import { BACKEND_URL } from "shared/helpers/utils";
 
-const usePremChatStream = (chatId: string | null): PremChatResponse => {
+const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const [pending, setPending] = useState<string | null>();
+  const { data: response } = useService(serviceId);
+  const service = response?.data;
 
   const {
-    model,
     history,
     addHistory,
     updateHistoryMessages,
@@ -23,9 +26,10 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
     max_tokens,
     top_p,
     frequency_penalty,
+    n,
+    presence_penalty
   } = usePremChatStore(
     (state) => ({
-      model: state.model,
       history: state.history,
       addHistory: state.addHistory,
       updateHistoryMessages: state.updateHistoryMessages,
@@ -33,6 +37,8 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
       max_tokens: state.max_tokens,
       top_p: state.top_p,
       frequency_penalty: state.frequency_penalty,
+      n: state.n,
+      presence_penalty: state.presence_penalty,
     }),
     shallow
   );
@@ -60,24 +66,28 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
     setLoading(true);
     const ctrl = new AbortController();
 
+    const backendUrl = new URL(BACKEND_URL);
+    backendUrl.port = `${service?.runningPort!}`;
+
     try {
       fetchEventSource(
-        `${import.meta.env.VITE_BACKEND_NEW_URL}/v1/chat/completions`,
+        `${backendUrl}api/v1/chat/completions`,
         {
           method: "POST",
           openWhenHidden: true,
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + import.meta.env.VITE_BACKEND_TOKEN,
           },
           body: JSON.stringify({
-            model,
+            model: serviceId,
             messages: [...messages, newMessage],
             stream: true,
             temperature,
             max_tokens,
             top_p,
             frequency_penalty,
+            n,
+            presence_penalty
           }),
           signal: ctrl.signal,
           onmessage: (event) => {
@@ -123,12 +133,12 @@ const usePremChatStream = (chatId: string | null): PremChatResponse => {
         const newChatId = uuid();
         addHistory({
           id: newChatId,
-          model,
+          model: serviceId,
           title: tempConversation[0].content,
           messages: [...tempConversation],
           timestamp: Date.now(),
         });
-        navigate(`/prem-chat/${newChatId}`);
+        navigate(`/prem-chat/${serviceId}/${newChatId}`);
       } else {
         updateHistoryMessages(chatId, [...messages, ...tempConversation]);
       }
