@@ -53,13 +53,15 @@ jobs:
           tag=${{ steps.next_tag.outputs.tag }}
           echo "version=${tag:1}" >> $GITHUB_OUTPUT
 
-      - name: Git config and pull
+      - name: Update with latest main branch
         run: |
           git config --local user.email "$(git log --format='%ae' HEAD^!)"
           git config --local user.name "$(git log --format='%an' HEAD^!)"
           git config pull.rebase true
+          git stash  
           git fetch origin main
           git pull origin main
+          git stash pop || true  
 
       - name: Set up Go
         uses: actions/setup-go@v3
