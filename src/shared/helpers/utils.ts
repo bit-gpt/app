@@ -2,6 +2,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { Option, Service, ServiceStatus } from "modules/service/types";
 import { CSSObjectWithLabel, ControlProps } from "react-select";
 
+export const SERVICE_CHECK_REFETCH_INTERVAL = 1000;
+
 export const checkIsDockerRunning = async () => {
   const check = await invoke("is_docker_running");
   return Boolean(check);
