@@ -1,5 +1,4 @@
 import AppContainer from "shared/components/AppContainer";
-import SettingsForm from "./SettingsForm";
 import Resources from "./Resources";
 
 const Settings = () => {
