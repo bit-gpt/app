@@ -3,12 +3,16 @@ import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import deleteService from "../api/deleteService";
 import startService from "../api/startService";
-import PlayIcon from "shared/components/PlayIcon";
 import DeleteIcon from "shared/components/DeleteIcon";
 import { useState } from "react";
 import WarningModal from "./WarningModal";
 
-const StoppedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
+const StoppedServiceState = ({
+  serviceId,
+  refetch,
+  isDetailView,
+  onOpenClick
+}: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation(
@@ -22,7 +26,10 @@ const StoppedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     startMutate(serviceId, {
-      onSuccess: refetch,
+      onSuccess: () => {
+        refetch();
+        onOpenClick && onOpenClick();
+      },
     });
   };
 
@@ -50,12 +57,17 @@ const StoppedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
 
   return (
     <>
-      <button onClick={onStart}>
-        <PlayIcon />
+      <button
+        className="bg-brightgray rounded-3xl px-6 py-[10px] text-sm"
+        onClick={onStart}
+      >
+        Open
       </button>
-      <button onClick={onDelete}>
-        <DeleteIcon />
-      </button>
+      {isDetailView && (
+        <button onClick={onDelete}>
+          <DeleteIcon />
+        </button>
+      )}
       {openDeleteModal && (
         <WarningModal
           icon={<DeleteIcon />}
