@@ -19,8 +19,9 @@ const NotDownloadedServiceState = ({
         console.log(error);
       },
       (message) => {
-        if ('progress' in message)
-          setProgress(message.progress as number);
+        console.log(message);
+        /* if ('progress' in message)
+          setProgress(message.progress as number); */
       },
     );
   };

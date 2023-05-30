@@ -11,13 +11,22 @@ const downloadServiceStream = async (
 ): Promise<void> => {
   const backendUrl = new URL(BACKEND_URL);
   try {
-    const response = await api.get(`v1/download-service/${serviceId}`);
-    console.log(response);
+    //const response = await api.get(`v1/download-service/${serviceId}`);
+    //console.log(response);
 
-    const eventSource = new EventSource(`${backendUrl}v1/download-service-stream/${serviceId}`);
+    const eventSource = new EventSource(`${backendUrl}v1/download-service-stream-sse/${serviceId}`);
     eventSource.onmessage = (event) => {
-      console.log('onmessage', event);
+      if (!event.data) return;
+      onMessage(event.data);
     };
+    eventSource.onerror = (err: any) => {
+      onError(err);
+    };
+    eventSource.onopen = (evt) => {
+      //evt.target?.addEventListener('message', (event) => { console.log('listener: message: ', event)})
+      console.log('onopen', evt);
+    };
+
 /*     eventSource.onerror = (err: any) => {
       console.log('error', err.data);
     };
