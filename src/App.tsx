@@ -6,7 +6,6 @@ import useDocker from "shared/hooks/useDocker";
 import DownloadDockerWall from "shared/components/DownloadDockerWall";
 import { isBrowserEnv } from "shared/helpers/utils";
 
-import Dashboard from "modules/dashboard/components/Dashboard";
 import PremChat from "modules/prem-chat/components/PremChat";
 import Service from "modules/service/components/Service";
 import ServiceDetail from "modules/service-detail/components/ServiceDetail";
@@ -39,12 +38,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Service />} />
           <Route path="/prem-chat/:serviceId/:chatId?" element={<PremChat />} />
-          <Route path="/services" element={<Service />} />
           <Route path="/services/:serviceId/detail" element={<ServiceDetail />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/:appId/services" element={<Service />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

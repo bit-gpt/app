@@ -1,7 +1,7 @@
 import { BACKEND_URL } from "shared/helpers/utils";
 import AppCard from "./AppCard";
 import { Link } from "react-router-dom";
-import useApps from "shared/hooks/useApps";
+import useApps from "shared/hooks/useInterfaces";
 
 const Apps = () => {
   const { data: response, isLoading } = useApps();

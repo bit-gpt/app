@@ -1,14 +1,12 @@
 import searchLogo from "assets/images/search.svg";
-import filterLogo from "assets/images/filter.svg";
-import Dropdown from "./Dropdown";
 import { useEffect, useMemo, useState } from "react";
 import Select, { MultiValue } from "react-select";
 import { Option, SearchFilterProps } from "../types";
 import MultiValueRemove from "./MultiValueRemove";
-import { serviceSearchStyle } from "shared/helpers/utils";
+import { BACKEND_URL, serviceSearchStyle } from "shared/helpers/utils";
+import clsx from "clsx";
 
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
   const [search, setSearch] = useState(new Map());
 
   useEffect(() => {
@@ -20,13 +18,9 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
     onFilterChange(search);
   }, [search]);
 
-  const toggleDropdown = () => {
-    setOpenDropdown(!openDropdown);
-  };
-
-  const handleSearch = (appId: string, status: boolean) => {
+  const handleSearch = (appId: string) => {
     const newSearch = new Map(search.entries());
-    newSearch.set(appId, status);
+    newSearch.set(appId, !newSearch.get(appId));
     setSearch(newSearch);
   };
 
@@ -56,49 +50,51 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   if (search.size === 0) return null;
 
   return (
-    <div className="relative search-filter">
-      <img
-        src={searchLogo}
-        alt="search"
-        width="18"
-        height="18"
-        className="absolute left-[20px] top-[12px]"
-      />
-      <Select
-        styles={serviceSearchStyle}
-        options={options}
-        isMulti
-        placeholder="Search"
-        isClearable={false}
-        onChange={onSelectChange}
-        value={selectedApps}
-        components={{
-          MultiValueRemove,
-          DropdownIndicator: () => null,
-          IndicatorSeparator: () => null,
-        }}
-      />
-      <button
-        onClick={toggleDropdown}
-        className="absolute right-[5px] top-0 w-[40px] h-[40px] text-center"
-      >
+    <div>
+      <div className="relative search-filter">
         <img
-          src={filterLogo}
-          alt="filter"
+          src={searchLogo}
+          alt="search"
           width="18"
           height="18"
-          className="mx-auto"
+          className="absolute left-[20px] top-[12px]"
         />
-      </button>
-      {apps.length > 0 && (
-        <Dropdown
-          open={openDropdown}
-          close={() => setOpenDropdown(false)}
-          apps={apps}
-          search={search}
-          onChange={handleSearch}
+        <Select
+          styles={serviceSearchStyle}
+          options={options}
+          isMulti
+          placeholder="Search"
+          isClearable={false}
+          onChange={onSelectChange}
+          value={selectedApps}
+          components={{
+            MultiValueRemove,
+            DropdownIndicator: () => null,
+            IndicatorSeparator: () => null,
+          }}
         />
-      )}
+      </div>
+      <div className="flex justify-around mx-44 mt-2">
+        {apps.map((app) => (
+          <div
+            className={clsx("text-white", {
+              "bg-tulip  rounded": search.get(app.id),
+            })}
+            key={app.id}
+          >
+            <button className="flex p-1" onClick={() => handleSearch(app.id)}>
+              <img
+                src={`${BACKEND_URL}${app.icon}`}
+                alt={app.name}
+                width="20"
+                height="20"
+                className="mr-2 rounded"
+              />
+              <span>{app.name}</span>
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
