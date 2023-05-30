@@ -36,7 +36,7 @@ export const isBackendSet = () => {
   return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
 };
 
-const REMOTE_BACKEND_URL = isBackendSet() ? import.meta.env.VITE_BACKEND_URL : "http://localhost:8000";
+const REMOTE_BACKEND_URL = isBackendSet() ? import.meta.env.VITE_BACKEND_URL : "http://localhost:54321";
 export const BACKEND_URL = isPackaged() ? `${window.location.protocol}//${window.location.host}/api` : REMOTE_BACKEND_URL;
 
 export const serviceSearchStyle = {
