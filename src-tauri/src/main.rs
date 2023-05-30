@@ -31,11 +31,6 @@ fn run_container() {
         println!("Docker is not running");
         return;
     }
-    let container_check = is_container_running();
-    if container_check {
-        println!("Container is already running");
-        return;
-    }
 
     //pull versions.json from GitHub repository prem-box
     let url = "https://raw.githubusercontent.com/premAI-io/prem-box/main/versions.json";
@@ -48,8 +43,9 @@ fn run_container() {
         config.prem.daemon.digest
     );
 
+    println!("Using image: {}", image);
     
-    let cmd = Command::new("docker")
+    Command::new("docker")
         .args(&[
             "run",
             "-d",
@@ -66,23 +62,6 @@ fn run_container() {
         ])
         .output()
         .expect("Failed to execute docker run");
-
-    let cmd_status = cmd.status.success();
-    if !cmd_status {
-        println!("Failed to run container");
-        return;
-    }
-    
-    // wait for APIs to be ready before running the app
-    loop {
-        match TcpStream::connect(("127.0.0.1", 8000)) {
-            Ok(_) => break,
-            Err(_) => {
-                println!("API not ready yet. Waiting for 1 second...");
-                thread::sleep(Duration::from_secs(1));
-            }
-        }
-    }
 }
 
 #[tauri::command]
@@ -103,19 +82,13 @@ fn is_docker_running() -> bool {
 
 
 #[tauri::command]
-fn is_container_running() -> bool {
-    let container_check = Command::new("docker")
-        .args(["ps", "-q", "-f", "name=premd"])
+fn is_container_running() -> Result<bool, String> {
+    let output = Command::new("docker")
+        .args(&["ps", "-q", "-f", "name=premd"])
         .output()
-        .map_err(|e| {
-            println!("Failed to execute docker ps: {}", e);
-            e
-        });
-    let container_check_status = container_check.is_ok();
-    if container_check_status && !container_check.unwrap().stdout.is_empty() {
-        return true;
-    }
-    return false;
+        .map_err(|e| format!("Failed to execute command: {}", e))?;
+
+    Ok(!output.stdout.is_empty())
 }
 
 fn main() {
