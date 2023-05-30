@@ -1,13 +1,14 @@
 import { AxiosResponse } from "axios";
 import api from "shared/api/v1";
-import { Message } from "../types";
+import { DownloadMessage } from "../types";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { BACKEND_URL } from "shared/helpers/utils";
 
 const downloadServiceStream = async (
   serviceId: string,
   onError: (err: any) => void,
-  onMessage: (message: Message) => void,
+  onMessage: (message: DownloadMessage) => void,
+  onceCompleted: () => void,
 ): Promise<void> => {
   const backendUrl = new URL(BACKEND_URL);
   try {
@@ -17,9 +18,21 @@ const downloadServiceStream = async (
     const eventSource = new EventSource(`${backendUrl}v1/download-service-stream-sse/${serviceId}`);
     eventSource.onmessage = (event) => {
       if (!event.data) return;
-      onMessage(event.data);
+      try {
+        const parsedData = JSON.parse(event.data);
+        const status = parsedData.status;
+        if (status.includes('Digest:')) {
+          eventSource.close();
+          onceCompleted();
+          return;
+        }
+        onMessage(parsedData);
+      } catch (error) {
+        throw error;
+      }
     };
     eventSource.onerror = (err: any) => {
+      eventSource.close();
       onError(err);
     };
     eventSource.onopen = (evt) => {
