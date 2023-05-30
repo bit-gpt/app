@@ -49,7 +49,7 @@ fn run_container() {
             "-e",
             "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-daemon/main/resources/mocks/manifests.json",
             "--rm",
-            "ghcr.io/premai-io/premd:latest",
+            "ghcr.io/premai-io/premd:v0.0.3",
         ])
         .output()
         .expect("Failed to execute docker run");

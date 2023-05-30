@@ -25,6 +25,10 @@ const useDocker = () => {
   useEffect(() => {
     if (isBrowser) return;
 
+    (async () => {
+      await handleCheckIsDockerRunning();
+    })();
+
     intervalRef.current = setInterval(async () => {
       await handleCheckIsDockerRunning();
     }, 5000);
