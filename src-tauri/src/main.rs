@@ -45,7 +45,7 @@ fn run_container() {
 
     println!("Using image: {}", image);
     
-    Command::new("docker")
+    Command::new("/usr/local/bin/docker")
         .args(&[
             "run",
             "-d",
@@ -66,7 +66,7 @@ fn run_container() {
 
 #[tauri::command]
 fn is_docker_running() -> bool {    
-    let output = Command::new("pgrep")
+    let output = Command::new("/usr/bin/pgrep")
         .args(["Docker"])
         .output()
         .map_err(|e| {
@@ -83,7 +83,7 @@ fn is_docker_running() -> bool {
 
 #[tauri::command]
 fn is_container_running() -> Result<bool, String> {
-    let output = Command::new("docker")
+    let output = Command::new("/usr/local/bin/docker")
         .args(&["ps", "-q", "-f", "name=premd"])
         .output()
         .map_err(|e| format!("Failed to execute command: {}", e))?;
