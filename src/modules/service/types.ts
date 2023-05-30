@@ -67,6 +67,9 @@ export type GPUStats = {
   used_memory: number | null,
   memory_percentage: number | null,
 }
+export type Message = {
+  message: string;
+};
 
 export type DownloadMessage = {
   status: string;
