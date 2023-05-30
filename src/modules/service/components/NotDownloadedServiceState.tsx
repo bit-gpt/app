@@ -1,26 +1,37 @@
-import { useMutation } from "@tanstack/react-query";
-import downloadService from "../api/downloadService";
 import DownloadIcon from "shared/components/DownloadIcon";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
+import downloadServiceStream from "../api/downloadServiceStream";
+import { useState } from "react";
 
 const NotDownloadedServiceState = ({
   serviceId,
   refetch,
 }: ServiceStateProps) => {
-  const { mutate, isLoading } = useMutation((id: string) =>
-    downloadService(id)
-  );
+
+  const [progress, setProgress] = useState(-1);
 
   const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    mutate(serviceId, {
-      onSuccess: refetch,
-    });
+    downloadServiceStream(
+      serviceId,
+      (error) => {
+        console.log(error);
+      },
+      (message) => {
+        if ('progress' in message)
+          setProgress(message.progress as number);
+      },
+    );
   };
 
-  if (isLoading) {
-    return <Spinner className="w-5 h-5" />;
+  if (progress >= 0) {
+    return (
+      <>
+        <p>{progress}%</p>
+        <Spinner className="w-5 h-5" />
+      </>
+    )
   }
 
   return (
