@@ -39,11 +39,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Service />} />
+          <Route path="/prem-chat/:serviceId/:chatId?" element={<PremChat />} />
           <Route path="/services/:serviceId/detail" element={<ServiceDetail />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/prem-chat" element={<PremChat />} />
-          <Route path="/prem-chat/:chatId" element={<PremChat />} />
-          <Route path="/:appId/services" element={<Service />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

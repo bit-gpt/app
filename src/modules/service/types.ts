@@ -37,6 +37,7 @@ export type Service = {
   name: string;
   running: boolean;
   supported: boolean;
+  runningPort: number;
 };
 
 export type SearchFilterProps = {
@@ -54,10 +55,18 @@ export type Stats = {
   cpu_percentage: number;
   memory_usage: number;
   memory_limit: number;
+  memory_percentage: number;
   storage_usage: number;
   storage_limit: number;
   storage_percentage: number;
 };
+
+export type GPUStats = {
+  gpu_name: string | null,
+  total_memory: number | null,
+  used_memory: number | null,
+  memory_percentage: number | null,
+}
 
 export type Message = {
   message: string;
@@ -101,4 +110,7 @@ export type ServiceStats = {
   memory_usage: number;
   memory_limit: number;
   memory_percentage: number;
+  storage_percentage: number;
+  storage_usage: number;
+  storage_limit: number;
 };
