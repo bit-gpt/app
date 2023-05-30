@@ -11,6 +11,7 @@ import Header from "./Header";
 import RightSidebar from "./RightSidebar";
 import { Message } from "../types";
 import useService from "shared/hooks/useService";
+import startService from "modules/service/api/startService";
 
 function PremChat() {
   const { chatId, serviceId } = useParams();
@@ -30,13 +31,10 @@ function PremChat() {
     onRegenerate,
   } = usePremChat(serviceId!, chatId || null);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (!service?.running) {
-      alert('The service stopped. Please start the service to continue using the app.');
-      navigate(-1);
-    };
+      startService(serviceId!);
+    }
     
     if (chatMessageListRef.current) {
       chatMessageListRef.current.scrollTop =
