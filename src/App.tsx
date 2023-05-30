@@ -10,6 +10,10 @@ import PremChat from "modules/prem-chat/components/PremChat";
 import Service from "modules/service/components/Service";
 import ServiceDetail from "modules/service-detail/components/ServiceDetail";
 import Settings from "modules/settings/components/Settings";
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
+
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -4,15 +4,25 @@ import { ServiceStateProps } from "../types";
 import StopIcon from "shared/components/StopIcon";
 import stopService from "../api/stopService";
 
-const RunningServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
-
+const RunningServiceState = ({
+  serviceId,
+  refetch,
+  isDetailView = false,
+  onOpenClick
+}: ServiceStateProps) => {
   const { mutate, isLoading } = useMutation((id: string) => stopService(id));
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(serviceId, {
-      onSuccess: refetch
+      onSuccess: refetch,
     });
+  };
+
+
+  const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    onOpenClick && onOpenClick();
   };
 
   if (isLoading) {
@@ -27,9 +37,17 @@ const RunningServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
       >
         Running
       </button>
-      <button onClick={onStop}>
-        <StopIcon />
+      <button
+        className="bg-brightgray rounded-3xl px-6 py-[10px] text-sm"
+        onClick={onOpen}
+      >
+        Open
       </button>
+      {isDetailView && (
+        <button onClick={onStop}>
+          <StopIcon />
+        </button>
+      )}
     </>
   );
 };

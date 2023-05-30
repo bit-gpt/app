@@ -75,6 +75,8 @@ export type Message = {
 export type ServiceStateProps = {
   serviceId: string;
   refetch: () => void;
+  isDetailView?: boolean;
+  onOpenClick?: () => void;
 };
 
 export type ServiceStatus =
@@ -87,17 +89,17 @@ export type ServiceStatus =
 
 
 export type ServiceCardProps = {
-  title: string;
   className: string;
   icon: string;
-  status: ServiceStatus;
-  serviceId: string;
+  service: Service;
 };
 
 export type ServiceActionsProps = PropsWithChildren<{
   status: ServiceStatus;
   serviceId: string;
   refetch: () => void;
+  isDetailView?: boolean;
+  interfaces: App[];
 }>;
 
 export type WarningServiceStateProps = {
@@ -113,4 +115,11 @@ export type ServiceStats = {
   storage_percentage: number;
   storage_usage: number;
   storage_limit: number;
+};
+
+
+export type DocumentationModalProps = {
+  content: string;
+  isOpen: boolean;
+  closeModal: () => void;
 };

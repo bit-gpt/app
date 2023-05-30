@@ -1,4 +1,4 @@
-import ServicesCard from "modules/service/components/ServiceCard";
+import ServiceCard from "modules/service/components/ServiceCard";
 import chatLogo from "assets/images/chat.svg";
 import useServices from "shared/hooks/useServices";
 
@@ -21,13 +21,11 @@ const ServicesRunning = () => {
       )}
       <div className="flex gap-8 flex-wrap">
         {runningServices.map((service) => (
-          <ServicesCard
+          <ServiceCard
             key={service.id}
             icon={chatLogo}
             className="dashboard-bottom__card flex-wrap !pr-5 services-running"
-            title={service.name}
-            status="running"
-            serviceId={service.id}
+            service={service}
           />
         ))}
       </div>

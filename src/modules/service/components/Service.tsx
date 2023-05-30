@@ -5,7 +5,7 @@ import SearchFilter from "./SearchFilter";
 import { useParams } from "react-router-dom";
 import useInterfaces from "shared/hooks/useInterfaces";
 import useServices from "shared/hooks/useServices";
-import ServicesCard from "./ServiceCard";
+import ServiceCard from "./ServiceCard";
 import { getServiceStatus } from "shared/helpers/utils";
 
 const Service = () => {
@@ -48,15 +48,13 @@ const Service = () => {
             <h3 className="text-white flex justify-center mb-3">{app.name}</h3>
             <div className="flex gap-[22px] flex-wrap justify-center ">
               {filteredServices.map((service) => (
-                <ServicesCard
+                <ServiceCard
                   key={service.id}
                   icon={service.icon}
                   className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
                     "services-running": service.running,
                   })}
-                  title={service.name}
-                  status={getServiceStatus(service)}
-                  serviceId={service.id}
+                  service={service}
                 />
               ))}
 
