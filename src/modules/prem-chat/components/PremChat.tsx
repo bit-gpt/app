@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import UserReply from "shared/components/UserReply";
 import BotReply from "shared/components/BotReply";
 import usePremChat from "shared/hooks/usePremChat";
@@ -30,7 +30,14 @@ function PremChat() {
     onRegenerate,
   } = usePremChat(serviceId!, chatId || null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (!service?.running) {
+      alert('The service stopped. Please start the service to continue using the app.');
+      navigate(-1);
+    };
+    
     if (chatMessageListRef.current) {
       chatMessageListRef.current.scrollTop =
         chatMessageListRef.current.scrollHeight;
