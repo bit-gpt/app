@@ -24,6 +24,7 @@ const NotDownloadedServiceState = ({
       },
       () => {
         setProgress(-1);
+        refetch();
       }
     );
   };
