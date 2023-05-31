@@ -1,25 +1,47 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { checkIsDockerRunning, runDockerContainer, isBrowserEnv, checkIsContainerRunning } from "../helpers/utils";
+import { checkIsDockerRunning, runDockerContainer, isBrowserEnv, checkIsContainerRunning, checkIsServerRunning } from "../helpers/utils";
 
 const useDocker = () => {
   const isBrowser = isBrowserEnv();
   const [isDockerRunning, setIsDockerRunning] = useState<boolean>(false);
   const [isContainerRunning, setIsContainerRunning] = useState<boolean>(false);
+  const [isServerRunning, setIsServerRunning] = useState<boolean>(false);
   
 
   const handleCheckIsDockerRunning = useCallback(async () => {
     try {
       const dockerRunning = await checkIsDockerRunning();
-      setIsDockerRunning(dockerRunning);
-      if (!dockerRunning) return;
+      if (!dockerRunning) {
+        setIsDockerRunning(false);
+        return
+      };
+      setIsDockerRunning(true);
+
       const containerRunning = await checkIsContainerRunning();
-      setIsContainerRunning(containerRunning);
-      if (containerRunning) return; 
-      await runDockerContainer();
+      if (!containerRunning) {
+        setIsContainerRunning(false);
+        await runDockerContainer();
+        return;
+      }
+      setIsContainerRunning(true);
+
+      const serverRunning = await checkIsServerRunning();
+      if (!serverRunning) {
+        setIsServerRunning(false);
+        const interval = setInterval(async () => {
+          const serverRunning = await checkIsServerRunning();
+          if (serverRunning) {
+            setIsServerRunning(true);
+            clearInterval(interval);
+          }
+        }, 500);
+        return;
+      }
+      setIsServerRunning(true);
     } catch (error) {
       throw error;
     }
-  }, [setIsDockerRunning, setIsContainerRunning]);
+  }, [setIsDockerRunning, setIsContainerRunning, setIsServerRunning]);
 
   const intervalRef = useRef<NodeJS.Timeout>();
   useEffect(() => {
@@ -39,6 +61,7 @@ const useDocker = () => {
   return {
     isDockerRunning: isDockerRunning,
     isContainerRunning: isContainerRunning,
+    isServerRunning: isServerRunning,
     handleCheckIsDockerRunning,
   };
 };

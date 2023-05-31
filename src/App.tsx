@@ -28,17 +28,17 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { isDockerRunning, handleCheckIsDockerRunning } = useDocker();
+  const { isDockerRunning, isContainerRunning, isServerRunning, handleCheckIsDockerRunning } = useDocker();
   const isBrowser = isBrowserEnv();
 
-  if (!isBrowser && !isDockerRunning) {
-    return (
-      <DownloadDockerWall
-        handleCheckIsDockerRunning={handleCheckIsDockerRunning}
-        isDockerRunning={isDockerRunning}
-      />
-    );
-  }
+  if (!isBrowser)
+    if (!isDockerRunning || !isContainerRunning || !isServerRunning)
+      return (
+        <DownloadDockerWall
+          handleCheckIsDockerRunning={handleCheckIsDockerRunning}
+          isDockerRunning={isDockerRunning}
+        />
+      );
 
   return (
     <QueryClientProvider client={queryClient}>

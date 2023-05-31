@@ -1,10 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use reqwest::blocking::get;
+use serde::Deserialize;
 use std::{env, fs, net::TcpStream, thread, time::Duration};
 use tauri::api::{path, process::Command};
-use serde::Deserialize;
-use reqwest::blocking::get;
 
 #[derive(Deserialize, Debug)]
 struct App {
@@ -37,14 +37,13 @@ fn run_container() {
     let response = get(url).expect("Request failed");
     let config: Config = response.json().expect("Failed to parse JSON");
 
-    let image = format!("{}:{}@{}",
-        config.prem.daemon.image,
-        config.prem.daemon.version,
-        config.prem.daemon.digest
+    let image = format!(
+        "{}:{}@{}",
+        config.prem.daemon.image, config.prem.daemon.version, config.prem.daemon.digest
     );
 
     println!("Using image: {}", image);
-    
+
     Command::new("/usr/local/bin/docker")
         .args(&[
             "run",
@@ -65,7 +64,7 @@ fn run_container() {
 }
 
 #[tauri::command]
-fn is_docker_running() -> bool {    
+fn is_docker_running() -> bool {
     let output = Command::new("/usr/bin/pgrep")
         .args(["Docker"])
         .output()
@@ -73,13 +72,12 @@ fn is_docker_running() -> bool {
             println!("Failed to execute docker info: {}", e);
             e
         });
-    
+
     if !output.unwrap().stdout.is_empty() {
         return true;
     }
     return false;
 }
-
 
 #[tauri::command]
 fn is_container_running() -> Result<bool, String> {
@@ -103,8 +101,8 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             run_container,
+            is_docker_running,
             is_container_running,
-            is_docker_running
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
