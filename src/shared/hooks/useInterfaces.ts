@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getApps } from "modules/dashboard/api";
+import getInterfaces from "modules/service/api/getInterfaces";
 
-const useApps = () => {
-  return useQuery(["getApps"], getApps);
+const useInterfaces = () => {
+  return useQuery(["getApps"], getInterfaces);
 };
 
-export default useApps;
+export default useInterfaces;

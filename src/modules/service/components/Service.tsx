@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import useInterfaces from "shared/hooks/useInterfaces";
 import useServices from "shared/hooks/useServices";
 import ServiceCard from "./ServiceCard";
-import { getServiceStatus } from "shared/helpers/utils";
 
 const Service = () => {
   const { appId } = useParams();

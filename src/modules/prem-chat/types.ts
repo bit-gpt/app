@@ -33,11 +33,6 @@ export type PremChatResponse = {
   onRegenerate: () => void;
 };
 
-export interface PremChatHistoryNavigator extends PremChatHistory {
-  next?: PremChatHistory;
-  prev?: PremChatHistory;
-}
-
 export type HeaderProps = {
   setRightSidebar: (value: boolean) => void;
   rightSidebar: boolean;
@@ -49,11 +44,6 @@ export type InputBoxProps = {
   setQuestion: (question: string) => void;
   disabled?: boolean;
   placeholder?: string;
-};
-
-export type Model = {
-  id: string;
-  name: string;
 };
 
 export type RegenerateButtonProps = {

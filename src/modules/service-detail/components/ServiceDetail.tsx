@@ -13,7 +13,7 @@ import ServiceActions from "modules/service/components/ServiceActions";
 import { useQueryClient } from "@tanstack/react-query";
 import { SERVICES_KEY } from "shared/hooks/useServices";
 import { useCallback } from "react";
-import useApps from "shared/hooks/useInterfaces";
+import useInterfaces from "shared/hooks/useInterfaces";
 
 const ServiceDetail = () => {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ const ServiceDetail = () => {
   const { data: response, isLoading, refetch } = useService(serviceId!);
   const service = response?.data || ({} as Service);
   
-  const {data: appResponse} = useApps();
+  const {data: appResponse} = useInterfaces();
   const interfaces = appResponse?.data || [];
 
   const refetchServices = useCallback(() => {
