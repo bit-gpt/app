@@ -3,8 +3,6 @@ import setting from "assets/images/setting.svg";
 import { HeaderProps } from "../types";
 
 const Header = ({ setRightSidebar, rightSidebar, title }: HeaderProps) => {
-
-
   return (
     <div className="border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0">
       <div className="w-full flex justify-center">

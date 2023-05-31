@@ -1,4 +1,3 @@
-import { App } from "modules/dashboard/types";
 import { PropsWithChildren } from "react";
 
 export type CheckeBoxProps = {
@@ -126,4 +125,12 @@ export type DocumentationModalProps = {
   content: string;
   isOpen: boolean;
   closeModal: () => void;
+};
+
+export type App = {
+  id: string;
+  name: string;
+  icon: string;
+  playground: boolean;
+  documentation: string;
 };

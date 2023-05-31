@@ -36,8 +36,14 @@ export const isBackendSet = () => {
   return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
 };
 
-const REMOTE_BACKEND_URL = isBackendSet() ? import.meta.env.VITE_BACKEND_URL : "http://localhost:54321";
-export const BACKEND_URL = isPackaged() ? `${window.location.protocol}//${window.location.host}/api` : REMOTE_BACKEND_URL;
+export const BACKEND_URL_KEY = "backend_url";
+
+export const getBackendUrl = () => {
+  const url = localStorage.getItem(BACKEND_URL_KEY);
+  return url || import.meta.env.VITE_BACKEND_URL;
+}
+
+export const BACKEND_URL = getBackendUrl()
 
 export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
@@ -112,3 +118,5 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
   // other status will go here
   return "stopped";
 };
+
+

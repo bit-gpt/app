@@ -6,7 +6,7 @@ import { ServiceCardProps } from "../types";
 import ServiceActions from "./ServiceActions";
 import { SERVICE_KEY } from "shared/hooks/useService";
 import { getServiceStatus } from "shared/helpers/utils";
-import useApps from "shared/hooks/useInterfaces";
+import useInterfaces from "shared/hooks/useInterfaces";
 
 const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const queryClient = useQueryClient();
@@ -14,7 +14,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const serviceId = service.id;
   const status = getServiceStatus(service);
   const title = service.name;
-  const { data: response } = useApps();
+  const { data: response } = useInterfaces();
   const interfaces = response?.data || [];
 
   const refetch = useCallback(() => {

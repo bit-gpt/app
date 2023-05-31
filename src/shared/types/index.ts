@@ -1,3 +1,5 @@
+import { Message, PremChatHistory } from "modules/prem-chat/types";
+
 export type BotReplyProps = {
   reply: string;
 };
@@ -61,4 +63,25 @@ export type WarningModalProps = {
   icon?: React.ReactNode;
   title?: string;
   description: string;
+};
+
+
+export type PremChatStore = {
+  history: PremChatHistory[];
+  clearHistory: () => void;
+  addHistory: (newHistory: PremChatHistory) => void;
+  updateHistoryMessages: (id: string, messages: Message[]) => void;
+  deleteHistory: (id: string) => void;
+  temperature: number;
+  setTemperature: (temperature: number) => void;
+  max_tokens: number;
+  setMaxTokens: (max_tokens: number) => void;
+  top_p: number;
+  setTopP: (top_p: number) => void;
+  frequency_penalty: number;
+  setFrequencyPenalty: (frequency_penalty: number) => void;
+  n: number;
+  setN: (n: number) => void;
+  presence_penalty: number;
+  setPresencePenalty: (presence_penalty: number) => void;
 };

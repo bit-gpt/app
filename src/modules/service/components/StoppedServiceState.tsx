@@ -7,6 +7,7 @@ import DeleteIcon from "shared/components/DeleteIcon";
 import { useState } from "react";
 import WarningModal from "./WarningModal";
 import PrimaryButton from "shared/components/PrimaryButton";
+import { toast } from "react-toastify";
 
 const StoppedServiceState = ({
   serviceId,
@@ -30,6 +31,10 @@ const StoppedServiceState = ({
       onSuccess: () => {
         refetch();
         onOpenClick && onOpenClick();
+        toast.success("Service started successfully");
+      },
+      onError: () => {
+        toast.error("Failed to start service");
       },
     });
   };
@@ -43,7 +48,13 @@ const StoppedServiceState = ({
     e.preventDefault();
     setOpenDeleteModal(false);
     deleteMutate(serviceId, {
-      onSuccess: refetch,
+      onSuccess: () => {
+        refetch();
+        toast.success("Service deleted successfully");
+      },
+      onError: () => {
+        toast.error("Failed to delete service");
+      },
     });
   };
 
