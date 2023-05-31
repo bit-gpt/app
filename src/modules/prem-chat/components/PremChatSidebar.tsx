@@ -6,13 +6,12 @@ import { shallow } from "zustand/shallow";
 import usePremChatStore from "shared/store/prem-chat";
 import Logo from "assets/images/logo.svg";
 import brandLogo from "assets/images/brand-logo.svg";
-import cross from "assets/images/cross.svg";
+import cross from "assets/images/arrow.svg";
 import edit from "assets/images/edit.svg";
 import msg from "assets/images/msg.svg";
 import searchIcon from "assets/images/search.svg";
 import exportData from "assets/images/export-data.svg";
 import importData from "assets/images/import-data.svg";
-import LeftArrowIcon from "shared/components/LeftArrowIcon";
 
 const PremChatSidebar = () => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
@@ -51,10 +50,10 @@ const PremChatSidebar = () => {
 
   return (
     <div className={clsx(sidebarToggle && "sidebar-toggle")}>
-      <div className="pt-[18px] pb-[70px] flex-col px-2 flex h-screen sidebar">
+      <div className="pt-[18px] pb-[10px] flex-col px-2 flex h-screen sidebar !w-[259px]">
         <div className={clsx(sidebarToggle ? "flex-col flex" : "flex")}>
           <button
-            className={clsx(sidebarToggle ? "mx-auto my-5" : "ml-4")}
+            className={clsx(sidebarToggle ? "mx-auto my-5" : "mx-2")}
             onClick={onCloseClick}
           >
             <img src={cross} alt="cross-logo" />
@@ -216,15 +215,6 @@ const PremChatSidebar = () => {
             </Link>
           </li>
         </ul>
-      </div>
-      <div className="sidebar-toggle__btn">
-        <button
-          onClick={() => setSidebarToggle(!sidebarToggle)}
-          className="bg-Onyx px-[8.4px] mr-3 -ml-[6px] py-[10px] rounded-md"
-        >
-          <LeftArrowIcon />
-        </button>
-        <span>Close Sidebar</span>
       </div>
     </div>
   );
