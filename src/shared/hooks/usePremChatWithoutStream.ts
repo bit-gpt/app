@@ -7,6 +7,7 @@ import { Message, PremChatResponse } from "modules/prem-chat/types";
 import { getChatCompletion } from "modules/prem-chat/api";
 import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
+import { toast } from "react-toastify";
 
 const usePremChatWithoutStream = (
   serviceId: string,
@@ -86,6 +87,10 @@ const usePremChatWithoutStream = (
         }
         setTempQuestion("");
       },
+      onError: () => {
+        setTempQuestion("");
+        toast.error("Something went wrong");
+      }
     }
   );
 
