@@ -119,4 +119,5 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
   return "stopped";
 };
 
+export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
 
