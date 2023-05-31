@@ -136,8 +136,8 @@ header img {
   mask-composite: exclude;
 }
 
-.dashboard-bottom__card-box {
-  @apply rounded-[11px] h-[54px] min-w-[54px] flex items-center justify-center;
+.dashboard-bottom__card-box img {
+  @apply rounded-[11px] h-[46px] w-[54px] flex items-center justify-center;
 }
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;
@@ -622,4 +622,34 @@ header img {
 }
 .right-general-card span {
   @apply text-brightgray font-proximaNova-regular text-base w-1/2;
+}
+
+.ReactModal__Overlay {
+  @apply !bg-transparent z-[11];
+}
+
+.documentation-markdown h1 {
+  @apply text-[32px] font-bold leading-[50px] mb-4;
+  font-family: "ProximaNova-bold";
+}
+.documentation-markdown code {
+  @apply whitespace-normal font-proximaNova-regular text-sm text-brightgray mb-4 block;
+}
+.documentation-modal {
+  max-height: calc(100vh - 100px);
+  @apply overflow-y-auto overflow-x-hidden;
+}
+.documentation-markdown {
+  @apply px-4;
+}
+.documentation-modal::-webkit-scrollbar {
+  @apply w-[3px];
+}
+.documentation-modal::-webkit-scrollbar-track {
+  @apply rounded-md;
+  background-color: rgba(237, 237, 237, 0.1);
+}
+.documentation-modal::-webkit-scrollbar-thumb {
+  @apply rounded-md;
+  background: linear-gradient(90deg, #F58E8E 0%, #F9D4A4 99.36%);
 }

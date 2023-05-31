@@ -26,11 +26,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
     <Link className={className} to={`/services/${serviceId}/detail`}>
       <div className="flex gap-8 items-start flex-wrap w-full relative -mx-3">
         <div className="dashboard-bottom__card-box">
-          <img
-            src={icon}
-            alt={title}
-            className="rounded-[11px] w-[28px] h-[28px]"
-          />
+          <img src={icon} alt={title} />
         </div>
         <ServiceActions
           refetch={refetch}
