@@ -78,11 +78,11 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
         {apps.map((app) => (
           <div
             className={clsx("text-white", {
-              "bg-tulip  rounded": search.get(app.id),
+              "bg-[#F4A597] rounded": search.get(app.id),
             })}
             key={app.id}
           >
-            <button className="flex p-1 items-center text-sm" onClick={() => handleSearch(app.id)}>
+            <button className="flex px-2 py-[6px] items-center text-sm" onClick={() => handleSearch(app.id)}>
               <img
                 src={`${BACKEND_URL}${app.icon}`}
                 alt={app.name}
