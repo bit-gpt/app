@@ -164,8 +164,7 @@ header img {
 }
 
 .sidebar {
-  background-color: rgba(32, 35, 43, 1);
-  @apply w-[218px];
+  @apply w-[218px] bg-[#28292D];
 }
 .sidebar-toggle .sidebar {
   @apply w-auto;

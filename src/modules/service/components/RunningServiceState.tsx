@@ -45,7 +45,7 @@ const RunningServiceState = ({
         Running
       </button>
       <PrimaryButton
-        className="!rounded-[14px] !px-4 !py-[3px] !text-[10px] !h-auto"
+        className="!rounded-[14px] !px-4 !py-0 !text-[8px] !h-[21px] flex items-center"
         onClick={onOpen}
       >
         Open
