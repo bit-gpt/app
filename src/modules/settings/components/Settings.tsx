@@ -1,6 +1,7 @@
 import AppContainer from "shared/components/AppContainer";
 import SystemResources from "./SystemResources";
 import GPUResources from "./GPUResources";
+import AdvancedSettings from "./AdvancedSettings";
 
 const Settings = () => {
   return (
@@ -13,6 +14,9 @@ const Settings = () => {
       </div>
       <div className="lg:max-w-[80%] mx-auto settings">
         <GPUResources />
+      </div>
+      <div className="lg:max-w-[80%] mx-auto settings">
+        <AdvancedSettings />
       </div>
     </AppContainer>
   );
