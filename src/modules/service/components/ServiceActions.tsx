@@ -31,7 +31,7 @@ const ServiceActions = ({
 
   return (
     <>
-      <div className="flex gap-4 md:ml-auto">
+      <div className="flex gap-4 ml-auto max-md:mt-4">
         {children}
         {status === "running" && (
           <RunningServiceState

@@ -20,7 +20,7 @@ const ServiceDetail = () => {
   const { serviceId } = useParams();
   const { data: response, isLoading, refetch } = useService(serviceId!);
   const service = response?.data || ({} as Service);
-  
+
   const {data: appResponse} = useApps();
   const interfaces = appResponse?.data || [];
 
@@ -34,7 +34,7 @@ const ServiceDetail = () => {
   if (isLoading) return <ServiceLoading />;
   return (
     <AppContainer>
-      <div className="flex flex-wrap items-start mb-[62px] mt-5">
+      <div className="flex flex-wrap items-start mb-[62px] mt-10 max-md:justify-between">
         <ServiceHeader
           title={service.name}
           tags={service.interfaces}
