@@ -1,4 +1,3 @@
-import { useState } from "react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import { shallow } from "zustand/shallow";
@@ -7,9 +6,6 @@ import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import { RightSidebarProps } from "../types";
 
 const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
-  const [isActive, setIsActive] = useState(false);
-  const [selected, setIsSelected] = useState("k50");
-
   const {
     temperature,
     setTemperature,
@@ -53,71 +49,8 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         <span>Close Sidebar</span>
       </div>
 
-      <div className="mb-[18px] mt-[42px]">
-        <p className="text-spanishgray text-base font-proximaNova-regular mb-[18px]">
-          Preset
-        </p>
-
-        <div className="dropdown">
-          <div
-            onClick={(e) => {
-              setIsActive(!isActive);
-            }}
-            className="text-white text-base font-proximaNova-regular flex items-center justify-between"
-          >
-            {selected}
-            <svg
-              width="7"
-              height="10"
-              viewBox="0 0 7 10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 9.25L5.125 5.125L1 1"
-                stroke="white"
-                strokeWidth="1.76786"
-              />
-            </svg>
-          </div>
-          <div
-            className="dropdown-content"
-            style={{ display: isActive ? "block" : "none" }}
-          >
-            <div
-              onClick={(e) => {
-                const target = e.target as HTMLElement;
-                setIsSelected(target.textContent || "");
-                setIsActive(!isActive);
-              }}
-              className="item"
-            >
-              k50
-            </div>
-            <div
-              className="item"
-              onClick={(e) => {
-                const target = e.target as HTMLElement;
-                setIsSelected(target.textContent || "");
-                setIsActive(!isActive);
-              }}
-            >
-              k50-Creative
-            </div>
-            <div
-              className="item"
-              onClick={(e) => {
-                const target = e.target as HTMLElement;
-                setIsSelected(target.textContent || "");
-                setIsActive(!isActive);
-              }}
-            >
-              k50-Precise
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="border border-timberwolf -mx-4 opacity-30" />
+    
+      <div className="-mx-4 opacity-30" />
       <ul className="my-[18px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
           <p>
