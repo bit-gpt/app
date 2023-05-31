@@ -14,6 +14,12 @@ export const checkIsContainerRunning = async () => {
   return Boolean(check);
 };
 
+export const checkIsServerRunning = async () => {
+  const url = getBackendUrl();
+  const response = await fetch(`${url}/v1/`, { method: "GET" });
+  return Boolean(response.ok);
+};
+
 export const runDockerContainer = async () => {
   const containerRunning = await checkIsContainerRunning();
   if (Boolean(containerRunning)) return;
@@ -37,12 +43,20 @@ export const isBackendSet = () => {
 };
 
 export const BACKEND_URL_KEY = "backend_url";
-
 export const getBackendUrl = () => {
-  const url = localStorage.getItem(BACKEND_URL_KEY);
-  return url || import.meta.env.VITE_BACKEND_URL;
+  let backendURL = "http://localhost:54321";
+  if (isBackendSet()) {
+    backendURL = import.meta.env.VITE_BACKEND_URL;
+  }
+  if (isPackaged()) {
+    backendURL = `${window.location.protocol}//${window.location.host}/api`;
+  }
+  const urlFromStorage = localStorage.getItem(BACKEND_URL_KEY);
+  if (urlFromStorage !== null) {
+    backendURL = urlFromStorage;
+  }
+  return backendURL;
 }
-
 export const BACKEND_URL = getBackendUrl()
 
 export const serviceSearchStyle = {

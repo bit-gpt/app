@@ -29,7 +29,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { isDockerRunning, handleCheckIsDockerRunning } = useDocker();
+  const { isDockerRunning, isContainerRunning, isServerRunning, handleCheckIsDockerRunning } = useDocker();
   const isBrowser = isBrowserEnv();
   const [displayWelcomeScreen, setDisplayWelcomeScreen] = useState(
     sessionStorage.getItem(DISPLAY_WELCOME_SCREEN_KEY) === null
@@ -44,14 +44,14 @@ function App() {
     return <WelcomeScreen close={closeWelcomeScreen} />;
   }
 
-  if (!isBrowser && !isDockerRunning) {
-    return (
-      <DownloadDockerWall
-        handleCheckIsDockerRunning={handleCheckIsDockerRunning}
-        isDockerRunning={isDockerRunning}
-      />
-    );
-  }
+  if (!isBrowser)
+    if (!isDockerRunning || !isContainerRunning || !isServerRunning)
+      return (
+        <DownloadDockerWall
+          handleCheckIsDockerRunning={handleCheckIsDockerRunning}
+          isDockerRunning={isDockerRunning}
+        />
+      );
 
   return (
     <QueryClientProvider client={queryClient}>
