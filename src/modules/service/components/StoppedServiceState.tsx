@@ -6,6 +6,7 @@ import startService from "../api/startService";
 import DeleteIcon from "shared/components/DeleteIcon";
 import { useState } from "react";
 import WarningModal from "./WarningModal";
+import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 
 const StoppedServiceState = ({
@@ -68,12 +69,12 @@ const StoppedServiceState = ({
 
   return (
     <>
-      <button
-        className="bg-brightgray rounded-3xl px-6 py-[10px] text-sm"
+      <PrimaryButton
+        className="!rounded-[14px] !px-4 !py-[3px] !text-[10px] !h-auto"
         onClick={onStart}
       >
         Open
-      </button>
+      </PrimaryButton>
       {isDetailView && (
         <button onClick={onDelete}>
           <DeleteIcon />

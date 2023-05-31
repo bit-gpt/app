@@ -3,6 +3,7 @@ import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import StopIcon from "shared/components/StopIcon";
 import stopService from "../api/stopService";
+import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 
 const RunningServiceState = ({
@@ -38,17 +39,17 @@ const RunningServiceState = ({
   return (
     <>
       <button
-        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular"
+        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[8px] font-proximaNova-regular"
         onClick={(e) => e.preventDefault()}
       >
         Running
       </button>
-      <button
-        className="bg-brightgray rounded-3xl px-6 py-[10px] text-sm"
+      <PrimaryButton
+        className="!rounded-[14px] !px-4 !py-[3px] !text-[10px] !h-auto"
         onClick={onOpen}
       >
         Open
-      </button>
+      </PrimaryButton>
       {isDetailView && (
         <button onClick={onStop}>
           <StopIcon />
