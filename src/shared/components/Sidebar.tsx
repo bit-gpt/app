@@ -9,7 +9,7 @@ import NavLinkContainer from "./NavLinkContainer";
 const Sidebar = () => {
   return (
     <div className={"sidebar-main sidebar-toggle"}>
-      <div className="pt-[18px] flex-col px-2 flex h-screen sidebar">
+      <div className="pt-10 flex-col px-2 flex h-screen sidebar">
         <div className="flex">
           <img className="ml-[10px]" src={brandLogo} alt="brandLogo" />
         </div>
