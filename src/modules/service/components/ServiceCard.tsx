@@ -24,7 +24,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
 
   return (
     <Link className={className} to={`/services/${serviceId}/detail`}>
-      <div className="flex gap-8 items-start flex-wrap w-full relative">
+      <div className="flex gap-8 items-start flex-wrap w-full relative -mx-3">
         <div className="dashboard-bottom__card-box">
           <img
             src={icon}

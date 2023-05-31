@@ -74,21 +74,19 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
           }}
         />
       </div>
-      <div className="flex justify-around mx-44 mt-2">
+      <div className="flex md:justify-center flex-wrap lg:gap-6 gap-4 mt-5">
         {apps.map((app) => (
           <div
             className={clsx("text-white", {
-              "bg-tulip  rounded": search.get(app.id),
+              "bg-[#F4A597] rounded": search.get(app.id),
             })}
             key={app.id}
           >
-            <button className="flex p-1" onClick={() => handleSearch(app.id)}>
+            <button className="flex px-2 py-[6px] items-center text-sm" onClick={() => handleSearch(app.id)}>
               <img
                 src={`${BACKEND_URL}${app.icon}`}
                 alt={app.name}
-                width="20"
-                height="20"
-                className="mr-2 rounded"
+                className="mr-2 w-4 h-4 rounded"
               />
               <span>{app.name}</span>
             </button>

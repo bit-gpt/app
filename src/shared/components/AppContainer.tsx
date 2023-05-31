@@ -13,7 +13,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
       <Sidebar />
       <div
         className={
-          "container pb-[60px] px-3 mx-auto z-[1] relative ml-[120px] mr-[40px]"
+          "container pb-[60px] px-3 mx-auto z-[1] relative md:ml-[120px] md:mr-[40px] ml-[80px] mr-[10px]"
         }
       >
         {children}
