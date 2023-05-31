@@ -3,22 +3,28 @@ import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import StopIcon from "shared/components/StopIcon";
 import stopService from "../api/stopService";
+import { toast } from "react-toastify";
 
 const RunningServiceState = ({
   serviceId,
   refetch,
   isDetailView = false,
-  onOpenClick
+  onOpenClick,
 }: ServiceStateProps) => {
   const { mutate, isLoading } = useMutation((id: string) => stopService(id));
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(serviceId, {
-      onSuccess: refetch,
+      onSuccess: () => {
+        refetch();
+        toast.success("Service stopped successfully");
+      },
+      onError: () => {
+        toast.error("Failed to stop service");
+      },
     });
   };
-
 
   const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

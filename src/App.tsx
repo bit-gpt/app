@@ -10,6 +10,8 @@ import PremChat from "modules/prem-chat/components/PremChat";
 import Service from "modules/service/components/Service";
 import ServiceDetail from "modules/service-detail/components/ServiceDetail";
 import Settings from "modules/settings/components/Settings";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -49,6 +51,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
