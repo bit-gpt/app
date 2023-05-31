@@ -1,4 +1,3 @@
-import { useState } from "react";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import { shallow } from "zustand/shallow";
@@ -7,9 +6,6 @@ import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import { RightSidebarProps } from "../types";
 
 const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
-  const [isActive, setIsActive] = useState(false);
-  const [selected, setIsSelected] = useState("k50");
-
   const {
     temperature,
     setTemperature,
