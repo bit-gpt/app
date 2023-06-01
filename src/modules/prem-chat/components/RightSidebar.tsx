@@ -49,7 +49,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         <span>Close Sidebar</span>
       </div>
 
-    
+
       <div className="-mx-4 opacity-30" />
       <ul className="my-[18px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
@@ -58,7 +58,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>{temperature}</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             value={[0, temperature]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -74,7 +74,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>{max_tokens}</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             value={[0, max_tokens]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -90,7 +90,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>{top_p}</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             value={[0, top_p]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -106,7 +106,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>{frequency_penalty}</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             value={[-2, frequency_penalty]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -122,7 +122,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>0.75</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             defaultValue={[0, 50]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -134,7 +134,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>0.75</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             defaultValue={[0, 50]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -146,7 +146,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>{n}</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             value={[0, n]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
@@ -162,7 +162,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             <span>{presence_penalty}</span>
           </p>
           <RangeSlider
-            className="single-thumb"
+            className="range-slider__bar"
             value={[-2, presence_penalty]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
