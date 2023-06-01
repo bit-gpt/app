@@ -2,7 +2,8 @@ import { AxiosResponse } from "axios";
 import api from "shared/api/v1";
 import { DownloadMessage } from "../types";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-import { BACKEND_URL } from "shared/helpers/utils";
+import { BACKEND_URL } from "shared/store/setting";
+
 
 const downloadServiceStream = async (
   serviceId: string,
@@ -10,7 +11,7 @@ const downloadServiceStream = async (
   onMessage: (message: DownloadMessage) => void,
   onceCompleted: () => void,
 ): Promise<void> => {
-  const backendUrl = new URL(BACKEND_URL);
+  const backendUrl = new URL(BACKEND_URL());
   try {
     //const response = await api.get(`v1/download-service/${serviceId}`);
     //console.log(response);

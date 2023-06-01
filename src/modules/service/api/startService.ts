@@ -5,6 +5,6 @@ import { Message } from "../types";
 const startService = async (
   serviceId: string
 ): Promise<AxiosResponse<Message>> =>
-  api.post(`v1/run-service/`, { id: serviceId });
+  api().post(`v1/run-service/`, { id: serviceId });
 
 export default startService;
