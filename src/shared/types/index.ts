@@ -85,3 +85,7 @@ export type PremChatStore = {
   presence_penalty: number;
   setPresencePenalty: (presence_penalty: number) => void;
 };
+
+export type MarkdownProps = {
+  children: string;
+};
