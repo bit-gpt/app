@@ -9,7 +9,8 @@ const AppContainer = ({ children }: PropsWithChildren) => {
   }, [setSidebarToggle]);
 
   return (
-    <section className="bg-darkjunglegreen min-h-screen flex w-full relative gradient-effect">
+    <section className="bg-darkjunglegreen relative gradient-effect">
+     <div className="max-w-[1723px] mx-auto min-h-screen flex w-full">
       <Sidebar />
       <div
         className={
@@ -17,6 +18,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
         }
       >
         {children}
+      </div>
       </div>
     </section>
   );
