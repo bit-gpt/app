@@ -17,7 +17,7 @@
     version = "1.0"
 
   [dependencies.tauri]
-    features = [ "process-exit","dialog-all", "path-all", "shell-all"]
+    features = [ "system-tray", "process-exit","dialog-all", "path-all", "shell-all"]
     version = "1.2"
 
 [features]

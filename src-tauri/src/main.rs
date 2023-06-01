@@ -3,10 +3,10 @@
 
 use reqwest::blocking::get;
 use serde::Deserialize;
-use std::{env};
+use std::env;
 use tauri::{
-    api::{ process::Command},
-    AboutMetadata, CustomMenuItem, Menu, MenuItem, RunEvent, Submenu, WindowEvent,
+    api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
+    Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 
 #[derive(Deserialize, Debug)]
@@ -103,6 +103,20 @@ fn main() {
             .add_item(CustomMenuItem::new("quit", "Quit")),
     ));
 
+    let running = CustomMenuItem::new("running".to_string(), "Prem is running").disabled();
+    let show = CustomMenuItem::new("show".to_string(), "Dashboard");
+    let hide = CustomMenuItem::new("hide".to_string(), "Hide");
+    let quit = CustomMenuItem::new("quit".to_string(), "Quit");
+
+    let tray_menu = SystemTrayMenu::new()
+        .add_item(running)
+        .add_native_item(SystemTrayMenuItem::Separator)
+        .add_item(show)
+        .add_item(hide)
+        .add_item(quit);
+
+    let system_tray = SystemTray::new().with_menu(tray_menu);
+
     #[allow(unused_mut)]
     let mut app = tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
@@ -111,6 +125,27 @@ fn main() {
             is_container_running,
         ])
         .menu(menu)
+        .system_tray(system_tray)
+        .on_system_tray_event(|app, event| match event {
+            SystemTrayEvent::MenuItemClick { id, .. } => {
+                match id.as_str() {
+                    "hide" => {
+                        let window = app.get_window("main").unwrap();
+                        window.hide().unwrap();
+                    }
+                    "quit" => {
+                        std::process::exit(0);
+                    }
+                    "show" => {
+                        let window = app.get_window("main").unwrap();
+                        window.set_focus().unwrap();
+                        window.show().unwrap();
+                    }
+                    _ => {}
+                }
+            }
+            _ => {}
+        })
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 
