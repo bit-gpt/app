@@ -45,7 +45,13 @@
       "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEVCM0ZBNkIwNDFFQjNBQUIKUldTck91dEJzS1kvNjRaTzhtZUtaMU5CdXVka0w2VFFNeWZDMStUL0k4a0N2OWR6alZlR1hjR3YK",
+      "endpoints": [
+        "https://github.com/premai-io/prem-app/releases/latest/download/latest.json"
+      ]
+
     },
     "windows": [
       {
