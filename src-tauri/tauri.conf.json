@@ -15,18 +15,11 @@
       "dialog": {
         "all": true
       },
-      "fs": {
-        "all": true,
-        "readDir": true,
-        "scope": [
-          "**"
-        ]
-      },
       "path": {
         "all": true
       },
       "process": {
-        "all": true
+        "exit": true
       },
       "shell": {
         "all": true
@@ -45,7 +38,7 @@
       "targets": "all"
     },
     "security": {
-      "csp": null
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
     },
     "updater": {
       "active": false
@@ -53,10 +46,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "minHeight": 600,
-        "minWidth": 1080,
+        "minHeight": 800,
+        "minWidth": 1220,
         "resizable": true,
-        "title": "prem-app"
+        "title": "Prem App"
       }
     ]
   }

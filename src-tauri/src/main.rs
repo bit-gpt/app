@@ -3,8 +3,11 @@
 
 use reqwest::blocking::get;
 use serde::Deserialize;
-use std::{env, fs, net::TcpStream, thread, time::Duration};
-use tauri::api::{path, process::Command};
+use std::{env};
+use tauri::{
+    api::{ process::Command},
+    AboutMetadata, CustomMenuItem, Menu, MenuItem, RunEvent, Submenu, WindowEvent,
+};
 
 #[derive(Deserialize, Debug)]
 struct App {
@@ -90,20 +93,41 @@ fn is_container_running() -> Result<bool, String> {
 }
 
 fn main() {
-    tauri::Builder::default()
-        .setup(|app| {
-            let config = app.config().clone();
-            let app_dir = path::app_data_dir(&config).expect("Failed to get app directory");
-            let app_dir_str = app_dir.to_string_lossy().to_string();
-            fs::create_dir_all(&app_dir).expect("Failed to create app data directory");
-            println!("App directory: {}", app_dir_str);
-            Ok(())
-        })
+    let menu = Menu::new().add_submenu(Submenu::new(
+        "Prem App",
+        Menu::new()
+            .add_native_item(MenuItem::About(
+                "Prem App".to_string(),
+                AboutMetadata::new(),
+            ))
+            .add_item(CustomMenuItem::new("quit", "Quit")),
+    ));
+
+    #[allow(unused_mut)]
+    let mut app = tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             run_container,
             is_docker_running,
             is_container_running,
         ])
-        .run(tauri::generate_context!())
+        .menu(menu)
+        .build(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    app.run(|_app_handle, e| match e {
+        // Triggered when a window is trying to close
+        RunEvent::WindowEvent { event, .. } => {
+            match event {
+                WindowEvent::CloseRequested { .. } => {
+                    // stop docker
+                    let _child = Command::new("/usr/local/bin/docker")
+                        .args(&["kill", "premd"])
+                        .output()
+                        .expect("Failed to execute docker stop");
+                }
+                _ => {}
+            }
+        }
+        _ => {}
+    })
 }
