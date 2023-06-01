@@ -448,6 +448,10 @@ header img {
   @apply absolute inset-0 rounded-2xl rotate-180 shadow-default pointer-events-none;
   background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
 }
+.services-running .dashboard-bottom__card-box {
+  @apply relative z-[1];
+}
+
 .search-filter {
   @apply lg:h-[50px];
 }
@@ -514,7 +518,10 @@ header img {
   background-position: 13px 0px;
 }
 .polygon-shape  svg {
-  @apply w-[22px] h-[22px] mt-[14px];
+  @apply w-7 h-7 mt-[14px];
+}
+.polygon-shape svg path {
+  @apply stroke-white;
 }
 
 .settings-card h3 {
@@ -585,7 +592,9 @@ header img {
 .service-detail {
   @apply flex gap-4 max-lg:flex-wrap max-lg:gap-8;
 }
-
+.service-detail__documentation {
+  @apply text-brightgray;
+}
 .service-detail .card {
   @apply rounded-md shadow-default;
   background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
