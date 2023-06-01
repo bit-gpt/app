@@ -29,7 +29,12 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const { isDockerRunning, isContainerRunning, isServerRunning, handleCheckIsDockerRunning } = useDocker();
+  const {
+    isDockerRunning,
+    isContainerRunning,
+    isServerRunning,
+    handleCheckIsDockerRunning,
+  } = useDocker();
   const isBrowser = isBrowserEnv();
   const [displayWelcomeScreen, setDisplayWelcomeScreen] = useState(
     sessionStorage.getItem(DISPLAY_WELCOME_SCREEN_KEY) === null
@@ -67,7 +72,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-      <ToastContainer />
+      <ToastContainer position="bottom-right"/>
     </QueryClientProvider>
   );
 }
