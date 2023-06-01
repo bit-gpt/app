@@ -32,7 +32,7 @@ const NotDownloadedServiceState = ({
   if (progress >= 0) {
     return (
       <>
-        <p>{progress}%</p>
+        <p className="text-brightgray">{progress}%</p>
         <Spinner className="w-5 h-5" />
       </>
     )

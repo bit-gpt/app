@@ -1,4 +1,6 @@
-import Header from "./Header";
+import PrimaryButton from "./PrimaryButton";
+import Logo from "assets/images/brand-logo.svg";
+import arrow from "assets/images/arrow.svg";
 
 type WelcomeScreenProps = {
   close: () => void;
@@ -6,20 +8,25 @@ type WelcomeScreenProps = {
 
 const WelcomeScreen = ({ close }: WelcomeScreenProps) => {
   return (
-    <section className="docker-not-detected flex flex-wrap bg-lines relative">
-      <Header />
-      <div className="flex items-center w-full modal-height">
-        <div className="docker-modal-wrap mx-auto md:max-w-[600px] max-w-[350px] w-full rounded-xl">
-          <div className="docker-not-detected__modal rounded-xl p-[18px]">
-            <div className="text-center">
-              <h1>Prem AI</h1>
-              <h2>AI that you own</h2>
-              <button className="bg-tulip p-2 rounded" onClick={close}>
-                Let's go
-              </button>
-            </div>
-          </div>
+    <section className="bg-darkjunglegreen bg-lines relative">
+      <div className="welcome-logo">
+        <img src={Logo} alt="logo" />
+        <button>
+          <img src={arrow} alt="arrow" />
+        </button>
+      </div>
+      <div className="mx-auto text-center welcome-container">
+        <div className="mask-heading">
+          <h2 className="md:!text-[55px] !text-[40px] !leading-[70px] !mt-0 font-[ProximaNova-bold]">
+            Prem AI
+          </h2>
         </div>
+        <h2 className="md:text-[35px] text-[25px] mb-10 tracking-[3.5px] capitalize font-semibold text-white">
+          AI that you own
+        </h2>
+        <PrimaryButton className="!px-12" onClick={close}>
+          Open
+        </PrimaryButton>
       </div>
     </section>
   );
