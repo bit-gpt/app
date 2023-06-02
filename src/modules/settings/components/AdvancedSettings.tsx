@@ -5,6 +5,7 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import ResetIcon from "shared/components/ResetIcon";
 import { toast } from "react-toastify";
 import useSettingStore from "shared/store/setting";
+import { getBackendUrl } from "shared/helpers/utils";
 const AdvancedSettings = () => {
   const queryClient = useQueryClient();
 
@@ -25,7 +26,7 @@ const AdvancedSettings = () => {
   };
 
   const onReset = () => {
-    setBackendUrl(backendUrlFromStore);
+    setBackendUrl(getBackendUrl());
   };
 
   return (
