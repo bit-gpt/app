@@ -38,7 +38,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
   );
 
   return (
-    <div className="bg-darkgunmetal flex-col px-4 flex h-screen w-[260px]">
+    <div className="bg-darkgunmetal flex-col px-4 flex h-screen w-[260px] prem-chat-right-sidebar">
       <div className="sidebar-toggle__btn !mt-5 !ml-3">
         <button
           onClick={() => setRightSidebar(false)}
@@ -48,8 +48,6 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         </button>
         <span>Close Sidebar</span>
       </div>
-
-
       <div className="-mx-4 opacity-30" />
       <ul className="my-[18px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
