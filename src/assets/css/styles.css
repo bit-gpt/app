@@ -30,7 +30,7 @@ header img {
   @apply w-[150px];
 }
 .system-check__container {
-  min-height: calc(100vh - 112px);
+  min-height: calc(100vh - 182px);
   @apply flex mb-[70px] items-center;
 }
 
