@@ -10,11 +10,11 @@ const AppContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <section className="bg-darkjunglegreen relative gradient-effect">
-     <div className="max-w-[1723px] mx-auto min-h-screen flex w-full">
+     <div className="min-h-screen flex w-full">
       <Sidebar />
       <div
         className={
-          "container pb-[60px] px-3 mx-auto z-[1] relative md:ml-[120px] md:mr-[40px] ml-[80px] mr-[10px]"
+          "pb-[60px] px-3 mx-auto w-full z-[1] relative md:ml-[120px] md:mr-[40px] ml-[80px] mr-[10px]"
         }
       >
         {children}
