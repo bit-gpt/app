@@ -53,3 +53,10 @@ export type RegenerateButtonProps = {
 export type RightSidebarProps = {
   setRightSidebar: (value: boolean) => void;
 };
+
+export type PremChatContainerProps = {
+  chatId: string | undefined;
+  isStreaming: boolean;
+  serviceId: string;
+  serviceName: string;
+};
