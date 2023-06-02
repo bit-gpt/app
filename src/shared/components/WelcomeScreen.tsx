@@ -1,6 +1,5 @@
 import PrimaryButton from "./PrimaryButton";
 import Logo from "assets/images/brand-logo.svg";
-import arrow from "assets/images/arrow.svg";
 
 type WelcomeScreenProps = {
   close: () => void;
@@ -11,9 +10,6 @@ const WelcomeScreen = ({ close }: WelcomeScreenProps) => {
     <section className="bg-darkjunglegreen bg-lines relative">
       <div className="welcome-logo">
         <img src={Logo} alt="logo" />
-        <button>
-          <img src={arrow} alt="arrow" />
-        </button>
       </div>
       <div className="mx-auto text-center welcome-container">
         <div className="mask-heading">

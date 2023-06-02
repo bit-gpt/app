@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
-import { BACKEND_URL } from "shared/helpers/utils";
 import { toast } from "react-toastify";
+import { getBackendUrlFromStore } from "shared/store/setting";
+
 
 const usePremChatStream = (
   serviceId: string,
@@ -70,7 +71,7 @@ const usePremChatStream = (
     setLoading(true);
     const ctrl = new AbortController();
 
-    const backendUrl = new URL(BACKEND_URL);
+    const backendUrl = new URL(getBackendUrlFromStore());
     backendUrl.port = `${service?.runningPort!}`;
 
     try {
