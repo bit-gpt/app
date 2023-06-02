@@ -4,13 +4,6 @@ export type BotReplyProps = {
   reply: string;
 };
 
-export type DownloadDockerWallProps = {
-  handleCheckIsDockerRunning: () => void;
-  isDockerRunning: boolean;
-};
-
-
-
 export type SidebarProps = {
   toggleStatus: boolean;
   toggle: () => void;
