@@ -35,10 +35,10 @@ const ServiceDetail = () => {
   if (isLoading) return <ServiceLoading />;
   return (
     <AppContainer>
-      <button className="w-[30px] h-[30px] mt-10 mb-14 md:-mx-10">
+      <button className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-10">
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
       </button>
-      <div className="flex flex-wrap items-start mb-[62px] max-md:justify-between">
+      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between">
         <ServiceHeader
           title={service.name}
           tags={service.interfaces}
