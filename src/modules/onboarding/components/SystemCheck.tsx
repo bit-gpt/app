@@ -69,14 +69,14 @@ const SystemCheck = ({
                 />
 
                 <Dependency
-                  isRunning={true}
-                  status="8gb"
+                  isRunning={false}
+                  status="> 16gb"
                   name="Memory"
                   tooltip={
                     <div>
                       In order to run Prem App you need to have
                       <br />
-                      at least 8gb of memory.
+                      at least 16gb of memory.
                     </div>
                   }
                 />
