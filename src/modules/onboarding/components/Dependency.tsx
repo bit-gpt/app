@@ -10,7 +10,7 @@ const Dependency = ({ isRunning, name, status, tooltip }: DependencyProps) => {
       )}
       {!isRunning && (
         <>
-          <button className="text-[#F9B96D] text-base flex gap-3 not_found">
+          <button className="text-[#F9B96D] flex gap-3 not_found">
             <svg
               width="16"
               height="16"

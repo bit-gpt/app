@@ -18,8 +18,20 @@ header img {
   @apply w-[140px];
 }
 
-.docker-not-detected {
+.system-check {
   @apply dark:bg-darkjunglegreen min-h-screen;
+}
+.system-check__requirements p,
+.system-check__requirements button {
+  @apply text-sm;
+}
+.system-check__requirements p:last-child,
+.system-check__requirements button {
+  @apply w-[150px];
+}
+.system-check__container {
+  min-height: calc(100vh - 112px);
+  @apply flex mb-[70px] items-center;
 }
 
 .scrollbar-none {
@@ -37,11 +49,6 @@ header img {
   @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
 }
 
-.docker-not-detected__modal {
-  @apply text-white relative;
-  background: #26262a;
-  margin: 1.5px;
-}
 .docker-modal-wrap {
   background: linear-gradient(
     131.93deg,
@@ -52,9 +59,6 @@ header img {
   );
 }
 
-.docker-not-detected__modal hr {
-  border-color: rgba(237, 237, 237, 0.34);
-}
 
 .modal-height {
   margin-bottom: 70px;
