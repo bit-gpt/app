@@ -655,16 +655,10 @@ header img {
 
 
 .welcome-logo {
-  @apply px-5 pt-7 flex items-center gap-6 relative z-[1];
-}
-.welcome-logo button {
-  @apply w-[30px] h-[30px];
-}
-.welcome-logo button img {
-  @apply mx-auto;
+  @apply px-5 pt-7 flex items-center gap-6;
 }
 
 .welcome-container {
-  height: calc(100vh - 65px);
+  height: calc(100vh - 62px);
   @apply relative z-[11] justify-center items-center flex-col flex;
 }
