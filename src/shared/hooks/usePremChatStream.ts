@@ -6,10 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
+import { toast } from "react-toastify";
 import { getBackendUrlFromStore } from "shared/store/setting";
 
 
-const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
+const usePremChatStream = (
+  serviceId: string,
+  chatId: string | null
+): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -28,7 +32,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     top_p,
     frequency_penalty,
     n,
-    presence_penalty
+    presence_penalty,
   } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -71,41 +75,46 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     backendUrl.port = `${service?.runningPort!}`;
 
     try {
-      fetchEventSource(
-        `${backendUrl}api/v1/chat/completions`,
-        {
-          method: "POST",
-          openWhenHidden: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: serviceId,
-            messages: [...messages, newMessage],
-            stream: true,
-            temperature,
-            max_tokens,
-            top_p,
-            frequency_penalty,
-            n,
-            presence_penalty
-          }),
-          signal: ctrl.signal,
-          onmessage: (event) => {
-            if (event.data === "[DONE]") {
-              setLoading(false);
-            } else {
-              const data = JSON.parse(event.data);
-              setPending(
-                (state) => (state ?? "") + (data.choices[0].delta.content || "")
-              );
-            }
-          },
-        }
-      );
+      fetchEventSource(`${backendUrl}api/v1/chat/completions`, {
+        method: "POST",
+        openWhenHidden: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: serviceId,
+          messages: [...messages, newMessage],
+          stream: true,
+          temperature,
+          max_tokens,
+          top_p,
+          frequency_penalty,
+          n,
+          presence_penalty,
+        }),
+        signal: ctrl.signal,
+        onmessage: (event) => {
+          if (event.data === "[DONE]") {
+            setLoading(false);
+          } else {
+            const data = JSON.parse(event.data);
+            setPending(
+              (state) => (state ?? "") + (data.choices[0].delta.content || "")
+            );
+          }
+        },
+        onerror: () => {
+          setLoading(false);
+          setIsError(true);
+          setTempQuestion("");
+          toast.error("Something went wrong");
+        },
+      });
     } catch (e) {
       setLoading(false);
       setIsError(true);
+      setTempQuestion("");
+      toast.error("Something went wrong");
     }
   };
 
