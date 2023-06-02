@@ -35,7 +35,7 @@ function PremChat() {
     if (!service?.running) {
       startService(serviceId!);
     }
-    
+
     if (chatMessageListRef.current) {
       chatMessageListRef.current.scrollTop =
         chatMessageListRef.current.scrollHeight;
@@ -44,11 +44,11 @@ function PremChat() {
 
   return (
     <section>
-      <div className="flex h-screen w-full relative">
-        <div>
+      <div className="flex md:flex-wrap h-screen w-full relative">
+        <div className="prem-chat-sidebar">
           <PremChatSidebar />
         </div>
-        <div className="flex flex-1">
+        <div className="flex sm:flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div
               className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none"

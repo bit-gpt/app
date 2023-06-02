@@ -223,8 +223,8 @@ header img {
 .sidebar-toggle .sidebar__search button {
   @apply w-[50px];
 }
-.sidebar-toggle .sidebar li a {
-  @apply justify-center w-5 h-5;
+.sidebar-toggle .sidebar li a svg {
+  @apply w-5 h-5;
 }
 
 .border-light {
@@ -365,10 +365,7 @@ header img {
   @apply cursor-pointer p-0 mb-2;
 }
 .sidebar-main .sidebar li a {
-  @apply text-lg items-center py-3 md:px-5 rounded-md;
-}
-.sidebar-main.sidebar-toggle li a {
-  @apply h-auto w-auto;
+  @apply text-lg items-center justify-center py-3 rounded-md;
 }
 
 .sidebar-main {
@@ -563,13 +560,6 @@ header img {
   @apply opacity-20;
 }
 
-.settings::after {
-  content: "";
-  background: url("../images/bottom-gradient.png") no-repeat;
-  @apply max-xl:bg-bottom bg-contain w-full h-[75%] opacity-80 z-[-1];
-  @apply absolute bottom-0 xl:w-[80%] xl:bg-cover left-[-150px] right-0 mx-auto
-  ;
-}
 .select-control {
   @apply w-full;
 }
@@ -599,8 +589,7 @@ header img {
   font-family: "ProximaNova-bold";
 }
 .service-detail .card p {
-  color: #EDEDED;
-  font-family: "ProximaNova-Regular";
+  @apply max-md:text-sm text-brightgray font-proximaNova-regular;
 }
 
 .service-detail ul {
@@ -620,7 +609,7 @@ header img {
   @apply flex gap-7 mb-3;
 }
 .right-general-card span {
-  @apply text-brightgray font-proximaNova-regular text-base w-1/2;
+  @apply text-brightgray font-proximaNova-regular md:text-base text-sm w-1/2;
 }
 
 .ReactModal__Overlay {
@@ -661,4 +650,42 @@ header img {
 .welcome-container {
   height: calc(100vh - 62px);
   @apply relative z-[11] justify-center items-center flex-col flex;
+}
+
+@media (max-width: 767px) {
+  .prem-chat-sidebar .sidebar {
+    @apply w-[60px];
+  }
+  .prem-chat-sidebar .sidebar li {
+    @apply px-0;
+  }
+  .prem-chat-sidebar .sidebar li a {
+    @apply justify-center;
+  }
+  .prem-chat-sidebar .sidebar li a span {
+    @apply hidden;
+  }
+  .prem-chat-sidebar .sidebar li img {
+    @apply mx-0;
+  }
+  .prem-chat-sidebar .sidebar__search button {
+    @apply hidden;
+  }
+  .prem-chat-sidebar .sidebar__search input::placeholder {
+    @apply opacity-0;
+  }
+  .prem-chat-sidebar .sidebar__search input {
+    @apply pl-5 mr-0;
+  }
+  .prem-chat-sidebar .sidebar__search img {
+    @apply left-[13px];
+  }
+  .prem-chat-right-sidebar {
+    @apply absolute right-0 top-0 z-10;
+  }
+}
+@media (min-width: 768px) {
+  .header__center {
+    width: calc(100% - 212px);
+  }
 }
