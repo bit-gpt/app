@@ -1,10 +1,6 @@
 # 🖥 Prem App
 
-## Demo
-
-`HERE_VIDEO_AND_DOWNLOAD_LINKS`
-
-## Getting Started
+## Contributing
 
 ### Run the Backend
 
