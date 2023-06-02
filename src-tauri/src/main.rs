@@ -45,7 +45,7 @@ fn run_container() {
         config.prem.daemon.image, config.prem.daemon.version, config.prem.daemon.digest
     );
 
-    println!("Using image: {}", image);
+    println!("Prem Daemon {}", image);
 
     Command::new("/usr/local/bin/docker")
         .args(&[
@@ -58,7 +58,7 @@ fn run_container() {
             "--name",
             "premd",
             "-e",
-            "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-daemon/main/resources/mocks/manifests.json",
+            "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json",
             "--rm",
             image.as_str(),
         ])

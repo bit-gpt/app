@@ -45,7 +45,7 @@ export type NavLinkItemProps = {
   icon: React.ReactNode;
   label: string;
   to: string;
-  target?: '_blank';
+  target?: "_blank";
 };
 
 export type WarningModalProps = {
@@ -57,7 +57,6 @@ export type WarningModalProps = {
   title?: string;
   description: string;
 };
-
 
 export type PremChatStore = {
   history: PremChatHistory[];
@@ -81,4 +80,9 @@ export type PremChatStore = {
 
 export type MarkdownProps = {
   children: string;
+};
+
+export type SettingStore = {
+  backendUrl: string;
+  setBackendUrl: (backendUrl: string) => void;
 };

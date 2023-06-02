@@ -49,18 +49,17 @@ const PremChatSidebar = () => {
   };
 
   return (
-    <div className={clsx(sidebarToggle && "sidebar-toggle")}>
-      <div className="pt-[18px] pb-[10px] flex-col px-2 flex h-screen sidebar !w-[259px]">
-        <div className={clsx(sidebarToggle ? "flex-col flex" : "flex")}>
+      <div className="pt-[18px] pb-[10px] flex-col px-2 flex h-screen sidebar md:!w-[259px]">
+        <div className={clsx(sidebarToggle ? "flex-col flex" : "flex max-md:justify-center max-md:flex-wrap max-md:gap-4")}>
           <button
             className={clsx(sidebarToggle ? "mx-auto my-5" : "mx-2")}
             onClick={onCloseClick}
           >
             <img src={cross} alt="cross-logo" />
           </button>
-          <img className="sidebar__logo" src={Logo} alt="logo" />
+          <img className="sidebar__logo max-md:hidden" src={Logo} alt="logo" />
           <img
-            className={clsx(sidebarToggle ? "mx-auto" : "hidden")}
+            className={clsx(!sidebarToggle && "md:hidden")}
             src={brandLogo}
             alt="brandLogo"
           />
@@ -216,7 +215,6 @@ const PremChatSidebar = () => {
           </li>
         </ul>
       </div>
-    </div>
   );
 };
 
