@@ -8,9 +8,6 @@ const WelcomeScreen = ({ close }: WelcomeScreenProps) => {
     <section className="bg-darkjunglegreen bg-lines relative">
       <div className="welcome-logo">
         <img src={Logo} alt="logo" />
-        <button>
-          <img src={arrow} alt="arrow" />
-        </button>
       </div>
       <div className="mx-auto text-center welcome-container">
         <div className="mask-heading">
