@@ -5,7 +5,7 @@ import { Option, SearchFilterProps } from "../types";
 import MultiValueRemove from "./MultiValueRemove";
 import { serviceSearchStyle } from "shared/helpers/utils";
 import clsx from "clsx";
-import { BACKEND_URL } from "shared/store/setting";
+import { getBackendUrlFromStore } from "shared/store/setting";
 
 
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
@@ -86,7 +86,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
           >
             <button className="flex px-2 py-[6px] items-center text-sm" onClick={() => handleSearch(app.id)}>
               <img
-                src={`${BACKEND_URL()}${app.icon}`}
+                src={`${getBackendUrlFromStore()}${app.icon}`}
                 alt={app.name}
                 className="mr-2 w-4 h-4 rounded"
               />

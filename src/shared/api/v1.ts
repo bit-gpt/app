@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BACKEND_URL } from "shared/store/setting";
+import { getBackendUrlFromStore } from "shared/store/setting";
 
 const api = () => {
   const client = axios.create({
-    baseURL: BACKEND_URL(),
+    baseURL: getBackendUrlFromStore(),
     headers: {
       "Content-Type": "application/json",
     },

@@ -15,6 +15,6 @@ const useSettingStore = create<SettingStore>()(
   )
 );
 
-export const BACKEND_URL = () => useSettingStore.getState().backendUrl;
+export const getBackendUrlFromStore = () => useSettingStore.getState().backendUrl;
 
 export default useSettingStore;
