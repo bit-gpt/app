@@ -3,15 +3,30 @@ import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 import PrimaryButton from "shared/components/PrimaryButton";
 import ResetIcon from "shared/components/ResetIcon";
-import { BACKEND_URL_KEY, BACKEND_URL } from "shared/helpers/utils";
-
+import { toast } from "react-toastify";
+import useSettingStore from "shared/store/setting";
+import { getBackendUrl } from "shared/helpers/utils";
 const AdvancedSettings = () => {
   const queryClient = useQueryClient();
 
-  const onBackendUrlBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    localStorage.setItem(BACKEND_URL_KEY, e.target.value);
+  const backendUrlFromStore = useSettingStore((state) => state.backendUrl);
+  const setBackendUrlToStore = useSettingStore((state) => state.setBackendUrl);
+
+  const [backendUrl, setBackendUrl] = useState(backendUrlFromStore);
+
+  const onChange = (e: React.FocusEvent<HTMLInputElement>) => {
+    setBackendUrl(e.target.value);
+  };
+
+  const onUpdate = () => {
+    setBackendUrlToStore(backendUrl);
     queryClient.invalidateQueries({ type: "all" });
-    window.location.reload();
+    queryClient.clear();
+    toast.success("Setting updated successfully");
+  };
+
+  const onReset = () => {
+    setBackendUrl(getBackendUrl());
   };
 
   return (
@@ -24,14 +39,22 @@ const AdvancedSettings = () => {
             <input
               className="form-control"
               type="text"
-              defaultValue={BACKEND_URL}
-              onBlur={onBackendUrlBlur}
+              value={backendUrl}
+              onChange={onChange}
             />
-            <PrimaryButton className="!px-9 mt-[44px] opacity-70">
+            <PrimaryButton
+              className="!px-9 mt-[44px] opacity-70"
+              onClick={onUpdate}
+            >
               Update
             </PrimaryButton>
           </div>
-          <button id="reset" className="w-[50px] h-[45px]">
+          <button
+            id="reset"
+            className="w-[50px] h-[45px]"
+            type="button"
+            onClick={onReset}
+          >
             <ResetIcon />
           </button>
           <Tooltip
