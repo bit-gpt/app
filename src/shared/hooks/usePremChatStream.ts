@@ -107,6 +107,7 @@ const usePremChatStream = (
           setIsError(true);
           setTempQuestion("");
           toast.error("Something went wrong");
+          throw new Error("Something went wrong");
         },
       });
     } catch (e) {
