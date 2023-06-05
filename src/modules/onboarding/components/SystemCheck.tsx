@@ -19,7 +19,7 @@ const SystemCheck = ({
       <div className="bg-tulip w-full py-[13px] sm:max-h-[56px] text-center max-sm:px-1 z-[11]">
         <p className="text-brightgray text-base">
           Don't have requirements? Try the &nbsp;
-          <a href="https://app.prem.ninja/" target="__blank" className="underline decoration">
+          <a href="https://app.prem.ninja/" target="_blank" className="underline decoration">
             Prem App
           </a>
           &nbsp; demo.
