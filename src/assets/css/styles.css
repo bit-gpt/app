@@ -123,7 +123,7 @@ header img {
 /* .modal::before, */
 .gradient-border::after {
   content: "";
-  @apply absolute inset-0 rounded-[10px] p-[2px] pointer-events-none;
+  @apply absolute inset-0 rounded-[12px] p-[2px] pointer-events-none;
   background: linear-gradient(
     131.93deg,
     rgba(245, 142, 142, 0.6) 11.72%,
@@ -445,7 +445,7 @@ header img {
 
 .services-running::after {
   content: "";
-  @apply absolute inset-0 rounded-2xl rotate-180 shadow-default pointer-events-none;
+  @apply absolute inset-0 rounded-[12px] rotate-180 shadow-default pointer-events-none;
   background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
 }
 .search-filter {
