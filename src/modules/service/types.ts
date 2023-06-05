@@ -38,6 +38,9 @@ export type Service = {
   running: boolean;
   supported: boolean;
   runningPort: number;
+  dockerImageSize: number;
+  volumePath: string | null;
+  volumeName: string | null;
 };
 
 export type SearchFilterProps = {
