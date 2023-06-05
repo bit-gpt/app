@@ -1,7 +1,7 @@
 import AppContainer from "shared/components/AppContainer";
 import ServiceDocumentation from "./ServiceDocumentation";
 import useService from "shared/hooks/useService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ServiceHeader from "./ServiceHeader";
 import ServiceResourceBars from "./ServiceResourceBars";
 import ServiceGeneralInfo from "./ServiceGeneralInfo";
@@ -19,6 +19,7 @@ import arrow from "assets/images/arrow.svg";
 const ServiceDetail = () => {
   const queryClient = useQueryClient();
   const { serviceId } = useParams();
+  const navigate = useNavigate();
   const { data: response, isLoading, refetch } = useService(serviceId!);
   const service = response?.data || ({} as Service);
 
@@ -30,12 +31,19 @@ const ServiceDetail = () => {
     queryClient.refetchQueries([SERVICES_KEY]);
   }, [refetch]);
 
+  const back = () => {
+    navigate("/");
+  };
+
   const status = getServiceStatus(service);
 
   if (isLoading) return <ServiceLoading />;
   return (
     <AppContainer>
-      <button className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-10">
+      <button
+        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-10"
+        onClick={back}
+      >
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
       </button>
       <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between">

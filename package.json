@@ -45,9 +45,11 @@
   "scripts": {
     "build": "tsc && vite build",
     "dev": "vite",
+    "infra:down": "bash ./scripts/down.sh",
+    "infra:up": "bash ./scripts/up.sh",
     "preview": "vite preview",
     "tauri": "tauri"
   },
   "type": "module",
-  "version": "0.0.8"
+  "version": "0.0.9"
 }

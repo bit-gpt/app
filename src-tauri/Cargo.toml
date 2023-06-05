@@ -17,7 +17,7 @@
     version = "1.0"
 
   [dependencies.tauri]
-    features = [ "updater","system-tray", "process-exit", "dialog-all", "path-all", "shell-all"]
+    features = ["updater", "system-tray", "process-exit", "dialog-all", "path-all", "shell-all"]
     version = "1.2"
 
 [features]
@@ -30,4 +30,4 @@
   license = ""
   name = "prem-app"
   repository = ""
-  version = "0.0.8"
+  version = "0.0.9"

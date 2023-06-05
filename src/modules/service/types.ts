@@ -21,6 +21,7 @@ export type ModelInfo = {
   tokenLimit: number;
   weightsName: string;
   weightsSize: number;
+  streaming: boolean;
 };
 
 export type Service = {

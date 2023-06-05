@@ -1,9 +1,6 @@
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "shared/components/PrimaryButton";
 import Logo from "assets/images/brand-logo.svg";
-
-type WelcomeScreenProps = {
-  close: () => void;
-};
+import { WelcomeScreenProps } from "../types";
 
 const WelcomeScreen = ({ close }: WelcomeScreenProps) => {
   return (
