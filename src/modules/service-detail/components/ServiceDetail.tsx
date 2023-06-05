@@ -40,7 +40,7 @@ const ServiceDetail = () => {
   if (isLoading) return <ServiceLoading />;
   return (
     <AppContainer>
-      <button className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-10" onClick={back}>
+      <button className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-14" onClick={back}>
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
       </button>
       <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header">
@@ -60,7 +60,7 @@ const ServiceDetail = () => {
       </div>
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
-        <div className="w-full">
+        <div className="lg:w-[40%]">
           <ServiceResourceBars serviceId={service.id} />
           <ServiceGeneralInfo service={service} />
           <ServiceDescription description={service.description} />
