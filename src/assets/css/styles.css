@@ -342,9 +342,8 @@ header img {
   );
   @apply shadow-default;
 }
-
 .sidebar-main .sidebar li .tooltip {
-  @apply bg-[#E9928E] uppercase;
+  @apply bg-[#E9928E] capitalize;
   z-index: 100;
 }
 
