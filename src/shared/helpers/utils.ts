@@ -121,12 +121,15 @@ export const serviceSearchStyle = {
 export const getServiceStatus = (service: Service): ServiceStatus => {
   if (!service.supported) {
     return "not_supported";
+  } else if (!service.enoughSystemMemory) {
+    return "not_enough_system_memory";
+  } else if (!service.enoughMemory) {
+    return "not_enough_memory";
   } else if (!service.downloaded) {
     return "not_downloaded";
   } else if (service.running) {
     return "running";
   }
-  // other status will go here
   return "stopped";
 };
 
