@@ -7,7 +7,7 @@ const ServiceResourceBars = ({ serviceId }: ServiceResourceBarsProps) => {
 
   return (
     <div className="right-top-card card">
-      <ul className="grid md:grid-cols-3 items-end gap-4 !ml-0 p-5">
+      <ul className="grid lg:grid-cols-3 items-end gap-4 !ml-0 p-5">
         <li>
           <p>Memory</p>
           <div className="flex gap-[6px] items-center">
