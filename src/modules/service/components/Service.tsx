@@ -50,7 +50,7 @@ const Service = () => {
                 <ServiceCard
                   key={service.id}
                   icon={service.icon}
-                  className={clsx("dashboard-bottom__card flex-wrap !pr-5", {
+                  className={clsx("dashboard-bottom__card flex-wrap", {
                     "services-running": service.running,
                   })}
                   service={service}

@@ -1,6 +1,6 @@
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
-import WarningShapeIcon from "shared/components/WarningShapeIcon";
+import WarningModalIcon from "shared/components/WarningModalIcon";
 import { WarningModalProps } from "shared/types";
 
 const WarningModal = ({
@@ -22,7 +22,7 @@ const WarningModal = ({
     >
       <div className="warning-modal__content gradient-border">
         <div className="flex gap-[24px]">
-          <div className="polygon-shape">{icon || <WarningShapeIcon />}</div>
+          <div className="polygon-shape">{icon || <WarningModalIcon />}</div>
           <div>
             <h2>{title}</h2>
             <p className="!text-base">{description}</p>
