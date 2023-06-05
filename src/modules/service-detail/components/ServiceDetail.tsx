@@ -41,7 +41,7 @@ const ServiceDetail = () => {
   return (
     <AppContainer>
       <button
-        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-10"
+        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-14"
         onClick={back}
       >
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
@@ -65,7 +65,7 @@ const ServiceDetail = () => {
       </div>
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
-        <div className="w-full">
+        <div className="lg:w-[40%]">
           <ServiceResourceBars serviceId={service.id} />
           <ServiceGeneralInfo service={service} />
           <ServiceDescription description={service.description} />
