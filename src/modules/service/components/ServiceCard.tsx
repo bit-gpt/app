@@ -32,9 +32,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
           refetch={refetch}
           serviceId={serviceId}
           status={status}
-          interfaces={interfaces.filter((app) =>
-            service.interfaces?.includes(app.id)
-          )}
+          interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
         />
       </div>
       <h3>{title}</h3>

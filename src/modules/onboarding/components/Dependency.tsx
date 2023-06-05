@@ -1,19 +1,11 @@
 import { Tooltip } from "react-tooltip";
 import { DependencyProps } from "../types";
 
-const Dependency = ({
-  isRunning,
-  name,
-  status,
-  tooltip,
-  id,
-}: DependencyProps) => {
+const Dependency = ({ isRunning, name, status, tooltip, id }: DependencyProps) => {
   return (
     <div className="flex justify-between mt-4">
       <p className="text-[#CFCFCF] text-base">{name}</p>
-      {isRunning && (
-        <p className="text-[#2ED291] text-base">&#10003;&nbsp;{status}</p>
-      )}
+      {isRunning && <p className="text-[#2ED291] text-base">&#10003;&nbsp;{status}</p>}
       {!isRunning && (
         <>
           <button className="text-[#F9B96D] flex gap-3 not_found" id={`${id}`}>

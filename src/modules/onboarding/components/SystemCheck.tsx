@@ -19,11 +19,7 @@ const SystemCheck = ({
       <div className="bg-tulip w-full py-[13px] sm:max-h-[56px] text-center max-sm:px-1 z-[11]">
         <p className="text-brightgray text-base">
           Don't have requirements? Try the &nbsp;
-          <a
-            href="https://app.prem.ninja/"
-            target="__blank"
-            className="underline decoration"
-          >
+          <a href="https://app.prem.ninja/" target="__blank" className="underline decoration">
             Prem App
           </a>
           &nbsp; demo.
@@ -71,8 +67,8 @@ const SystemCheck = ({
                   id={"daemon"}
                   tooltip={
                     <div>
-                      Prem App requires the Daemon to run in order to have{" "}
-                      <br /> the app working smoothly.
+                      Prem App requires the Daemon to run in order to have <br /> the app working
+                      smoothly.
                     </div>
                   }
                 />

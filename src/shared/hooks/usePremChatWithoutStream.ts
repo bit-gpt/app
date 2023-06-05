@@ -9,10 +9,7 @@ import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
 import { toast } from "react-toastify";
 
-const usePremChatWithoutStream = (
-  serviceId: string,
-  chatId: string | null
-): PremChatResponse => {
+const usePremChatWithoutStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const navigate = useNavigate();
@@ -28,7 +25,7 @@ const usePremChatWithoutStream = (
     top_p,
     frequency_penalty,
     n,
-    presence_penalty
+    presence_penalty,
   } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -44,8 +41,7 @@ const usePremChatWithoutStream = (
     shallow
   );
 
-  const messages =
-    history.find((_history) => _history.id === chatId)?.messages || [];
+  const messages = history.find((_history) => _history.id === chatId)?.messages || [];
 
   const { isLoading, isError, mutate } = useMutation(
     (messages: Message[]) =>
@@ -58,7 +54,7 @@ const usePremChatWithoutStream = (
         frequency_penalty,
         stream: false,
         n: n || 1,
-        presence_penalty
+        presence_penalty,
       }),
     {
       onSuccess: (response) => {
@@ -90,7 +86,7 @@ const usePremChatWithoutStream = (
       onError: () => {
         setTempQuestion("");
         toast.error("Something went wrong");
-      }
+      },
     }
   );
 

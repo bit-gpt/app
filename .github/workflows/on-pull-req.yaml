@@ -5,6 +5,25 @@ on:
     branches: ["main"]
 
 jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install frontend dependencies
+        run: npm install
+      
+      - name: Run prettier
+        run: npm run prettier:check
+  
   build:
     runs-on: ubuntu-latest
     permissions:

@@ -8,7 +8,7 @@ const NavLinkItem = ({ to, icon, label, target }: NavLinkItemProps) => {
     <li>
       <NavLink
         to={to}
-        target={target} 
+        target={target}
         rel="noopener noreferrer"
         className={({ isActive }) => (isActive ? "active" : "")}
         data-tooltip-id="sidebar-tooltip"
@@ -17,12 +17,7 @@ const NavLinkItem = ({ to, icon, label, target }: NavLinkItemProps) => {
         {icon}
         <span>{label}</span>
       </NavLink>
-      <Tooltip
-        id="sidebar-tooltip"
-        place="left"
-        className="tooltip"
-        noArrow={true}
-      />
+      <Tooltip id="sidebar-tooltip" place="left" className="tooltip" noArrow={true} />
     </li>
   );
 };

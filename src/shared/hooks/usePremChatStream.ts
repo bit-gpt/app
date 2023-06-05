@@ -9,10 +9,7 @@ import useService from "./useService";
 import { toast } from "react-toastify";
 import { getBackendUrlFromStore } from "shared/store/setting";
 
-const usePremChatStream = (
-  serviceId: string,
-  chatId: string | null
-): PremChatResponse => {
+const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -47,8 +44,7 @@ const usePremChatStream = (
     shallow
   );
 
-  const messages =
-    history.find((_history) => _history.id === chatId)?.messages || [];
+  const messages = history.find((_history) => _history.id === chatId)?.messages || [];
 
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -97,9 +93,7 @@ const usePremChatStream = (
             setLoading(false);
           } else {
             const data = JSON.parse(event.data);
-            setPending(
-              (state) => (state ?? "") + (data.choices[0].delta.content || "")
-            );
+            setPending((state) => (state ?? "") + (data.choices[0].delta.content || ""));
           }
         },
         onerror: () => {

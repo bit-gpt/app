@@ -39,10 +39,7 @@ export const isPackaged = () => {
 };
 
 export const isBackendSet = () => {
-  return (
-    import.meta.env.VITE_BACKEND_URL !== undefined &&
-    import.meta.env.VITE_BACKEND_URL !== ""
-  );
+  return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
 };
 
 export const getBackendUrl = () => {
