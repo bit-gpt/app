@@ -591,29 +591,12 @@ header img {
   @apply rounded-md shadow-default;
   background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
 }
-.service-detail .card h1 {
-  @apply text-brightgray font-bold text-xl;
-}
-.service-detail .card h2,
-.service-detail__documentation h3 {
-  @apply font-bold text-base text-brightgray mt-8 mb-6;
-  font-family: "ProximaNova-bold";
-}
-.service-detail .card p {
-  @apply max-md:text-sm text-brightgray font-proximaNova-regular;
-}
+
 .services-header button {
   @apply !text-sm;
 }
 .services-header button.btn-primary {
   @apply !rounded-[30px] !px-6 !h-[40px] !text-[13px];
-}
-
-.service-detail ul {
-  @apply ml-4;
-}
-.service-detail li {
-  @apply text-brightgray font-proximaNova-regular text-sm leading-7;
 }
 
 .right-top-card p {
@@ -717,4 +700,17 @@ header img {
 
 .service-is__not-running svg {
   @apply w-6 h-6;
+}
+
+.markdown-body {
+  @apply !bg-transparent !text-brightgray !text-sm;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  list-style: unset;
+}
+
+.markdown-body h2 {
+  @apply !border-[#a26d70];
 }

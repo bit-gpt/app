@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import dark from "react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus";
 import { MarkdownProps } from "shared/types";
+import "github-markdown-css/github-markdown-dark.css";
 
 const Markdown = ({ children }: MarkdownProps) => {
   return (
@@ -12,6 +13,7 @@ const Markdown = ({ children }: MarkdownProps) => {
       children={children}
       rehypePlugins={[rehypeRaw]}
       remarkPlugins={[remarkGfm]}
+      className="markdown-body"
       components={{
         code({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
