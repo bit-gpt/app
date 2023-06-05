@@ -18,8 +18,20 @@ header img {
   @apply w-[140px];
 }
 
-.docker-not-detected {
+.system-check {
   @apply dark:bg-darkjunglegreen min-h-screen;
+}
+.system-check__requirements p,
+.system-check__requirements button {
+  @apply text-sm;
+}
+.system-check__requirements p:last-child,
+.system-check__requirements button {
+  @apply w-[150px];
+}
+.system-check__container {
+  min-height: calc(100vh - 182px);
+  @apply flex mb-[70px] items-center;
 }
 
 .scrollbar-none {
@@ -37,11 +49,6 @@ header img {
   @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
 }
 
-.docker-not-detected__modal {
-  @apply text-white relative;
-  background: #26262a;
-  margin: 1.5px;
-}
 .docker-modal-wrap {
   background: linear-gradient(
     131.93deg,
@@ -52,9 +59,6 @@ header img {
   );
 }
 
-.docker-not-detected__modal hr {
-  border-color: rgba(237, 237, 237, 0.34);
-}
 
 .modal-height {
   margin-bottom: 70px;
@@ -78,7 +82,7 @@ header img {
 }
 
 .btn-primary {
-  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
+  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md hover:bg-[#ff7e7b];
 }
 
 .dashboard {
@@ -137,7 +141,7 @@ header img {
 }
 
 .dashboard-bottom__card-box img {
-  @apply -mt-1 h-[46px] w-[54px] flex items-center justify-center;
+  @apply rounded-[11px] h-[46px] w-[54px] flex items-center justify-center;
 }
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;
@@ -223,8 +227,8 @@ header img {
 .sidebar-toggle .sidebar__search button {
   @apply w-[50px];
 }
-.sidebar-toggle .sidebar li a {
-  @apply justify-center w-5 h-5;
+.sidebar-toggle .sidebar li a svg {
+  @apply w-5 h-5;
 }
 
 .border-light {
@@ -298,24 +302,24 @@ header img {
   @apply text-spanishgray;
 }
 
-.range-slider.range-slider__bar {
+.range-slider {
   @apply h-[3px];
   background-color: rgba(237, 237, 237, 0.1);
 }
 
-.range-slider__bar.range-slider .range-slider__range {
+.range-slider .range-slider__range {
   background-color: rgba(245, 142, 142, 1);
   @apply !left-0;
 }
-.range-slider__bar.range-slider .range-slider__thumb {
+.range-slider .range-slider__thumb {
   @apply h-3 w-3;
   background: linear-gradient(146.31deg, #f58e8e 28.33%, #f5c58c 71.67%);
 }
-.range-slider__bar.range-slider .range-slider__thumb:nth-child(3) {
+.range-slider .range-slider__thumb:nth-child(3) {
   @apply hidden;
 }
 
-.range-slider__bar.range-slider .range-slider__thumb::before {
+.range-slider .range-slider__thumb::before {
   content: "";
   background: rgba(249, 201, 161, 0.4);
   @apply absolute right-[-2px] left-[-2px] bottom-[-2px] top-[-2px] rounded-full;
@@ -340,7 +344,7 @@ header img {
 }
 
 .sidebar-main .sidebar li .tooltip {
-  @apply bg-[#E9928E] capitalize;
+  @apply bg-[#E9928E] uppercase;
   z-index: 100;
 }
 
@@ -365,10 +369,7 @@ header img {
   @apply cursor-pointer p-0 mb-2;
 }
 .sidebar-main .sidebar li a {
-  @apply text-lg items-center py-3 md:px-5 rounded-md;
-}
-.sidebar-main.sidebar-toggle li a {
-  @apply h-auto w-auto;
+  @apply text-lg items-center justify-center py-3 rounded-md;
 }
 
 .sidebar-main {
@@ -518,8 +519,15 @@ header img {
 }
 
 .settings-card h3 {
-  @apply text-brightgray text-lg mb-7;
+  background-color: rgba(77, 77, 79, 0.22);
+  @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg;
+
 }
+.settings-card__border {
+  @apply border-b-2 opacity-50;
+  border-color: rgba(219, 213, 213, 0.2);
+}
+
 .progress {
   @apply border w-full overflow-hidden rounded-[2px];
 }
@@ -527,11 +535,15 @@ header img {
   @apply h-5 bg-lightsalmonpink;
   transform: skew(-20deg) translateX(-10px);
 }
+.settings-card ul {
+  background: rgba(77, 77, 79, 0.2);
+  @apply py-5 px-8 rounded-bl-lg rounded-br-lg;
+}
 .settings-card li {
   @apply w-full;
 }
 .settings-card li span {
-  @apply text-brightgray font-semibold text-[13px] pb-3 gap-3;
+  @apply text-brightgray font-semibold text-[13px] pb-3;
 }
 
 .form-control {
@@ -552,13 +564,6 @@ header img {
   @apply opacity-20;
 }
 
-.settings::after {
-  content: "";
-  background: url("../images/bottom-gradient.png") no-repeat;
-  @apply max-xl:bg-bottom bg-contain w-full h-[75%] opacity-80 z-[-1];
-  @apply absolute bottom-0 xl:w-[80%] xl:bg-cover left-[-150px] right-0 mx-auto
-  ;
-}
 .select-control {
   @apply w-full;
 }
@@ -588,8 +593,7 @@ header img {
   font-family: "ProximaNova-bold";
 }
 .service-detail .card p {
-  color: #EDEDED;
-  font-family: "ProximaNova-Regular";
+  @apply max-md:text-sm text-brightgray font-proximaNova-regular;
 }
 
 .service-detail ul {
@@ -609,7 +613,7 @@ header img {
   @apply flex gap-7 mb-3;
 }
 .right-general-card span {
-  @apply text-brightgray font-proximaNova-regular text-base w-1/2;
+  @apply text-brightgray font-proximaNova-regular md:text-base text-sm w-1/2;
 }
 
 .ReactModal__Overlay {
@@ -642,18 +646,50 @@ header img {
   background: linear-gradient(90deg, #F58E8E 0%, #F9D4A4 99.36%);
 }
 
-.reset-topltip {
-  @apply !bg-[#353539] !text-[10px] !text-brightgray rounded-md;
-}
-.reset-topltip__arrow {
-  @apply p-[10px] -mt-[5px];
+
+.welcome-logo {
+  @apply px-5 pt-7 flex items-center gap-6;
 }
 
-.gpu-resources__header {
-  @apply rounded-tl-md rounded-bl-md bg-[#1D1D1D] py-8 px-9;
-  box-shadow: 0px 3.74684px 22.481px -0.93671px rgba(0, 0, 0, 0.2);
+.welcome-container {
+  height: calc(100vh - 62px);
+  @apply relative z-[11] justify-center items-center flex-col flex;
 }
-.gpu-resources__body {
-  background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
-  box-shadow: 0px 3.74684px 22.481px -0.93671px rgba(0, 0, 0, 0.2);
+
+@media (max-width: 767px) {
+  .prem-chat-sidebar .sidebar {
+    @apply w-[60px];
+  }
+  .prem-chat-sidebar .sidebar li {
+    @apply px-0;
+  }
+  .prem-chat-sidebar .sidebar li a {
+    @apply justify-center;
+  }
+  .prem-chat-sidebar .sidebar li a span {
+    @apply hidden;
+  }
+  .prem-chat-sidebar .sidebar li img {
+    @apply mx-0;
+  }
+  .prem-chat-sidebar .sidebar__search button {
+    @apply hidden;
+  }
+  .prem-chat-sidebar .sidebar__search input::placeholder {
+    @apply opacity-0;
+  }
+  .prem-chat-sidebar .sidebar__search input {
+    @apply pl-5 mr-0;
+  }
+  .prem-chat-sidebar .sidebar__search img {
+    @apply left-[13px];
+  }
+  .prem-chat-right-sidebar {
+    @apply absolute right-0 top-0 z-10;
+  }
+}
+@media (min-width: 768px) {
+  .header__center {
+    width: calc(100% - 212px);
+  }
 }

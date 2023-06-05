@@ -1,0 +1,15 @@
+{
+  "version": "0.0.9",
+  "notes": "See the assets to download and install this version.",
+  "pub_date": "2023-06-02T15:32:49.000Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNndoS2IyaEpkeEpNdW0yZzlZQlY2akdEd05nMDltTTB6NmZUT0dOK0dYN0RBUUJFTjFMT2cxdXBlK3FpNHNDL1NJTGtkTEg1dzdaZ1pyMS83a0pLZkFzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg1NzE5NTU1CWZpbGU6cHJlbS1hcHAuYXBwLnRhci5negpXMG5maEhvYm9XSVI1R2NFU0RiNVdkdnhHSVhUSG1nczg1cVF5L3VoSDRocjFvV004ME1sOXArbmlTUG1mZlVpWGl0ZDI5R2FLeUdNeUFkOVgwR2lDdz09Cg==",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.0.9/prem-app-debug_universal.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNndoS2IyaEpkeEpNdW0yZzlZQlY2akdEd05nMDltTTB6NmZUT0dOK0dYN0RBUUJFTjFMT2cxdXBlK3FpNHNDL1NJTGtkTEg1dzdaZ1pyMS83a0pLZkFzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg1NzE5NTU1CWZpbGU6cHJlbS1hcHAuYXBwLnRhci5negpXMG5maEhvYm9XSVI1R2NFU0RiNVdkdnhHSVhUSG1nczg1cVF5L3VoSDRocjFvV004ME1sOXArbmlTUG1mZlVpWGl0ZDI5R2FLeUdNeUFkOVgwR2lDdz09Cg==",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.0.9/prem-app-debug_universal.app.tar.gz"
+    }
+  }
+}

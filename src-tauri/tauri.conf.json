@@ -8,25 +8,18 @@
   },
   "package": {
     "productName": "prem-app",
-    "version": "0.0.4"
+    "version": "0.0.9"
   },
   "tauri": {
     "allowlist": {
       "dialog": {
         "all": true
       },
-      "fs": {
-        "all": true,
-        "readDir": true,
-        "scope": [
-          "**"
-        ]
-      },
       "path": {
         "all": true
       },
       "process": {
-        "all": true
+        "exit": true
       },
       "shell": {
         "all": true
@@ -45,18 +38,27 @@
       "targets": "all"
     },
     "security": {
-      "csp": null
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+    },
+    "systemTray": {
+      "iconAsTemplate": true,
+      "iconPath": "icons/32x32.png"
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "endpoints": [
+        "https://github.com/premai-io/prem-app/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEVCM0ZBNkIwNDFFQjNBQUIKUldTck91dEJzS1kvNjRaTzhtZUtaMU5CdXVka0w2VFFNeWZDMStUL0k4a0N2OWR6alZlR1hjR3YK"
     },
     "windows": [
       {
         "fullscreen": false,
-        "minHeight": 600,
-        "minWidth": 1080,
+        "minHeight": 800,
+        "minWidth": 1220,
         "resizable": true,
-        "title": "prem-app"
+        "title": "Prem App"
       }
     ]
   }
