@@ -41,7 +41,7 @@ const ServiceDetail = () => {
   return (
     <AppContainer>
       <button
-        className="w-[30px] h-[30px] mt-10 mb-14 md:-mx-10"
+        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-10"
         onClick={back}
       >
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
