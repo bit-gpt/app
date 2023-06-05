@@ -21,7 +21,7 @@ const SystemCheck = ({
           Don't have requirements? Try the &nbsp;
           <a
             href="https://app.prem.ninja/"
-            target="__blank"
+            target="_blank"
             className="underline decoration"
           >
             Prem App
