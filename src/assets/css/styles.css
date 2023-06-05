@@ -27,7 +27,7 @@ header img {
 }
 .system-check__requirements p:last-child,
 .system-check__requirements button {
-  @apply w-[150px];
+  @apply min-w-[120px];
 }
 .system-check__container {
   min-height: calc(100vh - 182px);
@@ -303,17 +303,17 @@ header img {
 }
 
 .range-slider {
-  @apply h-[3px];
-  background-color: rgba(237, 237, 237, 0.1);
+  @apply !h-[3px];
+  background-color: rgba(237, 237, 237, 0.1) !important;
 }
 
 .range-slider .range-slider__range {
-  background-color: rgba(245, 142, 142, 1);
+  background-color: rgba(245, 142, 142, 1) !important;
   @apply !left-0;
 }
 .range-slider .range-slider__thumb {
-  @apply h-3 w-3;
-  background: linear-gradient(146.31deg, #f58e8e 28.33%, #f5c58c 71.67%);
+  @apply !h-2 !w-2;
+  background: linear-gradient(146.31deg, #f58e8e 28.33%, #f5c58c 71.67%) !important;
 }
 .range-slider .range-slider__thumb:nth-child(3) {
   @apply hidden;
@@ -322,7 +322,7 @@ header img {
 .range-slider .range-slider__thumb::before {
   content: "";
   background: rgba(249, 201, 161, 0.4);
-  @apply absolute right-[-2px] left-[-2px] bottom-[-2px] top-[-2px] rounded-full;
+  @apply absolute right-[-1.5px] left-[-1.5px] bottom-[-1.5px] top-[-1.5px] rounded-full;
 }
 
 .dropdown {
@@ -449,6 +449,10 @@ header img {
   @apply absolute inset-0 rounded-[12px] rotate-180 shadow-default pointer-events-none;
   background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
 }
+.services-running .dashboard-bottom__card-box {
+  @apply z-[1];
+}
+
 .search-filter {
   @apply lg:h-[50px];
 }
@@ -514,8 +518,11 @@ header img {
   @apply min-w-[100px] h-[65px] flex justify-center items-center bg-contain;
   background-position: 13px 0px;
 }
-.polygon-shape  svg {
-  @apply w-[22px] h-[22px] mt-[14px];
+.polygon-shape svg {
+  @apply w-7 h-7 mt-[14px];
+}
+.polygon-shape svg path {
+  @apply stroke-white;
 }
 
 .settings-card h3 {
@@ -543,7 +550,7 @@ header img {
   @apply w-full;
 }
 .settings-card li span {
-  @apply text-brightgray font-semibold text-[13px] pb-3;
+  @apply text-brightgray font-semibold text-[13px] pb-3 gap-3;
 }
 
 .form-control {
@@ -584,23 +591,12 @@ header img {
   @apply rounded-md shadow-default;
   background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
 }
-.service-detail .card h1 {
-  @apply text-brightgray font-bold text-xl;
-}
-.service-detail .card h2,
-.service-detail__documentation h3 {
-  @apply font-bold text-base text-brightgray mt-8 mb-6;
-  font-family: "ProximaNova-bold";
-}
-.service-detail .card p {
-  @apply max-md:text-sm text-brightgray font-proximaNova-regular;
-}
 
-.service-detail ul {
-  @apply ml-4;
+.services-header button {
+  @apply !text-sm;
 }
-.service-detail li {
-  @apply text-brightgray font-proximaNova-regular text-sm leading-7;
+.services-header button.btn-primary {
+  @apply !rounded-[30px] !px-6 !h-[40px] !text-[13px];
 }
 
 .right-top-card p {
@@ -621,9 +617,17 @@ header img {
 }
 
 .documentation-markdown h1 {
-  @apply text-[32px] font-bold leading-[50px] mb-4;
+  @apply text-2xl font-bold mb-6;
   font-family: "ProximaNova-bold";
 }
+.documentation-markdown h2 {
+  @apply text-base font-bold mb-6;
+}
+.documentation-markdown p {
+  @apply max-md:text-sm text-brightgray font-proximaNova-regular mb-6;
+}
+
+
 .documentation-markdown code {
   @apply whitespace-normal font-proximaNova-regular text-sm text-brightgray mb-4 block;
 }
@@ -692,4 +696,21 @@ header img {
   .header__center {
     width: calc(100% - 212px);
   }
+}
+
+.service-is__not-running svg {
+  @apply w-6 h-6;
+}
+
+.markdown-body {
+  @apply !bg-transparent !text-brightgray !text-sm;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  list-style: unset;
+}
+
+.markdown-body h2 {
+  @apply !border-[#a26d70];
 }

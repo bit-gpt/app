@@ -33,7 +33,7 @@ const AppRouter = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="top-right" />
     </QueryClientProvider>
   );
 };

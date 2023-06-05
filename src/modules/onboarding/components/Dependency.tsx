@@ -1,7 +1,13 @@
 import { Tooltip } from "react-tooltip";
 import { DependencyProps } from "../types";
 
-const Dependency = ({ isRunning, name, status, tooltip }: DependencyProps) => {
+const Dependency = ({
+  isRunning,
+  name,
+  status,
+  tooltip,
+  id,
+}: DependencyProps) => {
   return (
     <div className="flex justify-between mt-4">
       <p className="text-[#CFCFCF] text-base">{name}</p>
@@ -10,7 +16,7 @@ const Dependency = ({ isRunning, name, status, tooltip }: DependencyProps) => {
       )}
       {!isRunning && (
         <>
-          <button className="text-[#F9B96D] flex gap-3 not_found">
+          <button className="text-[#F9B96D] flex gap-3 not_found" id={`${id}`}>
             <svg
               width="16"
               height="16"
@@ -32,15 +38,9 @@ const Dependency = ({ isRunning, name, status, tooltip }: DependencyProps) => {
             </svg>
             {status}
           </button>
-          {tooltip && (
-            <Tooltip
-              anchorSelect=".not_found"
-              place="bottom"
-              className="topltip"
-            >
-              {tooltip}
-            </Tooltip>
-          )}
+          <Tooltip anchorSelect={`#${id}`} place="right" className="topltip">
+            {tooltip}
+          </Tooltip>
         </>
       )}
     </div>

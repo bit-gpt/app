@@ -49,7 +49,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         <span>Close Sidebar</span>
       </div>
       <div className="-mx-4 opacity-30" />
-      <ul className="my-[18px] right-sidebar__list overflow-y-auto scrollbar-none">
+      <ul className="mb-[18px] mt-[42px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
           <p>
             <span>Temperature</span>
