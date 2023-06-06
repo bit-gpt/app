@@ -2,6 +2,7 @@ import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 import WarningModalIcon from "shared/components/WarningModalIcon";
 import { WarningModalProps } from "shared/types";
+import Modal from "react-modal";
 
 const WarningModal = ({
   onCancel,
@@ -9,16 +10,19 @@ const WarningModal = ({
   cancelButtonText = "Cancel",
   okButtonText = "Ok",
   icon,
+  isOpen,
   title = "Warning",
   description,
 }: WarningModalProps) => {
   return (
-    <div className="warning-modal" aria-modal aria-hidden tabIndex={-1} role="dialog">
-      <div className="warning-modal__content gradient-border">
-        <div className="flex gap-[24px]">
-          <div className="polygon-shape">{icon || <WarningModalIcon />}</div>
+    <Modal className="warning-modal" isOpen={isOpen} onRequestClose={onCancel}>
+      <div className="warning-modal__content gradient-border w-[550px]">
+        <div className="flex max-sm:flex-wrap items-start gap-5 mt-5 mb-7">
+          <div className="md:mb-5 max-sm:-mx-3">
+            <div className="polygon-shape">{icon || <WarningModalIcon />}</div>
+          </div>
           <div>
-            <h2>{title}</h2>
+            <h2 className="text-lg mb-2">{title}</h2>
             <p className="!text-base">{description}</p>
           </div>
         </div>
@@ -35,7 +39,7 @@ const WarningModal = ({
           </PrimaryButton>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

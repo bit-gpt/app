@@ -8,7 +8,7 @@ const DocumentationModal = ({ content, isOpen, closeModal }: DocumentationModalP
     <Modal className="warning-modal" isOpen={isOpen} onRequestClose={closeModal}>
       <div className="warning-modal__content gradient-border">
         <div className="documentation-modal scrollbar-custom">
-          <button onClick={closeModal} className="w-[40px] -mx-2 mb-3">
+          <button onClick={closeModal} className="w-[40px] -mx-2 mb-5">
             <img src={cross} alt="cross" className="h-4 w-4 mx-auto" />
           </button>
           <div className="documentation-markdown">

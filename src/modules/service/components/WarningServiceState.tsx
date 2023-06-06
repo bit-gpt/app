@@ -53,6 +53,7 @@ const WarningServiceState = ({ status }: WarningServiceStateProps) => {
           onCancel={closeWarningModal}
           onOk={closeWarningModal}
           icon={getServiceWarningIcon(status)}
+          isOpen={isOpen}
         />
       )}
     </>
