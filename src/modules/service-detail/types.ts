@@ -1,4 +1,4 @@
-import { Service } from "modules/service/types";
+import { Service, ServiceStatus } from "modules/service/types";
 
 export type ServiceHeaderProps = {
   icon: string;
@@ -21,6 +21,7 @@ export type ServiceGeneralInfoProps = {
 
 export type ServiceResourceBarsProps = {
   serviceId: string;
+  status: ServiceStatus;
 };
 
 export type ServiceInfoValue = string | number | null | boolean;
