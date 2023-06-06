@@ -4,12 +4,11 @@ import { DownloadMessage } from "../types";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { getBackendUrlFromStore } from "shared/store/setting";
 
-
 const downloadServiceStream = async (
   serviceId: string,
   onError: (err: any) => void,
   onMessage: (message: DownloadMessage) => void,
-  onceCompleted: () => void,
+  onceCompleted: () => void
 ): Promise<void> => {
   const backendUrl = new URL(getBackendUrlFromStore());
   try {
@@ -22,7 +21,7 @@ const downloadServiceStream = async (
       try {
         const parsedData = JSON.parse(event.data);
         const status = parsedData.status;
-        if (status.includes('Digest:')) {
+        if (status.includes("Digest:")) {
           eventSource.close();
           onceCompleted();
           return;
@@ -38,17 +37,16 @@ const downloadServiceStream = async (
     };
     eventSource.onopen = (evt) => {
       //evt.target?.addEventListener('message', (event) => { console.log('listener: message: ', event)})
-      console.log('onopen', evt);
+      console.log("onopen", evt);
     };
 
-/*     eventSource.onerror = (err: any) => {
+    /*     eventSource.onerror = (err: any) => {
       console.log('error', err.data);
     };
     eventSource.onopen = (evt) => {
       evt.target?.addEventListener('message', (event) => { console.log('listener: message: ', event)})
       console.log('onopen', evt);
     }; */
- 
 
     /* fetchEventSource(`${backendUrl}v1/download-service-stream/${serviceId}`, {
       method: "GET",
@@ -72,7 +70,6 @@ const downloadServiceStream = async (
     console.log(err);
     onError(err);
   }
-}
-
+};
 
 export default downloadServiceStream;

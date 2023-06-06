@@ -65,11 +65,11 @@ export type Stats = {
 };
 
 export type GPUStats = {
-  gpu_name: string | null,
-  total_memory: number | null,
-  used_memory: number | null,
-  memory_percentage: number | null,
-}
+  gpu_name: string | null;
+  total_memory: number | null;
+  used_memory: number | null;
+  memory_percentage: number | null;
+};
 export type Message = {
   message: string;
 };
@@ -93,7 +93,6 @@ export type ServiceStatus =
   | "not_downloaded"
   | "service_greater_than_free_memory"
   | "service_greater_than_limit_memory";
-
 
 export type ServiceCardProps = {
   className: string;
@@ -123,7 +122,6 @@ export type ServiceStats = {
   storage_usage: number;
   storage_limit: number;
 };
-
 
 export type DocumentationModalProps = {
   content: string;

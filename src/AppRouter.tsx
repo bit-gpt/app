@@ -25,10 +25,7 @@ const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Service />} />
           <Route path="/prem-chat/:serviceId/:chatId?" element={<PremChat />} />
-          <Route
-            path="/services/:serviceId/detail"
-            element={<ServiceDetail />}
-          />
+          <Route path="/services/:serviceId/detail" element={<ServiceDetail />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

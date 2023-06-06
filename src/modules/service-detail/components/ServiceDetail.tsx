@@ -40,10 +40,7 @@ const ServiceDetail = () => {
   if (isLoading) return <ServiceLoading />;
   return (
     <AppContainer>
-      <button
-        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-14"
-        onClick={back}
-      >
+      <button className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 md:-mx-14" onClick={back}>
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
       </button>
       <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header">
@@ -58,9 +55,7 @@ const ServiceDetail = () => {
           status={status}
           refetch={refetchServices}
           isDetailView={true}
-          interfaces={interfaces.filter((app) =>
-            service.interfaces?.includes(app.id)
-          )}
+          interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
         />
       </div>
       <div className="service-detail">

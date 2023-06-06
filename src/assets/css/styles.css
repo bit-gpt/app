@@ -59,7 +59,6 @@ header img {
   );
 }
 
-
 .modal-height {
   margin-bottom: 70px;
 }
@@ -121,7 +120,6 @@ header img {
   box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
   @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[282px] md:w-[265px] w-full max-md:max-w-[300px];
 }
-
 
 .dashboard-bottom__card::before,
 /* .modal::before, */
@@ -356,7 +354,7 @@ header img {
 .sidebar-main .sidebar li a.active svg path {
   @apply fill-[#FF7E7B];
 }
-.sidebar-last__row li:last-child:hover a svg.svg-stroke path ,
+.sidebar-last__row li:last-child:hover a svg.svg-stroke path,
 .sidebar-last__row li:last-child a.active svg.svg-stroke path {
   @apply stroke-[#FF7E7B] !fill-none;
 }
@@ -446,7 +444,12 @@ header img {
 .services-running::after {
   content: "";
   @apply absolute inset-0 rounded-[12px] rotate-180 shadow-default pointer-events-none;
-  background: linear-gradient(312.93deg, rgba(245, 142, 142, 0.46) -4.82%, rgba(245, 142, 142, 0.61) 8.19%, rgba(245, 142, 142, 0.08) 61.08%);
+  background: linear-gradient(
+    312.93deg,
+    rgba(245, 142, 142, 0.46) -4.82%,
+    rgba(245, 142, 142, 0.61) 8.19%,
+    rgba(245, 142, 142, 0.08) 61.08%
+  );
 }
 .services-running .dashboard-bottom__card-box {
   @apply z-[1];
@@ -500,7 +503,11 @@ header img {
 .warning-modal::before {
   content: "";
   @apply fixed top-0 left-0 z-[1] w-screen h-screen backdrop-blur-[20px] shadow-default;
-  background: linear-gradient(131.09deg, rgba(29, 29, 27, 0.49) 8.8%, rgba(29, 29, 27, 0.76) 88.99%);
+  background: linear-gradient(
+    131.09deg,
+    rgba(29, 29, 27, 0.49) 8.8%,
+    rgba(29, 29, 27, 0.76) 88.99%
+  );
 }
 .warning-modal__content {
   @apply p-6 mx-auto relative rounded-2xl z-[11] bg-[#26262A] max-w-[630px] text-brightgray;
@@ -527,7 +534,6 @@ header img {
 .settings-card h3 {
   background-color: rgba(77, 77, 79, 0.22);
   @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg;
-
 }
 .settings-card__border {
   @apply border-b-2 opacity-50;
@@ -574,7 +580,7 @@ header img {
   @apply w-full;
 }
 .select-control select {
-  background: url('../images/down.svg') no-repeat 100% 50%;
+  background: url("../images/down.svg") no-repeat 100% 50%;
   background-color: rgba(77, 77, 79, 0.22);
   background-position-x: 95%;
   @apply appearance-none h-full;
@@ -588,7 +594,11 @@ header img {
 
 .service-detail .card {
   @apply rounded-md shadow-default max-lg:w-full;
-  background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%);
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.4) 8.8%,
+    rgba(103, 100, 98, 0.11) 88.99%
+  );
 }
 
 .services-header button {
@@ -626,7 +636,6 @@ header img {
   @apply max-md:text-sm text-brightgray font-proximaNova-regular mb-6;
 }
 
-
 .documentation-markdown code {
   @apply whitespace-normal font-proximaNova-regular text-sm text-brightgray mb-4 block;
 }
@@ -646,9 +655,8 @@ header img {
 }
 .documentation-modal::-webkit-scrollbar-thumb {
   @apply rounded-md;
-  background: linear-gradient(90deg, #F58E8E 0%, #F9D4A4 99.36%);
+  background: linear-gradient(90deg, #f58e8e 0%, #f9d4a4 99.36%);
 }
-
 
 .welcome-logo {
   @apply px-5 pt-7 flex items-center gap-6;

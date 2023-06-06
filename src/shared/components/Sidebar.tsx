@@ -14,11 +14,7 @@ const Sidebar = () => {
           <img className="ml-[10px]" src={brandLogo} alt="brandLogo" />
         </div>
         <NavLinkContainer className="my-6 overflow-y-auto flex-grow scrollbar-none">
-          <NavLinkItem
-            to="/"
-            icon={<DashboardIcon className={""} />}
-            label="Dashboard"
-          />
+          <NavLinkItem to="/" icon={<DashboardIcon className={""} />} label="Dashboard" />
         </NavLinkContainer>
 
         <NavLinkContainer className="sidebar-last__row">

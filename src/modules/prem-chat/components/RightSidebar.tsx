@@ -18,7 +18,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
     n,
     setN,
     presence_penalty,
-    setPresencePenalty
+    setPresencePenalty,
   } = usePremChatStore(
     (state) => ({
       temperature: state.temperature,
@@ -32,7 +32,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
       n: state.n,
       setN: state.setN,
       presence_penalty: state.presence_penalty,
-      setPresencePenalty: state.setPresencePenalty
+      setPresencePenalty: state.setPresencePenalty,
     }),
     shallow
   );

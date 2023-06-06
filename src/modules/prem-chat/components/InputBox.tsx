@@ -1,11 +1,6 @@
 import { InputBoxProps } from "../types";
 
-const InputBox = ({
-  question,
-  setQuestion,
-  disabled,
-  placeholder,
-}: InputBoxProps) => {
+const InputBox = ({ question, setQuestion, disabled, placeholder }: InputBoxProps) => {
   return (
     <div className="prem-chat-input flex items-center relative">
       <input
