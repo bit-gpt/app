@@ -82,8 +82,8 @@ const SystemCheck = ({
                   id={"memory"}
                   tooltip={
                     <div>
-                      Prem App you requires at least <br /> {memoryLimit} of RAM allocated for Docker
-                      Engine.
+                      Prem App you requires at least <br /> {memoryLimit} of RAM allocated for
+                      Docker Engine.
                     </div>
                   }
                 />
