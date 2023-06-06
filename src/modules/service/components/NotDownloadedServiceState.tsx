@@ -15,7 +15,9 @@ const NotDownloadedServiceState = ({ serviceId, refetch }: ServiceStateProps) =>
     return (
       <>
         <p className="text-brightgray">{progress}%</p>
-        <Spinner className="w-5 h-5" />
+        <div className="flex justify-center mt-5">
+          <Spinner className="h-5 w-5" />
+        </div>
       </>
     );
   }

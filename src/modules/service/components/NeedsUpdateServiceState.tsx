@@ -23,7 +23,9 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
     return (
       <>
         {progress > 0 && <p className="text-brightgray">{progress}%</p>}
-        <Spinner className="w-5 h-5" />
+        <div className="flex justify-center mt-5">
+          <Spinner className="h-10 w-10" />
+        </div>
       </>
     );
   }

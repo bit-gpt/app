@@ -62,7 +62,11 @@ const StoppedServiceState = ({
   };
 
   if (deleteLoading || startLoading) {
-    return <Spinner className="w-5 h-5" />;
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Spinner className="w-5 h-5" />
+      </div>
+    );
   }
 
   return (

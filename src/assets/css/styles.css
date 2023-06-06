@@ -750,3 +750,19 @@ header img {
     width: calc(100% - 210px);
   }
 }
+
+.Toastify__toast {
+  @apply !text-white;
+  background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.4) 8.8%, rgba(103, 100, 98, 0.11) 88.99%) !important;
+  backdrop-filter: blur(22.4932px);
+  box-shadow: 0px 4.49864px 26.9918px -1.12466px rgba(0, 0, 0, 0.2) !important;
+}
+.Toastify__progress-bar--success {
+  @apply !bg-lightsalmonpink;
+}
+.Toastify__close-button > svg {
+  @apply !fill-[#B3B3B3];
+}
+.Toastify__toast-icon path{
+  @apply !fill-lightsalmonpink;
+}
