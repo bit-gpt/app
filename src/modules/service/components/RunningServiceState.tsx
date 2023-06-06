@@ -5,6 +5,7 @@ import StopIcon from "shared/components/StopIcon";
 import stopService from "../api/stopService";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
+import useStopService from "shared/hooks/useStopService";
 
 const RunningServiceState = ({
   serviceId,
@@ -12,7 +13,7 @@ const RunningServiceState = ({
   isDetailView = false,
   onOpenClick,
 }: ServiceStateProps) => {
-  const { mutate, isLoading } = useMutation((id: string) => stopService(id));
+  const { mutate, isLoading } = useStopService();
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
