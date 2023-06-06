@@ -4,7 +4,7 @@ import Spinner from "shared/components/Spinner";
 const ServiceLoading = () => {
   return (
     <AppContainer>
-      <div className="flex  items-center justify-center mt-5">
+      <div className="flex h-full items-center justify-center mt-5">
         <Spinner className="h-10 w-10" />
       </div>
     </AppContainer>
