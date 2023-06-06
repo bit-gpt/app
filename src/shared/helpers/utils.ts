@@ -47,7 +47,6 @@ export const isServerSet = () => {
   return import.meta.env.VITE_SERVER_URL !== undefined && import.meta.env.VITE_SERVER_URL !== "";
 };
 
-
 export const getBackendUrl = () => {
   let backendURL = "http://localhost:54321";
   if (isBackendSet()) {
