@@ -88,13 +88,6 @@ header img {
   @apply bg-darkjunglegreen pb-12;
 }
 
-.gradient-effect::after {
-  content: "";
-  background: url("../images/gradient1.png") no-repeat;
-  @apply max-xl:bg-bottom bg-contain w-full h-[70%] xl:left-[300px];
-  @apply absolute bottom-0 xl:w-[70%] xl:h-[900px] xl:bg-cover left-[0] right-0 mx-auto z-0;
-}
-
 .dashboard-top h1 {
   @apply font-bold text-[47px] leading-[40px] max-md:text-[40px] mt-4;
 }
@@ -122,10 +115,9 @@ header img {
 }
 
 .dashboard-bottom__card::before,
-/* .modal::before, */
 .gradient-border::after {
   content: "";
-  @apply absolute inset-0 rounded-[12px] p-[2px] pointer-events-none;
+  @apply absolute inset-0 rounded-[12px] p-[1.5px] pointer-events-none;
   background: linear-gradient(
     131.93deg,
     rgba(245, 142, 142, 0.6) 11.72%,
@@ -510,19 +502,19 @@ header img {
   );
 }
 .warning-modal__content {
-  @apply p-6 mx-auto relative rounded-2xl z-[11] bg-[#26262A] max-w-[630px] text-brightgray;
+  @apply p-6 mx-auto relative rounded-2xl z-[11] bg-[#26262A] max-w-[675px] text-brightgray;
 }
 .warning-modal__footer {
   @apply flex items-center gap-8;
 }
 .hr {
-  @apply border-t -mx-6 pt-6 mt-[37px] opacity-50;
+  @apply border-t -mx-6 pt-6 opacity-50;
   border-color: rgba(237, 237, 237, 0.34);
 }
 .polygon-shape {
   background: url("../images/polygon-shape.svg") no-repeat;
-  @apply min-w-[100px] h-[65px] flex justify-center items-center bg-contain;
-  background-position: 13px 0px;
+  @apply w-[90px] h-[60px] flex justify-center items-center bg-contain;
+  background-position: 10px 0px;
 }
 .polygon-shape svg {
   @apply w-7 h-7 mt-[14px];
@@ -726,21 +718,27 @@ header img {
   border-color: rgb(219 213 213 / 30%) !important;
 }
 
+.markdown-body p {
+  @apply leading-6;
+}
+
 .main-container {
   width: calc(100% - 90px);
-  @apply pb-[60px] px-3 mx-auto z-[1] relative lg:ml-[140px] md:ml-[120px] md:mr-[70px] ml-[80px] mr-[10px];
+  @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] lg:ml-[100px] md:ml-[90px] md:mr-[70px] ml-[80px] mr-[10px];
 }
 @screen md {
   .main-container {
-    width: calc(100% - 190px);
+    width: calc(100% - 110px);
   }
 }
-@screen md {
-  .main-container {
-    width: calc(100% - 190px);
-  }
-}
+
 @screen lg {
+  .main-container {
+    width: calc(100% - 130px);
+  }
+}
+
+@screen xl {
   .main-container {
     width: calc(100% - 210px);
   }

@@ -9,7 +9,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
   }, [setSidebarToggle]);
 
   return (
-    <section className="bg-darkjunglegreen relative gradient-effect">
+    <section className="bg-darkjunglegreen">
       <div className="min-h-screen flex w-full">
         <Sidebar />
         <div className="main-container">{children}</div>
