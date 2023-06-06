@@ -714,3 +714,12 @@ header img {
 .markdown-body h2 {
   @apply !border-[#a26d70];
 }
+
+.disabled--card {
+  background: linear-gradient(131.09deg, rgba(47, 47, 47, 0.2) 8.8%, rgba(103, 100, 98, 0.055) 88.99%);
+  @apply opacity-60 pointer-events-none;
+}
+
+.disabled--card::before {
+  @apply hidden;
+}
