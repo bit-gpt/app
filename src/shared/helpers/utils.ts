@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import { ServiceInfoValue } from "modules/service-detail/types";
 import { Option, Service, ServiceStatus } from "modules/service/types";
 import { CSSObjectWithLabel, ControlProps } from "react-select";
 
@@ -128,6 +129,15 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
     return "running";
   }
   return "stopped";
+};
+
+export const formatInfo = (value: ServiceInfoValue) => {
+  if (value === null) {
+    return "-";
+  } else if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+  return value;
 };
 
 export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
