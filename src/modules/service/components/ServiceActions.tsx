@@ -54,11 +54,9 @@ const ServiceActions = ({
           <NotDownloadedServiceState serviceId={serviceId} refetch={refetch} />
         )}
 
-        {[
-          "not_supported",
-          "service_greater_than_free_memory",
-          "service_greater_than_limit_memory",
-        ].includes(status) && <WarningServiceState status={status} />}
+        {["not_supported", "not_enough_memory", "not_enough_system_memory"].includes(status) && (
+          <WarningServiceState status={status} />
+        )}
       </div>
       {modalIsOpen && (
         <DocumentationModal

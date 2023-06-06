@@ -41,6 +41,8 @@ export type Service = {
   dockerImageSize: number;
   volumePath: string | null;
   volumeName: string | null;
+  enoughMemory: boolean;
+  enoughSystemMemory: boolean;
 };
 
 export type SearchFilterProps = {
@@ -91,8 +93,8 @@ export type ServiceStatus =
   | "stopped"
   | "not_supported"
   | "not_downloaded"
-  | "service_greater_than_free_memory"
-  | "service_greater_than_limit_memory";
+  | "not_enough_memory"
+  | "not_enough_system_memory";
 
 export type ServiceCardProps = {
   className: string;
