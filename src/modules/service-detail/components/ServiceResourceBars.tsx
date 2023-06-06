@@ -2,7 +2,7 @@ import useServiceStats from "shared/hooks/useServiceStats";
 import { ServiceResourceBarsProps } from "../types";
 import WarningIcon from "shared/components/WarningIcon";
 
-const ServiceResourceBars = ({ serviceId }: ServiceResourceBarsProps) => {
+const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) => {
   const { data: response } = useServiceStats(serviceId);
 
   return (
@@ -45,10 +45,12 @@ const ServiceResourceBars = ({ serviceId }: ServiceResourceBarsProps) => {
           </div>
         </li>
       </ul>
-      <p className="flex items-center pb-3 mx-4 gap-[7px] !text-[12px] service-is__not-running">
-        <WarningIcon />
-        Service is not Running. Resources not available
-      </p>
+      {status !== "running" && (
+        <p className="flex items-center pb-3 mx-4 gap-[7px] !text-[12px] service-is__not-running">
+          <WarningIcon />
+          The service is not Running. Resources not available
+        </p>
+      )}
     </div>
   );
 };
