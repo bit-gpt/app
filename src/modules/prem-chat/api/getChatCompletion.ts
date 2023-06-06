@@ -1,12 +1,12 @@
 import api from "shared/api/v1";
 import { ChatCompletionInputData } from "../types";
-import { getServerUrl } from "shared/helpers/utils";
+import { getBackendUrlFromStore } from "shared/store/setting";
 
 const getChatCompletion = async (port: number, data: ChatCompletionInputData) => {
-  const serverUrl = new URL(getServerUrl());
-  serverUrl.port = `${port}`;
+  const backendUrl = new URL(getBackendUrlFromStore());
+  backendUrl.port = `${port}`;
 
-  return api().post(`${serverUrl}api/v1/chat/completions`, data);
+  return api().post(`${backendUrl}api/v1/chat/completions`, data);
 };
 
 export default getChatCompletion;

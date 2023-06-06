@@ -43,10 +43,6 @@ export const isBackendSet = () => {
   return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
 };
 
-export const isServerSet = () => {
-  return import.meta.env.VITE_SERVER_URL !== undefined && import.meta.env.VITE_SERVER_URL !== "";
-};
-
 export const getBackendUrl = () => {
   let backendURL = "http://localhost:54321";
   if (isBackendSet()) {
@@ -56,14 +52,6 @@ export const getBackendUrl = () => {
     backendURL = `${window.location.protocol}//${window.location.host}/api`;
   }
   return backendURL;
-};
-
-export const getServerUrl = () => {
-  let serverUrl = "http://localhost";
-  if (isServerSet()) {
-    serverUrl = import.meta.env.VITE_SERVER_URL;
-  }
-  return serverUrl;
 };
 
 export const serviceSearchStyle = {
