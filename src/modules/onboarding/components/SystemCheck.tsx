@@ -6,6 +6,8 @@ import appleLogo from "assets/images/apple.svg";
 import { SystemCheckProps } from "../types";
 import Dependency from "./Dependency";
 import PrimaryButton from "shared/components/PrimaryButton";
+import useSystemStats from "shared/hooks/useSystemStats";
+import Spinner from "shared/components/Spinner";
 
 const SystemCheck = ({
   handleCheckIsDockerRunning,
@@ -14,6 +16,10 @@ const SystemCheck = ({
   back,
   next,
 }: SystemCheckProps) => {
+  const { data: response, isLoading } = useSystemStats();
+
+  const memoryLimit = response?.data?.memory_limit ? `${response?.data?.memory_limit}GiB` : "";
+
   return (
     <section className="system-check flex flex-wrap bg-lines relative">
       <div className="bg-tulip w-full py-2 sm:max-h-[56px] text-center max-sm:px-1 z-[11]">
@@ -69,14 +75,15 @@ const SystemCheck = ({
                 />
 
                 <Dependency
+                  isLoading={isLoading}
                   isRunning={false}
-                  status="> 16gb"
+                  status={memoryLimit}
                   name="Memory"
                   id={"memory"}
                   tooltip={
                     <div>
-                      Prem App you requires at least <br /> 16GiB of RAM allocated for Docker
-                      Engine.
+                      Prem App you requires at least <br /> {memoryLimit} of RAM allocated for
+                      Docker Engine.
                     </div>
                   }
                 />
