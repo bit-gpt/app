@@ -737,7 +737,7 @@ header img {
 }
 .main-container {
   width: calc(100% - 90px);
-  @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] lg:ml-[100px] md:ml-[90px] md:mr-[70px] ml-[80px] mr-[10px];
+  @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px];
 }
 @screen md {
   .main-container {
@@ -747,7 +747,7 @@ header img {
 
 @screen lg {
   .main-container {
-    width: calc(100% - 130px);
+    width: calc(100% - 150px);
   }
 }
 

@@ -26,7 +26,7 @@ const Service = () => {
 
   return (
     <AppContainer>
-      <div className="mask-heading mb-[29px] md:-mx-10">
+      <div className="mask-heading mb-[29px] md:-mx-6 xl:-mx-10">
         <h2 className="!mt-10">Dashboard</h2>
       </div>
 

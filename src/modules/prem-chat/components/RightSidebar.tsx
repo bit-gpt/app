@@ -39,12 +39,12 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
 
   return (
     <div className="bg-darkgunmetal flex-col px-4 flex h-screen w-[260px] prem-chat-right-sidebar">
-      <div className="sidebar-toggle__btn !mt-5 !ml-3">
+      <div className="sidebar-toggle__btn !mt-5 !ml-0">
         <button
           onClick={() => setRightSidebar(false)}
-          className="bg-Onyx px-[8.4px] mr-3 -ml-[6px] py-[10px] rounded-md"
+          className="bg-Onyx px-[8.4px] mr-3 py-[10px] rounded-md"
         >
-          <LeftArrowIcon />
+          <LeftArrowIcon className="rotate-180"/>
         </button>
         <span>Close Sidebar</span>
       </div>
