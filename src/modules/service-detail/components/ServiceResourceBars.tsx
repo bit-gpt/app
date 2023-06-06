@@ -1,13 +1,14 @@
 import useServiceStats from "shared/hooks/useServiceStats";
 import { ServiceResourceBarsProps } from "../types";
 import WarningIcon from "shared/components/WarningIcon";
+import clsx from "clsx";
 
 const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) => {
   const { data: response } = useServiceStats(serviceId);
 
   return (
     <div className="right-top-card card">
-      <ul className="grid lg:grid-cols-3 items-end gap-4 !ml-0 p-5">
+      <ul className={clsx("grid lg:grid-cols-3 items-end gap-4 !ml-0 p-5", status !== "running" && "status-not-running")}>
         <li>
           <p>Memory</p>
           <div className="flex gap-[6px] items-center">
