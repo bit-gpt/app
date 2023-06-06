@@ -55,8 +55,7 @@ const SystemCheck = ({
                   id={"docker"}
                   tooltip={
                     <div>
-                      In order to run Prem App you need to have
-                      <br /> docker installed and running
+                      Prem App requires Docker installed and running.
                     </div>
                   }
                 />
@@ -67,8 +66,7 @@ const SystemCheck = ({
                   id={"daemon"}
                   tooltip={
                     <div>
-                      Prem App requires the Daemon to run in order to have <br /> the app working
-                      smoothly.
+                      Prem App requires Prem Daemon to be up and running. <br /> The Daemon is automatically started when docker is running.
                     </div>
                   }
                 />
@@ -80,8 +78,7 @@ const SystemCheck = ({
                   id={"memory"}
                   tooltip={
                     <div>
-                      In order to use Prem App you need <br />
-                      at least 16gb of RAM
+                      Prem App you requires at least <br /> 16GiB of RAM allocated for Docker Engine.
                     </div>
                   }
                 />
