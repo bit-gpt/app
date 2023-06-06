@@ -26,7 +26,10 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const isGreyCard = status === "not_supported" || status === "not_enough_system_memory";
 
   return (
-    <Link className={clsx(className, isGreyCard && "disabled--card")} to={`/services/${serviceId}/detail`}>
+    <Link
+      className={clsx(className, isGreyCard && "disabled--card")}
+      to={`/services/${serviceId}/detail`}
+    >
       <div className="flex gap-8 items-start flex-wrap w-full relative">
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt={title} />
@@ -35,9 +38,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
           refetch={refetch}
           serviceId={serviceId}
           status={status}
-          interfaces={interfaces.filter((app) =>
-            service.interfaces?.includes(app.id)
-          )}
+          interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
         />
       </div>
       <h3>{title}</h3>

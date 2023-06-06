@@ -31,17 +31,11 @@ const Service = () => {
       </div>
 
       {apps.length > 0 && (
-        <SearchFilter
-          onFilterChange={setFilter}
-          appId={appId as string}
-          apps={apps}
-        />
+        <SearchFilter onFilterChange={setFilter} appId={appId as string} apps={apps} />
       )}
 
       {filteredApps.map((app) => {
-        const filteredServices = services.filter((service) =>
-          service.interfaces.includes(app.id)
-        );
+        const filteredServices = services.filter((service) => service.interfaces.includes(app.id));
         return (
           <div key={app.id} className="mt-10">
             <h3 className="text-brightgray font-bold md:text-xl text-base flex mb-5">{app.name}</h3>
@@ -58,13 +52,9 @@ const Service = () => {
               ))}
 
               {!isServicesLoading && filteredServices.length === 0 && (
-                <div className="text-white opacity-70">
-                  No services found
-                </div>
+                <div className="text-white opacity-70">No services found</div>
               )}
-              {isServicesLoading && (
-                <div className="text-center text-[#8C8C8C]">Loading...</div>
-              )}
+              {isServicesLoading && <div className="text-center text-[#8C8C8C]">Loading...</div>}
             </div>
           </div>
         );

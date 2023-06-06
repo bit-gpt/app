@@ -7,13 +7,10 @@ import WarningShapeIcon from "shared/components/WarningShapeIcon";
 const WarningServiceState = ({ status }: WarningServiceStateProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeWarningModal = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      setIsOpen(false);
-    },
-    []
-  );
+  const closeWarningModal = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsOpen(false);
+  }, []);
 
   const getServiceWarningDescription = (status: ServiceStatus) => {
     switch (status) {
@@ -32,7 +29,7 @@ const WarningServiceState = ({ status }: WarningServiceStateProps) => {
     switch (status) {
       case "not_enough_memory":
         return <WarningShapeIcon />;
-        case "not_supported":
+      case "not_supported":
       case "not_enough_system_memory":
         return <WarningIcon />;
       default:

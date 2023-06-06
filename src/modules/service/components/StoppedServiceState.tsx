@@ -17,12 +17,12 @@ const StoppedServiceState = ({
 }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation(
-    (id: string) => deleteService(id)
+  const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
+    deleteService(id)
   );
 
-  const { mutate: startMutate, isLoading: startLoading } = useMutation(
-    (id: string) => startService(id)
+  const { mutate: startMutate, isLoading: startLoading } = useMutation((id: string) =>
+    startService(id)
   );
 
   const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {

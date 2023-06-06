@@ -1,16 +1,16 @@
 @font-face {
-  font-family: 'Pretendard';
-  src: url('../fonts/Pretendard-Medium.otf') format(opentype);
+  font-family: "Pretendard";
+  src: url("../fonts/Pretendard-Medium.otf") format(opentype);
 }
 @font-face {
-  font-family: 'ProximaNova-Regular';
-  src: url('../fonts/ProximaNovaRegular.ttf');
+  font-family: "ProximaNova-Regular";
+  src: url("../fonts/ProximaNovaRegular.ttf");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: 'ProximaNova-bold';
-  src: url('../fonts/ProximaNovaBold.otf') format(opentype);
+  font-family: "ProximaNova-bold";
+  src: url("../fonts/ProximaNovaBold.otf") format(opentype);
   font-weight: normal;
   font-style: normal;
 }

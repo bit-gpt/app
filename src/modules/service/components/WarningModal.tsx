@@ -13,13 +13,7 @@ const WarningModal = ({
   description,
 }: WarningModalProps) => {
   return (
-    <div
-      className="warning-modal"
-      aria-modal
-      aria-hidden
-      tabIndex={-1}
-      role="dialog"
-    >
+    <div className="warning-modal" aria-modal aria-hidden tabIndex={-1} role="dialog">
       <div className="warning-modal__content gradient-border">
         <div className="flex gap-[24px]">
           <div className="polygon-shape">{icon || <WarningModalIcon />}</div>

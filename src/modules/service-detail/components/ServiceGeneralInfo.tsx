@@ -26,36 +26,35 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       </div>
       <div className="right-general-card">
         <span className="opacity-70">Volume Name</span>
-        <span className="uppercase">{service.volumeName  || "-"}</span>
+        <span className="uppercase">{service.volumeName || "-"}</span>
       </div>
       <div className="right-general-card">
         <span className="opacity-70">Volume Path</span>
-        <span className="uppercase">{service.volumePath  || "-"}</span>
+        <span className="uppercase">{service.volumePath || "-"}</span>
       </div>
 
       <div className="right-general-card">
         <span className="opacity-70">Supported</span>
-        <span className="uppercase">{service.supported  ? "Yes" : "No"}</span>
+        <span className="uppercase">{service.supported ? "Yes" : "No"}</span>
       </div>
       <div className="right-general-card">
         <span className="opacity-70">Downloaded</span>
-        <span className="uppercase">{service.downloaded  ? "Yes" : "No"}</span>
+        <span className="uppercase">{service.downloaded ? "Yes" : "No"}</span>
       </div>
 
       <div className="right-general-card">
         <span className="opacity-70">Running</span>
-        <span className="uppercase">{service.running  ? "Yes" : "No"}</span>
+        <span className="uppercase">{service.running ? "Yes" : "No"}</span>
       </div>
-      
 
       <h3 className="text-brightgray font-bold text-xl my-6">Model Info</h3>
       <div className="right-general-card">
         <span className="opacity-70">Weights Name</span>
-        <span>{service.modelInfo.weightsName || '-'}</span>
+        <span>{service.modelInfo.weightsName || "-"}</span>
       </div>
       <div className="right-general-card">
         <span className="opacity-70">Weights Size</span>
-        <span>{service.modelInfo.weightsSize || '-'}</span>
+        <span>{service.modelInfo.weightsSize || "-"}</span>
       </div>
       <div className="right-general-card">
         <span className="opacity-70">Inference Time</span>
@@ -71,7 +70,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       </div>
       <div className="right-general-card">
         <span className="opacity-70">Streaming</span>
-        <span>{service.modelInfo.streaming ? 'Yes' : 'No'}</span>
+        <span>{service.modelInfo.streaming ? "Yes" : "No"}</span>
       </div>
     </div>
   );

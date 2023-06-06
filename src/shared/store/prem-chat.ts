@@ -34,13 +34,11 @@ const usePremChatStore = create<PremChatStore>()(
       top_p: 1,
       setTopP: (top_p) => set(() => ({ top_p })),
       frequency_penalty: 0,
-      setFrequencyPenalty: (frequency_penalty) =>
-        set(() => ({ frequency_penalty })),
+      setFrequencyPenalty: (frequency_penalty) => set(() => ({ frequency_penalty })),
       n: 1,
       setN: (n) => set(() => ({ n })),
       presence_penalty: 0,
-      setPresencePenalty: (presence_penalty) =>
-        set(() => ({ presence_penalty })),
+      setPresencePenalty: (presence_penalty) => set(() => ({ presence_penalty })),
     }),
     {
       name: "prem-chat",

@@ -20,20 +20,12 @@ const PremChatContainer = ({
   const [rightSidebar, setRightSidebar] = useState(false);
   const chatMessageListRef = useRef<HTMLDivElement>(null);
 
-  const {
-    chatMessages,
-    onSubmit,
-    question,
-    setQuestion,
-    isLoading,
-    isError,
-    onRegenerate,
-  } = usePremChat(isStreaming, serviceId!, chatId || null);
+  const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
+    usePremChat(isStreaming, serviceId!, chatId || null);
 
   useEffect(() => {
     if (chatMessageListRef.current) {
-      chatMessageListRef.current.scrollTop =
-        chatMessageListRef.current.scrollHeight;
+      chatMessageListRef.current.scrollTop = chatMessageListRef.current.scrollHeight;
     }
   }, [chatMessages]);
 
@@ -88,9 +80,8 @@ const PremChatContainer = ({
                       />
                     </form>
                     <p className="text-philippinegray mt-3 text-[10px] font-proximaNova-regular text-center">
-                      ChatBot UI. Chat bot UI is an advanced chatbot kit for
-                      OpenAI'a chat models aiming to mimic ChatGPT's interface
-                      and functionality.
+                      ChatBot UI. Chat bot UI is an advanced chatbot kit for OpenAI'a chat models
+                      aiming to mimic ChatGPT's interface and functionality.
                     </p>
                   </div>
                 </div>
@@ -98,9 +89,7 @@ const PremChatContainer = ({
             </div>
           </div>
         </div>
-        <div>
-          {rightSidebar && <RightSidebar setRightSidebar={setRightSidebar} />}
-        </div>
+        <div>{rightSidebar && <RightSidebar setRightSidebar={setRightSidebar} />}</div>
       </div>
     </section>
   );

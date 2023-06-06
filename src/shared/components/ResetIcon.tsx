@@ -1,7 +1,7 @@
 const ResetIcon = () => {
   return (
     <svg
-    className="mx-auto"
+      className="mx-auto"
       width="22"
       height="22"
       viewBox="0 0 22 22"
