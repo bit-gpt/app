@@ -44,7 +44,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
           onClick={() => setRightSidebar(false)}
           className="bg-Onyx px-[8.4px] mr-3 py-[10px] rounded-md"
         >
-          <LeftArrowIcon className="rotate-180"/>
+          <LeftArrowIcon className="rotate-180" />
         </button>
         <span>Close Sidebar</span>
       </div>
