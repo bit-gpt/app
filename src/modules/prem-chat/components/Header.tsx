@@ -13,7 +13,10 @@ const Header = ({ setRightSidebar, rightSidebar, title }: HeaderProps) => {
       <div className="border-l border-light md:pl-6 pl-4 flex items-center ml-auto max-w-max w-full absolute right-0">
         <button
           type="button"
-          className={clsx("bg-sonicsilver py-3 px-4 rounded-md md:text-lg text-sm font-proximaNova-regular text-white", rightSidebar && "mr-6")}
+          className={clsx(
+            "bg-sonicsilver py-3 px-4 rounded-md md:text-lg text-sm font-proximaNova-regular text-white",
+            rightSidebar && "mr-6"
+          )}
         >
           Share Chat
         </button>
