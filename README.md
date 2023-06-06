@@ -2,14 +2,6 @@
 
 ## Contributing
 
-### Run the Backend
-
-```bash
-# clone the backend repo
-git clone git@github.com:premAI-io/prem-box.git
-cd ./prem-box/
-docker-compose up --build -d prem_controller
-```
 ### Run the app with Tauri
 
 ```bash
@@ -21,5 +13,5 @@ npm run tauri dev
 
 ```bash
 npm i
-npm run start
+npm run dev
 ```
