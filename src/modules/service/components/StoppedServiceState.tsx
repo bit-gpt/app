@@ -88,6 +88,7 @@ const StoppedServiceState = ({
           title="Warning"
           onCancel={onCancelClick}
           onOk={deleteServiceHandler}
+          isOpen={openDeleteModal}
         />
       )}
     </>

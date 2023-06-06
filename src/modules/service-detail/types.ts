@@ -22,3 +22,5 @@ export type ServiceGeneralInfoProps = {
 export type ServiceResourceBarsProps = {
   serviceId: string;
 };
+
+export type ServiceInfoValue = string | number | null | boolean;
