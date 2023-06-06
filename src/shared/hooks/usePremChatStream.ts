@@ -7,7 +7,7 @@ import { PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
 import { toast } from "react-toastify";
-import { getBackendUrlFromStore } from "shared/store/setting";
+import { getServerUrl } from "shared/helpers/utils";
 
 const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
@@ -66,11 +66,11 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     const ctrl = new AbortController();
 
-    const backendUrl = new URL(getBackendUrlFromStore());
-    backendUrl.port = `${service?.runningPort!}`;
+    const serverUrl = new URL(getServerUrl());
+    serverUrl.port = `${service?.runningPort!}`;
 
     try {
-      fetchEventSource(`${backendUrl}api/v1/chat/completions`, {
+      fetchEventSource(`${serverUrl}api/v1/chat/completions`, {
         method: "POST",
         openWhenHidden: true,
         headers: {
