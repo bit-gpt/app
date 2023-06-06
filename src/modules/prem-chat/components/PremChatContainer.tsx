@@ -79,10 +79,6 @@ const PremChatContainer = ({
                         }
                       />
                     </form>
-                    <p className="text-philippinegray mt-3 text-[10px] font-proximaNova-regular text-center">
-                      ChatBot UI. Chat bot UI is an advanced chatbot kit for OpenAI'a chat models
-                      aiming to mimic ChatGPT's interface and functionality.
-                    </p>
                   </div>
                 </div>
               </div>

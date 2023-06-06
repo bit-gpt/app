@@ -770,3 +770,14 @@ header img {
 .Toastify__toast-icon path {
   @apply !fill-lightsalmonpink;
 }
+
+.status-not-running .progress-container {
+  background-color: rgba(217, 217, 217, 0.4);
+}
+.status-not-running .progress {
+  @apply border-lavendergray;
+}
+
+.status-not-running p {
+  color: rgba(217, 217, 217, 0.4);
+}
