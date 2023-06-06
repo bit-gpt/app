@@ -722,6 +722,18 @@ header img {
   @apply leading-6;
 }
 
+.disabled--card {
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.2) 8.8%,
+    rgba(103, 100, 98, 0.055) 88.99%
+  );
+  @apply opacity-60;
+}
+
+.disabled--card::before {
+  @apply hidden;
+}
 .main-container {
   width: calc(100% - 90px);
   @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] lg:ml-[100px] md:ml-[90px] md:mr-[70px] ml-[80px] mr-[10px];

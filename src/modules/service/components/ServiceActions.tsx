@@ -6,6 +6,7 @@ import StoppedServiceState from "./StoppedServiceState";
 import WarningServiceState from "./WarningServiceState";
 import { useNavigate } from "react-router-dom";
 import DocumentationModal from "./DocumentationModal";
+import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
 
 const ServiceActions = ({
   status,
@@ -14,6 +15,7 @@ const ServiceActions = ({
   children,
   isDetailView = false,
   interfaces,
+  needsUpdate,
 }: ServiceActionsProps) => {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -33,6 +35,9 @@ const ServiceActions = ({
     <>
       <div className="flex items-center gap-4 ml-auto">
         {children}
+        {isDetailView && needsUpdate && (
+          <NeedsUpdateServiceState serviceId={serviceId} refetch={refetch} />
+        )}
         {status === "running" && (
           <RunningServiceState
             serviceId={serviceId}
@@ -54,11 +59,9 @@ const ServiceActions = ({
           <NotDownloadedServiceState serviceId={serviceId} refetch={refetch} />
         )}
 
-        {[
-          "not_supported",
-          "service_greater_than_free_memory",
-          "service_greater_than_limit_memory",
-        ].includes(status) && <WarningServiceState status={status} />}
+        {["not_supported", "not_enough_memory", "not_enough_system_memory"].includes(status) && (
+          <WarningServiceState status={status} />
+        )}
       </div>
       {modalIsOpen && (
         <DocumentationModal

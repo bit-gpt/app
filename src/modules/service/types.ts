@@ -25,22 +25,25 @@ export type ModelInfo = {
 };
 
 export type Service = {
-  interfaces: string[];
   defaultPort: number;
   description: string;
   dockerImage: string;
+  dockerImageSize: number;
   documentation: string;
   downloaded: boolean;
+  enoughMemory: boolean;
+  enoughSystemMemory: boolean;
   icon: string;
   id: string;
+  interfaces: string[];
   modelInfo: ModelInfo;
   name: string;
+  needsUpdate: boolean;
   running: boolean;
-  supported: boolean;
   runningPort: number;
-  dockerImageSize: number;
-  volumePath: string | null;
+  supported: boolean;
   volumeName: string | null;
+  volumePath: string | null;
 };
 
 export type SearchFilterProps = {
@@ -91,8 +94,8 @@ export type ServiceStatus =
   | "stopped"
   | "not_supported"
   | "not_downloaded"
-  | "service_greater_than_free_memory"
-  | "service_greater_than_limit_memory";
+  | "not_enough_memory"
+  | "not_enough_system_memory";
 
 export type ServiceCardProps = {
   className: string;
@@ -106,6 +109,7 @@ export type ServiceActionsProps = PropsWithChildren<{
   refetch: () => void;
   isDetailView?: boolean;
   interfaces: App[];
+  needsUpdate: boolean;
 }>;
 
 export type WarningServiceStateProps = {
