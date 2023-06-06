@@ -18,6 +18,7 @@ export type DependencyProps = {
   status: string;
   tooltip?: string | ReactElement;
   id: string | number;
+  isLoading?: boolean;
 };
 
 export type OnboardingProps = {
