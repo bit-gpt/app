@@ -141,3 +141,5 @@ export const formatInfo = (value: ServiceInfoValue) => {
 };
 
 export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
+
+export const SYSTEM_MEMORY_LIMIT = 16;
