@@ -663,7 +663,7 @@ header img {
 }
 
 .welcome-container {
-  height: calc(100vh - 62px);
+  height: calc(100vh - 61px);
   @apply relative z-[11] justify-center items-center flex-col flex;
 }
 
@@ -719,7 +719,11 @@ header img {
 }
 
 .markdown-body h2 {
-  @apply !border-[#a26d70];
+  border-color: rgb(219 213 213 / 30%) !important;
+}
+.markdown-body a:hover {
+  @apply !no-underline border-b;
+  border-color: rgb(219 213 213 / 30%) !important;
 }
 
 .main-container {
