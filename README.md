@@ -33,8 +33,22 @@ If you wanna know which services we support for each interface, please refer to 
 - [ ] 🖼️ Prem Upscaler
 - [ ] 📹 Prem Video
 
-## Contributing
+## Contributing to Prem App
 
+### Run the app with Tauri
+
+```bash
+npm i
+npm run tauri dev
+```
+
+### Run the app with React
+
+```bash
+npm i
+npm run dev
+```
+## Contributing to Prem Daemon
 ### Running the Daemon locally
 
 ```bash
@@ -68,20 +82,6 @@ PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-daemon/main/r
 
 ```bash
 pytest
-```
-
-### Run the app with Tauri
-
-```bash
-npm i
-npm run tauri dev
-```
-
-### Run the app with React
-
-```bash
-npm i
-npm run dev
 ```
 
 ### Release Checklist
