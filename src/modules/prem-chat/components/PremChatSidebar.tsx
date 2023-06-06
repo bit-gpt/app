@@ -5,7 +5,6 @@ import orderBy from "lodash/orderBy";
 import { shallow } from "zustand/shallow";
 import usePremChatStore from "shared/store/prem-chat";
 import Logo from "assets/images/logo.svg";
-import brandLogo from "assets/images/brand-logo.svg";
 import cross from "assets/images/arrow.svg";
 import edit from "assets/images/edit.svg";
 import msg from "assets/images/msg.svg";
@@ -54,8 +53,7 @@ const PremChatSidebar = () => {
         <button className={clsx(sidebarToggle ? "mx-auto my-5" : "mx-2")} onClick={onCloseClick}>
           <img src={cross} alt="cross-logo" />
         </button>
-        <img className="sidebar__logo max-md:hidden" src={Logo} alt="logo" />
-        <img className={clsx(!sidebarToggle && "md:hidden")} src={brandLogo} alt="brandLogo" />
+        <img className="sidebar__logo" src={Logo} alt="logo" />
       </div>
       <div className="flex mt-8 sidebar__search relative">
         <img
