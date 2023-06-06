@@ -1,9 +1,9 @@
-import DownloadIcon from "shared/components/DownloadIcon";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
+import RefreshIcon from "shared/components/RefreshIcon";
 import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
 
-const NotDownloadedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
+const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   const { progress, download } = useDownloadServiceStream();
 
   const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,9 +22,9 @@ const NotDownloadedServiceState = ({ serviceId, refetch }: ServiceStateProps) =>
 
   return (
     <button onClick={onDownload}>
-      <DownloadIcon />
+      <RefreshIcon />
     </button>
   );
 };
 
-export default NotDownloadedServiceState;
+export default NeedsUpdateServiceState;

@@ -39,6 +39,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
           serviceId={serviceId}
           status={status}
           interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
+          needsUpdate={service.needsUpdate}
         />
       </div>
       <h3>{title}</h3>

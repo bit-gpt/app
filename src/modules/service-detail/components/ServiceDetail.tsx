@@ -56,6 +56,7 @@ const ServiceDetail = () => {
           refetch={refetchServices}
           isDetailView={true}
           interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
+          needsUpdate={service.needsUpdate}
         />
       </div>
       <div className="service-detail">
