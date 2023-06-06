@@ -12,6 +12,9 @@ jobs:
       packages: write
       id-token: write
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Sync node version and setup cache
         uses: actions/setup-node@v3
 
