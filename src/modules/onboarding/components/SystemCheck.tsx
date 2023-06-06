@@ -1,4 +1,3 @@
-import { Tooltip } from "react-tooltip";
 import Logo from "assets/images/brand-logo.svg";
 import arrow from "assets/images/arrow.svg";
 import computerLogo from "assets/images/computer.svg";
@@ -7,7 +6,7 @@ import { SystemCheckProps } from "../types";
 import Dependency from "./Dependency";
 import PrimaryButton from "shared/components/PrimaryButton";
 import useSystemStats from "shared/hooks/useSystemStats";
-import Spinner from "shared/components/Spinner";
+import { SYSTEM_MEMORY_LIMIT } from "shared/helpers/utils";
 
 const SystemCheck = ({
   handleCheckIsDockerRunning,
@@ -16,9 +15,15 @@ const SystemCheck = ({
   back,
   next,
 }: SystemCheckProps) => {
-  const { data: response, isLoading } = useSystemStats();
+  const { data: response, isLoading, refetch } = useSystemStats();
 
-  const memoryLimit = response?.data?.memory_limit ? `${response?.data?.memory_limit}GiB` : "";
+  const memoryLimit = response?.data?.memory_limit;
+  const isMemorySufficient = memoryLimit! > SYSTEM_MEMORY_LIMIT;
+
+  const onCheckAgainClick = () => {
+    handleCheckIsDockerRunning();
+    refetch();
+  };
 
   return (
     <section className="system-check flex flex-wrap bg-lines relative">
@@ -73,17 +78,16 @@ const SystemCheck = ({
                     </div>
                   }
                 />
-
                 <Dependency
                   isLoading={isLoading}
-                  isRunning={false}
-                  status={memoryLimit}
+                  isRunning={isMemorySufficient}
+                  status={isMemorySufficient ? `${memoryLimit}GiB` : `> ${SYSTEM_MEMORY_LIMIT}GiB`}
                   name="Memory"
                   id={"memory"}
                   tooltip={
                     <div>
-                      Prem App you requires at least <br /> {memoryLimit} of RAM allocated for
-                      Docker Engine.
+                      Prem App you requires at least <br /> {SYSTEM_MEMORY_LIMIT}GiB of RAM
+                      allocated for Docker Engine.
                     </div>
                   }
                 />
@@ -91,7 +95,7 @@ const SystemCheck = ({
               <div className="text-center mt-1 mb-16">
                 <button
                   className="text-white text-sm opacity-70"
-                  onClick={() => handleCheckIsDockerRunning()}
+                  onClick={() => onCheckAgainClick()}
                 >
                   Check Again
                 </button>
