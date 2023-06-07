@@ -278,8 +278,11 @@ header img {
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
 }
+.right-sidebar__list {
+  @apply -mx-[2px];
+}
 .right-sidebar__list li {
-  @apply mb-[18px];
+  @apply mb-[18px] px-[2px];
 }
 .right-sidebar__list li p {
   @apply font-proximaNova-regular text-base justify-between flex mb-6;
@@ -517,9 +520,12 @@ header img {
   background-position: 10px 0px;
 }
 .polygon-shape svg {
-  @apply w-7 h-7 mt-[14px];
+  @apply w-6 h-6 mt-[14px];
 }
-.polygon-shape svg path {
+svg.warning-icon {
+  @apply w-8 h-8;
+}
+.warning-icon path {
   @apply stroke-white;
 }
 
