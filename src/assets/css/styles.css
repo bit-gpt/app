@@ -757,3 +757,20 @@ header img {
 .status-not-running p {
   color: rgba(217, 217, 217, 0.4);
 }
+
+.gpu-resources__header {
+  @apply bg-[#1D1D1D] rounded-[7px] p-8 backdrop-blur-[19px];
+  box-shadow: 0px 3.74684px 22.481px -0.93671px rgba(0, 0, 0, 0.2);
+}
+.gpu-resources__body {
+  @apply p-8 rounded-br-[7px] rounded-bl-[7px] backdrop-blur-[19px];
+  box-shadow: 0px 3.74684px 22.481px -0.93671px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.4) 8.8%,
+    rgba(103, 100, 98, 0.11) 88.99%
+  );
+}
+.gpu-resources__body li span {
+  @apply text-brightgray text-[13px] mb-3;
+}
