@@ -18,7 +18,7 @@ curl -fsSL https://get.prem.ninja/install.sh | bash
 
 ## Product Roadmap
 
-If you wanna know which services we support for each interface, please refer to Prem Registry https://premai-io.github.io/prem-registry/.
+If you wanna know which services we support for each interface, please refer to Prem Registry https://premai-io.github.io/prem-registry-ui/.
 
 ### Interfaces
 
