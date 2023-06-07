@@ -3,7 +3,7 @@
 
 use reqwest::blocking::get;
 use serde::Deserialize;
-use std::env;
+use std::{env, thread};
 use tauri::{
     api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -47,7 +47,9 @@ fn run_container() {
 
     println!("Prem Daemon {}", image);
 
-    Command::new("/usr/local/bin/docker")
+    // run in a separate thread the docker pull
+    let _child = thread::spawn(move || {
+        Command::new("/usr/local/bin/docker")
         .args(&[
             "run",
             "-d",
@@ -64,6 +66,7 @@ fn run_container() {
         ])
         .output()
         .expect("Failed to execute docker run");
+    });
 }
 
 #[tauri::command]
