@@ -32,7 +32,7 @@ const PremChatContainer = ({
   return (
     <section>
       <div className="flex h-screen w-full relative">
-        <div>
+        <div className="prem-chat-sidebar">
           <PremChatSidebar />
         </div>
         <div className="flex flex-1">

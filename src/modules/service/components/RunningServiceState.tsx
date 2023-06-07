@@ -35,7 +35,7 @@ const RunningServiceState = ({
 
   if (isLoading) {
     return (
-      <div className="mt-2 ">
+      <div className="mt-2">
         <Spinner className="w-5 h-5" />
       </div>
     );
