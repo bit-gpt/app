@@ -58,15 +58,17 @@ export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
     ...base,
     backgroundColor: "rgba(77, 77, 79, 0.22)",
+    border: "1.75px solid rgba(237, 237, 237, 0.2)",
     borderColor: state.isFocused ? "transparent" : "transparent",
     padding: 3,
     paddingLeft: 40,
+    boxShadow: "none",
     "&:hover": {
       cursor: "pointer",
+      boxShadow: "none",
       "state.isFocused": {
         borderColor: "transparent",
-        backgroundColor: "rgba(77, 77, 79, 0.22)",
-        boxShadown: "0",
+        boxShadow: "none",
       },
     },
   }),
@@ -111,7 +113,7 @@ export const serviceSearchStyle = {
     fontSize: 12,
     fontFamily: "ProximaNova-Regular",
     "&:hover": {
-      backgroundColor: "#323232",
+      backgroundColor: "#28282D",
     },
   }),
 };
