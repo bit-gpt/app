@@ -44,13 +44,13 @@ const RunningServiceState = ({
   return (
     <>
       <button
-        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[8px] font-proximaNova-regular"
+        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular"
         onClick={(e) => e.preventDefault()}
       >
         Running
       </button>
       <PrimaryButton
-        className="!rounded-[14px] !px-4 !py-0 !text-[8px] !h-[21px] flex items-center"
+        className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
         onClick={onOpen}
       >
         Open
