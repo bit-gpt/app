@@ -61,6 +61,7 @@ export const serviceSearchStyle = {
     border: "1.75px solid rgba(237, 237, 237, 0.2)",
     borderColor: state.isFocused ? "transparent" : "transparent",
     padding: 3,
+    minHeight: 50,
     paddingLeft: 40,
     boxShadow: "none",
     "&:hover": {

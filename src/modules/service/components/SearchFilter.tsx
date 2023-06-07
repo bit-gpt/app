@@ -56,7 +56,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
           alt="search"
           width="18"
           height="18"
-          className="absolute left-[20px] top-[12px]"
+          className="absolute left-[20px] top-[15px]"
         />
         <Select
           styles={serviceSearchStyle}

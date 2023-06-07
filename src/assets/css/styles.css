@@ -75,7 +75,7 @@ header img {
 }
 
 .btn-outline-circle {
-  @apply rounded-full transition-colors;
+  @apply rounded-full transition-colors hover:border-[#ff7e7b] hover:text-[#ff7e7b];
   font-family: "ProximaNova-bold";
   padding: 12px 20px;
 }
