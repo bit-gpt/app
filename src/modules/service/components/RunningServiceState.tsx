@@ -44,7 +44,7 @@ const RunningServiceState = ({
   return (
     <>
       <button
-        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[8px] font-proximaNova-regular"
+        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular"
         onClick={(e) => e.preventDefault()}
       >
         Running
