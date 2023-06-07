@@ -4,6 +4,7 @@ import RefreshIcon from "shared/components/RefreshIcon";
 import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
 import useStartService from "shared/hooks/useStartService";
 import useStopService from "shared/hooks/useStopService";
+import { Tooltip } from "react-tooltip";
 
 const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   const { progress, download } = useDownloadServiceStream();
@@ -23,7 +24,7 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
     return (
       <>
         {progress > 0 && <p className="text-brightgray">{progress}%</p>}
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center">
           <Spinner className="h-10 w-10" />
         </div>
       </>
@@ -31,9 +32,14 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   }
 
   return (
-    <button onClick={onDownload}>
-      <RefreshIcon />
-    </button>
+    <>
+      <button className="refresh-icon mx-4" onClick={onDownload}>
+        <RefreshIcon />
+      </button>
+      <Tooltip anchorSelect=".refresh-icon" place="bottom" className="topltip">
+        The app is outdated. Download the latest version.
+      </Tooltip>
+    </>
   );
 };
 

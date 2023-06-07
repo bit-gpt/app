@@ -48,8 +48,8 @@ const PremChatSidebar = () => {
   };
 
   return (
-    <div className="pt-[18px] pb-[10px] flex-col px-2 flex h-screen sidebar md:!w-[259px]">
-      <div className={clsx(sidebarToggle ? "flex-col flex" : "flex max-md:flex-wrap max-md:gap-4")}>
+    <div className="pt-7 pb-[10px] flex-col px-2 flex h-screen sidebar md:!w-[259px]">
+      <div className={clsx(sidebarToggle ? "flex-col flex" : "flex max-md:flex-wrap gap-4")}>
         <button className={clsx(sidebarToggle ? "mx-auto my-5" : "mx-2")} onClick={onCloseClick}>
           <img src={cross} alt="cross-logo" />
         </button>

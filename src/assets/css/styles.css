@@ -659,38 +659,14 @@ header img {
   @apply relative z-[11] justify-center items-center flex-col flex;
 }
 
-@media (max-width: 767px) {
-  .prem-chat-sidebar .sidebar {
-    @apply w-[60px];
-  }
-  .prem-chat-sidebar .sidebar li {
-    @apply px-0;
-  }
-  .prem-chat-sidebar .sidebar li a {
-    @apply justify-center;
-  }
-  .prem-chat-sidebar .sidebar li a span {
-    @apply hidden;
-  }
-  .prem-chat-sidebar .sidebar li img {
-    @apply mx-0;
-  }
-  .prem-chat-sidebar .sidebar__search button {
-    @apply hidden;
-  }
-  .prem-chat-sidebar .sidebar__search input::placeholder {
-    @apply opacity-0;
-  }
-  .prem-chat-sidebar .sidebar__search input {
-    @apply pl-5 mr-0;
-  }
-  .prem-chat-sidebar .sidebar__search img {
-    @apply left-[13px];
-  }
-  .prem-chat-right-sidebar {
-    @apply absolute right-0 top-0 z-10;
-  }
+.prem-chat-sidebar .sidebar li a span {
+  @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
 }
+
+.prem-chat-sidebar .sidebar li {
+  @apply pr-9;
+}
+
 @media (min-width: 768px) {
   .header__center {
     width: calc(100% - 212px);
