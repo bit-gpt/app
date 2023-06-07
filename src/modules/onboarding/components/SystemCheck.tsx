@@ -7,6 +7,7 @@ import Dependency from "./Dependency";
 import PrimaryButton from "shared/components/PrimaryButton";
 import useSystemStats from "shared/hooks/useSystemStats";
 import { SYSTEM_MEMORY_LIMIT } from "shared/helpers/utils";
+import regenerate from "assets/images/regenerate.svg";
 
 const SystemCheck = ({
   handleCheckIsDockerRunning,
@@ -92,12 +93,19 @@ const SystemCheck = ({
                   }
                 />
               </div>
-              <div className="text-center mt-1 mb-16">
+              <div className="text-center mt-6 mb-14">
                 <button
-                  className="text-white text-sm opacity-70"
+                  className="text-white opacity-70 mx-auto flex items-center text-sm"
                   onClick={() => onCheckAgainClick()}
                 >
-                  Check Again
+                  <img
+                    width={18}
+                    height={18}
+                    src={regenerate}
+                    alt="regenerate-logo"
+                    className="mr-2"
+                  />
+                  <span className="border-b">Check Again</span>
                 </button>
               </div>
             </div>
@@ -112,7 +120,7 @@ const SystemCheck = ({
               </a>
               <PrimaryButton
                 disabled={!(isDockerRunning && isServerRunning)}
-                className="!px-9 sm:ml-4 !h-[50px] cursor-pointer"
+                className="!px-9 !h-[50px] cursor-pointer"
                 onClick={next}
               >
                 Next
