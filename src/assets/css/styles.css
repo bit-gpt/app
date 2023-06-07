@@ -111,13 +111,13 @@ header img {
 
 .dashboard-bottom__card {
   box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.2);
-  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[282px] md:w-[265px] w-full max-md:max-w-[300px];
+  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[330px] md:w-[265px] w-full max-md:max-w-[300px];
 }
 
 .dashboard-bottom__card::before,
 .gradient-border::after {
   content: "";
-  @apply absolute inset-0 rounded-[12px] p-[1.5px] pointer-events-none;
+  @apply absolute inset-0 rounded-[10px] p-[1.5px] pointer-events-none;
   background: linear-gradient(
     131.93deg,
     rgba(245, 142, 142, 0.6) 11.72%,
@@ -171,7 +171,7 @@ header img {
   @apply w-full flex dark:text-cultured text-base font-medium;
 }
 .sidebar__search input {
-  @apply font-proximaNova-regular text-manatee text-base;
+  @apply font-proximaNova-regular text-manatee text-base outline-none;
   background-color: rgba(77, 77, 79, 0.22);
 }
 .sidebar__search button {
