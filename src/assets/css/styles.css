@@ -131,7 +131,7 @@ header img {
 }
 
 .dashboard-bottom__card-box img {
-  @apply rounded-[11px] h-full w-[54px] flex items-center justify-center;
+  @apply rounded-[11px] h-[54px] w-[54px] flex items-center justify-center;
 }
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;

@@ -21,7 +21,7 @@ const Sidebar = () => {
           <div className="border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
           <NavLinkItem
             target="_blank"
-            to="https://dev.prem.ninja"
+            to="https://github.com/premAI-io/prem-app"
             label="Documentation"
             icon={<DocumentationIcon className={""} />}
           />

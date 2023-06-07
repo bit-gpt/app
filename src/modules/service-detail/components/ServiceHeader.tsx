@@ -5,8 +5,8 @@ const ServiceHeader = (props: ServiceHeaderProps) => {
   const { tags, icon, subtitle, title } = props;
   return (
     <div className="flex flex-wrap max-md:gap-4">
-      <div className="dashboard-bottom__card-box w-[50px] h-[60px]">
-        <img src={icon} alt={title} className="rounded-[11px] w-[28px] h-[28px]" />
+      <div className="dashboard-bottom__card-box">
+        <img src={icon} alt={title} />
       </div>
       <div className="mask-heading md:ml-6">
         <h2 className="!mt-0 mb-1">{title}</h2>
