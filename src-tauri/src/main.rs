@@ -3,7 +3,7 @@
 
 use reqwest::blocking::get;
 use serde::Deserialize;
-use std::env;
+use std::{env, thread};
 use tauri::{
     api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -47,7 +47,9 @@ fn run_container() {
 
     println!("Prem Daemon {}", image);
 
-    Command::new("/usr/local/bin/docker")
+    // run in a separate thread the docker pull
+    let _child = thread::spawn(move || {
+        Command::new("/usr/local/bin/docker")
         .args(&[
             "run",
             "-d",
@@ -64,6 +66,7 @@ fn run_container() {
         ])
         .output()
         .expect("Failed to execute docker run");
+    });
 }
 
 #[tauri::command]
@@ -154,6 +157,11 @@ fn main() {
         RunEvent::WindowEvent { event, .. } => {
             match event {
                 WindowEvent::CloseRequested { .. } => {
+                    // stop services
+                    let url = "http://localhost:54321/v1/stop-all-services";
+                    let response = get(url).expect("Request failed");
+                    let json: Config = response.json().expect("Failed to parse JSON");
+                    println!("Stop all services: {:?}", json);
                     // stop docker
                     let _child = Command::new("/usr/local/bin/docker")
                         .args(&["kill", "premd"])

@@ -278,8 +278,11 @@ header img {
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
 }
+.right-sidebar__list {
+  @apply -mx-[2px];
+}
 .right-sidebar__list li {
-  @apply mb-[18px];
+  @apply mb-[18px] px-[2px];
 }
 .right-sidebar__list li p {
   @apply font-proximaNova-regular text-base justify-between flex mb-6;
@@ -517,9 +520,12 @@ header img {
   background-position: 10px 0px;
 }
 .polygon-shape svg {
-  @apply w-7 h-7 mt-[14px];
+  @apply w-6 h-6 mt-[14px];
 }
-.polygon-shape svg path {
+svg.warning-icon {
+  @apply w-8 h-8;
+}
+.warning-icon path {
   @apply stroke-white;
 }
 
@@ -756,4 +762,21 @@ header img {
 
 .status-not-running p {
   color: rgba(217, 217, 217, 0.4);
+}
+
+.gpu-resources__header {
+  @apply bg-[#1D1D1D] rounded-[7px] p-8 backdrop-blur-[19px];
+  box-shadow: 0px 3.74684px 22.481px -0.93671px rgba(0, 0, 0, 0.2);
+}
+.gpu-resources__body {
+  @apply p-8 rounded-br-[7px] rounded-bl-[7px] backdrop-blur-[19px];
+  box-shadow: 0px 3.74684px 22.481px -0.93671px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.4) 8.8%,
+    rgba(103, 100, 98, 0.11) 88.99%
+  );
+}
+.gpu-resources__body li span {
+  @apply text-brightgray text-[13px] mb-3;
 }
