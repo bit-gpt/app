@@ -56,6 +56,7 @@ export type WarningModalProps = {
   icon?: React.ReactNode;
   title?: string;
   description: string;
+  isOpen: boolean;
 };
 
 export type PremChatStore = {

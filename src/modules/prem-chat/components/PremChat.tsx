@@ -21,7 +21,7 @@ function PremChat() {
   if (isLoading) {
     return (
       <AppContainer>
-        <div className="flex justify-center mt-5">
+        <div className="flex items-center h-full justify-center mt-5">
           <Spinner className="h-10 w-10" />
         </div>
       </AppContainer>

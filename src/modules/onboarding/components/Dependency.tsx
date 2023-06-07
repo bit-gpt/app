@@ -1,16 +1,27 @@
 import { Tooltip } from "react-tooltip";
 import { DependencyProps } from "../types";
+import Spinner from "shared/components/Spinner";
 
-const Dependency = ({ isRunning, name, status, tooltip }: DependencyProps) => {
+const Dependency = ({
+  isRunning,
+  name,
+  status,
+  tooltip,
+  id,
+  isLoading = false,
+}: DependencyProps) => {
   return (
     <div className="flex justify-between mt-4">
       <p className="text-[#CFCFCF] text-base">{name}</p>
-      {isRunning && (
-        <p className="text-[#2ED291] text-base">&#10003;&nbsp;{status}</p>
+      {isRunning && <p className="text-[#2ED291] text-base">&#10003;&nbsp;{status}</p>}
+      {isLoading && (
+        <p>
+          <Spinner className="w-5 h-5" />
+        </p>
       )}
-      {!isRunning && (
+      {!isRunning && !isLoading && (
         <>
-          <button className="text-[#F9B96D] flex gap-3 not_found">
+          <button className="text-[#F9B96D] flex gap-3 not_found" id={`${id}`}>
             <svg
               width="16"
               height="16"
@@ -32,15 +43,9 @@ const Dependency = ({ isRunning, name, status, tooltip }: DependencyProps) => {
             </svg>
             {status}
           </button>
-          {tooltip && (
-            <Tooltip
-              anchorSelect=".not_found"
-              place="bottom"
-              className="topltip"
-            >
-              {tooltip}
-            </Tooltip>
-          )}
+          <Tooltip anchorSelect={`#${id}`} place="right" className="topltip !left-[450px]">
+            {tooltip}
+          </Tooltip>
         </>
       )}
     </div>

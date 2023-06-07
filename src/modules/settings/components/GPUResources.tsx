@@ -15,8 +15,7 @@ const GPUResources = () => {
                 <div className="flex flex-wrap justify-between">
                   <span className="flex items-center">Memory&nbsp;</span>
                   <span>
-                    {response.data.used_memory} / {response.data.total_memory}{" "}
-                    GiB
+                    {response.data.used_memory} / {response.data.total_memory} GiB
                   </span>
                 </div>
                 <div className="progress">
@@ -36,16 +35,13 @@ const GPUResources = () => {
                   <img src={nvidia_logo} alt="nvidia-logo" />
                 </div>
                 <div className="py-8 px-9 gpu-resources__body">
-                  <h3 className="text-brightgray mb-4 text-lg">
-                    {response.data.gpu_name}
-                  </h3>
+                  <h3 className="text-brightgray mb-4 text-lg">{response.data.gpu_name}</h3>
                   <ul className="!p-0">
                     <li>
                       <div className="flex flex-wrap justify-between">
                         <span className="flex items-center">Memory&nbsp;</span>
                         <span>
-                          {response.data.used_memory} /{" "}
-                          {response.data.total_memory} GiB
+                          {response.data.used_memory} / {response.data.total_memory} GiB
                         </span>
                       </div>
                       <div className="progress">

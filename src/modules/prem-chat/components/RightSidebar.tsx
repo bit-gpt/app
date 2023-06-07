@@ -18,7 +18,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
     n,
     setN,
     presence_penalty,
-    setPresencePenalty
+    setPresencePenalty,
   } = usePremChatStore(
     (state) => ({
       temperature: state.temperature,
@@ -32,24 +32,24 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
       n: state.n,
       setN: state.setN,
       presence_penalty: state.presence_penalty,
-      setPresencePenalty: state.setPresencePenalty
+      setPresencePenalty: state.setPresencePenalty,
     }),
     shallow
   );
 
   return (
     <div className="bg-darkgunmetal flex-col px-4 flex h-screen w-[260px] prem-chat-right-sidebar">
-      <div className="sidebar-toggle__btn !mt-5 !ml-3">
+      <div className="sidebar-toggle__btn !mt-5 !ml-0">
         <button
           onClick={() => setRightSidebar(false)}
-          className="bg-Onyx px-[8.4px] mr-3 -ml-[6px] py-[10px] rounded-md"
+          className="bg-Onyx px-[8.4px] mr-3 py-[10px] rounded-md"
         >
-          <LeftArrowIcon />
+          <LeftArrowIcon className="rotate-180" />
         </button>
         <span>Close Sidebar</span>
       </div>
       <div className="-mx-4 opacity-30" />
-      <ul className="my-[18px] right-sidebar__list overflow-y-auto scrollbar-none">
+      <ul className="mb-[18px] mt-[42px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
           <p>
             <span>Temperature</span>
@@ -61,27 +61,12 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
             min={0}
-            max={2}
+            max={1}
             step={0.1}
             onInput={(value: number[]) => setTemperature(value[1])}
           />
         </li>
-        <li>
-          <p>
-            <span>Max new tokens</span>
-            <span>{max_tokens}</span>
-          </p>
-          <RangeSlider
-            className="range-slider__bar"
-            value={[0, max_tokens]}
-            thumbsDisabled={[true, false]}
-            rangeSlideDisabled={true}
-            min={10}
-            max={2000}
-            step={10}
-            onInput={(value: number[]) => setMaxTokens(value[1])}
-          />
-        </li>
+
         <li>
           <p>
             <span>Top P</span>
@@ -94,50 +79,27 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             rangeSlideDisabled={true}
             min={0}
             max={1}
-            step={0.1}
+            step={0.05}
             onInput={(value: number[]) => setTopP(value[1])}
           />
         </li>
         <li>
           <p>
-            <span>Frequency Penalty</span>
-            <span>{frequency_penalty}</span>
+            <span>Max new tokens</span>
+            <span>{max_tokens}</span>
           </p>
           <RangeSlider
             className="range-slider__bar"
-            value={[-2, frequency_penalty]}
+            value={[0, max_tokens]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
-            min={-2}
-            max={2}
-            step={0.1}
-            onInput={(value: number[]) => setFrequencyPenalty(value[1])}
+            min={0}
+            max={512}
+            step={1}
+            onInput={(value: number[]) => setMaxTokens(value[1])}
           />
         </li>
-        <li>
-          <p>
-            <span>Top K</span>
-            <span>0.75</span>
-          </p>
-          <RangeSlider
-            className="range-slider__bar"
-            defaultValue={[0, 50]}
-            thumbsDisabled={[true, false]}
-            rangeSlideDisabled={true}
-          />
-        </li>
-        <li>
-          <p>
-            <span>Typical P</span>
-            <span>0.75</span>
-          </p>
-          <RangeSlider
-            className="range-slider__bar"
-            defaultValue={[0, 50]}
-            thumbsDisabled={[true, false]}
-            rangeSlideDisabled={true}
-          />
-        </li>
+
         <li>
           <p>
             <span>N</span>
@@ -148,12 +110,13 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             value={[0, n]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
-            min={0}
-            max={1}
-            step={0.1}
+            min={1}
+            max={10}
+            step={1}
             onInput={(value: number[]) => setN(value[1])}
           />
         </li>
+
         <li>
           <p>
             <span>Presence Penalty</span>
@@ -161,13 +124,30 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
           </p>
           <RangeSlider
             className="range-slider__bar"
-            value={[-2, presence_penalty]}
+            value={[0, presence_penalty]}
             thumbsDisabled={[true, false]}
             rangeSlideDisabled={true}
-            min={-2}
-            max={2}
+            min={0}
+            max={1}
             step={0.1}
             onInput={(value: number[]) => setPresencePenalty(value[1])}
+          />
+        </li>
+
+        <li>
+          <p>
+            <span>Frequency Penalty</span>
+            <span>{frequency_penalty}</span>
+          </p>
+          <RangeSlider
+            className="range-slider__bar"
+            value={[0, frequency_penalty]}
+            thumbsDisabled={[true, false]}
+            rangeSlideDisabled={true}
+            min={0}
+            max={1}
+            step={0.1}
+            onInput={(value: number[]) => setFrequencyPenalty(value[1])}
           />
         </li>
       </ul>

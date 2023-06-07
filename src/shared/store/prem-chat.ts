@@ -27,20 +27,18 @@ const usePremChatStore = create<PremChatStore>()(
         set((state) => ({
           history: state.history.filter((_history) => _history.id !== id),
         })),
-      temperature: 1,
+      temperature: 0.2,
       setTemperature: (temperature) => set(() => ({ temperature })),
-      max_tokens: 10,
+      max_tokens: 256,
       setMaxTokens: (max_tokens) => set(() => ({ max_tokens })),
-      top_p: 1,
+      top_p: 0.95,
       setTopP: (top_p) => set(() => ({ top_p })),
       frequency_penalty: 0,
-      setFrequencyPenalty: (frequency_penalty) =>
-        set(() => ({ frequency_penalty })),
+      setFrequencyPenalty: (frequency_penalty) => set(() => ({ frequency_penalty })),
       n: 1,
       setN: (n) => set(() => ({ n })),
       presence_penalty: 0,
-      setPresencePenalty: (presence_penalty) =>
-        set(() => ({ presence_penalty })),
+      setPresencePenalty: (presence_penalty) => set(() => ({ presence_penalty })),
     }),
     {
       name: "prem-chat",

@@ -36,25 +36,12 @@ const AdvancedSettings = () => {
         <label className="text-white mr-2 max-md:mb-4">Backend URL</label>
         <div className="flex">
           <div className="text-right w-full">
-            <input
-              className="form-control"
-              type="text"
-              value={backendUrl}
-              onChange={onChange}
-            />
-            <PrimaryButton
-              className="!px-9 mt-[44px] opacity-70"
-              onClick={onUpdate}
-            >
+            <input className="form-control" type="text" value={backendUrl} onChange={onChange} />
+            <PrimaryButton className="!px-9 mt-[44px] opacity-70" onClick={onUpdate}>
               Update
             </PrimaryButton>
           </div>
-          <button
-            id="reset"
-            className="w-[50px] h-[45px]"
-            type="button"
-            onClick={onReset}
-          >
+          <button id="reset" className="w-[50px] h-[45px]" type="button" onClick={onReset}>
             <ResetIcon />
           </button>
           <Tooltip

@@ -1,6 +1,7 @@
-const LeftArrowIcon = () => {
+const LeftArrowIcon = ({ className }: any) => {
   return (
     <svg
+      className={className}
       width="16"
       height="16"
       viewBox="0 0 18 17"

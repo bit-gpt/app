@@ -1,41 +1,25 @@
 import DownloadIcon from "shared/components/DownloadIcon";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
-import downloadServiceStream from "../api/downloadServiceStream";
-import { useState } from "react";
+import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
 
-const NotDownloadedServiceState = ({
-  serviceId,
-  refetch,
-}: ServiceStateProps) => {
-
-  const [progress, setProgress] = useState(-1);
+const NotDownloadedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
+  const { progress, download } = useDownloadServiceStream();
 
   const onDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    downloadServiceStream(
-      serviceId,
-      (error) => {
-        console.log(error);
-      },
-      (message) => {
-        console.log(message.status);
-        if ('percentage' in message) setProgress(message.percentage as number);
-      },
-      () => {
-        setProgress(-1);
-        refetch();
-      }
-    );
+    download(serviceId, refetch);
   };
 
   if (progress >= 0) {
     return (
       <>
         <p className="text-brightgray">{progress}%</p>
-        <Spinner className="w-5 h-5" />
+        <div className="flex justify-center">
+          <Spinner className="h-5 w-5" />
+        </div>
       </>
-    )
+    );
   }
 
   return (

@@ -7,7 +7,6 @@ import { serviceSearchStyle } from "shared/helpers/utils";
 import clsx from "clsx";
 import { getBackendUrlFromStore } from "shared/store/setting";
 
-
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   const [search, setSearch] = useState(new Map());
 
@@ -27,9 +26,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   };
 
   const onSelectChange = (newValue: MultiValue<Option>) => {
-    const newSearch = new Map<string, boolean>(
-      apps.map((app) => [app.id, false])
-    );
+    const newSearch = new Map<string, boolean>(apps.map((app) => [app.id, false]));
     newValue.forEach((option: Option) => {
       newSearch.set(option.value, true);
     });
@@ -59,7 +56,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
           alt="search"
           width="18"
           height="18"
-          className="absolute left-[20px] top-[12px]"
+          className="absolute left-[20px] top-[15px]"
         />
         <Select
           styles={serviceSearchStyle}
@@ -84,7 +81,10 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
             })}
             key={app.id}
           >
-            <button className="flex px-2 py-[6px] items-center text-sm" onClick={() => handleSearch(app.id)}>
+            <button
+              className="flex px-2 py-[6px] items-center text-sm"
+              onClick={() => handleSearch(app.id)}
+            >
               <img
                 src={`${getBackendUrlFromStore()}${app.icon}`}
                 alt={app.name}

@@ -2,12 +2,12 @@ import { useMutation } from "@tanstack/react-query";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import deleteService from "../api/deleteService";
-import startService from "../api/startService";
 import DeleteIcon from "shared/components/DeleteIcon";
 import { useState } from "react";
 import WarningModal from "./WarningModal";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
+import useStartService from "shared/hooks/useStartService";
 
 const StoppedServiceState = ({
   serviceId,
@@ -17,13 +17,11 @@ const StoppedServiceState = ({
 }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation(
-    (id: string) => deleteService(id)
+  const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
+    deleteService(id)
   );
 
-  const { mutate: startMutate, isLoading: startLoading } = useMutation(
-    (id: string) => startService(id)
-  );
+  const { mutate: startMutate, isLoading: startLoading } = useStartService();
 
   const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -64,13 +62,17 @@ const StoppedServiceState = ({
   };
 
   if (deleteLoading || startLoading) {
-    return <Spinner className="w-5 h-5" />;
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Spinner className="w-5 h-5" />
+      </div>
+    );
   }
 
   return (
     <>
       <PrimaryButton
-        className="!rounded-[14px] !px-4 !py-0 !text-[8px] !h-[21px] flex items-center"
+        className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
         onClick={onStart}
       >
         Open
@@ -88,6 +90,7 @@ const StoppedServiceState = ({
           title="Warning"
           onCancel={onCancelClick}
           onOk={deleteServiceHandler}
+          isOpen={openDeleteModal}
         />
       )}
     </>

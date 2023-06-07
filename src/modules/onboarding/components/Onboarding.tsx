@@ -6,22 +6,14 @@ import { useState } from "react";
 import { OnboardingProps } from "../types";
 
 const Onboarding = ({ redirectTo }: OnboardingProps) => {
-  const { displayWelcomeScreen, setDisplayWelcomeScreen, closeWelcomeScreen } =
-    useWelcomeScreen();
-  const {
-    isDockerRunning,
-    isContainerRunning,
-    isServerRunning,
-    handleCheckIsDockerRunning,
-  } = useDocker();
+  const { displayWelcomeScreen, setDisplayWelcomeScreen, closeWelcomeScreen } = useWelcomeScreen();
+  const { isDockerRunning, isContainerRunning, isServerRunning, handleCheckIsDockerRunning } =
+    useDocker();
 
   const [isSystemChecked, setIsSystemChecked] = useState(false);
 
   const isSystemCheckRequired =
-    !isDockerRunning ||
-    !isContainerRunning ||
-    !isServerRunning ||
-    !isSystemChecked;
+    !isDockerRunning || !isContainerRunning || !isServerRunning || !isSystemChecked;
 
   if (displayWelcomeScreen) {
     return <WelcomeScreen close={closeWelcomeScreen} />;

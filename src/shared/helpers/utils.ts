@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import { ServiceInfoValue } from "modules/service-detail/types";
 import { Option, Service, ServiceStatus } from "modules/service/types";
 import { CSSObjectWithLabel, ControlProps } from "react-select";
 
@@ -39,10 +40,7 @@ export const isPackaged = () => {
 };
 
 export const isBackendSet = () => {
-  return (
-    import.meta.env.VITE_BACKEND_URL !== undefined &&
-    import.meta.env.VITE_BACKEND_URL !== ""
-  );
+  return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
 };
 
 export const getBackendUrl = () => {
@@ -60,15 +58,18 @@ export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
     ...base,
     backgroundColor: "rgba(77, 77, 79, 0.22)",
+    border: "1.75px solid rgba(237, 237, 237, 0.2)",
     borderColor: state.isFocused ? "transparent" : "transparent",
     padding: 3,
+    minHeight: 50,
     paddingLeft: 40,
+    boxShadow: "none",
     "&:hover": {
       cursor: "pointer",
+      boxShadow: "none",
       "state.isFocused": {
         borderColor: "transparent",
-        backgroundColor: "rgba(77, 77, 79, 0.22)",
-        boxShadown: "0",
+        boxShadow: "none",
       },
     },
   }),
@@ -113,7 +114,7 @@ export const serviceSearchStyle = {
     fontSize: 12,
     fontFamily: "ProximaNova-Regular",
     "&:hover": {
-      backgroundColor: "#323232",
+      backgroundColor: "#28282D",
     },
   }),
 };
@@ -121,13 +122,27 @@ export const serviceSearchStyle = {
 export const getServiceStatus = (service: Service): ServiceStatus => {
   if (!service.supported) {
     return "not_supported";
+  } else if (!service.enoughSystemMemory) {
+    return "not_enough_system_memory";
+  } else if (!service.enoughMemory) {
+    return "not_enough_memory";
   } else if (!service.downloaded) {
     return "not_downloaded";
   } else if (service.running) {
     return "running";
   }
-  // other status will go here
   return "stopped";
 };
 
+export const formatInfo = (value: ServiceInfoValue) => {
+  if (value === null) {
+    return "-";
+  } else if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
+  }
+  return value;
+};
+
 export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
+
+export const SYSTEM_MEMORY_LIMIT = 16;
