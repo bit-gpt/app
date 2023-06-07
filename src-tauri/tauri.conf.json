@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "prem-app",
+    "productName": "Prem",
     "version": "0.0.9"
   },
   "tauri": {
@@ -55,8 +55,8 @@
     "windows": [
       {
         "fullscreen": false,
-        "minHeight": 800,
-        "minWidth": 1220,
+        "minHeight": 900,
+        "minWidth": 1600,
         "resizable": true,
         "title": "Prem App"
       }
