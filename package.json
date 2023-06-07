@@ -49,11 +49,11 @@
     "dev": "vite",
     "infra:down": "bash ./scripts/down.sh",
     "infra:up": "bash ./scripts/up.sh",
-    "preview": "vite preview",
-    "tauri": "tauri",
     "prettier": "prettier --write src/",
-    "prettier:check": "prettier --check src/"
+    "prettier:check": "prettier --check src/",
+    "preview": "vite preview",
+    "tauri": "tauri"
   },
   "type": "module",
-  "version": "0.0.9"
+  "version": "0.0.10"
 }
