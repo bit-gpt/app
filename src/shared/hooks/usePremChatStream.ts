@@ -66,7 +66,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     const ctrl = new AbortController();
 
-    const backendUrl = `https://${serviceId}.joandko.io`;
+    const backendUrl = `https://${serviceId}.prem.ninja`;
 
     try {
       fetchEventSource(`${backendUrl}/api/v1/chat/completions`, {
