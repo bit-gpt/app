@@ -4,7 +4,7 @@ import WarningModal from "./WarningModal";
 import { ServiceStatus, WarningServiceStateProps } from "../types";
 import WarningShapeIcon from "shared/components/WarningShapeIcon";
 
-const WarningServiceState = ({ status }: WarningServiceStateProps) => {
+const WarningServiceState = ({ status, memoryRequirements }: WarningServiceStateProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeWarningModal = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,7 +19,7 @@ const WarningServiceState = ({ status }: WarningServiceStateProps) => {
       case "not_enough_memory":
         return "You don't have enough memory to run this service, stop another service in order to run it";
       case "not_enough_system_memory":
-        return "In order to run this service, you need at least 100gb of RAM Memory";
+        return `In order to run this service, you need at least ${memoryRequirements}GiB of RAM Memory`;
       default:
         return "";
     }

@@ -17,7 +17,7 @@ export type DropdownProps = {
 export type ModelInfo = {
   inferenceTime: string;
   maxLength: number;
-  memoryRequirements: string;
+  memoryRequirements: number;
   tokenLimit: number;
   weightsName: string;
   weightsSize: number;
@@ -110,10 +110,12 @@ export type ServiceActionsProps = PropsWithChildren<{
   isDetailView?: boolean;
   interfaces: App[];
   needsUpdate: boolean;
+  memoryRequirements: number;
 }>;
 
 export type WarningServiceStateProps = {
   status: ServiceStatus;
+  memoryRequirements: number;
 };
 
 export type ServiceStats = {
