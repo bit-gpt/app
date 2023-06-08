@@ -34,7 +34,7 @@ const PremChatContainer = ({
     <section>
       <div className="flex h-screen w-full relative">
         <div className={clsx("prem-chat-sidebar", hamburgerMenuOpen && "max-md:hidden")}>
-          <PremChatSidebar setHamburgerMenu={setHamburgerMenu}/>
+          <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">

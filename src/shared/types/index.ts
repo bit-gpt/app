@@ -25,7 +25,6 @@ export type PipelineIconProps = {
   className: string;
 };
 
-
 export type SettingIconProps = {
   className: string;
 };

@@ -29,7 +29,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
         </button>
       )}
       <div className="min-h-screen flex w-full">
-        <div className={clsx({"max-md:hidden": hamburgerMenuOpen })}>
+        <div className={clsx({ "max-md:hidden": hamburgerMenuOpen })}>
           <Sidebar />
         </div>
         <div className="main-container">{children}</div>
