@@ -215,8 +215,8 @@ const PremChatSidebar = () => {
         </ul>
       </div>
       <WarningModal
-        description="Coming Soon"
-        title="Import/Export data"
+        description="Import / Export is not available yet"
+        title="Coming Soon"
         isOpen={openWarningModal}
         onCancel={closeModal}
         onOk={closeModal}
