@@ -45,8 +45,8 @@ const Header = ({ setRightSidebar, rightSidebar, title }: HeaderProps) => {
         </div>
       </div>
       <WarningModal
-        description="Coming Soon"
-        title="Share Chat"
+        description="Share Chat is not available yet"
+        title="Coming Soon"
         isOpen={open}
         onCancel={closeModal}
         onOk={closeModal}
