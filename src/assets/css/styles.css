@@ -158,31 +158,28 @@ header img {
 }
 
 .sidebar {
-  @apply w-[218px] bg-[#28292D];
-}
-.sidebar-toggle .sidebar {
-  @apply w-auto;
+  @apply bg-[#28292D];
 }
 
 .sidebar li {
   @apply flex items-center py-[13px] px-5 hover:bg-darkjunglegreen rounded-md;
 }
 .sidebar li a {
-  @apply w-full flex dark:text-cultured text-base font-medium;
+  @apply w-full max-md:justify-center flex dark:text-cultured text-base font-medium;
 }
 .sidebar__search input {
-  @apply font-proximaNova-regular text-manatee text-base outline-none;
+  @apply font-proximaNova-regular text-manatee text-base outline-none h-[50px] max-md:h-[40px];
   background-color: rgba(77, 77, 79, 0.22);
 }
 .sidebar__search button {
-  @apply bg-darkliver w-[65px] h-[50px] rounded-md flex items-center justify-center;
+  @apply bg-darkliver w-[65px] h-[50px] max-md:h-[40px] rounded-md flex items-center justify-center;
 }
 
 .sidebar-toggle__btn {
   @apply text-base font-proximaNova-regular dark:text-cultured mt-[-60px] ml-[25px];
 }
 .sidebar-toggle {
-  @apply w-[70px];
+  @apply md:w-[70px];
 }
 .sidebar-toggle .sidebar-toggle__btn button svg {
   @apply rotate-180;
@@ -198,7 +195,7 @@ header img {
   @apply hidden;
 }
 .sidebar-toggle .sidebar li {
-  @apply px-0 justify-center;
+  @apply px-0 md:justify-center;
 }
 
 .sidebar-toggle .sidebar__search {
@@ -357,22 +354,38 @@ header img {
 .sidebar-main .sidebar {
   @apply bg-[#28292D];
 }
-.sidebar-main .sidebar li {
-  @apply cursor-pointer p-0 mb-2;
-}
-.sidebar-main .sidebar li a {
-  @apply text-lg items-center justify-center py-3 rounded-md;
+
+@media (max-width: 767px) {
+  .sidebar-main .sidebar {
+    background: linear-gradient(
+      131.09deg,
+      rgba(29, 29, 27, 0.49) 8.8%,
+      rgba(29, 29, 27, 0.76) 88.99%
+    );
+    box-shadow: 0px 4.49864px 26.9918px -1.12466px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(22.4932px);
+    @apply h-full;
+  }
 }
 
+.sidebar-main .sidebar li {
+  @apply cursor-pointer p-0 mb-2 max-md:w-[50px];
+}
+.sidebar-main .sidebar li a {
+  @apply text-lg items-center md:justify-center py-3 rounded-md;
+}
+.sidebar-main.sidebar-toggle li a {
+  @apply max-md:w-[50px];
+}
 .sidebar-main {
-  @apply fixed z-10;
+  @apply fixed z-10 max-md:w-full max-md:top-0 max-md:bottom-0;
 }
 .sidebar-main .sidebar-toggle__btn {
   @apply relative z-10;
 }
 
 .active {
-  @apply bg-[#323232];
+  @apply md:bg-[#323232];
 }
 
 .coming-soon {
@@ -670,12 +683,12 @@ svg.warning-icon {
 }
 
 .prem-chat-sidebar .sidebar li {
-  @apply pr-9;
+  @apply pr-9 max-md:px-1;
 }
 
 @media (min-width: 768px) {
   .header__center {
-    width: calc(100% - 212px);
+    width: calc(100% - 187px);
   }
 }
 
@@ -718,8 +731,8 @@ svg.warning-icon {
   @apply hidden;
 }
 .main-container {
-  width: calc(100% - 90px);
-  @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px];
+  /* width: calc(100% - 90px); */
+  @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px] max-md:mx-4;
 }
 @screen md {
   .main-container {
@@ -779,4 +792,45 @@ svg.warning-icon {
 }
 .gpu-resources__body li span {
   @apply text-brightgray text-[13px] mb-3;
+}
+
+.share-chat__btn {
+  @apply bg-sonicsilver py-3 px-4 max-md:px-[11px] max-md:py-2 rounded-md md:text-lg text-sm max-md:text-[12px] font-proximaNova-regular text-white;
+}
+.setting__btn {
+  @apply w-[66px] h-[48px] max-md:h-9 max-md:w-[46px] max-md:mr-2;
+}
+.setting__btn img {
+  @apply mx-auto max-md:max-w-[17px];
+}
+.prem-chat-right-sidebar {
+  @apply bg-darkgunmetal flex-col px-4 flex h-screen w-[260px] max-md:absolute max-md:z-10 right-0;
+}
+
+.prem-chat-sidebar .sidebar {
+  @apply max-md:absolute max-md:z-[11] max-md:w-full max-md:px-6;
+}
+.transform-translateX-0 {
+  transform: translateX(0px);
+}
+@media (max-width: 767px) {
+  .prem-chat-sidebar .sidebar {
+    background: linear-gradient(
+      131.09deg,
+      rgba(29, 29, 27, 0.49) 8.8%,
+      rgba(29, 29, 27, 0.76) 88.99%
+    );
+    box-shadow: 0px 4.49864px 26.9918px -1.12466px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(22.4932px);
+  }
+}
+
+.prem-chat-sidebar .sidebar__logo {
+  @apply max-md:max-w-[100px] max-md:ml-3;
+}
+.prem-chat-sidebar .sidebar__search {
+  @apply max-md:h-[38px];
+}
+.prem-chat-sidebar .sidebar li a {
+  @apply max-md:text-sm;
 }

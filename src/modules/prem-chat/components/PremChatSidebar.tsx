@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import clsx from "clsx";
 import orderBy from "lodash/orderBy";
 import { shallow } from "zustand/shallow";
 import usePremChatStore from "shared/store/prem-chat";
 import Logo from "assets/images/logo.svg";
-import cross from "assets/images/arrow.svg";
+import leftArrow from "assets/images/arrow.svg";
+import cross from "assets/images/cross.svg";
 import edit from "assets/images/edit.svg";
 import msg from "assets/images/msg.svg";
 import searchIcon from "assets/images/search.svg";
@@ -13,8 +14,9 @@ import exportData from "assets/images/export-data.svg";
 import importData from "assets/images/import-data.svg";
 import WarningModal from "modules/service/components/WarningModal";
 import WarningIcon from "shared/components/WarningIcon";
+import { HamburgerMenuProps } from "../types";
 
-const PremChatSidebar = () => {
+const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -25,7 +27,6 @@ const PremChatSidebar = () => {
   );
 
   const [search, setSearch] = useState("");
-  const [sidebarToggle, setSidebarToggle] = useState(false);
 
   const { chatId, serviceId } = useParams();
   const navigate = useNavigate();
@@ -60,29 +61,35 @@ const PremChatSidebar = () => {
 
   return (
     <>
-      <div className="pt-7 pb-[10px] flex-col px-2 flex h-screen sidebar md:!w-[259px]">
-        <div className={clsx(sidebarToggle ? "flex-col flex" : "flex max-md:flex-wrap gap-4")}>
-          <button className={clsx(sidebarToggle ? "mx-auto my-5" : "mx-2")} onClick={onCloseClick}>
-            <img src={cross} alt="cross-logo" />
+      <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex h-screen sidebar md:!w-[259px]">
+        <div className="flex max-md:flex-wrap md:gap-4">
+          <button className="mx-2" onClick={onCloseClick}>
+            <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
+          <button
+            onClick={() => setHamburgerMenu(true)}
+            className="w-[30px] md:hidden z-[11] fixed right-[14px] top-[24px]"
+          >
+            <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
+          </button>
         </div>
-        <div className="flex mt-8 sidebar__search relative">
+        <div className="flex md:mt-8 mt-6 sidebar__search relative">
           <img
             src={searchIcon}
             alt="search"
             width={18}
             height={18}
-            className="absolute left-[20px] top-[15px]"
+            className="absolute left-[20px] md:top-[15px] top-[11px] max-md:max-w-[15px]"
           />
           <input
-            className="h-[50px] w-full rounded-md mr-[6px] pr-5 pl-[44px] py-2"
+            className="w-full rounded-md mr-[6px] pr-5 pl-[44px] py-2"
             type="text"
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
           />
           <button onClick={() => navigate(`/prem-chat/${serviceId}`)}>
-            <img src={edit} alt="edit" width={18} height={18} />
+            <img className="max-md:max-w-[15px]" src={edit} alt="edit" width={18} height={18} />
           </button>
         </div>
 
@@ -91,13 +98,7 @@ const PremChatSidebar = () => {
             return (
               <li key={item.id} className={clsx({ "bg-darkjunglegreen": chatId === item.id })}>
                 <Link to={`/prem-chat/${serviceId}/${item.id}`}>
-                  <img
-                    src={msg}
-                    alt="msg"
-                    width={18}
-                    height={18}
-                    className={clsx(!sidebarToggle && "mr-3")}
-                  />
+                  <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
                   <span>{item.title}</span>
                 </Link>
                 <button onClick={() => onDeleteClick(item.id)}>
@@ -148,7 +149,7 @@ const PremChatSidebar = () => {
             <li>
               <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>
                 <svg
-                  className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
+                  className="mr-3 max-w-[20px]"
                   width="20"
                   height="20"
                   viewBox="0 0 18 18"
@@ -195,7 +196,7 @@ const PremChatSidebar = () => {
                 alt="exportData"
                 width={20}
                 height={20}
-                className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
+                className="mr-3 max-w-[20px]"
               />
               <span>Export data</span>
             </Link>
@@ -207,7 +208,7 @@ const PremChatSidebar = () => {
                 alt="importData"
                 width={20}
                 height={20}
-                className={clsx(!sidebarToggle && "mr-3 max-w-[20px]")}
+                className="mr-3 max-w-[20px]"
               />
               <span>Import data</span>
             </Link>
