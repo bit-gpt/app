@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import UserReply from "shared/components/UserReply";
 import BotReply from "shared/components/BotReply";
 import usePremChat from "shared/hooks/usePremChat";
-
 import InputBox from "./InputBox";
 import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
 import Header from "./Header";
 import RightSidebar from "./RightSidebar";
 import { Message, PremChatContainerProps } from "../types";
+import clsx from "clsx";
 
 const PremChatContainer = ({
   chatId,
@@ -18,6 +18,7 @@ const PremChatContainer = ({
 }: PremChatContainerProps) => {
   const model = serviceId;
   const [rightSidebar, setRightSidebar] = useState(false);
+  const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const chatMessageListRef = useRef<HTMLDivElement>(null);
 
   const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
@@ -32,8 +33,8 @@ const PremChatContainer = ({
   return (
     <section>
       <div className="flex h-screen w-full relative">
-        <div className="prem-chat-sidebar">
-          <PremChatSidebar />
+        <div className={clsx("prem-chat-sidebar", hamburgerMenuOpen && "max-md:hidden")}>
+          <PremChatSidebar setHamburgerMenu={setHamburgerMenu}/>
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
@@ -42,6 +43,8 @@ const PremChatContainer = ({
               ref={chatMessageListRef}
             >
               <Header
+                hamburgerMenuOpen={hamburgerMenuOpen}
+                setHamburgerMenu={setHamburgerMenu}
                 title={serviceName}
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}

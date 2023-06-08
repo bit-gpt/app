@@ -1,9 +1,6 @@
-import { DocumentationIconProps } from "shared/types";
-
-const DocumentationIcon = ({ className }: DocumentationIconProps) => {
+const DocumentationIcon = () => {
   return (
     <svg
-      className={className}
       width="20"
       height="20"
       viewBox="0 0 24 22"

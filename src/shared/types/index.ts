@@ -17,10 +17,6 @@ export type UserReplyProps = {
   reply: string;
 };
 
-export type DashboardIconPorps = {
-  className: string;
-};
-
 export type ServiceIconPorps = {
   className: string;
 };
@@ -29,9 +25,6 @@ export type PipelineIconProps = {
   className: string;
 };
 
-export type DocumentationIconProps = {
-  className: string;
-};
 
 export type SettingIconProps = {
   className: string;
