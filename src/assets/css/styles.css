@@ -683,7 +683,7 @@ svg.warning-icon {
 }
 
 .prem-chat-sidebar .sidebar li {
-  @apply pr-9 max-md:px-[14px];
+  @apply pr-9 max-md:px-1;
 }
 
 @media (min-width: 768px) {
