@@ -749,9 +749,14 @@ svg.warning-icon {
   @apply hidden;
 }
 .main-container {
-  /* width: calc(100% - 90px); */
   @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px] max-md:mx-4;
 }
+@media (max-width: 767px) {
+  .main-container {
+    width: calc(100% - 2rem);
+  }
+}
+
 @screen md {
   .main-container {
     width: calc(100% - 150px);
