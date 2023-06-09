@@ -61,14 +61,14 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   return (
     <>
-      <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex h-screen sidebar md:!w-[259px]">
+      <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
         <div className="flex max-md:flex-wrap md:gap-4">
           <button className="mx-2" onClick={onCloseClick}>
             <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
           <button
-            onClick={() => setHamburgerMenu(true)}
+            onClick={()=> setHamburgerMenu(true)}
             className="w-[30px] md:hidden z-[11] fixed right-[14px] top-[24px]"
           >
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
