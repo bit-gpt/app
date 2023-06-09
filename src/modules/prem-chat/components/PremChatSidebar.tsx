@@ -68,7 +68,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
           <button
-            onClick={()=> setHamburgerMenu(true)}
+            onClick={() => setHamburgerMenu(true)}
             className="w-[30px] md:hidden z-[11] fixed right-[14px] top-[24px]"
           >
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
