@@ -1,8 +1,6 @@
-<div align="center" style="text-align: center">
-**[PremAI](https://premai.io) - AI THAT YOU OWN**</br>
-</div>
+# [PremAI](https://premai.io)
 
-Privacy Preserving Open source AI Platform.
+Self sovereign AI Infrastructure. 
 
 ## Installation
 
