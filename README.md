@@ -1,10 +1,8 @@
-# 🖥 Prem App
+<div align="center" style="text-align: center">
+**[PremAI](https://premai.io) - AI THAT YOU OWN**</br>
+</div>
 
-`BADGES`
-
-`SHORT_DESCRIPTION`
-
-`VIDEO`
+Privacy Preserving Open source AI Platform.
 
 ## Installation
 
