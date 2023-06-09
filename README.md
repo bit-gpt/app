@@ -1,6 +1,6 @@
-# [PremAI](https://premai.io)
+# [PremAI](https://premai.io) - Self Sovereign AI Infrastructure. 
 
-Self sovereign AI Infrastructure. 
+<img width="1500" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
 
 ## Installation
 
