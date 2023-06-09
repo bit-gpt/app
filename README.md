@@ -8,12 +8,30 @@
 
 ## Installation
 
-Download the latest version of the app from [here](https://github.com).
+Download the latest version of the app from [here](https://github.com/premAI-io/prem-app/releases/tag/v0.0.10).
 
 Otherwise, you can install Prem on your server by running the following command:
 
 ```bash
-curl -fsSL https://get.prem.ninja/install.sh | bash
+wget -q https://get.prem.ninja/install.sh -O install.sh; sudo bash ./install.sh
+```
+
+If you have problems with the installer script, you can run Prem directly with docker-compose.
+
+```bash
+git clone https://github.com/premAI-io/prem-app.git
+cd ./prem-app
+docker-compose up -d
+```
+
+> We suggest to use the installer script if you have a fresh machine, because it will install all the necessary dependencies.
+
+If you have a GPU 
+
+```bash
+git clone https://github.com/premAI-io/prem-app.git
+cd ./prem-app
+docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 ```
 
 ## Product Roadmap
