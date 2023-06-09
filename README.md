@@ -1,19 +1,37 @@
-# 🖥 Prem App
+# [Prem](https://premai.io) - Self Sovereign AI Infrastructure. 
 
-`BADGES`
+<img width="1500" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
 
-`SHORT_DESCRIPTION`
+## Demo
 
-`VIDEO`
+https://github.com/premAI-io/prem-app/assets/29598954/856af04d-bded-423e-8e90-1e891ec6824f
 
 ## Installation
 
-Download the latest version of the app from [here](https://github.com).
+Download the latest version of the app from [here](https://github.com/premAI-io/prem-app/releases/tag/v0.0.10).
 
 Otherwise, you can install Prem on your server by running the following command:
 
 ```bash
-curl -fsSL https://get.prem.ninja/install.sh | bash
+wget -q https://get.prem.ninja/install.sh -O install.sh; sudo bash ./install.sh
+```
+
+If you have problems with the installer script, you can run Prem directly with docker-compose.
+
+```bash
+git clone https://github.com/premAI-io/prem-app.git
+cd ./prem-app
+docker-compose up -d
+```
+
+> We suggest to use the installer script if you have a fresh machine, because it will install all the necessary dependencies.
+
+If you have a GPU 
+
+```bash
+git clone https://github.com/premAI-io/prem-app.git
+cd ./prem-app
+docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 ```
 
 ## Product Roadmap

@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  premd:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
