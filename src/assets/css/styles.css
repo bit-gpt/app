@@ -252,6 +252,11 @@ header img {
 .prem-chat-body {
   height: calc(100vh - 116px);
 }
+@media (max-width: 767px) {
+  .prem-chat-body {
+    height: calc(100vh - 77px);
+  }
+}
 
 .bot-reply {
   @apply flex mb-[40px] w-full;
@@ -838,6 +843,7 @@ svg.warning-icon {
 }
 @media (max-width: 767px) {
   .prem-chat-sidebar .sidebar {
+    @apply h-full;
     background: linear-gradient(
       131.09deg,
       rgba(29, 29, 27, 0.49) 8.8%,
