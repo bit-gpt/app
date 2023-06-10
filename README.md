@@ -1,5 +1,6 @@
 # 🤖 Prem - Self Sovereign AI Infrastructure
-Prem AI is an open-source abstraction layer designed to self-host Open source AI models without exposing sensitive data to third parties.
+Prem AI is an open-source abstraction layer designed to deploy self-hosted, Open-source AI models without exposing sensitive data to third parties.
+Our platform provides a unified environment to develop AI applications and deploy AI models on your own infrastructure.
 
 <img width="1024" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
 
