@@ -1,38 +1,43 @@
-# [Prem](https://premai.io) - Self Sovereign AI Infrastructure
+# 🤖 Prem - Self Sovereign AI Infrastructure
+
+Prem AI is an open-source abstraction layer designed to deploy self-hosted, Open-source AI models without exposing sensitive data to third parties.
+Our platform provides a unified environment to develop AI applications and deploy AI models on your own infrastructure.
 
 [![Version](https://img.shields.io/github/v/release/premAI-io/prem-app?color=%235351FB&label=version)](https://github.com/premAI-io/prem-app/releases)
 [![Release](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml/badge.svg?event=push)](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml)
 [![Twitter](https://img.shields.io/twitter/follow/premai_io?style=social)](https://twitter.com/premai_io)
 
+<img width="1024" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
 
-<img width="1500" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
+## 🚀 Getting started
+
+- Install Prem on your MacOS (16GB+ RAM required) - [Dowload the latest Prem App](https://github.com/premAI-io/prem-app/releases)
+- Install Prem on your Linux sever (Ubuntu,Debian) - [Installer script](#install-on-linux)
+- Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
 
 ## Demo
 
 https://github.com/premAI-io/prem-app/assets/29598954/856af04d-bded-423e-8e90-1e891ec6824f
 
-## Installation
+## Install on Linux
 
-Download the latest version of the app from [here](https://github.com/premAI-io/prem-app/releases/tag/v0.0.10).
-
-Otherwise, you can install Prem on your server by running the following command:
+Install everything needed to run Prem on Ubuntu/Debian server
 
 ```bash
 wget -q https://get.prem.ninja/install.sh -O install.sh; sudo bash ./install.sh
 ```
+------
 
-If you have problems with the installer script, you can run Prem directly with docker-compose.
+If you encounter issues or you want to build the Prem App docker image inside your Linux server
 
+### CPU 
 ```bash
 git clone https://github.com/premAI-io/prem-app.git
 cd ./prem-app
 docker-compose up -d
 ```
 
-> We suggest to use the installer script if you have a fresh machine, because it will install all the necessary dependencies.
-
-If you have a GPU 
-
+### GPU 
 ```bash
 git clone https://github.com/premAI-io/prem-app.git
 cd ./prem-app
@@ -41,23 +46,26 @@ docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 
 ## Product Roadmap
 
-If you wanna know which services we support for each interface, please refer to Prem Registry https://premai-io.github.io/prem-registry-ui/.
+The AI services expose am HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
+Each service we support it's published on the [Prem Registry](https://premai-io.github.io/prem-registry-ui). 
+
+> Anyone can prepare, package and publish an AI service on Prem. Instructions coming soon.
 
 ### Interfaces
 
-- [x] 😃 Prem Chat
-- [x] 📕 Prem Embeddings
-- [x] 🏛️ Prem Store
-- [ ] 🎨 Prem Diffusion
-- [ ] 💻 Prem Copilot
-- [ ] 🎵 Prem Text to Audio
-- [ ] 🎵 Prem Audio to Text
-- [ ] 📷 Prem Vision
-- [ ] 📖 Prem Summary
-- [ ] 🖼️ Prem Upscaler
-- [ ] 📹 Prem Video
+- [x] 😃 Chat
+- [x] 📕 Embedding
+- [x] 🏛️ Vector Store
+- [ ] 🎨 Diffuser
+- [ ] 💻 Coder
+- [ ] 🎵 Text to Audio
+- [ ] 🎵 Audio to Text
+- [ ] 📷 Vision
+- [ ] 📖 Summary
+- [ ] 🖼️ Upscaler
+- [ ] 📹 Video
 
-## Contributing to Prem App
+## Contributing
 
 ### Run the app with Tauri
 
