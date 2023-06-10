@@ -97,6 +97,8 @@ In order to use the mock registry, you can specify the `REGISTRY_URL` environmen
 PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-daemon/main/resources/mocks/manifests.json
 ```
 
+> The mock registry is not fully tested. Few interfaces could be broken.
+
 ### Running the test cases
 
 ```bash
