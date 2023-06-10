@@ -88,7 +88,15 @@ cp .env.example
 npm i
 npm run dev
 ```
+
+### Environment Variables
+
+- `VITE_BACKEND_URL` : destination of the premd
+- `VITE_DESTINATION` : `browser` | `desktop`
+- `IS_PACKAGED` : used for server packaging.
+
 ## Contributing to Prem Daemon
+
 ### Running the Daemon locally
 
 ```bash
