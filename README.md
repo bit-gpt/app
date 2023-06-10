@@ -43,9 +43,10 @@ If you wanna know which services we support for each interface, please refer to 
 - [x] 😃 Prem Chat
 - [x] 📕 Prem Embeddings
 - [x] 🏛️ Prem Store
-- [ ] 🎨 Prem Michelangelo
+- [ ] 🎨 Prem Diffusion
 - [ ] 💻 Prem Copilot
-- [ ] 🎵 Prem Audio
+- [ ] 🎵 Prem Text to Audio
+- [ ] 🎵 Prem Audio to Text
 - [ ] 📷 Prem Vision
 - [ ] 📖 Prem Summary
 - [ ] 🖼️ Prem Upscaler
