@@ -69,6 +69,8 @@ Each service we support it's published on the [Prem Registry](https://premai-io.
 
 ### Run the app with Tauri
 
+> Make sure to remove any value in the `.env` file.
+
 ```bash
 npm i
 npm run tauri dev
@@ -77,10 +79,24 @@ npm run tauri dev
 ### Run the app with React
 
 ```bash
+# run the daemon
+docker-compose up -d premd
+
+# copy .env.example file in .env
+cp .env.example
+
 npm i
 npm run dev
 ```
+
+### Environment Variables
+
+- `VITE_BACKEND_URL` : destination of the premd
+- `VITE_DESTINATION` : `browser` | `desktop`
+- `IS_PACKAGED` : used for server packaging.
+
 ## Contributing to Prem Daemon
+
 ### Running the Daemon locally
 
 ```bash
