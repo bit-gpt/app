@@ -46,7 +46,7 @@ docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 
 ## Product Roadmap
 
-The AI services expose am HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
+The AI services expose an HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
 Each service we support it's published on the [Prem Registry](https://premai-io.github.io/prem-registry-ui). 
 
 > Anyone can prepare, package and publish an AI service on Prem. Instructions coming soon.
