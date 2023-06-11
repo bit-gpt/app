@@ -93,7 +93,7 @@ npm run dev
 
 - `VITE_BACKEND_URL` : destination of the premd
 - `VITE_DESTINATION` : `browser` | `desktop`
-- `IS_PACKAGED` : used for server packaging.
+- `IS_PACKAGED` : `true` | `false` used for server packaging.
 
 ## Contributing to Prem Daemon
 
