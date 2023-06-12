@@ -5,7 +5,6 @@ import { HeaderProps } from "../types";
 import WarningModal from "modules/service/components/WarningModal";
 import { useState } from "react";
 import WarningIcon from "shared/components/WarningIcon";
-import { useLockedBody } from "usehooks-ts";
 
 const Header = ({
   setRightSidebar,
@@ -24,17 +23,11 @@ const Header = ({
     setIsOpen(true);
   };
 
-  const [locked, setLocked] = useLockedBody(false, "root");
-  const hamburgerMenuToggle = () => {
-    setLocked(!locked);
-    setHamburgerMenu(!hamburgerMenuOpen);
-  };
-
   return (
     <>
       <div className="md:border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0">
         <div className="max-md:w-full flex md:justify-center header__center max-md:items-center">
-          <button onClick={hamburgerMenuToggle} className="md:hidden ml-5 w-10 h-10">
+          <button onClick={()=> setHamburgerMenu(!hamburgerMenuOpen)} className="md:hidden ml-5 w-10 h-10">
             <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
           </button>
           <h1 className="flex items-center text-white md:text-xl text-md font-proximaNova-regular mx-[18px]">

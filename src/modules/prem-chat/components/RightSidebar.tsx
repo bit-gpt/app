@@ -38,7 +38,7 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
   );
 
   return (
-    <div className=" prem-chat-right-sidebar">
+    <div className="prem-chat-right-sidebar">
       <div className="sidebar-toggle__btn !mt-5 !ml-0">
         <button
           onClick={() => setRightSidebar(false)}
