@@ -52,6 +52,7 @@ const ServiceDetail = () => {
           tags={service.interfaces}
           icon={service.icon}
           subtitle={service.id}
+          isInBeta={service.beta}
         />
         <ServiceActions
           serviceId={serviceId!}

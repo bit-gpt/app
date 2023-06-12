@@ -44,6 +44,7 @@ export type Service = {
   supported: boolean;
   volumeName: string | null;
   volumePath: string | null;
+  beta: boolean;
 };
 
 export type SearchFilterProps = {

@@ -1,15 +1,19 @@
 import TagsOutline from "shared/components/TagsOutline";
 import { ServiceHeaderProps } from "../types";
+import Beta from "modules/service/components/Beta";
 
 const ServiceHeader = (props: ServiceHeaderProps) => {
-  const { tags, icon, subtitle, title } = props;
+  const { tags, icon, subtitle, title, isInBeta } = props;
   return (
     <div className="flex flex-wrap max-md:gap-4">
       <div className="dashboard-bottom__card-box">
         <img src={icon} alt={title} />
       </div>
       <div className="mask-heading md:ml-6">
-        <h2 className="!mt-0 mb-1">{title}</h2>
+        <h2 className="!mt-0 mb-1">
+          {title}
+          {isInBeta && <Beta />}
+        </h2>
         <span className="text-brightgray">{subtitle}</span>
       </div>
       <div className="gap-[14px] flex items-start ml-8">

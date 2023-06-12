@@ -8,6 +8,7 @@ import { SERVICE_KEY } from "shared/hooks/useService";
 import { getServiceStatus } from "shared/helpers/utils";
 import useInterfaces from "shared/hooks/useInterfaces";
 import clsx from "clsx";
+import Beta from "./Beta";
 
 const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const queryClient = useQueryClient();
@@ -43,7 +44,10 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
           memoryRequirements={service.modelInfo?.memoryRequirements}
         />
       </div>
-      <h3>{title}</h3>
+      <h3>
+        {title}
+        {service.beta && <Beta />}
+      </h3>
     </Link>
   );
 };
