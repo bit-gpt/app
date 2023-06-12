@@ -31,7 +31,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   const { chatId, serviceId } = useParams();
   const { height } = useWindowSize();
-  const responsiveMatches = useMediaQuery('(min-width: 768px)');
+  const responsiveMatches = useMediaQuery("(min-width: 768px)");
   const navigate = useNavigate();
   const [openWarningModal, setIsOpenWarningModal] = useState(false);
 
