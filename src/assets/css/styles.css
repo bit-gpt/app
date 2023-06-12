@@ -247,18 +247,15 @@ header img {
   @apply absolute right-[21px] top-[25px];
 }
 .prem-chat-bottom {
-  @apply sticky z-10 mt-auto bottom-0 pb-[33px] left-0 right-0 w-full;
+  @apply md:sticky fixed z-10 mt-auto bottom-0 pb-[33px] left-0 right-0 w-full;
 }
+
 .prem-chat-body {
-  height: calc(100vh - 116px);
+  height: calc(100vh - 177px);
 }
 @media (max-width: 767px) {
-  .prem-chat-body {
-    @apply mt-0;
-    height: calc(100vh - 77px);
-  }
   .prem-chat-bottom {
-    @apply flex items-end;
+    @apply flex items-end mt-0;
   }
 }
 
@@ -282,7 +279,7 @@ header img {
 }
 
 .bot-reply > p {
-  @apply p-8 w-full;
+  @apply p-4 w-full text-white;
   max-width: 660px;
   border-radius: 0px 10.4294px 10.4294px 10.4294px;
   background: linear-gradient(90.54deg, #e9928e 0%, #f49893 100%);
