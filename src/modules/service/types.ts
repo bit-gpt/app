@@ -45,6 +45,7 @@ export type Service = {
   volumeName: string | null;
   volumePath: string | null;
   beta: boolean;
+  coming_soon: boolean;
 };
 
 export type SearchFilterProps = {
@@ -96,7 +97,8 @@ export type ServiceStatus =
   | "not_supported"
   | "not_downloaded"
   | "not_enough_memory"
-  | "not_enough_system_memory";
+  | "not_enough_system_memory"
+  | "coming_soon";
 
 export type ServiceCardProps = {
   className: string;
