@@ -1,15 +1,15 @@
 {
-  "version": "0.0.10",
+  "version": "0.0.11",
   "notes": "See the assets to download and install this version.",
-  "pub_date": "2023-06-07T20:32:06.912Z",
+  "pub_date": "2023-06-12T15:11:00.833Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjZjSXFEeWNLbmMvTnNiYUpleEJwN3pYOEdudDlvS0d1YXNaTGM4VVA2TytQMDZxRkVNRHU4Q0VGdDJTcXo0U0hDallsS1UvWTd0Y2lVQXdrYm5SSEFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg2MTY5NTA5CWZpbGU6UHJlbS5hcHAudGFyLmd6Cko5aXBWNTZSaEJHVVpvay9jSFU1eVQrc0V2TnBJU1JoUHlJOVk4OTRQaWgwS3MySCtoWnB3YVpoaWwwYnFrOFNyQm5RdGtMSit1THNtb25mUkFQVUNRPT0K",
-      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.0.10/Prem-debug_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjFJUFA0U3ZEcjNrQTg5NVZYTjhKTGhFOVBRRGtLY25RbUNJOHJXbngzaElpWXg1ZTFZWFZGQ3ZZNHdKN25QSy9yWEU2WW9VQmVIL2NOaWNHOElSVHc0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg2NTgxODUyCWZpbGU6UHJlbS5hcHAudGFyLmd6CkMrWmpDVkJ0bjhRYUF2RGtCQlh2ZHdzMUdWMnJUTmY2Z21peEZVaFZYRGFnM0JMVWtGWVdxNWxNK2dHYkp3ZUpHVkhZTjZkYkQvYWs4eG14dEg4UEJnPT0K",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.0.11/Prem-debug_universal.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjZjSXFEeWNLbmMvTnNiYUpleEJwN3pYOEdudDlvS0d1YXNaTGM4VVA2TytQMDZxRkVNRHU4Q0VGdDJTcXo0U0hDallsS1UvWTd0Y2lVQXdrYm5SSEFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg2MTY5NTA5CWZpbGU6UHJlbS5hcHAudGFyLmd6Cko5aXBWNTZSaEJHVVpvay9jSFU1eVQrc0V2TnBJU1JoUHlJOVk4OTRQaWgwS3MySCtoWnB3YVpoaWwwYnFrOFNyQm5RdGtMSit1THNtb25mUkFQVUNRPT0K",
-      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.0.10/Prem-debug_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjFJUFA0U3ZEcjNrQTg5NVZYTjhKTGhFOVBRRGtLY25RbUNJOHJXbngzaElpWXg1ZTFZWFZGQ3ZZNHdKN25QSy9yWEU2WW9VQmVIL2NOaWNHOElSVHc0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg2NTgxODUyCWZpbGU6UHJlbS5hcHAudGFyLmd6CkMrWmpDVkJ0bjhRYUF2RGtCQlh2ZHdzMUdWMnJUTmY2Z21peEZVaFZYRGFnM0JMVWtGWVdxNWxNK2dHYkp3ZUpHVkhZTjZkYkQvYWs4eG14dEg4UEJnPT0K",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.0.11/Prem-debug_universal.app.tar.gz"
     }
   }
 }
