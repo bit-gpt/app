@@ -39,7 +39,7 @@ const PremChatContainer = ({
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div
-              className="main-content h-full z-10 relative max-h-full overflow-x-hidden max-md:overflow-hidden scrollbar-none"
+              className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none"
               ref={chatMessageListRef}
             >
               <Header

@@ -255,10 +255,10 @@ header img {
 @media (max-width: 767px) {
   .prem-chat-body {
     @apply mt-0;
-    height: calc(100vh - 116px);
+    height: calc(100vh - 77px);
   }
   .prem-chat-bottom {
-    @apply flex items-end min-h-full;
+    @apply flex items-end;
   }
 }
 
