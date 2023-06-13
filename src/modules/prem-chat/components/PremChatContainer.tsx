@@ -9,6 +9,7 @@ import Header from "./Header";
 import RightSidebar from "./RightSidebar";
 import { Message, PremChatContainerProps } from "../types";
 import clsx from "clsx";
+import { useLockedBody, useMediaQuery, useWindowSize } from "usehooks-ts";
 
 const PremChatContainer = ({
   chatId,
@@ -20,10 +21,17 @@ const PremChatContainer = ({
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const chatMessageListRef = useRef<HTMLDivElement>(null);
+  const { height } = useWindowSize();
+  const responsiveMatches = useMediaQuery("(min-width: 768px)");
 
   const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
     usePremChat(isStreaming, serviceId!, chatId || null);
 
+  const [locked, setLocked] = useLockedBody(false, "root");
+  const hamburgerMenuToggle = () => {
+    setLocked(!locked);
+  };
+  useEffect(() => {}, [hamburgerMenuToggle]);
   useEffect(() => {
     if (chatMessageListRef.current) {
       chatMessageListRef.current.scrollTop = chatMessageListRef.current.scrollHeight;
@@ -32,14 +40,16 @@ const PremChatContainer = ({
 
   return (
     <section>
-      <div className="flex h-screen w-full relative">
-        <div className={clsx("prem-chat-sidebar", hamburgerMenuOpen && "max-md:hidden")}>
+      <div className="md:flex md:h-screen w-full relative">
+        <div
+          className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "max-md:hidden")}
+        >
           <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div
-              className="main-content h-full z-10 relative max-h-full overflow-x-hidden scrollbar-none"
+              className="main-content h-full z-10 relative max-h-full overflow-hidden scrollbar-none"
               ref={chatMessageListRef}
             >
               <Header
@@ -49,8 +59,11 @@ const PremChatContainer = ({
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <div className="z-10 relative mt-[40px] flex flex-col prem-chat-body">
-                <div className="md:w-[65%] w-[90%] mx-auto mt-8">
+              <div
+                className="z-10 relative mt-[40px] flex flex-col prem-chat-body scrollbar-none"
+                style={{ height: height - (responsiveMatches ? 200 : 140) }}
+              >
+                <div className="md:w-[65%] w-[90%] mx-auto md:mt-8">
                   {chatMessages.map((message: Message, index: number) => (
                     <div key={index}>
                       {message.role === "user" ? (
@@ -61,28 +74,28 @@ const PremChatContainer = ({
                     </div>
                   ))}
                 </div>
-                <div className="prem-chat-bottom border-transparent bg-gradient-to-b from-transparent via-white to-white dark:via-[#20232B] dark:to-[#20232B]">
-                  <div className="md:w-[55%] w-[85%] mx-auto">
-                    {chatMessages.length > 0 && !isLoading && !isError && (
-                      <div>
-                        <RegenerateButton onRgenerateClick={onRegenerate} />
-                      </div>
-                    )}
-                    <form className="text-center" onSubmit={onSubmit}>
-                      <InputBox
-                        question={question}
-                        setQuestion={setQuestion}
-                        disabled={isLoading || !model}
-                        placeholder={
-                          isLoading
-                            ? "Fetching response..."
-                            : model
-                            ? "Type a message or type to select a prompt"
-                            : "Please select a model to get started"
-                        }
-                      />
-                    </form>
-                  </div>
+              </div>
+              <div className="prem-chat-bottom border-transparent bg-gradient-to-b from-transparent via-white to-white dark:via-[#20232B] dark:to-[#20232B]">
+                <div className="md:w-[55%] w-[85%] mx-auto">
+                  {chatMessages.length > 0 && !isLoading && !isError && (
+                    <div>
+                      <RegenerateButton onRgenerateClick={onRegenerate} />
+                    </div>
+                  )}
+                  <form className="text-center" onSubmit={onSubmit}>
+                    <InputBox
+                      question={question}
+                      setQuestion={setQuestion}
+                      disabled={isLoading || !model}
+                      placeholder={
+                        isLoading
+                          ? "Fetching response..."
+                          : model
+                          ? "Type a message or type to select a prompt"
+                          : "Please select a model to get started"
+                      }
+                    />
+                  </form>
                 </div>
               </div>
             </div>
