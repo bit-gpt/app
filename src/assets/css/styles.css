@@ -367,13 +367,16 @@ header img {
 }
 
 .sidebar-main .sidebar li:hover {
-  @apply bg-[#323232] font-semibold;
+  @apply bg-[#323232] max-md:bg-transparent font-semibold;
 }
 .sidebar-main .sidebar li:hover svg:not(.svg-stroke) path {
-  @apply fill-[#FF7E7B] transition-all;
+  @apply md:fill-[#FF7E7B] transition-all;
 }
 .sidebar-main .sidebar li a.active svg path {
   @apply fill-[#FF7E7B];
+}
+.sidebar-last__row li:last-child:hover a svg.svg-stroke path {
+  @apply max-md:!stroke-white;
 }
 .sidebar-last__row li:last-child:hover a svg.svg-stroke path,
 .sidebar-last__row li:last-child a.active svg.svg-stroke path {
