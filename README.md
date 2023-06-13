@@ -1,13 +1,14 @@
-# 🤖 Prem - Self Sovereign AI Infrastructure
+<img width="1024" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
 
-Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical difficulties for open source-model deployment and ushering in a new era of privacy-centric AI applications where users can finally retain control and ownership of their models.  
+# 🤖 Prem - Self Sovereign AI Infrastructure
 
 [![Version](https://img.shields.io/github/v/release/premAI-io/prem-app?color=%235351FB&label=version)](https://github.com/premAI-io/prem-app/releases)
 [![Release](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml/badge.svg?event=push)](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml)
 [![Twitter](https://img.shields.io/twitter/follow/premai_io?style=social)](https://twitter.com/premai_io)
 [![Discord](https://dcbadge.vercel.app/api/server/WkBkzVEp?style=social)](https://discord.com/invite/WkBkzVEp)
 
-<img width="1024" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
+
+Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical difficulties for open source-model deployment and ushering in a new era of privacy-centric AI applications where users can finally retain control and ownership of their models.  
 
 ## 🚀 Getting started
 
