@@ -12,7 +12,7 @@ const ServiceHeader = (props: ServiceHeaderProps) => {
       <div className="mask-heading md:ml-6">
         <div className="flex items-start">
           <h2 className="!mt-0 mb-1">{title}</h2>
-          {isInBeta && <Beta className="top-0"/>}
+          {isInBeta && <Beta className="top-0" />}
         </div>
         <span className="text-brightgray">{subtitle}</span>
       </div>
