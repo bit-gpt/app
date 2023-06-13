@@ -106,7 +106,7 @@ header img {
   background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
-  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[30px] text-[20px] leading-9;
+  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[30px] text-[25px] leading-9;
 }
 
 .dashboard-bottom__card {
@@ -568,7 +568,7 @@ svg.warning-icon {
 
 .settings-card h3 {
   background-color: rgba(77, 77, 79, 0.22);
-  @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg;
+  @apply text-brightgray text-lg max-md:text-sm md:py-[14px] md:px-8 rounded-tl-lg rounded-tr-lg max-md:bg-transparent;
 }
 .settings-card__border {
   @apply border-b-2 opacity-50;
@@ -584,18 +584,18 @@ svg.warning-icon {
 }
 .settings-card ul {
   background: rgba(77, 77, 79, 0.2);
-  @apply py-5 px-8 rounded-bl-lg rounded-br-lg;
+  @apply py-5 md:px-8 rounded-bl-lg rounded-br-lg max-md:bg-transparent;
 }
 .settings-card li {
   @apply w-full;
 }
 .settings-card li span {
-  @apply text-brightgray font-semibold text-[13px] pb-3 gap-3;
+  @apply text-brightgray font-semibold md:text-[13px] text-[10px] pb-3 gap-3;
 }
 
 .form-control {
   background: rgba(77, 77, 79, 0.22);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   @apply rounded-md py-3 px-5 w-full focus:!ring-0 focus:outline-none;
 }
 .form-control::placeholder,
@@ -863,4 +863,19 @@ svg.warning-icon {
 }
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-sm;
+}
+
+.backend-url {
+  width: 45%;
+}
+.reset-topltip {
+  @apply !text-brightgray;
+}
+.reset-topltip,
+.reset-topltip__arrow {
+  @apply !bg-[#353539] !rounded;
+}
+
+.reset-topltip__arrow {
+  @apply !w-7 !h-7 z-[-1] !top-[-10px];
 }
