@@ -8,7 +8,7 @@
 [![Discord](https://dcbadge.vercel.app/api/server/WkBkzVEp?style=social)](https://discord.com/invite/WkBkzVEp)
 
 
-Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical difficulties for open source-model deployment and ushering in a new era of privacy-centric AI applications where users can finally retain control and ownership of their models.  
+Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical complexities for AI deployment and ushering in a new era of privacy-centric AI applications - users can finally retain control and ownership of their models. 
 
 ## 🚀 Getting started
 
