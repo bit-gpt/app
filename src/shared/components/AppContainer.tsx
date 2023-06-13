@@ -4,12 +4,14 @@ import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import clsx from "clsx";
 import cross from "assets/images/cross.svg";
 import { useLockedBody, useMediaQuery } from "usehooks-ts";
+import { useLocation } from "react-router";
 
 const AppContainer = ({ children }: PropsWithChildren) => {
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
   const matches = useMediaQuery("(max-width: 767px)");
   const [locked, setLocked] = useLockedBody(false, "root");
+  const location = useLocation();
 
   const toggle = useCallback(() => {
     setSidebarToggle((prev) => !prev);
@@ -22,12 +24,14 @@ const AppContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <section className="bg-darkjunglegreen">
-      <button
-        onClick={() => hamburgerMenuToggle()}
-        className="md:hidden ml-5 mt-5 w-10 h-10 z-[11]"
-      >
-        <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
-      </button>
+      {location?.pathname == "/" && (
+        <button
+          onClick={() => hamburgerMenuToggle()}
+          className="md:hidden ml-5 mt-5 w-10 h-10 z-[11]"
+        >
+          <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
+        </button>
+      )}
       {hamburgerMenuOpen && (
         <button
           onClick={() => hamburgerMenuToggle()}

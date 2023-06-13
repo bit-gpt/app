@@ -133,6 +133,7 @@ header img {
 .dashboard-bottom__card-box img {
   @apply rounded-[11px] h-[54px] w-[54px] flex items-center justify-center;
 }
+
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;
   @apply md:text-lg text-base font-bold leading-[25px] text-brightgray;
@@ -635,7 +636,9 @@ svg.warning-icon {
     rgba(103, 100, 98, 0.11) 88.99%
   );
 }
-
+.services-header {
+  @apply relative;
+}
 .services-header button {
   @apply !text-sm;
 }
@@ -863,4 +866,31 @@ svg.warning-icon {
 }
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-sm;
+}
+
+@media (max-width: 767px) {
+  .services-detail--header .dashboard-bottom__card-box img {
+    @apply max-md:h-8 max-md:w-8 mt-[6px];
+  }
+}
+
+@media (max-width: 1023px) {
+  .services-detail-header {
+    @apply absolute top-0 right-0;
+  }
+  .services-detail--header {
+    width: calc(100% - 211px);
+  }
+  .services-detail--header .mask-heading h2 {
+    @apply w-[320px] overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .services-detail--header .mask-heading {
+    @apply mb-4;
+  }
+  .services-detail--header {
+    width: 70%;
+  }
 }

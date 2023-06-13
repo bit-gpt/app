@@ -46,22 +46,26 @@ const ServiceDetail = () => {
       >
         <img className="mx-auto" src={arrow} alt="arrow-logo" />
       </button>
-      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header max-sm:gap-4">
-        <ServiceHeader
-          title={service.name}
-          tags={service.interfaces}
-          icon={service.icon}
-          subtitle={service.id}
-        />
-        <ServiceActions
-          serviceId={serviceId!}
-          status={status}
-          refetch={refetchServices}
-          isDetailView={true}
-          interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
-          needsUpdate={service.needsUpdate}
-          memoryRequirements={service.modelInfo?.memoryRequirements}
-        />
+      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header max-sm:gap-4 md:justify-between md:gap-4">
+        <div className="services-detail--header">
+          <ServiceHeader
+            title={service.name}
+            tags={service.interfaces}
+            icon={service.icon}
+            subtitle={service.id}
+          />
+        </div>
+        <div className="services-detail-header">
+          <ServiceActions
+            serviceId={serviceId!}
+            status={status}
+            refetch={refetchServices}
+            isDetailView={true}
+            interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
+            needsUpdate={service.needsUpdate}
+            memoryRequirements={service.modelInfo?.memoryRequirements}
+          />
+        </div>
       </div>
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
