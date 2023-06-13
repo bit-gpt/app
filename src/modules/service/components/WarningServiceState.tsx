@@ -44,6 +44,7 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
           e.preventDefault();
           setIsOpen(true);
         }}
+        className="dashboard-bottom__card-warning"
       >
         <WarningIcon />
       </button>
