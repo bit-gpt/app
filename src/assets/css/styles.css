@@ -404,10 +404,6 @@ header img {
   @apply text-lg max-md:text-base items-center md:justify-center py-3 rounded-md max-md:gap-5;
 }
 
-.sidebar-main .sidebar li .tooltip {
-  @apply max-md:hidden;
-}
-
 .sidebar-main {
   @apply fixed z-10 max-md:w-full max-md:top-0 max-md:bottom-0;
 }
