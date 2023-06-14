@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import NotFound from "shared/components/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PremMichelangelo from "modules/prem-michelangelo/components/PremMichelAngelo";
 
 const AppRouter = () => {
   return (
@@ -16,6 +17,7 @@ const AppRouter = () => {
           <Route path="/prem-chat/:serviceId/:chatId?" element={<PremChat />} />
           <Route path="/services/:serviceId/detail" element={<ServiceDetail />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/prem-michelangelo" element={<PremMichelangelo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
