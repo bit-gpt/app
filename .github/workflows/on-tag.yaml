@@ -91,6 +91,7 @@ jobs:
           tagName: ${{ steps.next_tag.outputs.tag }}
           releaseName: "PremAI App ${{ steps.next_tag.outputs.tag }}"
           releaseBody: "See the assets to download and install this version."
+          releaseDraft: true
           includeDebug: true
           updaterJsonKeepUniversal: true
           args: '--target universal-apple-darwin'
