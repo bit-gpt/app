@@ -60,6 +60,7 @@ const ServiceDetail = () => {
           isDetailView={true}
           interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
           needsUpdate={service.needsUpdate}
+          memoryRequirements={service.modelInfo?.memoryRequirements}
         />
       </div>
       <div className="service-detail">

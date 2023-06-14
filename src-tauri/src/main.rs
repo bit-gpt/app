@@ -158,10 +158,8 @@ fn main() {
             match event {
                 WindowEvent::CloseRequested { .. } => {
                     // stop services
-                    let url = "http://localhost:54321/v1/stop-all-services";
-                    let response = get(url).expect("Request failed");
-                    let json: Config = response.json().expect("Failed to parse JSON");
-                    println!("Stop all services: {:?}", json);
+                    let url = "http://localhost:54321/v1/stop-all-services/";
+                    get(url).expect("Request failed");
                     // stop docker
                     let _child = Command::new("/usr/local/bin/docker")
                         .args(&["kill", "premd"])
