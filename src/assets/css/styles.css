@@ -136,7 +136,7 @@ header img {
 
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;
-  @apply md:text-lg text-base font-bold leading-[25px] text-brightgray;
+  @apply md:text-lg max-md:text-sm text-base font-bold leading-[25px] text-brightgray;
 }
 .dashboard-bottom__card p {
   @apply text-sm leading-[30px] text-brightgray font-proximaNova-regular;
@@ -166,7 +166,7 @@ header img {
   @apply flex items-center py-[13px] px-5 hover:bg-darkjunglegreen rounded-md;
 }
 .sidebar li a {
-  @apply w-full max-md:justify-center flex dark:text-cultured text-base font-medium;
+  @apply w-full flex dark:text-cultured text-base font-medium;
 }
 .sidebar__search input {
   @apply font-proximaNova-regular text-manatee text-base outline-none h-[50px] max-md:h-[40px];
@@ -195,6 +195,11 @@ header img {
 .sidebar-toggle .sidebar li button svg {
   @apply hidden;
 }
+
+.sidebar-toggle .sidebar li span {
+  @apply max-md:flex;
+}
+
 .sidebar-toggle .sidebar li {
   @apply px-0 md:justify-center;
 }
@@ -363,13 +368,16 @@ header img {
 }
 
 .sidebar-main .sidebar li:hover {
-  @apply bg-[#323232] font-semibold;
+  @apply bg-[#323232] max-md:bg-transparent font-semibold;
 }
 .sidebar-main .sidebar li:hover svg:not(.svg-stroke) path {
-  @apply fill-[#FF7E7B] transition-all;
+  @apply md:fill-[#FF7E7B] transition-all;
 }
 .sidebar-main .sidebar li a.active svg path {
   @apply fill-[#FF7E7B];
+}
+.sidebar-last__row li:last-child:hover a svg.svg-stroke path {
+  @apply max-md:!stroke-white;
 }
 .sidebar-last__row li:last-child:hover a svg.svg-stroke path,
 .sidebar-last__row li:last-child a.active svg.svg-stroke path {
@@ -394,14 +402,12 @@ header img {
 }
 
 .sidebar-main .sidebar li {
-  @apply cursor-pointer p-0 mb-2 max-md:w-[50px];
+  @apply cursor-pointer p-0 max-md:px-4 mb-2;
 }
 .sidebar-main .sidebar li a {
-  @apply text-lg items-center md:justify-center py-3 rounded-md;
+  @apply text-lg max-md:text-base items-center md:justify-center py-3 rounded-md max-md:gap-5;
 }
-.sidebar-main.sidebar-toggle li a {
-  @apply max-md:w-[50px];
-}
+
 .sidebar-main {
   @apply fixed z-10 max-md:w-full max-md:top-0 max-md:bottom-0;
 }
@@ -565,6 +571,9 @@ svg.warning-icon {
 }
 .warning-icon path {
   @apply stroke-white;
+}
+.dashboard-bottom__card-warning path:first-child {
+  @apply stroke-none;
 }
 
 .settings-card h3 {
@@ -753,6 +762,11 @@ svg.warning-icon {
     rgba(47, 47, 47, 0.2) 8.8%,
     rgba(103, 100, 98, 0.055) 88.99%
   );
+  box-shadow: 0px 4.6684px 28.0104px -1.1671px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(23.342px);
+}
+.disabled--card.dashboard-bottom__card-box,
+.disabled--card.dashboard-bottom__card h3 {
   @apply opacity-60;
 }
 
