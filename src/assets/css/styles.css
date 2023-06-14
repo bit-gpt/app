@@ -106,7 +106,7 @@ header img {
   background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
-  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[30px] text-[20px] leading-9;
+  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[30px] text-[25px] leading-9;
 }
 
 .dashboard-bottom__card {
@@ -135,7 +135,7 @@ header img {
 }
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;
-  @apply md:text-lg text-base font-bold leading-[25px] text-brightgray;
+  @apply md:text-lg max-md:text-sm text-base font-bold leading-[25px] text-brightgray;
 }
 .dashboard-bottom__card p {
   @apply text-sm leading-[30px] text-brightgray font-proximaNova-regular;
