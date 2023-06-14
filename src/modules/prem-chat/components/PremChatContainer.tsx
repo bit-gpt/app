@@ -9,7 +9,8 @@ import Header from "./Header";
 import RightSidebar from "./RightSidebar";
 import { Message, PremChatContainerProps } from "../types";
 import clsx from "clsx";
-import { useLockedBody, useMediaQuery, useWindowSize } from "usehooks-ts";
+import { useMediaQuery, useWindowSize } from "usehooks-ts";
+import useBodyLock from "shared/hooks/useBodyLock";
 
 const PremChatContainer = ({
   chatId,
@@ -27,9 +28,9 @@ const PremChatContainer = ({
   const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
     usePremChat(isStreaming, serviceId!, chatId || null);
 
-  const [locked, setLocked] = useLockedBody(false, "root");
+  const { bodyLocked, setBodyLocked } = useBodyLock();
   const hamburgerMenuToggle = () => {
-    setLocked(!locked);
+    setBodyLocked(!bodyLocked);
   };
   useEffect(() => {}, [hamburgerMenuToggle]);
   useEffect(() => {
