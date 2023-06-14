@@ -565,6 +565,9 @@ svg.warning-icon {
 .warning-icon path {
   @apply stroke-white;
 }
+.dashboard-bottom__card-warning path:first-child {
+  @apply stroke-none;
+}
 
 .settings-card h3 {
   background-color: rgba(77, 77, 79, 0.22);
@@ -748,6 +751,11 @@ svg.warning-icon {
     rgba(47, 47, 47, 0.2) 8.8%,
     rgba(103, 100, 98, 0.055) 88.99%
   );
+  box-shadow: 0px 4.6684px 28.0104px -1.1671px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(23.342px);
+}
+.disabled--card.dashboard-bottom__card-box,
+.disabled--card.dashboard-bottom__card h3 {
   @apply opacity-60;
 }
 
