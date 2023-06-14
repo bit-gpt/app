@@ -106,7 +106,7 @@ header img {
   background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
-  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[30px] text-[20px] leading-9;
+  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[22px] lg:text-[30px] text-[20px] leading-9;
 }
 
 .dashboard-bottom__card {
@@ -629,7 +629,7 @@ svg.warning-icon {
 }
 
 .service-detail .card {
-  @apply rounded-md shadow-default max-lg:w-full;
+  @apply rounded-md shadow-default max-lg:w-full max-md:!bg-none max-md:px-0;
   background: linear-gradient(
     131.09deg,
     rgba(47, 47, 47, 0.4) 8.8%,
@@ -645,7 +645,9 @@ svg.warning-icon {
 .services-header button.btn-primary {
   @apply !rounded-[30px] !px-6 !h-[40px] !text-[13px];
 }
-
+.service-detail h3 {
+  @apply max-md:!text-base;
+}
 .right-top-card p {
   @apply text-brightgray text-sm mb-2;
 }
@@ -868,9 +870,19 @@ svg.warning-icon {
   @apply max-md:text-sm;
 }
 
+.services-detail--header .mask-heading {
+  @apply max-sm:basis-full;
+}
+
 @media (max-width: 767px) {
   .services-detail--header .dashboard-bottom__card-box img {
-    @apply max-md:h-8 max-md:w-8 mt-[6px];
+    @apply max-md:h-9 max-md:w-9;
+  }
+  .services-detail--header .dashboard-bottom__card-box {
+    @apply basis-full;
+  }
+  .services-detail--header span {
+    @apply text-[9px] py-[2px];
   }
 }
 
@@ -878,18 +890,15 @@ svg.warning-icon {
   .services-detail-header {
     @apply absolute top-0 right-0;
   }
-  .services-detail--header {
-    width: calc(100% - 211px);
+  .services-detail--header .mask-heading span {
+    @apply text-[12px];
   }
-  .services-detail--header .mask-heading h2 {
-    @apply w-[320px] overflow-hidden text-ellipsis whitespace-nowrap;
+  .services-detail--header .mask-heading {
+    @apply flex items-center gap-4;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .services-detail--header .mask-heading {
-    @apply mb-4;
-  }
   .services-detail--header {
     width: 70%;
   }
