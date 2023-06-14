@@ -9,7 +9,7 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
   const [isOpen, setIsOpen] = useState(false);
   const { bodyLocked, setBodyLocked } = useBodyLock();
 
-  const openWarningModal = (e: any) => {
+  const openWarningModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsOpen(true);
     setBodyLocked(!bodyLocked);
