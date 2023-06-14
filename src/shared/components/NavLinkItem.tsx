@@ -2,8 +2,10 @@ import { NavLink } from "react-router-dom";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import { NavLinkItemProps } from "shared/types";
+import { useMediaQuery } from "usehooks-ts";
 
 const NavLinkItem = ({ to, icon, label, target }: NavLinkItemProps) => {
+  const onlyDesktopShow = useMediaQuery("(min-width: 768px)");
   return (
     <li>
       <NavLink
@@ -17,7 +19,9 @@ const NavLinkItem = ({ to, icon, label, target }: NavLinkItemProps) => {
         {icon}
         <span>{label}</span>
       </NavLink>
-      <Tooltip id="sidebar-tooltip" place="left" className="tooltip" noArrow={true} />
+      {onlyDesktopShow && (
+        <Tooltip id="sidebar-tooltip" place="left" className="tooltip" noArrow={true} />
+      )}
     </li>
   );
 };
