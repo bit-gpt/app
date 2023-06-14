@@ -728,6 +728,12 @@ svg.warning-icon {
 .service-is__not-running svg {
   @apply w-6 h-6;
 }
+p.service-is__not-running {
+  @apply text-isabelline;
+}
+.service-is__not-running .warning-icon path:first-child {
+  @apply stroke-none;
+}
 
 .markdown-body {
   @apply !bg-transparent !text-brightgray !text-sm;
