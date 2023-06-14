@@ -44,14 +44,12 @@ const AdvancedSettings = () => {
 
   return (
     <div className="md:mb-14 mb-8">
-      <h2 className="md:!mt-10 mt-[60px] text-brightgray md:mb-[37px] mb-4 md:text-lg text-sm">
+      <h2 className="md:!mt-10 mt-10 text-brightgray md:mb-[37px] mb-2 md:text-lg text-sm">
         Advanced
       </h2>
       <form onSubmit={onUpdate}>
-        <div className="flex">
-          <label className="text-white mr-2 max-md:mb-4 backend-url md:text-lg text-[10px]">
-            Backend URL
-          </label>
+        <div className="flex max-md:items-center">
+          <label className="text-white mr-2 backend-url md:text-lg text-[10px]">Backend URL</label>
           <div className="flex w-full">
             <div className="text-right w-full">
               <input
