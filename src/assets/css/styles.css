@@ -649,10 +649,10 @@ svg.warning-icon {
   @apply relative;
 }
 .services-header button {
-  @apply !text-sm;
+  @apply !text-sm max-md:py-0 max-md:!text-[10px] max-md:h-6;
 }
 .services-header button.btn-primary {
-  @apply !rounded-[30px] !px-6 !h-[40px] !text-[13px];
+  @apply !rounded-[30px] md:!px-6 md:!h-[40px] max-md:!h-[27px] md:!text-[13px];
 }
 .service-detail h3 {
   @apply max-md:!text-base;
@@ -890,19 +890,19 @@ svg.warning-icon {
 
 @media (max-width: 767px) {
   .services-detail--header .dashboard-bottom__card-box img {
-    @apply max-md:h-9 max-md:w-9;
+    @apply max-md:h-12 max-md:w-12;
   }
   .services-detail--header .dashboard-bottom__card-box {
     @apply basis-full;
   }
   .services-detail--header span {
-    @apply text-[9px] py-[2px];
+    @apply text-[10px] py-0 px-3 h-6 flex items-center;
   }
 }
 
 @media (max-width: 1023px) {
   .services-detail-header {
-    @apply absolute top-0 right-0;
+    @apply absolute top-[10px] right-0;
   }
   .services-detail--header .mask-heading span {
     @apply text-[12px];
