@@ -572,7 +572,7 @@ header img {
   background-position: 10px 0px;
 }
 .polygon-shape svg {
-  @apply w-6 h-6 md:mt-[14px] mt-2;
+  @apply w-6 h-6 md:mt-[14px] mt-2 max-md:h-4 max-md:w-4;
 }
 svg.warning-icon {
   @apply w-8 h-8 max-md:h-6 max-md:w-6;
