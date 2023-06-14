@@ -48,7 +48,7 @@ const AdvancedSettings = () => {
         Advanced
       </h2>
       <form onSubmit={onUpdate}>
-        <div className="flex max-md:items-center">
+        <div className="flex items-center">
           <label className="text-white mr-2 backend-url md:text-lg text-[10px]">Backend URL</label>
           <div className="flex w-full">
             <div className="text-right w-full">
@@ -58,13 +58,6 @@ const AdvancedSettings = () => {
                 value={backendUrl}
                 onChange={onChange}
               />
-              <PrimaryButton
-                className="!px-9 mt-[44px] max-md:text-sm max-md:absolute left-0 right-0 bottom-0"
-                type="submit"
-                disabled={isLoading}
-              >
-                {isLoading ? "Updating..." : "Update"}
-              </PrimaryButton>
             </div>
             <button
               id="reset"
@@ -83,6 +76,15 @@ const AdvancedSettings = () => {
               Reset to Default
             </Tooltip>
           </div>
+        </div>
+        <div className="text-right mt-[44px] mr-[45px]">
+          <PrimaryButton
+            className="!px-9 max-md:text-sm max-md:absolute left-0 right-0 bottom-0"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Updating..." : "Update"}
+          </PrimaryButton>
         </div>
       </form>
     </div>
