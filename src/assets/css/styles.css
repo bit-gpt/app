@@ -591,8 +591,7 @@ svg.warning-icon {
 }
 
 .settings-card h3 {
-  background-color: rgba(77, 77, 79, 0.22);
-  @apply text-brightgray text-lg py-[14px] px-8 rounded-tl-lg rounded-tr-lg;
+  @apply text-brightgray text-lg mb-7;
 }
 .settings-card__border {
   @apply border-b-2 opacity-50;
@@ -606,10 +605,7 @@ svg.warning-icon {
   @apply h-5 bg-lightsalmonpink;
   transform: skew(-20deg) translateX(-10px);
 }
-.settings-card ul {
-  background: rgba(77, 77, 79, 0.2);
-  @apply py-5 px-8 rounded-bl-lg rounded-br-lg;
-}
+
 .settings-card li {
   @apply w-full;
 }
