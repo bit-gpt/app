@@ -559,11 +559,10 @@ header img {
 }
 .polygon-shape {
   background: url("../images/polygon-shape.svg") no-repeat;
-  @apply w-[90px] h-[60px] flex justify-center items-center bg-contain;
-  background-position: 10px 0px;
+  @apply w-[65px] h-[60px] flex justify-center items-center bg-contain;
 }
 .polygon-shape svg {
-  @apply w-6 h-6 mt-[14px];
+  @apply w-6 h-6 mt-2;
 }
 svg.warning-icon {
   @apply w-8 h-8;

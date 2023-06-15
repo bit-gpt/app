@@ -17,7 +17,7 @@ const WarningModal = ({
   return (
     <Modal className="warning-modal" isOpen={isOpen} onRequestClose={onCancel}>
       <div className="warning-modal__content gradient-border w-[550px]">
-        <div className="flex max-sm:flex-wrap items-start gap-5 mt-5 mb-7">
+        <div className="flex max-sm:flex-wrap items-start md:gap-8 gap-6 mt-5 mb-7">
           <div className="md:mb-5 max-sm:-mx-3">
             <div className="polygon-shape">{icon || <WarningModalIcon />}</div>
           </div>
