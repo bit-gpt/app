@@ -176,7 +176,7 @@ header img {
 }
 
 .sidebar-toggle__btn {
-  @apply text-base font-proximaNova-regular dark:text-cultured mt-[-60px] ml-[25px];
+  @apply text-base font-proximaNova-regular dark:text-cultured mt-[-60px] ml-[25px] flex items-center;
 }
 .sidebar-toggle {
   @apply md:w-[70px];
@@ -245,6 +245,16 @@ header img {
 .prem-chat-input input {
   @apply bg-darkcharcoal font-proximaNova-regular text-white text-sm outline-none rounded-[29px] h-[57px] mt-[14px] py-2 pl-[33px] pr-16 w-full;
 }
+
+.prem-chat-input input:-webkit-autofill,
+.prem-chat-input input:-webkit-autofill:hover,
+.prem-chat-input input:-webkit-autofill:active,
+.prem-chat-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px #302f32 inset;
+  -webkit-text-fill-color: white;
+  @apply !bg-transparent;
+}
+
 .prem-chat-input svg {
   @apply bg-americanpink p-2 w-[35px] h-[35px] rounded-full stroke-white;
 }
@@ -252,12 +262,13 @@ header img {
   @apply absolute right-[21px] top-[25px];
 }
 .prem-chat-bottom {
-  @apply md:sticky fixed z-10 mt-auto bottom-0 pb-[33px] left-0 right-0 w-full;
+  width: calc(100% - 259px);
+  @apply fixed z-10 mt-auto bottom-0 pb-[33px] left-auto right-0;
 }
 
 @media (max-width: 767px) {
   .prem-chat-bottom {
-    @apply flex items-end mt-0;
+    @apply flex items-end mt-0 w-full left-0;
   }
   .prem-chat-body {
     @apply pb-[70px] overflow-y-auto;
@@ -877,4 +888,9 @@ svg.warning-icon {
 }
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-sm;
+}
+
+.prem-chat-container .bg-lines::before {
+  @apply max-md:hidden bg-cover;
+  background-position: 0% 100%;
 }

@@ -46,10 +46,10 @@ const PremChatContainer = ({
         >
           <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
-        <div className="flex flex-1">
+        <div className="flex flex-1 prem-chat-container">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div
-              className="main-content h-full z-10 relative max-h-full overflow-hidden scrollbar-none"
+              className="main-content h-full z-10 relative max-h-full overflow-x-hidden overflow-y-auto scrollbar-none"
               ref={chatMessageListRef}
             >
               <Header
