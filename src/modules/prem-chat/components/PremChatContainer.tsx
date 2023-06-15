@@ -63,7 +63,7 @@ const PremChatContainer = ({
                 className="z-10 relative mt-[40px] flex flex-col prem-chat-body scrollbar-none"
                 style={{ height: height - (responsiveMatches ? 200 : 140) }}
               >
-                <div className="md:w-[65%] w-[90%] mx-auto md:mt-8">
+                <div className="md:w-[65%] w-[90%] mx-auto md:mt-8 md:pb-[75px]">
                   {chatMessages.map((message: Message, index: number) => (
                     <div key={index}>
                       {message.role === "user" ? (
