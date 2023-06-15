@@ -714,9 +714,11 @@ svg.warning-icon {
 .prem-chat-sidebar .sidebar li a span {
   @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
 }
-
+.prem-chat-sidebar .sidebar li a {
+  width: calc(100% - 18px);
+}
 .prem-chat-sidebar .sidebar li {
-  @apply pr-9 max-md:px-1;
+  @apply max-md:px-1;
 }
 
 @media (min-width: 768px) {
