@@ -15,6 +15,7 @@ import { SERVICES_KEY } from "shared/hooks/useServices";
 import { useCallback } from "react";
 import useInterfaces from "shared/hooks/useInterfaces";
 import arrow from "assets/images/arrow.svg";
+import UseScrollToTop from "shared/hooks/useScrollToTop";
 
 const ServiceDetail = () => {
   const queryClient = useQueryClient();
@@ -38,8 +39,10 @@ const ServiceDetail = () => {
   const status = getServiceStatus(service);
 
   if (isLoading) return <ServiceLoading />;
+
   return (
     <AppContainer>
+      <UseScrollToTop />
       <button
         className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 xl:-mx-14 lg:-mx-8 md:-mx-6"
         onClick={back}

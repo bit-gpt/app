@@ -2,10 +2,12 @@ import AppContainer from "shared/components/AppContainer";
 import SystemResources from "./SystemResources";
 import GPUResources from "./GPUResources";
 import AdvancedSettings from "./AdvancedSettings";
+import UseScrollToTop from "shared/hooks/useScrollToTop";
 
 const Settings = () => {
   return (
     <AppContainer>
+      <UseScrollToTop />
       <div className="mask-heading md:mb-14 mb-8 md:-mx-6 xl:-mx-10">
         <h2 className="!mt-10">Settings</h2>
       </div>
