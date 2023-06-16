@@ -62,6 +62,11 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
     setIsOpenWarningModal(true);
   };
 
+  const createNewChatClick = () => {
+    setHamburgerMenu(true);
+    navigate(`/prem-chat/${serviceId}`);
+  };
+
   return (
     <>
       <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
@@ -91,7 +96,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={() => navigate(`/prem-chat/${serviceId}`)}>
+          <button onClick={createNewChatClick}>
             <img className="max-md:max-w-[15px]" src={edit} alt="edit" width={18} height={18} />
           </button>
         </div>
