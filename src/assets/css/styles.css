@@ -250,9 +250,10 @@ header img {
 .prem-chat-input input:-webkit-autofill:hover,
 .prem-chat-input input:-webkit-autofill:active,
 .prem-chat-input input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 100px #302f32 inset;
+  -webkit-text-fill-color: #302f32;
   -webkit-text-fill-color: white;
-  @apply !bg-transparent;
+  -webkit-box-shadow: 0 0 0px 1000px #302f32 inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .prem-chat-input svg {

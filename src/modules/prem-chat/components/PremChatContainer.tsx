@@ -46,10 +46,10 @@ const PremChatContainer = ({
         >
           <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
-        <div className="flex flex-1 prem-chat-container">
+        <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div
-              className="main-content h-full z-10 relative max-h-full overflow-x-hidden overflow-y-auto scrollbar-none"
+              className="main-content h-full z-10 relative max-h-full overflow-hidden scrollbar-none"
               ref={chatMessageListRef}
             >
               <Header
@@ -63,7 +63,7 @@ const PremChatContainer = ({
                 className="z-10 relative mt-[40px] flex flex-col prem-chat-body scrollbar-none"
                 style={{ height: height - (responsiveMatches ? 200 : 140) }}
               >
-                <div className="md:w-[65%] w-[90%] mx-auto md:mt-8 md:pb-[75px]">
+                <div className="md:w-[65%] w-[90%] mx-auto md:mt-8">
                   {chatMessages.map((message: Message, index: number) => (
                     <div key={index}>
                       {message.role === "user" ? (
@@ -75,7 +75,7 @@ const PremChatContainer = ({
                   ))}
                 </div>
               </div>
-              <div className="prem-chat-bottom border-transparent bg-gradient-to-b from-transparent via-white to-white dark:via-[#20232B] dark:to-[#20232B]">
+              <div className="prem-chat-bottom border-transparent">
                 <div className="md:w-[55%] w-[85%] mx-auto">
                   {chatMessages.length > 0 && !isLoading && !isError && (
                     <div>
@@ -91,7 +91,7 @@ const PremChatContainer = ({
                         isLoading
                           ? "Fetching response..."
                           : model
-                          ? "Type a message or type to select a prompt"
+                          ? `Type a message or type "/" to select a prompt`
                           : "Please select a model to get started"
                       }
                     />
