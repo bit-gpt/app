@@ -883,7 +883,6 @@ svg.warning-icon {
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-sm;
 }
-
 .services-detail--header .mask-heading {
   @apply max-sm:basis-full;
 }
@@ -895,7 +894,7 @@ svg.warning-icon {
   .services-detail--header .dashboard-bottom__card-box {
     @apply basis-full;
   }
-  .services-detail--header span {
+  .services-detail--header span:not(.mask-heading span) {
     @apply text-[10px] py-0 px-3 h-6 flex items-center;
   }
 }
@@ -908,7 +907,7 @@ svg.warning-icon {
     @apply text-[12px];
   }
   .services-detail--header .mask-heading {
-    @apply flex items-center gap-4;
+    @apply flex items-center gap-2;
   }
 }
 
