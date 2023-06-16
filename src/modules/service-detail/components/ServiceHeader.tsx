@@ -12,7 +12,7 @@ const ServiceHeader = (props: ServiceHeaderProps) => {
         <h2 className="!mt-0 mb-1">{title}</h2>
         <span className="text-brightgray">{subtitle}</span>
       </div>
-      <div className="gap-[14px] flex items-start lg:ml-8">
+      <div className="gap-[14px] mt-[6px] flex items-start ml-8">
         {tags.map((tag) => (
           <TagsOutline key={tag} className="text-sm rounded-md px-4 py-1 capitalize">
             {tag}
