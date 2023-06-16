@@ -76,7 +76,7 @@ const PremChatContainer = ({
                 </div>
               </div>
               <div className="prem-chat-bottom border-transparent">
-                <div className="md:w-[55%] w-[85%] mx-auto">
+                <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto">
                   {chatMessages.length > 0 && !isLoading && !isError && (
                     <div>
                       <RegenerateButton onRgenerateClick={onRegenerate} />

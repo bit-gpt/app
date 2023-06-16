@@ -243,7 +243,7 @@ header img {
 }
 
 .prem-chat-input input {
-  @apply bg-darkcharcoal font-proximaNova-regular text-white text-sm outline-none rounded-[29px] h-[57px] mt-[14px] py-2 pl-[33px] pr-16 w-full;
+  @apply bg-darkcharcoal font-proximaNova-regular text-white md:text-sm text-[13px] outline-none rounded-[29px] h-[57px] mt-[14px] py-2 md:pl-[33px] md:pr-16 pr-12 pl-4 w-full;
 }
 
 .prem-chat-input input:-webkit-autofill,
@@ -260,7 +260,7 @@ header img {
   @apply bg-americanpink p-2 w-[35px] h-[35px] rounded-full stroke-white;
 }
 .prem-chat-input button {
-  @apply absolute right-[21px] top-[25px];
+  @apply absolute md:right-[21px] right-[12px] top-[25px];
 }
 .prem-chat-bottom {
   width: calc(100% - 259px);
