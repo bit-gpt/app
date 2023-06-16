@@ -869,7 +869,7 @@ svg.warning-icon {
   @apply max-md:max-w-[100px] max-md:ml-3;
 }
 .prem-chat-sidebar .sidebar__search {
-  @apply max-md:h-[38px] max-md:mb-[18px];
+  @apply max-md:h-[38px] mb-[18px];
 }
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-[12px];
