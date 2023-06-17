@@ -38,7 +38,7 @@ cd ./prem-app
 docker-compose up -d
 ```
 
-### GPU 
+### GPU (Nvidia)
 ```bash
 git clone https://github.com/premAI-io/prem-app.git
 cd ./prem-app
