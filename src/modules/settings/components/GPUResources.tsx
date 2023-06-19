@@ -4,7 +4,7 @@ import nvidia_logo from "assets/images/nvidia_logo.svg";
 const GPUResources = () => {
   const { data: response } = useGPUStats();
   return (
-    <div className="mt-[68px]">
+    <>
       <h2 className="text-brightgray mb-[37px] text-lg">GPUs</h2>
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
         {response?.data?.gpu_name ? (
@@ -38,7 +38,7 @@ const GPUResources = () => {
           <p className="text-white opacity-70">No GPUs available</p>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
