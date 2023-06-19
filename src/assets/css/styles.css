@@ -606,17 +606,16 @@ svg.warning-icon {
   @apply h-5 bg-lightsalmonpink;
   transform: skew(-20deg) translateX(-10px);
 }
-
 .settings-card li {
   @apply w-full;
 }
 .settings-card li span {
-  @apply text-brightgray font-semibold text-[13px] pb-3 gap-3;
+  @apply text-brightgray font-semibold md:text-[13px] text-[10px] pb-3 gap-3;
 }
 
 .form-control {
   background: rgba(77, 77, 79, 0.22);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   @apply rounded-md py-3 px-5 w-full focus:!ring-0 focus:outline-none;
 }
 .form-control::placeholder,
@@ -901,6 +900,21 @@ p.service-is__not-running {
 }
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-sm;
+}
+
+.backend-url {
+  width: 45%;
+}
+.reset-topltip {
+  @apply !text-brightgray;
+}
+.reset-topltip,
+.reset-topltip__arrow {
+  @apply !bg-[#353539] !rounded;
+}
+
+.reset-topltip__arrow {
+  @apply !w-7 !h-7 z-[-1] !top-[-10px];
 }
 .services-detail--header .mask-heading {
   @apply max-sm:basis-full;
