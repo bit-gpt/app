@@ -73,6 +73,17 @@ export const serviceSearchStyle = {
       },
     },
   }),
+  input: (base: CSSObjectWithLabel) => ({
+    ...base,
+    color: "#9597A3",
+  }),
+  placeholder: (base: CSSObjectWithLabel) => {
+    return {
+      ...base,
+      color: "#9597A3",
+    };
+  },
+
   multiValue: (base: CSSObjectWithLabel) => ({
     ...base,
     backgroundColor: "transparent",

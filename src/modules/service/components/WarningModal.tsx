@@ -17,20 +17,20 @@ const WarningModal = ({
   return (
     <Modal className="warning-modal" isOpen={isOpen} onRequestClose={onCancel}>
       <div className="warning-modal__content gradient-border w-[550px]">
-        <div className="flex max-sm:flex-wrap items-start gap-5 mt-5 mb-7">
+        <div className="flex max-md:flex-col max-md:item-center max-md:text-center md:items-start gap-5 mt-5 mb-7 max-md:flex-1 max-md:justify-center">
           <div className="md:mb-5 max-sm:-mx-3">
-            <div className="polygon-shape">{icon || <WarningModalIcon />}</div>
+            <div className="polygon-shape max-md:mx-auto">{icon || <WarningModalIcon />}</div>
           </div>
           <div>
-            <h2 className="text-lg mb-2">{title}</h2>
-            <p className="!text-base">{description}</p>
+            <h2 className="text-lg max-md:text-xl mb-2 max-md:mb-4">{title}</h2>
+            <p className="!text-base max-md:!text-sm">{description}</p>
           </div>
         </div>
         <div className="hr" />
         <div className="warning-modal__footer">
           <OutlineCircleButton
             onClick={onCancel}
-            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full"
+            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full max-md:order-2"
           >
             {cancelButtonText}
           </OutlineCircleButton>

@@ -2,6 +2,7 @@ import AppContainer from "shared/components/AppContainer";
 import SystemResources from "./SystemResources";
 import GPUResources from "./GPUResources";
 import AdvancedSettings from "./AdvancedSettings";
+import UseScrollToTop from "shared/hooks/useScrollToTop";
 
 const Settings = () => {
   return (
