@@ -106,7 +106,7 @@ header img {
   background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
-  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[30px] text-[25px] leading-9;
+  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[22px] lg:text-[30px] text-[20px] leading-9;
 }
 
 .dashboard-bottom__card {
@@ -133,6 +133,7 @@ header img {
 .dashboard-bottom__card-box img {
   @apply rounded-[11px] h-[54px] w-[54px] flex items-center justify-center;
 }
+
 .dashboard-bottom__card h3 {
   letter-spacing: 0.035em;
   @apply md:text-lg max-md:text-sm text-base font-bold leading-[25px] text-brightgray;
@@ -652,23 +653,27 @@ svg.warning-icon {
 }
 
 .service-detail .card {
-  @apply rounded-md shadow-default max-lg:w-full;
+  @apply rounded-md shadow-default max-lg:w-full max-md:!bg-none max-md:px-0;
   background: linear-gradient(
     131.09deg,
     rgba(47, 47, 47, 0.4) 8.8%,
     rgba(103, 100, 98, 0.11) 88.99%
   );
 }
-
+.services-header {
+  @apply relative;
+}
 .services-header button {
-  @apply !text-sm;
+  @apply !text-sm max-md:py-0 max-md:!text-[10px] max-md:h-6;
 }
 .services-header button.btn-primary {
-  @apply !rounded-[30px] !px-6 !h-[40px] !text-[13px];
+  @apply !rounded-[30px] md:!px-6 md:!h-[40px] max-md:!h-[27px] md:!text-[13px];
 }
-
+.service-detail h3 {
+  @apply max-md:!text-base;
+}
 .right-top-card p {
-  @apply text-brightgray text-sm mb-2;
+  @apply text-brightgray text-sm mb-2 max-lg:min-w-[80px];
 }
 .right-top-card .progress-container {
   @apply transform-none;
@@ -898,4 +903,37 @@ p.service-is__not-running {
 }
 .prem-chat-sidebar .sidebar li a {
   @apply max-md:text-sm;
+}
+.services-detail--header .mask-heading {
+  @apply max-sm:basis-full;
+}
+
+@media (max-width: 767px) {
+  .services-detail--header .dashboard-bottom__card-box img {
+    @apply max-md:h-12 max-md:w-12;
+  }
+  .services-detail--header .dashboard-bottom__card-box {
+    @apply basis-full;
+  }
+  .services-detail--header span:not(.mask-heading span) {
+    @apply text-[10px] py-0 px-3 h-6 flex items-center;
+  }
+}
+
+@media (max-width: 1023px) {
+  .services-detail-header {
+    @apply absolute top-[10px] right-0;
+  }
+  .services-detail--header .mask-heading span {
+    @apply text-[12px];
+  }
+  .services-detail--header .mask-heading {
+    @apply flex items-center gap-2;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .services-detail--header {
+    width: 70%;
+  }
 }
