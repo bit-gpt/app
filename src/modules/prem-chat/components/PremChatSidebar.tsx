@@ -83,7 +83,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             alt="search"
             width={18}
             height={18}
-            className="absolute left-[20px] md:top-[15px] top-[11px] max-md:max-w-[15px]"
+            className="absolute left-[20px] md:top-[15px] top-[12px] max-md:max-w-[13px]"
           />
           <input
             className="w-full rounded-md mr-[6px] pr-5 pl-[44px] py-2"
@@ -102,7 +102,10 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
               return (
-                <li key={item.id} className={clsx({ "bg-darkjunglegreen": chatId === item.id })}>
+                <li
+                  key={item.id}
+                  className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": chatId === item.id })}
+                >
                   <Link to={`/prem-chat/${serviceId}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
                     <span>{item.title}</span>
@@ -150,8 +153,8 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             })}
           </ul>
         </div>
-        <ul className="absolute md:bottom-[33px] bottom-[22px] md:left-0 left-[22px] right-0">
-          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
+        <ul className="absolute md:bottom-[33px] bottom-[12px] md:left-0 left-[22px] right-0">
+          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] max-md:hidden"></div>
           {filteredHistory.length > 0 && (
             <li>
               <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>

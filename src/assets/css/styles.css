@@ -169,11 +169,11 @@ header img {
   @apply w-full flex dark:text-cultured text-base font-medium;
 }
 .sidebar__search input {
-  @apply font-proximaNova-regular text-manatee text-base outline-none h-[50px] max-md:h-[40px];
+  @apply font-proximaNova-regular text-manatee md:text-base text-[12px] outline-none h-[50px] max-md:h-[38px];
   background-color: rgba(77, 77, 79, 0.22);
 }
 .sidebar__search button {
-  @apply bg-darkliver w-[65px] h-[50px] max-md:h-[40px] rounded-md flex items-center justify-center;
+  @apply bg-darkliver w-[65px] h-[50px] max-md:h-[38px] max-md:w-[45px] rounded-md flex items-center justify-center;
 }
 
 .sidebar-toggle__btn {
@@ -606,17 +606,16 @@ svg.warning-icon {
   @apply h-5 bg-lightsalmonpink;
   transform: skew(-20deg) translateX(-10px);
 }
-
 .settings-card li {
   @apply w-full;
 }
 .settings-card li span {
-  @apply text-brightgray font-semibold text-[13px] pb-3 gap-3;
+  @apply text-brightgray font-semibold md:text-[13px] text-[10px] pb-3 gap-3;
 }
 
 .form-control {
   background: rgba(77, 77, 79, 0.22);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
   @apply rounded-md py-3 px-5 w-full focus:!ring-0 focus:outline-none;
 }
 .form-control::placeholder,
@@ -875,21 +874,17 @@ p.service-is__not-running {
 }
 
 .prem-chat-sidebar .sidebar {
-  @apply max-md:fixed max-md:z-[11] max-md:w-full max-md:px-6 max-md:overflow-hidden;
+  @apply max-md:fixed max-md:z-[11] max-md:w-full max-md:p-5 max-md:overflow-hidden;
 }
 .transform-translateX-0 {
   transform: translateX(0px);
 }
 @media (max-width: 767px) {
   .prem-chat-sidebar .sidebar {
-    @apply top-0 bottom-0 overflow-hidden;
-    background: linear-gradient(
-      131.09deg,
-      rgba(29, 29, 27, 0.49) 8.8%,
-      rgba(29, 29, 27, 0.76) 88.99%
-    );
-    box-shadow: 0px 4.49864px 26.9918px -1.12466px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(22.4932px);
+    @apply top-0 bottom-0 overflow-hidden bg-darkgunmetal;
+  }
+  .prem-chat-sidebar .sidebar li.active {
+    @apply bg-[#1A1E23];
   }
 }
 
@@ -897,10 +892,25 @@ p.service-is__not-running {
   @apply max-md:max-w-[100px] max-md:ml-3;
 }
 .prem-chat-sidebar .sidebar__search {
-  @apply max-md:h-[38px];
+  @apply max-md:h-[38px] mb-[18px];
 }
 .prem-chat-sidebar .sidebar li a {
-  @apply max-md:text-sm;
+  @apply max-md:text-[12px];
+}
+
+.backend-url {
+  width: 45%;
+}
+.reset-topltip {
+  @apply !text-brightgray;
+}
+.reset-topltip,
+.reset-topltip__arrow {
+  @apply !bg-[#353539] !rounded;
+}
+
+.reset-topltip__arrow {
+  @apply !w-7 !h-7 z-[-1] !top-[-10px];
 }
 .services-detail--header .mask-heading {
   @apply max-sm:basis-full;
