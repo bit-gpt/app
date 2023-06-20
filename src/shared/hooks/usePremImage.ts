@@ -23,11 +23,7 @@ const usePremImage = (historyId: string | undefined): PremImageResponse => {
     shallow
   );
 
-  const {
-    isLoading,
-    isError,
-    mutate,
-  } = useMutation(
+  const { isLoading, isError, mutate } = useMutation(
     () =>
       generateImage({
         prompt,
