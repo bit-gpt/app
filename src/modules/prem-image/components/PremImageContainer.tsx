@@ -5,15 +5,16 @@ import clsx from "clsx";
 import PremImageRightSidebar from "./PremImageRightSidebar";
 import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
+import { useParams } from "react-router-dom";
 
 const PremImageContainer = () => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
+  const { historyId } = useParams();
 
-  const { isLoading, onSubmit, prompt, setPrompt, images, n } = usePremImage();
+  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n } = usePremImage(historyId);
 
   const generateImages = () => {
-    console.log("generate images");
     if (!prompt) return;
     onSubmit();
   };
@@ -53,10 +54,10 @@ const PremImageContainer = () => {
                 </div>
               </div>
               <div className="flex flex-wrap">
-                {images.map((image, index) => {
+                {currentHistory?.images.map((image, index) => {
                   return (
                     <div key={index} className="m-10">
-                      <img src={image.url} />
+                      <img src={image} />
                     </div>
                   );
                 })}

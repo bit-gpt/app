@@ -1,3 +1,5 @@
+import { PremImageHistory } from "shared/types";
+
 export type ImageGeneration = {
   prompt: string;
   n?: number;
@@ -15,6 +17,6 @@ export type PremImageResponse = {
   setPrompt: (question: string) => void;
   isLoading: boolean;
   isError: boolean;
-  images: UrlResponse[];
+  currentHistory: PremImageHistory | undefined;
   n: number;
 };
