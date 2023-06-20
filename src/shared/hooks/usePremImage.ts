@@ -6,16 +6,19 @@ import usePremImageStore from "shared/store/prem-image";
 import generateImage from "modules/prem-image/api/generateImage";
 import { PremImageResponse, UrlResponse } from "modules/prem-image/types";
 import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router-dom";
 
-const usePremImage = (): PremImageResponse => {
+const usePremImage = (historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
+  const navigate = useNavigate();
 
-  const { n, size, response_format, addHistory } = usePremImageStore(
+  const { n, size, response_format, addHistory, history } = usePremImageStore(
     (state) => ({
       n: state.n,
       size: state.size,
       response_format: state.response_format,
       addHistory: state.addHistory,
+      history: state.history,
     }),
     shallow
   );
@@ -24,7 +27,6 @@ const usePremImage = (): PremImageResponse => {
     isLoading,
     isError,
     mutate,
-    data: response,
   } = useMutation(
     () =>
       generateImage({
@@ -35,12 +37,14 @@ const usePremImage = (): PremImageResponse => {
       }),
     {
       onSuccess: (response) => {
+        const id = uuid();
         addHistory({
-          id: uuid(),
+          id,
           prompt,
           images: (response.data.data || []).map((image: UrlResponse) => image.url),
           timestamp: new Date().toISOString(),
         });
+        navigate(`/prem-image/${id}`);
       },
       onError: () => {
         toast.error("Something went wrong while generating the image");
@@ -48,11 +52,11 @@ const usePremImage = (): PremImageResponse => {
     }
   );
 
-  const images = response?.data?.data || [];
+  const currentHistory = history.find((_history) => _history.id === historyId);
 
   return {
-    images,
-    prompt,
+    currentHistory,
+    prompt: prompt || currentHistory?.prompt || "",
     setPrompt,
     isLoading,
     isError,

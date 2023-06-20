@@ -1,19 +1,17 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Logo from "assets/images/logo.svg";
 import leftArrow from "assets/images/arrow.svg";
 import cross from "assets/images/cross.svg";
-import WarningModal from "modules/service/components/WarningModal";
-import WarningIcon from "shared/components/WarningIcon";
 import { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 import usePremImageStore from "shared/store/prem-image";
 import { reverse } from "lodash";
 import clsx from "clsx";
+import { format, parseISO } from "date-fns";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const [openWarningModal, setIsOpenWarningModal] = useState(false);
+  const { historyId } = useParams();
   const { history } = usePremImageStore(
     (state) => ({
       history: state.history,
@@ -25,11 +23,6 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
     navigate("/");
   };
 
-  const closeModal = () => {
-    setIsOpenWarningModal(false);
-  };
-
-  const chatId = null;
   return (
     <>
       <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
@@ -51,23 +44,20 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
               return (
                 <li
                   key={item.id}
-                  className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": chatId === item.id })}
+                  className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": historyId === item.id })}
                 >
-                  <span className="text-white">{item.timestamp}</span>
+                  <Link to={`/prem-image/${item.id}`}>
+                    <span className="text-white">
+                      {format(parseISO(item.timestamp), "LLLL dd, hh:mm a")}
+                    </span>
+                  </Link>
+                  <span className="text-white">{item.images.length} images</span>
                 </li>
               );
             })}
           </ul>
         </div>
       </div>
-      <WarningModal
-        description="Import / Export is not available yet"
-        title="Coming Soon"
-        isOpen={openWarningModal}
-        onCancel={closeModal}
-        onOk={closeModal}
-        icon={<WarningIcon />}
-      />
     </>
   );
 };

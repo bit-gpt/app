@@ -7,15 +7,16 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
 import DownloadIcon from "shared/components/DownloadIcon";
 import DeleteIconNew from "shared/components/DeleteIconNew";
+import { useParams } from "react-router-dom";
 
 const PremImageContainer = () => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
+  const { historyId } = useParams();
 
-  const { isLoading, onSubmit, prompt, setPrompt, images, n } = usePremImage();
+  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n } = usePremImage(historyId);
 
   const generateImages = () => {
-    console.log("generate images");
     if (!prompt) return;
     onSubmit();
   };
@@ -83,7 +84,7 @@ const PremImageContainer = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-[13px]">
-                  {images.map((image, index) => {
+                  {currentHistory.map((image, index) => {
                     return (
                       <div key={index}>
                         <img src={image.url} className="w-full" />

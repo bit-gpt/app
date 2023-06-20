@@ -17,7 +17,7 @@ const AppRouter = () => {
           <Route path="/prem-chat/:serviceId/:chatId?" element={<PremChat />} />
           <Route path="/services/:serviceId/detail" element={<ServiceDetail />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/prem-image" element={<PremImage />} />
+          <Route path="/prem-image/:historyId?" element={<PremImage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
