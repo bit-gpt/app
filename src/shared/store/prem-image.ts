@@ -13,7 +13,7 @@ const usePremImageStore = create<PremImageStore>()(
       response_format: "url",
       setResponseFormat: (response_format) => set(() => ({ response_format })),
       addHistory: (newHistory: PremImageHistory) =>
-      set((state) => ({ history: [...state.history, newHistory] })),
+        set((state) => ({ history: [...state.history, newHistory] })),
     }),
     {
       name: "prem-michelangelo",

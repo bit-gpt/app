@@ -1,10 +1,7 @@
 import PremImageContainer from "./PremImageContainer";
 
 const PremImage = () => {
-  return (
-    <PremImageContainer
-  />
-  );
+  return <PremImageContainer />;
 };
 
 export default PremImage;

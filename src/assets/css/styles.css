@@ -705,14 +705,17 @@ svg.warning-icon {
 .documentation-markdown {
   @apply px-4;
 }
-.documentation-modal::-webkit-scrollbar {
+.documentation-modal::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
   @apply w-[3px];
 }
-.documentation-modal::-webkit-scrollbar-track {
+.documentation-modal::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
   @apply rounded-md;
   background-color: rgba(237, 237, 237, 0.1);
 }
-.documentation-modal::-webkit-scrollbar-thumb {
+.documentation-modal::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb {
   @apply rounded-md;
   background: linear-gradient(90deg, #f58e8e 0%, #f9d4a4 99.36%);
 }
@@ -944,4 +947,53 @@ p.service-is__not-running {
   .services-detail--header {
     width: 70%;
   }
+}
+
+.prem-img-services {
+  @apply md:pb-16 pb-10;
+}
+
+.prem-img-services textarea {
+  @apply bg-darkcharcoal h-[134px] font-proximaNova-regular focus:outline-none;
+  border-radius: 0px 4.34204px 4.34204px 4.34204px;
+}
+
+.prem-img-services__container {
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.4) 8.8%,
+    rgba(103, 100, 98, 0.11) 88.99%
+  );
+  backdrop-filter: blur(15.3228px);
+  @apply md:px-[50px] px-[25px];
+}
+.prem-img-services__container img {
+  @apply mx-auto w-full rounded;
+  border: 1.15px solid;
+  border-image-source: linear-gradient(
+    131.93deg,
+    rgba(245, 142, 142, 0.6) 11.72%,
+    rgba(246, 162, 148, 0.23) 38.41%,
+    rgba(248, 190, 157, 0.23) 66.36%,
+    rgba(249, 212, 164, 0.6) 91.8%
+  );
+  background: linear-gradient(
+    131.93deg,
+    rgba(245, 142, 142, 0.6) 11.72%,
+    rgba(246, 162, 148, 0.23) 38.41%,
+    rgba(248, 190, 157, 0.23) 66.36%,
+    rgba(249, 212, 164, 0.6) 91.8%
+  );
+  box-shadow: 0px 3.06457px 18.3874px -0.766141px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15.3228px);
+}
+
+.prem-img-services__container select {
+  @apply text-white py-2 px-3 focus:outline-none rounded;
+  border: 1px solid rgba(245, 245, 245, 0.21);
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.4) 8.8%,
+    rgba(103, 100, 98, 0.11) 88.99%
+  );
 }

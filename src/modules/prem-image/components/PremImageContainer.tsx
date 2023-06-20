@@ -5,6 +5,8 @@ import clsx from "clsx";
 import PremImageRightSidebar from "./PremImageRightSidebar";
 import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
+import DownloadIcon from "shared/components/DownloadIcon";
+import DeleteIconNew from "shared/components/DeleteIconNew";
 
 const PremImageContainer = () => {
   const [rightSidebar, setRightSidebar] = useState(false);
@@ -28,7 +30,7 @@ const PremImageContainer = () => {
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
-            <div className="main-content h-full z-10 relative max-h-full overflow-hidden ">
+            <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services">
               <Header
                 hamburgerMenuOpen={hamburgerMenuOpen}
                 setHamburgerMenu={setHamburgerMenu}
@@ -36,15 +38,20 @@ const PremImageContainer = () => {
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <div className="m-10 flex flex-col ">
-                <textarea
-                  className="p-2 rounded"
-                  onChange={(e) => setPrompt(e.target.value)}
-                  value={prompt}
-                ></textarea>
-                <div className="mt-3">
+              <div className="md:m-[50px] m-[25px] grid md:grid-cols-2 md:gap-10 gap-4">
+                <div className="flex flex-col">
+                  <span className="bg-darkcharcoal py-2 px-[14px] text-spanishgray font-proximaNova-regular w-[129px] rounded-tl rounded-tr">
+                    Prompt
+                  </span>
+                  <textarea
+                    className="py-2 px-4 text-ghostwhite rounded custom-scroll"
+                    onChange={(e) => setPrompt(e.target.value)}
+                    value={prompt}
+                  ></textarea>
+                </div>
+                <div className="mt-auto">
                   <PrimaryButton
-                    className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
+                    className="lg:!px-12 !px-6 !py-2 !text-sm"
                     onClick={generateImages}
                     disabled={isLoading || !prompt}
                   >
@@ -52,14 +59,38 @@ const PremImageContainer = () => {
                   </PrimaryButton>
                 </div>
               </div>
-              <div className="flex flex-wrap">
-                {images.map((image, index) => {
-                  return (
-                    <div key={index} className="m-10">
-                      <img src={image.url} />
-                    </div>
-                  );
-                })}
+              <div className="prem-img-services__container">
+                <div className="py-[30px] flex">
+                  <PrimaryButton
+                    className="!px-12 !py-2 !text-sm"
+                    onClick={generateImages}
+                    disabled={isLoading || !prompt}
+                  >
+                    {isLoading ? `Generating ${n} Images` : `Generate Image`}
+                  </PrimaryButton>
+                  <div className="ml-auto flex gap-6">
+                    <button>
+                      <DownloadIcon />
+                    </button>
+                    <button>
+                      <DeleteIconNew />
+                    </button>
+                    <select>
+                      <option>Matrix View</option>
+                      <option>Matrix</option>
+                      <option>Matrix View</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-[13px]">
+                  {images.map((image, index) => {
+                    return (
+                      <div key={index}>
+                        <img src={image.url} className="w-full" />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
