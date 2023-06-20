@@ -84,10 +84,10 @@ const PremImageContainer = () => {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-[13px]">
-                  {currentHistory.map((image, index) => {
+                  {currentHistory?.images.map((image, index) => {
                     return (
                       <div key={index}>
-                        <img src={image.url} className="w-full" />
+                        <img src={image} className="w-full" />
                       </div>
                     );
                   })}
