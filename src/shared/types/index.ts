@@ -79,3 +79,39 @@ export type SettingStore = {
   backendUrl: string;
   setBackendUrl: (backendUrl: string) => void;
 };
+
+export type HeaderProps = {
+  setRightSidebar: (value: boolean) => void;
+  rightSidebar: boolean;
+  hamburgerMenuOpen: boolean;
+  setHamburgerMenu: (value: boolean) => void;
+  title: string;
+};
+
+export type HamburgerMenuProps = {
+  setHamburgerMenu: (value: boolean) => void;
+};
+
+export type RightSidebarProps = {
+  setRightSidebar: (value: boolean) => void;
+};
+
+export type PremImageSize = "256x256" | "512x512" | "1024x1024";
+
+export type PremImageStore = {
+  history: PremImageHistory[];
+  n: number;
+  setN: (n: number) => void;
+  size: PremImageSize;
+  setSize: (size: PremImageSize) => void;
+  response_format: string;
+  setResponseFormat: (response_format: string) => void;
+  addHistory: (newHistory: PremImageHistory) => void;
+};
+
+export type PremImageHistory = {
+  id: string;
+  prompt: string;
+  images: string[];
+  timestamp: string;
+};
