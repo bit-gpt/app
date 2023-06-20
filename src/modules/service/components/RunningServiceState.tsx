@@ -6,6 +6,7 @@ import stopService from "../api/stopService";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 import useStopService from "shared/hooks/useStopService";
+import useBodyLock from "shared/hooks/useBodyLock";
 
 const RunningServiceState = ({
   serviceId,
@@ -14,6 +15,7 @@ const RunningServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const { mutate, isLoading } = useStopService();
+  const { bodyLocked, setBodyLocked } = useBodyLock();
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const RunningServiceState = ({
 
   const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setBodyLocked(true);
     onOpenClick && onOpenClick();
   };
 

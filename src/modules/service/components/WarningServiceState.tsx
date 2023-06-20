@@ -3,13 +3,22 @@ import WarningIcon from "shared/components/WarningIcon";
 import WarningModal from "./WarningModal";
 import { ServiceStatus, WarningServiceStateProps } from "../types";
 import WarningShapeIcon from "shared/components/WarningShapeIcon";
+import useBodyLock from "shared/hooks/useBodyLock";
 
 const WarningServiceState = ({ status, memoryRequirements }: WarningServiceStateProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { bodyLocked, setBodyLocked } = useBodyLock();
+
+  const openWarningModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsOpen(true);
+    setBodyLocked(!bodyLocked);
+  };
 
   const closeWarningModal = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsOpen(false);
+    setBodyLocked(false);
   }, []);
 
   const getServiceWarningDescription = (status: ServiceStatus) => {
@@ -39,12 +48,7 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
 
   return (
     <>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setIsOpen(true);
-        }}
-      >
+      <button onClick={(e) => openWarningModal(e)}>
         <WarningIcon />
       </button>
       {isOpen && (
