@@ -5,7 +5,7 @@ import cross from "assets/images/cross.svg";
 import { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 import usePremImageStore from "shared/store/prem-image";
-import { reverse } from "lodash";
+import { orderBy } from "lodash";
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
@@ -41,7 +41,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
         </div>
         <div className="overflow-y-auto prem-image-sidebar custom-scroll overflow-x-hidden flex flex-col">
           <ul className="md:flex-grow scrollbar-none w-full">
-            {reverse(history).map((item) => {
+            {orderBy(history, "timestamp", "desc").map((item) => {
               return (
                 <li
                   key={item.id}
