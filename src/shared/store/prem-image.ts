@@ -14,6 +14,10 @@ const usePremImageStore = create<PremImageStore>()(
       setResponseFormat: (response_format) => set(() => ({ response_format })),
       addHistory: (newHistory: PremImageHistory) =>
         set((state) => ({ history: [...state.history, newHistory] })),
+      deleteHistory: (id: string) =>
+        set((state) => ({
+          history: state.history.filter((_history) => _history.id !== id),
+        })),
     }),
     {
       name: "prem-michelangelo",

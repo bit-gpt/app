@@ -7,18 +7,25 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
 import DownloadIcon from "shared/components/DownloadIcon";
 import DeleteIconNew from "shared/components/DeleteIconNew";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PremImageContainer = () => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const { historyId } = useParams();
+  const navigate = useNavigate();
 
-  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n } = usePremImage(historyId);
+  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n, deleteHistory } =
+    usePremImage(historyId);
 
   const generateImages = () => {
     if (!prompt) return;
     onSubmit();
+  };
+
+  const onDeleteClick = () => {
+    deleteHistory(historyId as string);
+    navigate("/prem-image")
   };
 
   return (
@@ -61,17 +68,9 @@ const PremImageContainer = () => {
                     {isLoading ? `Generating ${n} Images` : `Generate Image`}
                   </PrimaryButton>
                   <div className="ml-auto flex gap-4">
-                    <button className="px-2">
-                      <DownloadIcon />
-                    </button>
-                    <button className="px-2">
+                    <button className="px-2" onClick={onDeleteClick}>
                       <DeleteIconNew />
                     </button>
-                    <select className="custom-select">
-                      <option>Matrix View</option>
-                      <option>Matrix</option>
-                      <option>Matrix View</option>
-                    </select>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-[13px]">

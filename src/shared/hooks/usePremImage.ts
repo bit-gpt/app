@@ -12,13 +12,14 @@ const usePremImage = (historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
   const navigate = useNavigate();
 
-  const { n, size, response_format, addHistory, history } = usePremImageStore(
+  const { n, size, response_format, addHistory, history, deleteHistory } = usePremImageStore(
     (state) => ({
       n: state.n,
       size: state.size,
       response_format: state.response_format,
       addHistory: state.addHistory,
       history: state.history,
+      deleteHistory: state.deleteHistory
     }),
     shallow
   );
@@ -58,6 +59,7 @@ const usePremImage = (historyId: string | undefined): PremImageResponse => {
     isError,
     onSubmit: mutate,
     n,
+    deleteHistory
   };
 };
 

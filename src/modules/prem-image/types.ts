@@ -19,4 +19,5 @@ export type PremImageResponse = {
   isError: boolean;
   currentHistory: PremImageHistory | undefined;
   n: number;
+  deleteHistory: (id: string) => void;
 };
