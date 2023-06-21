@@ -36,6 +36,9 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
   }, [service]);
 
   const docUrl = useMemo(() => {
+    if (!service.runningPort) {
+      return "";
+    }
     const url = new URL(backendUrlFromStore);
     url.port = service.runningPort.toString();
     url.pathname = "docs";
@@ -48,9 +51,13 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       <div className="right-general-card">
         <span className="opacity-70">Docs</span>
         <span>
-          <a href={docUrl} target="_blank" className="text-blue-400 hover:underline">
-            {docUrl}
-          </a>
+          {!!docUrl ? (
+            <a href={docUrl} target="_blank" className="text-blue-400 hover:underline">
+              {docUrl}
+            </a>
+          ) : (
+            "-"
+          )}
         </span>
       </div>
       {generalInfo.map((info) => (
