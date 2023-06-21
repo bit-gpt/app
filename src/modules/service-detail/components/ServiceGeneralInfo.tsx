@@ -2,6 +2,7 @@ import { startCase } from "lodash";
 import { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 import { useMemo } from "react";
 import { formatInfo } from "shared/helpers/utils";
+import useSettingStore from "shared/store/setting";
 
 const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
   const skippableFields = [
@@ -13,6 +14,8 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     "interfaces",
     "modelInfo",
   ];
+
+  const backendUrlFromStore = useSettingStore((state) => state.backendUrl);
 
   const generalInfo = useMemo(() => {
     return Object.entries(service)
@@ -32,9 +35,24 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       }));
   }, [service]);
 
+  const docUrl = useMemo(() => {
+    const url = new URL(backendUrlFromStore);
+    url.port = service.runningPort.toString();
+    url.pathname = "docs";
+    return url.toString();
+  }, [backendUrlFromStore, service]);
+
   return (
     <div className="card px-[22px] py-8 mt-4">
       <h3 className="text-brightgray font-bold text-xl mb-6">General</h3>
+      <div className="right-general-card">
+        <span className="opacity-70">Docs</span>
+        <span>
+          <a href={docUrl} target="_blank">
+            {docUrl}
+          </a>
+        </span>
+      </div>
       {generalInfo.map((info) => (
         <div className="right-general-card" key={info.key}>
           <span className="opacity-70">{info.key}</span>
