@@ -23,6 +23,8 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
 
   const getServiceWarningDescription = (status: ServiceStatus) => {
     switch (status) {
+      case "coming_soon":
+        return "Service will be available soon";
       case "not_supported":
         return "This service is not supported on your device";
       case "not_enough_memory":
@@ -46,6 +48,8 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
     }
   };
 
+  const title = status === "coming_soon" ? "Coming soon" : "Warning";
+
   return (
     <>
       <button onClick={(e) => openWarningModal(e)}>
@@ -58,6 +62,7 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
           onOk={closeWarningModal}
           icon={getServiceWarningIcon(status)}
           isOpen={isOpen}
+          title={title}
         />
       )}
     </>

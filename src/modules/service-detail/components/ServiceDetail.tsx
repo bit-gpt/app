@@ -56,6 +56,7 @@ const ServiceDetail = () => {
             tags={service.interfaces}
             icon={service.icon}
             subtitle={service.id}
+            isInBeta={service.beta}
           />
         </div>
         <div className="services-detail-header">
