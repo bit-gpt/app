@@ -73,6 +73,17 @@ export const serviceSearchStyle = {
       },
     },
   }),
+  input: (base: CSSObjectWithLabel) => ({
+    ...base,
+    color: "#9597A3",
+  }),
+  placeholder: (base: CSSObjectWithLabel) => {
+    return {
+      ...base,
+      color: "#9597A3",
+    };
+  },
+
   multiValue: (base: CSSObjectWithLabel) => ({
     ...base,
     backgroundColor: "transparent",
@@ -147,4 +158,4 @@ export const formatInfo = (value: ServiceInfoValue) => {
 
 export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
 
-export const SYSTEM_MEMORY_LIMIT = 16;
+export const SYSTEM_MEMORY_LIMIT = 8;

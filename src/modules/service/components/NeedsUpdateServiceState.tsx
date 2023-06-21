@@ -37,7 +37,7 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
         <RefreshIcon />
       </button>
       <Tooltip anchorSelect=".refresh-icon" place="bottom" className="topltip">
-        The app is outdated. Download the latest version.
+        it will download the latest version, stop the service and run it again.
       </Tooltip>
     </>
   );
