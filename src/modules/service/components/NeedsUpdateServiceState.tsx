@@ -37,7 +37,8 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
         <RefreshIcon />
       </button>
       <Tooltip anchorSelect=".refresh-icon" place="bottom" className="topltip">
-        it will download the latest version, stop the service and run it again.
+        There is a new version available for this service. Updating will dowload the new version and
+        restart your service, causing a brief downtime.
       </Tooltip>
     </>
   );
