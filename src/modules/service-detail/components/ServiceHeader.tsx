@@ -10,10 +10,10 @@ const ServiceHeader = (props: ServiceHeaderProps) => {
         <img src={icon} alt={title} />
       </div>
       <div className="mask-heading lg:ml-6">
-        <h2 className="!mt-0 mb-1">
-          {title}
-          {isInBeta && <Beta />}
-        </h2>
+        <div className="flex items-start">
+          <h2 className="!mt-0 mb-1">{title}</h2>
+          {isInBeta && <Beta className="md:top-2 top-3" />}
+        </div>
         <span className="text-brightgray">{subtitle}</span>
       </div>
       <div className="gap-[14px] mt-[6px] flex items-start ml-8">

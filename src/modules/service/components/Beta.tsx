@@ -1,5 +1,7 @@
-const Beta = () => {
-  return <sup className="text-xs text-gray-200 ml-2">BETA</sup>;
+import clsx from "clsx";
+
+const Beta = ({ className }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+  return <sup className={clsx("text-[9px] text-white ml-2", className)}>BETA</sup>;
 };
 
 export default Beta;

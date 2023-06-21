@@ -44,7 +44,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
       </div>
       <h3>
         {title}
-        {service.beta && <Beta />}
+        {service.beta && <Beta className="md:-top-2 top-[-5px]" />}
       </h3>
     </Link>
   );
