@@ -8,6 +8,7 @@ import usePremImageStore from "shared/store/prem-image";
 import { reverse } from "lodash";
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
+import LeftArrowIcon from "shared/components/LeftArrowIcon";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   return (
     <>
-      <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
+      <div className="md:pt-7 !bg-darkgunmetal pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
         <div className="flex max-md:flex-wrap md:gap-4">
           <button className="mx-2" onClick={onCloseClick}>
             <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
@@ -38,7 +39,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
-        <div className="overflow-y-auto custom-scroll overflow-x-hidden flex flex-col">
+        <div className="overflow-y-auto prem-image-sidebar custom-scroll overflow-x-hidden flex flex-col">
           <ul className="md:flex-grow scrollbar-none w-full">
             {reverse(history).map((item) => {
               return (
@@ -50,12 +51,23 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                     <span className="text-white">
                       {format(parseISO(item.timestamp), "LLLL dd, hh:mm a")}
                     </span>
+                    <div className="flex flex-wrap gap-[2px] mt-[11px]">
+                      {item.images?.map((image, index) => {
+                        return <img key={index} src={image} className="w-8 h-8" />;
+                      })}
+                    </div>
                   </Link>
-                  <span className="text-white">{item.images.length} images</span>
+                  <span className="text-[#58595E]">{item.images.length}&nbsp;images</span>
                 </li>
               );
             })}
           </ul>
+        </div>
+        <div className="sidebar-toggle__btn !mt-5 !-mx-2 px-5 border-t pt-4 pb-2 close-sidebar">
+          <button onClick={onCloseClick} className="bg-Onyx px-[8.4px] mr-3 py-[10px] rounded-md">
+            <LeftArrowIcon />
+          </button>
+          <span>Close Sidebar</span>
         </div>
       </div>
     </>

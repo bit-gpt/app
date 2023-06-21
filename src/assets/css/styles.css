@@ -988,12 +988,41 @@ p.service-is__not-running {
   backdrop-filter: blur(15.3228px);
 }
 
-.prem-img-services__container select {
-  @apply text-white py-2 px-3 focus:outline-none rounded;
-  border: 1px solid rgba(245, 245, 245, 0.21);
-  background: linear-gradient(
-    131.09deg,
-    rgba(47, 47, 47, 0.4) 8.8%,
-    rgba(103, 100, 98, 0.11) 88.99%
-  );
+.custom-select {
+  background: url("../images/down-arrow.svg") no-repeat;
+  @apply text-white py-2 pl-3 pr-8 text-sm focus:outline-none rounded bg-transparent appearance-none bg-[90%] border;
+  border-color: rgba(245, 245, 245, 0.21);
+}
+.prem-image-sidebar ul {
+  @apply relative mt-7;
+}
+.prem-image-sidebar li {
+  @apply items-start;
+}
+.prem-image-sidebar li::after {
+  content: "";
+  @apply absolute left-1 border-l top-[21px] bottom-[75px] opacity-20;
+  border-color: rgba(237, 237, 237, 0.5);
+}
+.prem-image-sidebar li::before {
+  content: "";
+  @apply rounded absolute left-0 border border-brightgray h-[9px] w-[9px];
+}
+.prem-image-sidebar ul li:hover {
+  @apply bg-transparent;
+}
+.prem-image-sidebar ul li span,
+.prem-image-sidebar ul li a {
+  @apply text-sm;
+}
+.prem-image-sidebar ul li a {
+  @apply flex-wrap;
+}
+
+.close-sidebar {
+  border-color: rgba(219, 213, 213, 0.3);
+}
+
+.prem-image--right-sidebar {
+  @apply max-md:h-full max-md:fixed;
 }

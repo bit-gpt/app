@@ -16,7 +16,7 @@ const PremImageRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
   );
 
   return (
-    <div className="prem-chat-right-sidebar">
+    <div className="prem-chat-right-sidebar prem-image--right-sidebar">
       <div className="sidebar-toggle__btn !mt-5 !ml-0">
         <button
           onClick={() => setRightSidebar(false)}
@@ -47,7 +47,11 @@ const PremImageRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         <li>
           <p>
             <span>Size</span>
-            <select value={size} onChange={(e) => setSize(e.target.value as PremImageSize)}>
+            <select
+              className="custom-select"
+              value={size}
+              onChange={(e) => setSize(e.target.value as PremImageSize)}
+            >
               <option value="256x256">256x256</option>
               <option value="512x512">512x512</option>
               <option value="1024x1024">1024x1024</option>

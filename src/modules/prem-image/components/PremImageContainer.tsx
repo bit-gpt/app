@@ -31,7 +31,7 @@ const PremImageContainer = () => {
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
-            <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services">
+            <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">
               <Header
                 hamburgerMenuOpen={hamburgerMenuOpen}
                 setHamburgerMenu={setHamburgerMenu}
@@ -39,7 +39,7 @@ const PremImageContainer = () => {
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <div className="md:m-[50px] m-[25px] grid md:grid-cols-2 md:gap-10 gap-4">
+              <div className="md:m-[50px] m-[25px]">
                 <div className="flex flex-col">
                   <span className="bg-darkcharcoal py-2 px-[14px] text-spanishgray font-proximaNova-regular w-[129px] rounded-tl rounded-tr">
                     Prompt
@@ -50,18 +50,9 @@ const PremImageContainer = () => {
                     value={prompt}
                   ></textarea>
                 </div>
-                <div className="mt-auto">
-                  <PrimaryButton
-                    className="lg:!px-12 !px-6 !py-2 !text-sm"
-                    onClick={generateImages}
-                    disabled={isLoading || !prompt}
-                  >
-                    {isLoading ? `Generating ${n} Images` : `Generate Image`}
-                  </PrimaryButton>
-                </div>
               </div>
               <div className="prem-img-services__container">
-                <div className="py-[30px] flex">
+                <div className="py-[30px] flex flex-wrap max-md:gap-2">
                   <PrimaryButton
                     className="!px-12 !py-2 !text-sm"
                     onClick={generateImages}
@@ -69,14 +60,14 @@ const PremImageContainer = () => {
                   >
                     {isLoading ? `Generating ${n} Images` : `Generate Image`}
                   </PrimaryButton>
-                  <div className="ml-auto flex gap-6">
-                    <button>
+                  <div className="ml-auto flex gap-4">
+                    <button className="px-2">
                       <DownloadIcon />
                     </button>
-                    <button>
+                    <button className="px-2">
                       <DeleteIconNew />
                     </button>
-                    <select>
+                    <select className="custom-select">
                       <option>Matrix View</option>
                       <option>Matrix</option>
                       <option>Matrix View</option>
