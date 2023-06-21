@@ -8,6 +8,7 @@ import usePremImage from "shared/hooks/usePremImage";
 import DownloadIcon from "shared/components/DownloadIcon";
 import DeleteIconNew from "shared/components/DeleteIconNew";
 import { useNavigate, useParams } from "react-router-dom";
+import PremImagePromptBox from "./PremImagePromptBox";
 
 const PremImageContainer = () => {
   const [rightSidebar, setRightSidebar] = useState(false);
@@ -25,7 +26,7 @@ const PremImageContainer = () => {
 
   const onDeleteClick = () => {
     deleteHistory(historyId as string);
-    navigate("/prem-image")
+    navigate("/prem-image");
   };
 
   return (
@@ -46,22 +47,14 @@ const PremImageContainer = () => {
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <div className="md:m-[50px] m-[25px]">
-                <div className="flex flex-col">
-                  <span className="bg-darkcharcoal py-2 px-[14px] text-spanishgray font-proximaNova-regular w-[129px] rounded-tl rounded-tr">
-                    Prompt
-                  </span>
-                  <textarea
-                    className="py-2 px-4 text-ghostwhite rounded custom-scroll"
-                    onChange={(e) => setPrompt(e.target.value)}
-                    value={prompt}
-                  ></textarea>
-                </div>
-              </div>
+              <PremImagePromptBox prompt={prompt} setPrompt={setPrompt} />
               <div className="prem-img-services__container">
                 <div className="py-[30px] flex flex-wrap max-md:gap-2">
                   <PrimaryButton
-                    className="!px-12 !py-2 !text-sm"
+                    className={clsx(
+                      "!px-12 !py-2 !text-sm",
+                      isLoading || (!prompt && "animate-fill-effect")
+                    )}
                     onClick={generateImages}
                     disabled={isLoading || !prompt}
                   >
@@ -76,8 +69,11 @@ const PremImageContainer = () => {
                 <div className="grid grid-cols-2 gap-[13px]">
                   {currentHistory?.images.map((image, index) => {
                     return (
-                      <div key={index}>
+                      <div className="relative prem-img__box" key={index}>
                         <img src={image} className="w-full" />
+                        <button>
+                          <DownloadIcon />
+                        </button>
                       </div>
                     );
                   })}

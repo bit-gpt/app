@@ -19,7 +19,7 @@ const usePremImage = (historyId: string | undefined): PremImageResponse => {
       response_format: state.response_format,
       addHistory: state.addHistory,
       history: state.history,
-      deleteHistory: state.deleteHistory
+      deleteHistory: state.deleteHistory,
     }),
     shallow
   );
@@ -59,7 +59,7 @@ const usePremImage = (historyId: string | undefined): PremImageResponse => {
     isError,
     onSubmit: mutate,
     n,
-    deleteHistory
+    deleteHistory,
   };
 };
 

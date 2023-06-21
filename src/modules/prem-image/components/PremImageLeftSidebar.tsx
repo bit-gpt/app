@@ -39,7 +39,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
-        <div className="overflow-y-auto prem-image-sidebar custom-scroll overflow-x-hidden flex flex-col">
+        <div className="prem-image-sidebar custom-scroll">
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(history, "timestamp", "desc").map((item) => {
               return (
