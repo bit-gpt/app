@@ -24,13 +24,11 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
     queryClient.invalidateQueries([SERVICE_KEY, serviceId]);
   }, []);
 
-  const isGreyCard = status === "not_supported" || status === "not_enough_system_memory";
+  const isGreyCard = ["not_supported", "not_enough_system_memory", "coming_soon"].includes(status);
+  const redirectLink = status === "coming_soon" ? "/" : `/services/${serviceId}/detail`;
 
   return (
-    <Link
-      className={clsx(className, isGreyCard && "disabled--card")}
-      to={`/services/${serviceId}/detail`}
-    >
+    <Link className={clsx(className, isGreyCard && "disabled--card")} to={redirectLink}>
       <div className="flex gap-8 items-start flex-wrap w-full relative">
         <div className="dashboard-bottom__card-box">
           <img src={icon} alt={title} />
