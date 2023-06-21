@@ -23,12 +23,14 @@ const AppContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <section className="bg-darkjunglegreen">
-      <button
-        onClick={() => hamburgerMenuToggle()}
-        className="md:hidden ml-5 mt-5 w-10 h-10 z-[11]"
-      >
-        <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
-      </button>
+      {location?.pathname == "/" && (
+        <button
+          onClick={() => hamburgerMenuToggle()}
+          className="md:hidden ml-5 mt-5 w-10 h-10 z-[11]"
+        >
+          <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
+        </button>
+      )}
       {hamburgerMenuOpen && (
         <button
           onClick={() => hamburgerMenuToggle()}

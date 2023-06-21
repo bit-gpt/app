@@ -10,7 +10,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
     <div className="right-top-card card">
       <ul
         className={clsx(
-          "grid lg:grid-cols-3 items-end gap-4 !ml-0 p-5",
+          "grid lg:grid-cols-3 items-end gap-4 !ml-0 md:p-5",
           status !== "running" && "status-not-running"
         )}
       >
