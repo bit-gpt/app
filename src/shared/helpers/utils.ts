@@ -131,7 +131,7 @@ export const serviceSearchStyle = {
 };
 
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (service.coming_soon) {
+  if (service.comingSoon) {
     return "coming_soon";
   } else if (!service.supported) {
     return "not_supported";

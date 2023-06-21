@@ -45,7 +45,7 @@ export type Service = {
   volumeName: string | null;
   volumePath: string | null;
   beta: boolean;
-  coming_soon: boolean;
+  comingSoon: boolean;
 };
 
 export type SearchFilterProps = {
