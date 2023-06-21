@@ -108,6 +108,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
               return (
                 <li
+                  onClick={()=> setHamburgerMenu(true)}
                   key={item.id}
                   className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": chatId === item.id })}
                 >
