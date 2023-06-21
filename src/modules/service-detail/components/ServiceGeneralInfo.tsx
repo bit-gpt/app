@@ -36,7 +36,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
   }, [service]);
 
   const docUrl = useMemo(() => {
-    if (!service.runningPort) {
+    if (!service.running) {
       return "";
     }
     const url = new URL(backendUrlFromStore);
