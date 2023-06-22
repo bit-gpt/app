@@ -75,9 +75,9 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                     return (
                       <div className="relative prem-img__box" key={index}>
                         <img src={image} className="w-full" />
-                        <button>
+                        <a href={image} download>
                           <DownloadIcon />
-                        </button>
+                        </a>
                       </div>
                     );
                   })}

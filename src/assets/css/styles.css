@@ -1053,15 +1053,15 @@ p.service-is__not-running {
   @apply absolute rounded right-0 left-0 bottom-0 top-0 bg-transparent opacity-50 z-[1];
 }
 
-.prem-img__box button {
+.prem-img__box a {
   background: rgba(237, 237, 237, 0.2);
   @apply w-[35px] h-[35px] rounded absolute bottom-[18px] left-[18px] z-10;
 }
 
-.prem-img__box button svg {
+.prem-img__box a svg {
   @apply mx-auto w-4 h-4;
 }
-.prem-img__box:hover button {
+.prem-img__box:hover a {
   transition: background-color 0.5s;
   background-color: rgba(33, 36, 44, 0.435);
 }
