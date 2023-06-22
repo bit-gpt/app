@@ -19,7 +19,7 @@ const usePremImageStore = create<PremImageStore>()(
     }),
     {
       name: "prem-image",
-      storage: createJSONStorage(() => storage)
+      storage: createJSONStorage(() => storage),
     }
   )
 );

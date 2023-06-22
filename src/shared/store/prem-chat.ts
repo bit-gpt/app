@@ -43,7 +43,7 @@ const usePremChatStore = create<PremChatStore>()(
     }),
     {
       name: "prem-chat",
-      storage: createJSONStorage(() => storage)
+      storage: createJSONStorage(() => storage),
     }
   )
 );

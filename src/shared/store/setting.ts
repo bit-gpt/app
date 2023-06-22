@@ -12,7 +12,7 @@ const useSettingStore = create<SettingStore>()(
     }),
     {
       name: "setting",
-      storage: createJSONStorage(() => storage)
+      storage: createJSONStorage(() => storage),
     }
   )
 );
