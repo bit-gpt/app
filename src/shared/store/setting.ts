@@ -1,7 +1,8 @@
+import storage from "shared/helpers/custom-storage";
 import { getBackendUrl } from "shared/helpers/utils";
 import { SettingStore } from "shared/types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 const useSettingStore = create<SettingStore>()(
   persist(
@@ -11,6 +12,7 @@ const useSettingStore = create<SettingStore>()(
     }),
     {
       name: "setting",
+      storage: createJSONStorage(() => storage)
     }
   )
 );
