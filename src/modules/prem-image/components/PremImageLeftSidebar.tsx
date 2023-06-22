@@ -12,7 +12,7 @@ import LeftArrowIcon from "shared/components/LeftArrowIcon";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const { historyId } = useParams();
+  const { serviceId, historyId } = useParams();
   const { history } = usePremImageStore(
     (state) => ({
       history: state.history,
@@ -47,7 +47,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                   key={item.id}
                   className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": historyId === item.id })}
                 >
-                  <Link to={`/prem-image/${item.id}`}>
+                  <Link to={`/prem-image/${serviceId}/${item.id}`}>
                     <span className="text-white">
                       {format(parseISO(item.timestamp), "LLLL dd, hh:mm a")}
                     </span>

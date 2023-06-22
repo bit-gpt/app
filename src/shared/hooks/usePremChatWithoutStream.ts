@@ -13,7 +13,7 @@ const usePremChatWithoutStream = (serviceId: string, chatId: string | null): Pre
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const navigate = useNavigate();
-  const { data: response } = useService(serviceId);
+  const { data: response } = useService(serviceId, false);
   const service = response?.data;
 
   const {

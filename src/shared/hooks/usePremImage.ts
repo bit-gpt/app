@@ -8,7 +8,7 @@ import { PremImageResponse, UrlResponse } from "modules/prem-image/types";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 
-const usePremImage = (historyId: string | undefined): PremImageResponse => {
+const usePremImage = (serviceId: string, historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const usePremImage = (historyId: string | undefined): PremImageResponse => {
           images: (response.data.data || []).map((image: UrlResponse) => image.url),
           timestamp: new Date().toISOString(),
         });
-        navigate(`/prem-image/${id}`);
+        navigate(`/prem-image/${serviceId}/${id}`);
       },
       onError: () => {
         toast.error("Something went wrong while generating the image");

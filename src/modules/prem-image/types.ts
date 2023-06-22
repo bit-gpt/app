@@ -21,3 +21,9 @@ export type PremImageResponse = {
   n: number;
   deleteHistory: (id: string) => void;
 };
+
+export type PremImageContainerProps = {
+  serviceName: string;
+  historyId?: string;
+  serviceId: string;
+};

@@ -7,17 +7,17 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
 import DownloadIcon from "shared/components/DownloadIcon";
 import DeleteIconNew from "shared/components/DeleteIconNew";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PremImagePromptBox from "./PremImagePromptBox";
+import { PremImageContainerProps } from "../types";
 
-const PremImageContainer = () => {
+const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
-  const { historyId } = useParams();
   const navigate = useNavigate();
 
   const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n, deleteHistory } =
-    usePremImage(historyId);
+    usePremImage(serviceId, historyId);
 
   const generateImages = () => {
     if (!prompt) return;
@@ -26,7 +26,7 @@ const PremImageContainer = () => {
 
   const onDeleteClick = () => {
     deleteHistory(historyId as string);
-    navigate("/prem-image");
+    navigate(`/prem-image/${serviceId}`);
   };
 
   return (
@@ -43,7 +43,7 @@ const PremImageContainer = () => {
               <Header
                 hamburgerMenuOpen={hamburgerMenuOpen}
                 setHamburgerMenu={setHamburgerMenu}
-                title={"Stable Diffusion 1.5"}
+                title={serviceName}
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
@@ -51,20 +51,21 @@ const PremImageContainer = () => {
               <div className="prem-img-services__container">
                 <div className="py-[30px] flex flex-wrap max-md:gap-2">
                   <PrimaryButton
-                    className={clsx(
-                      "!px-12 !py-2 !text-sm",
-                      isLoading || (!prompt && "animate-fill-effect")
-                    )}
+                    className={clsx("!px-12 !py-2 !text-sm", {
+                      "opacity-50": !prompt,
+                    })}
                     onClick={generateImages}
                     disabled={isLoading || !prompt}
                   >
                     {isLoading ? `Generating ${n} Images` : `Generate Image`}
                   </PrimaryButton>
-                  <div className="ml-auto flex gap-4">
-                    <button className="px-2" onClick={onDeleteClick}>
-                      <DeleteIconNew />
-                    </button>
-                  </div>
+                  {currentHistory && (
+                    <div className="ml-auto flex gap-4">
+                      <button className="px-2" onClick={onDeleteClick}>
+                        <DeleteIconNew />
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 gap-[13px]">
                   {currentHistory?.images.map((image, index) => {

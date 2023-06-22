@@ -5,11 +5,12 @@ import startService from "modules/service/api/startService";
 import Spinner from "shared/components/Spinner";
 import AppContainer from "shared/components/AppContainer";
 import PremChatContainer from "./PremChatContainer";
+import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
 
 function PremChat() {
   const { chatId, serviceId } = useParams();
 
-  const { data: response, isLoading } = useService(serviceId!);
+  const { data: response, isLoading } = useService(serviceId!, false);
   const service = response?.data;
 
   useEffect(() => {
@@ -19,13 +20,7 @@ function PremChat() {
   }, [service]);
 
   if (isLoading) {
-    return (
-      <AppContainer>
-        <div className="flex items-center h-full justify-center mt-5">
-          <Spinner className="h-10 w-10" />
-        </div>
-      </AppContainer>
-    );
+    return <PlayGroundSpinner />;
   }
 
   return (

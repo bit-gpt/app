@@ -23,7 +23,7 @@ const PremImagePromptBox = ({ prompt, setPrompt }: PromptProps) => {
           </span>
           <span className="ml-auto">Optional</span>
         </div>
-        <textarea className="h-[80px]" value="Negative Prompt"></textarea>
+        <textarea className="h-[80px]"></textarea>
         <div className="mt-3">
           <PrimaryButton className="!px-12 !py-2 !text-sm">Generate Image</PrimaryButton>
         </div>
