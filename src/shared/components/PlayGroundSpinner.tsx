@@ -11,5 +11,4 @@ const PlayGroundSpinner = () => {
   );
 };
 
-
 export default PlayGroundSpinner;

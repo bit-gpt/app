@@ -4,13 +4,17 @@ import { shallow } from "zustand/shallow";
 import { toast } from "react-toastify";
 import usePremImageStore from "shared/store/prem-image";
 import generateImage from "modules/prem-image/api/generateImage";
-import { PremImageResponse, UrlResponse } from "modules/prem-image/types";
+import { B64JsonResponse, PremImageResponse, UrlResponse } from "modules/prem-image/types";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
+import useService from "./useService";
 
 const usePremImage = (serviceId: string, historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
   const navigate = useNavigate();
+
+  const { data: response } = useService(serviceId, false);
+  const service = response?.data;
 
   const { n, size, response_format, addHistory, history, deleteHistory } = usePremImageStore(
     (state) => ({
@@ -26,7 +30,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateImage({
+      generateImage(service?.runningPort!, {
         prompt,
         n,
         response_format,
@@ -38,7 +42,9 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
         addHistory({
           id,
           prompt,
-          images: (response.data.data || []).map((image: UrlResponse) => image.url),
+          images: (response.data.data || []).map(
+            (image: B64JsonResponse) => `data:image/png;base64, ${image.b64_json}`
+          ),
           timestamp: new Date().toISOString(),
         });
         navigate(`/prem-image/${serviceId}/${id}`);

@@ -16,8 +16,10 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n, deleteHistory } =
-    usePremImage(serviceId, historyId);
+  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n, deleteHistory } = usePremImage(
+    serviceId,
+    historyId
+  );
 
   const generateImages = () => {
     if (!prompt) return;
@@ -53,6 +55,7 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                   <PrimaryButton
                     className={clsx("!px-12 !py-2 !text-sm", {
                       "opacity-50": !prompt,
+                      "animate-fill-effect": isLoading,
                     })}
                     onClick={generateImages}
                     disabled={isLoading || !prompt}

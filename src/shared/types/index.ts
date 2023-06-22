@@ -101,11 +101,8 @@ export type PremImageSize = "256x256" | "512x512" | "1024x1024";
 export type PremImageStore = {
   history: PremImageHistory[];
   n: number;
-  setN: (n: number) => void;
   size: PremImageSize;
-  setSize: (size: PremImageSize) => void;
   response_format: string;
-  setResponseFormat: (response_format: string) => void;
   addHistory: (newHistory: PremImageHistory) => void;
   deleteHistory: (id: string) => void;
 };

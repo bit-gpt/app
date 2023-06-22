@@ -11,6 +11,10 @@ export type UrlResponse = {
   url: string;
 };
 
+export type B64JsonResponse = {
+  b64_json: string;
+};
+
 export type PremImageResponse = {
   onSubmit: () => void;
   prompt: string;

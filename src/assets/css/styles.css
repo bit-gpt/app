@@ -1084,25 +1084,22 @@ p.service-is__not-running {
   30% {
     left: -82%;
   }
-  30% {
-    left: -62%;
-  }
   40% {
-    left: -38%;
+    left: -78%;
   }
   50% {
-    left: -18%;
+    left: -61%;
   }
   60% {
-    left: -14%;
+    left: -53%;
   }
   80% {
-    left: -7%;
+    left: -40%;
   }
   90% {
-    left: -3%;
+    left: -30%;
   }
   100% {
-    left: 0%;
+    left: -10%;
   }
 }

@@ -7,11 +7,8 @@ const usePremImageStore = create<PremImageStore>()(
     (set) => ({
       history: [],
       n: 1,
-      setN: (n) => set(() => ({ n })),
-      size: "256x256",
-      setSize: (size) => set(() => ({ size })),
-      response_format: "url",
-      setResponseFormat: (response_format) => set(() => ({ response_format })),
+      size: "512x512",
+      response_format: "b64_json",
       addHistory: (newHistory: PremImageHistory) =>
         set((state) => ({ history: [...state.history, newHistory] })),
       deleteHistory: (id: string) =>
@@ -20,7 +17,7 @@ const usePremImageStore = create<PremImageStore>()(
         })),
     }),
     {
-      name: "prem-michelangelo",
+      name: "prem-image",
     }
   )
 );

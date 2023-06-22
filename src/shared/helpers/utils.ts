@@ -160,3 +160,10 @@ export const SYSTEM_MEMORY_LIMIT = 8;
 
 export const CHAT_ID = "chat";
 export const DIFFUSER_ID = "diffuser";
+
+export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
+  const url = new URL(baseUrl);
+  url.port = `${port}`;
+  url.pathname = pathname;
+  return url.toString();
+};
