@@ -76,8 +76,8 @@ const PremChatContainer = ({
                   ))}
                 </div>
               </div>
-              <div className="prem-chat-bottom border-transparent bg-gradient-to-b from-transparent via-white to-white dark:via-[#20232B] dark:to-[#20232B]">
-                <div className="md:w-[55%] w-[85%] mx-auto">
+              <div className="prem-chat-bottom border-transparent">
+                <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto">
                   {chatMessages.length > 0 && !isLoading && !isError && (
                     <div>
                       <RegenerateButton onRgenerateClick={onRegenerate} />
@@ -92,7 +92,7 @@ const PremChatContainer = ({
                         isLoading
                           ? "Fetching response..."
                           : model
-                          ? "Type a message or type to select a prompt"
+                          ? `Type a message or type "/" to select a prompt`
                           : "Please select a model to get started"
                       }
                     />

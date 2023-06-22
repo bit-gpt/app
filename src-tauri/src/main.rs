@@ -103,7 +103,15 @@ fn main() {
                 "Prem App".to_string(),
                 AboutMetadata::new(),
             ))
-            .add_item(CustomMenuItem::new("quit", "Quit")),
+            .add_native_item(MenuItem::Copy)
+            .add_native_item(MenuItem::Paste)
+            .add_native_item(MenuItem::Quit)
+            .add_native_item(MenuItem::SelectAll)
+            .add_native_item(MenuItem::Cut)
+            .add_native_item(MenuItem::Undo)
+            .add_native_item(MenuItem::Redo)
+            .add_native_item(MenuItem::Minimize)
+            .add_native_item(MenuItem::Hide),
     ));
 
     let running = CustomMenuItem::new("running".to_string(), "Prem is running").disabled();

@@ -131,7 +131,9 @@ export const serviceSearchStyle = {
 };
 
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (!service.supported) {
+  if (service.comingSoon) {
+    return "coming_soon";
+  } else if (!service.supported) {
     return "not_supported";
   } else if (!service.enoughSystemMemory) {
     return "not_enough_system_memory";
