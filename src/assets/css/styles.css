@@ -689,7 +689,8 @@ svg.warning-icon {
   @apply flex gap-7 mb-3;
 }
 .right-general-card span {
-  @apply text-brightgray font-proximaNova-regular md:text-base text-sm w-1/2;
+  @apply text-brightgray font-proximaNova-regular md:text-base text-sm md:w-1/2 min-w-[45%];
+  word-wrap: break-word;
 }
 
 .ReactModal__Overlay {
@@ -758,7 +759,7 @@ svg.warning-icon {
   @apply w-6 h-6;
 }
 p.service-is__not-running {
-  @apply text-isabelline;
+  @apply text-brightgray mt-[14px];
 }
 .service-is__not-running .warning-icon path:first-child {
   @apply stroke-none;
