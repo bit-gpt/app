@@ -590,7 +590,7 @@ header img {
   @apply w-[90px] h-[60px] max-md:h-9 max-md:w-[65px] flex justify-center items-center bg-contain max-md:!bg-[12px] bg-center;
 }
 .polygon-shape svg {
-  @apply w-6 h-6 md:mt-[14px] mt-2 max-md:h-4 max-md:w-4;
+  @apply w-6 h-6 md:mt-[14px] mt-2 max-md:h-4 max-md:w-4 mx-auto;
 }
 svg.warning-icon {
   @apply w-8 h-8 max-md:h-6 max-md:w-6 mx-auto;
