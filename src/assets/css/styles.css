@@ -587,14 +587,13 @@ header img {
 }
 .polygon-shape {
   background: url("../images/polygon-shape.svg") no-repeat;
-  @apply w-[90px] h-[60px] max-md:h-9 max-md:w-[65px] flex justify-center items-center bg-contain max-md:!bg-[12px];
-  background-position: 10px 0px;
+  @apply w-[90px] h-[60px] max-md:h-9 max-md:w-[65px] flex justify-center items-center bg-contain max-md:!bg-[12px] bg-center;
 }
 .polygon-shape svg {
   @apply w-6 h-6 md:mt-[14px] mt-2 max-md:h-4 max-md:w-4;
 }
 svg.warning-icon {
-  @apply w-8 h-8 max-md:h-6 max-md:w-6;
+  @apply w-8 h-8 max-md:h-6 max-md:w-6 mx-auto;
 }
 .warning-icon path {
   @apply stroke-white;
@@ -836,6 +835,9 @@ p.service-is__not-running {
 }
 .Toastify__progress-bar--success {
   @apply !bg-lightsalmonpink;
+}
+.Toastify__progress-bar--error {
+  @apply !bg-[#FF5757];
 }
 .Toastify__close-button > svg {
   @apply !fill-[#B3B3B3];

@@ -159,7 +159,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             })}
           </ul>
         </div>
-        <ul className="absolute md:bottom-[33px] bottom-[12px] md:left-0 left-[22px] right-0">
+        <ul>
           <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] max-md:hidden"></div>
           {filteredHistory.length > 0 && (
             <li>
