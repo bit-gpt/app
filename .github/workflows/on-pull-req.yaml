@@ -23,6 +23,9 @@ jobs:
       
       - name: Run prettier
         run: npm run prettier:check
+
+      - name: Build frontend
+        run: npm run build
   
   build:
     runs-on: ubuntu-latest
