@@ -49,7 +49,7 @@ const AdvancedSettings = () => {
       </h2>
       <form onSubmit={onUpdate}>
         <div className="flex items-center">
-          <label className="text-white mr-2 backend-url md:text-lg text-[10px]">Backend URL</label>
+          <label className="text-white mr-2 backend-url md:text-lg text-[11px]">Backend URL</label>
           <div className="flex w-full">
             <div className="text-right w-full">
               <input
@@ -79,7 +79,7 @@ const AdvancedSettings = () => {
         </div>
         <div className="text-right mt-[44px] mr-[45px]">
           <PrimaryButton
-            className="!px-9 max-md:text-sm max-md:absolute left-0 right-0 bottom-0"
+            className="!px-9 max-md:text-[12px] max-md:absolute left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
             type="submit"
             disabled={isLoading}
           >
