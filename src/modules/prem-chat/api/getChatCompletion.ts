@@ -1,12 +1,10 @@
 import api from "shared/api/v1";
 import { ChatCompletionInputData } from "../types";
-import { getBackendUrlFromStore } from "shared/store/setting";
 
 const getChatCompletion = async (port: number, data: ChatCompletionInputData) => {
-  const backendUrl = new URL(getBackendUrlFromStore());
-  backendUrl.port = `${port}`;
+  const backendUrl = `https://${data.model}.prem.ninja`;
 
-  return api().post(`${backendUrl}api/v1/chat/completions`, data);
+  return api().post(`${backendUrl}/api/v1/chat/completions`, data);
 };
 
 export default getChatCompletion;

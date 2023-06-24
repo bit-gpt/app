@@ -66,11 +66,10 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     const ctrl = new AbortController();
 
-    const backendUrl = new URL(getBackendUrlFromStore());
-    backendUrl.port = `${service?.runningPort!}`;
+    const backendUrl = `https://${serviceId}.prem.ninja`;
 
     try {
-      fetchEventSource(`${backendUrl}api/v1/chat/completions`, {
+      fetchEventSource(`${backendUrl}/api/v1/chat/completions`, {
         method: "POST",
         openWhenHidden: true,
         headers: {
