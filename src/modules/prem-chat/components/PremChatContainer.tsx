@@ -22,6 +22,7 @@ const PremChatContainer = ({
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const chatMessageListRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { height } = useWindowSize();
   const responsiveMatches = useMediaQuery("(min-width: 768px)");
 
@@ -38,6 +39,12 @@ const PremChatContainer = ({
       chatMessageListRef.current.scrollTop = chatMessageListRef.current.scrollHeight;
     }
   }, [chatMessages]);
+
+  useEffect(() => {
+    if (!isLoading && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isLoading]);
 
   return (
     <section>
@@ -88,6 +95,7 @@ const PremChatContainer = ({
                       question={question}
                       setQuestion={setQuestion}
                       disabled={isLoading || !model}
+                      ref={inputRef}
                       placeholder={
                         isLoading
                           ? "Fetching response..."
