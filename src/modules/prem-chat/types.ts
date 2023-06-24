@@ -33,14 +33,6 @@ export type PremChatResponse = {
   onRegenerate: () => void;
 };
 
-export type HeaderProps = {
-  setRightSidebar: (value: boolean) => void;
-  rightSidebar: boolean;
-  hamburgerMenuOpen: boolean;
-  setHamburgerMenu: (value: boolean) => void;
-  title: string;
-};
-
 export type InputBoxProps = {
   question: string;
   setQuestion: (question: string) => void;
