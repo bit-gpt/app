@@ -7,6 +7,7 @@ import WarningServiceState from "./WarningServiceState";
 import { useNavigate } from "react-router-dom";
 import DocumentationModal from "./DocumentationModal";
 import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
+import { round } from "lodash";
 
 const ServiceActions = ({
   status,
@@ -16,6 +17,7 @@ const ServiceActions = ({
   isDetailView = false,
   interfaces,
   needsUpdate,
+  memoryRequirements,
 }: ServiceActionsProps) => {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -30,6 +32,8 @@ const ServiceActions = ({
   }, []);
 
   const documentation = `${interfaces[0]?.documentation || ""}`.trim();
+
+  const memoryInGib = round(memoryRequirements / 1024, 2);
 
   return (
     <>
@@ -59,9 +63,9 @@ const ServiceActions = ({
           <NotDownloadedServiceState serviceId={serviceId} refetch={refetch} />
         )}
 
-        {["not_supported", "not_enough_memory", "not_enough_system_memory"].includes(status) && (
-          <WarningServiceState status={status} />
-        )}
+        {["not_supported", "not_enough_memory", "not_enough_system_memory", "coming_soon"].includes(
+          status
+        ) && <WarningServiceState status={status} memoryRequirements={memoryInGib} />}
       </div>
       {modalIsOpen && (
         <DocumentationModal

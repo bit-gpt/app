@@ -19,9 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create the .env file from example
-        run: cp .env.example .env
-
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
 
@@ -84,12 +81,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         with:
           tagName: ${{ steps.next_tag.outputs.tag }}
           releaseName: "PremAI App ${{ steps.next_tag.outputs.tag }}"
           releaseBody: "See the assets to download and install this version."
+          releaseDraft: true
           includeDebug: true
-          args: ${{matrix.platform == 'ubuntu-20.04' && '--target x86_64-unknown-linux-gnu' || '--target universal-apple-darwin'}}
+          updaterJsonKeepUniversal: true
+          args: '--target universal-apple-darwin'
 
       # Commit package.json, tauri.conf.json and Cargo.toml to master
       - name: Commit & Push

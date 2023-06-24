@@ -8,6 +8,7 @@ import WarningModal from "./WarningModal";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 import useStartService from "shared/hooks/useStartService";
+import useBodyLock from "shared/hooks/useBodyLock";
 
 const StoppedServiceState = ({
   serviceId,
@@ -16,6 +17,7 @@ const StoppedServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const { bodyLocked, setBodyLocked } = useBodyLock();
 
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
     deleteService(id)
@@ -40,6 +42,7 @@ const StoppedServiceState = ({
   const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setOpenDeleteModal(true);
+    setBodyLocked(true);
   };
 
   const deleteServiceHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,6 +62,7 @@ const StoppedServiceState = ({
   const onCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setOpenDeleteModal(false);
+    setBodyLocked(false);
   };
 
   if (deleteLoading || startLoading) {

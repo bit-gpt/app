@@ -95,16 +95,45 @@ fn is_container_running() -> Result<bool, String> {
     Ok(!output.stdout.is_empty())
 }
 
+fn kill_container() {
+    // stop services
+    let url = "http://localhost:54321/v1/stop-all-services/";
+    get(url).expect("Request failed");
+    // stop docker
+    let _child = Command::new("/usr/local/bin/docker")
+        .args(&["kill", "premd"])
+        .output()
+        .expect("Failed to execute docker stop");
+}
+
 fn main() {
-    let menu = Menu::new().add_submenu(Submenu::new(
-        "Prem App",
-        Menu::new()
-            .add_native_item(MenuItem::About(
-                "Prem App".to_string(),
-                AboutMetadata::new(),
-            ))
-            .add_item(CustomMenuItem::new("quit", "Quit")),
-    ));
+    let menu = Menu::new()
+        .add_submenu(Submenu::new(
+            "Prem App",
+            Menu::new()
+                .add_native_item(MenuItem::About(
+                    "About Prem App".to_string(),
+                    AboutMetadata::new(),
+                ))
+                .add_native_item(MenuItem::Minimize)
+                .add_native_item(MenuItem::Hide)
+                .add_item(CustomMenuItem::new(
+                    "quit",
+                    "Quit Prem App", // ⌘Q is automatically mapped to Quit for macOS
+                ))
+        ))
+        .add_submenu(Submenu::new(
+            "Edit",
+            Menu::new()
+                .add_native_item(MenuItem::Undo)
+                .add_native_item(MenuItem::Redo)
+                .add_native_item(MenuItem::Separator)
+                .add_native_item(MenuItem::Cut)
+                .add_native_item(MenuItem::Copy)
+                .add_native_item(MenuItem::Paste)
+                .add_native_item(MenuItem::Separator)
+                .add_native_item(MenuItem::SelectAll),
+        ));
 
     let running = CustomMenuItem::new("running".to_string(), "Prem is running").disabled();
     let show = CustomMenuItem::new("show".to_string(), "Dashboard");
@@ -128,45 +157,47 @@ fn main() {
             is_container_running,
         ])
         .menu(menu)
+        .on_menu_event(|event| match event.menu_item_id() {
+            "quit" => {
+                kill_container();
+                event.window().close().unwrap();
+            }
+            "close" => {
+                event.window().close().unwrap();
+            }
+            _ => {}
+        })
         .system_tray(system_tray)
         .on_system_tray_event(|app, event| match event {
-            SystemTrayEvent::MenuItemClick { id, .. } => {
-                match id.as_str() {
-                    "hide" => {
-                        let window = app.get_window("main").unwrap();
-                        window.hide().unwrap();
-                    }
-                    "quit" => {
-                        std::process::exit(0);
-                    }
-                    "show" => {
-                        let window = app.get_window("main").unwrap();
-                        window.set_focus().unwrap();
-                        window.show().unwrap();
-                    }
-                    _ => {}
+            SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
+                "hide" => {
+                    let window = app.get_window("main").unwrap();
+                    window.hide().unwrap();
                 }
-            }
+                "quit" => {
+                    kill_container();
+                    app.exit(0);
+                }
+                "show" => {
+                    let window = app.get_window("main").unwrap();
+                    window.set_focus().unwrap();
+                    window.show().unwrap();
+                }
+                _ => {}
+            },
             _ => {}
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 
-    app.run(|_app_handle, e| match e {
+    app.run(|app_handle, e| match e {
         // Triggered when a window is trying to close
-        RunEvent::WindowEvent { event, .. } => {
+        RunEvent::WindowEvent { label, event, .. } => {
             match event {
-                WindowEvent::CloseRequested { .. } => {
-                    // stop services
-                    let url = "http://localhost:54321/v1/stop-all-services";
-                    let response = get(url).expect("Request failed");
-                    let json: Config = response.json().expect("Failed to parse JSON");
-                    println!("Stop all services: {:?}", json);
-                    // stop docker
-                    let _child = Command::new("/usr/local/bin/docker")
-                        .args(&["kill", "premd"])
-                        .output()
-                        .expect("Failed to execute docker stop");
+                WindowEvent::CloseRequested { api, .. } => {
+                    app_handle.get_window(&label).unwrap().hide().unwrap();
+                    // use the exposed close api, and prevent the event loop to close
+                    api.prevent_close();
                 }
                 _ => {}
             }

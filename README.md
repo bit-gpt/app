@@ -1,41 +1,85 @@
-# 🖥 Prem App
+<img width="1024" alt="Logo" src="https://github.com/premAI-io/prem-app/assets/29598954/9fb2e2b5-89e8-40c9-a66f-eb20f6b00584">
 
-`BADGES`
+# 🤖 Prem - Self Sovereign AI Infrastructure
 
-`SHORT_DESCRIPTION`
+[![Version](https://img.shields.io/github/v/release/premAI-io/prem-app?color=%235351FB&label=version)](https://github.com/premAI-io/prem-app/releases)
+[![Release](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml/badge.svg?event=push)](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml)
+[![Twitter](https://img.shields.io/twitter/follow/premai_io?style=social)](https://twitter.com/premai_io)
+[![Discord](https://dcbadge.vercel.app/api/server/kpKk6vYVAn?style=social)](https://discord.com/invite/kpKk6vYVAn)
 
-`VIDEO`
 
-## Installation
+Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical complexities for AI deployment and ushering in a new era of privacy-centric AI applications - users can finally retain control and ownership of their models. 
 
-Download the latest version of the app from [here](https://github.com).
+## 🚀 Getting started
 
-Otherwise, you can install Prem on your server by running the following command:
+- Install Prem on your MacOS - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
+  - 16GB+ RAM required to be allocated to your Docker engine.
+  - If you installed Docker Desktop for Mac for the first time, from the Whale 🐳 icon in the task bar, go to `Settings` -> `Resources` and increase it to more than 16GB. 
+- Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
+- Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
+
+## Demo
+
+https://github.com/premAI-io/prem-app/assets/29598954/856af04d-bded-423e-8e90-1e891ec6824f
+
+## Install on Linux
+
+Install everything needed to run Prem on Ubuntu/Debian server
 
 ```bash
-curl -fsSL https://get.prem.ninja/install.sh | bash
+wget -q https://get.prem.ninja/install.sh -O install.sh; sudo bash ./install.sh
+```
+------
+
+If you encounter issues or you want to build the Prem App docker image inside your Linux server
+
+### CPU 
+```bash
+git clone https://github.com/premAI-io/prem-app.git
+cd ./prem-app
+docker-compose up -d
+```
+
+### GPU (NVIDIA)
+```bash
+git clone https://github.com/premAI-io/prem-app.git
+cd ./prem-app
+docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 ```
 
 ## Product Roadmap
 
-If you wanna know which services we support for each interface, please refer to Prem Registry https://premai-io.github.io/prem-registry-ui/.
+The AI services expose an HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
+Each service we support it's published on the [Prem Registry](https://premai-io.github.io/prem-registry-ui). 
+
+> Anyone can prepare, package and publish an AI service on Prem. Instructions coming soon.
 
 ### Interfaces
 
-- [x] 😃 Prem Chat
-- [x] 📕 Prem Embeddings
-- [x] 🏛️ Prem Store
-- [ ] 🎨 Prem Michelangelo
-- [ ] 💻 Prem Copilot
-- [ ] 🎵 Prem Audio
-- [ ] 📷 Prem Vision
-- [ ] 📖 Prem Summary
-- [ ] 🖼️ Prem Upscaler
-- [ ] 📹 Prem Video
+- [x] 😃 Chat
+- [x] 📕 Embedding
+- [x] 🏛️ Vector Store
+- [ ] 🎨 Diffuser
+- [ ] 💻 Coder
+- [ ] 🎵 Text to Audio
+- [ ] 🎵 Audio to Text
+- [ ] 📷 Vision
+- [ ] 📖 Summary
+- [ ] 🖼️ Upscaler
+- [ ] 📹 Video
 
-## Contributing to Prem App
+## Contributing
+
+### Requirements
+
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Node](https://nodejs.org/en/download)
+- [Docker](https://docs.docker.com/engine/install/)
+- [Tauri](https://tauri.app/v1/guides/getting-started/prerequisites#installing)
 
 ### Run the app with Tauri
+
+> Make sure to remove any value in the `.env` file.
 
 ```bash
 npm i
@@ -45,10 +89,24 @@ npm run tauri dev
 ### Run the app with React
 
 ```bash
+# run the daemon
+docker-compose up -d premd
+
+# copy .env.example file in .env
+cp .env.example
+
 npm i
 npm run dev
 ```
+
+### Environment Variables
+
+- `VITE_BACKEND_URL` : destination of the premd
+- `VITE_DESTINATION` : `browser` | `desktop`
+- `IS_PACKAGED` : `true` | `false` used for server packaging.
+
 ## Contributing to Prem Daemon
+
 ### Running the Daemon locally
 
 ```bash
@@ -77,6 +135,8 @@ In order to use the mock registry, you can specify the `REGISTRY_URL` environmen
 ```bash
 PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-daemon/main/resources/mocks/manifests.json
 ```
+
+> The mock registry is not fully tested. Few interfaces could be broken.
 
 ### Running the test cases
 

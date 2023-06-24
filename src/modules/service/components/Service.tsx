@@ -26,8 +26,8 @@ const Service = () => {
 
   return (
     <AppContainer>
-      <div className="mask-heading mb-[29px] md:-mx-6 xl:-mx-10">
-        <h2 className="!mt-10">Dashboard</h2>
+      <div className="mask-heading mb-5 md:-mx-6 xl:-mx-10">
+        <h2 className="md:!mt-10 max-md:!mt-4">Dashboard</h2>
       </div>
 
       {apps.length > 0 && (
@@ -38,7 +38,9 @@ const Service = () => {
         const filteredServices = services.filter((service) => service.interfaces.includes(app.id));
         return (
           <div key={app.id} className="mt-10">
-            <h3 className="text-brightgray font-bold md:text-xl text-base flex mb-5">{app.name}</h3>
+            <h3 className="text-brightgray font-bold md:text-xl max-md:text-sm text-base flex md:mb-5 mb-[13px]">
+              {app.name}
+            </h3>
             <div className="flex gap-[22px] flex-wrap ">
               {filteredServices.map((service) => (
                 <ServiceCard

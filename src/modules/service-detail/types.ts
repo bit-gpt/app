@@ -5,6 +5,7 @@ export type ServiceHeaderProps = {
   title: string;
   tags: string[];
   subtitle: string;
+  isInBeta: boolean;
 };
 
 export type ServiceDocumentationProps = {
