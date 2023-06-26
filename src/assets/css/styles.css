@@ -106,7 +106,7 @@ header img {
   background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
-  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold md:text-[22px] lg:text-[30px] text-[20px] leading-9;
+  @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold text-[24px] lg:text-[30px] leading-9;
 }
 
 .dashboard-bottom__card {
@@ -421,7 +421,7 @@ header img {
 }
 
 .sidebar-main {
-  @apply fixed z-10 max-md:w-full max-md:top-0 max-md:bottom-0;
+  @apply fixed z-10 max-md:w-full max-md:top-0 max-md:bottom-0 max-md:left-0 max-md:right-0;
 }
 .sidebar-main .sidebar-toggle__btn {
   @apply relative z-10;
@@ -587,14 +587,13 @@ header img {
 }
 .polygon-shape {
   background: url("../images/polygon-shape.svg") no-repeat;
-  @apply w-[90px] h-[60px] max-md:h-9 max-md:w-[65px] flex justify-center items-center bg-contain max-md:!bg-[12px];
-  background-position: 10px 0px;
+  @apply w-[90px] h-[60px] max-md:h-9 max-md:w-[65px] flex justify-center items-center bg-contain max-md:!bg-[12px] bg-center;
 }
 .polygon-shape svg {
-  @apply w-6 h-6 md:mt-[14px] mt-2 max-md:h-4 max-md:w-4;
+  @apply w-6 h-6 md:mt-[14px] mt-2 max-md:h-4 max-md:w-4 mx-auto;
 }
 svg.warning-icon {
-  @apply w-8 h-8 max-md:h-6 max-md:w-6;
+  @apply w-8 h-8 max-md:h-6 max-md:w-6 mx-auto;
 }
 .warning-icon path {
   @apply stroke-white;
@@ -604,7 +603,7 @@ svg.warning-icon {
 }
 
 .settings-card h3 {
-  @apply text-brightgray text-lg mb-7;
+  @apply text-brightgray md:text-lg text-xs mb-7;
 }
 .settings-card__border {
   @apply border-b-2 opacity-50;
@@ -689,7 +688,8 @@ svg.warning-icon {
   @apply flex gap-7 mb-3;
 }
 .right-general-card span {
-  @apply text-brightgray font-proximaNova-regular md:text-base text-sm w-1/2;
+  @apply text-brightgray font-proximaNova-regular md:text-base text-sm md:w-1/2 min-w-[45%];
+  word-wrap: break-word;
 }
 
 .ReactModal__Overlay {
@@ -761,7 +761,7 @@ svg.warning-icon {
   @apply w-6 h-6;
 }
 p.service-is__not-running {
-  @apply text-isabelline;
+  @apply text-brightgray mt-[14px];
 }
 .service-is__not-running .warning-icon path:first-child {
   @apply stroke-none;
@@ -839,6 +839,9 @@ p.service-is__not-running {
 }
 .Toastify__progress-bar--success {
   @apply !bg-lightsalmonpink;
+}
+.Toastify__progress-bar--error {
+  @apply !bg-[#FF5757];
 }
 .Toastify__close-button > svg {
   @apply !fill-[#B3B3B3];

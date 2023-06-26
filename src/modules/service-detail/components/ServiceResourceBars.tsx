@@ -52,7 +52,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
         </li>
       </ul>
       {status !== "running" && (
-        <p className="flex items-center pb-3 mx-4 gap-[7px] !text-[12px] service-is__not-running">
+        <p className="flex items-center pb-3 md:mx-4 -mx-1 gap-[7px] !text-[12px] service-is__not-running">
           <WarningIcon />
           The service is not Running. Resources not available
         </p>
