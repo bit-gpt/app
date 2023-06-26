@@ -1,13 +1,5 @@
 import { Message, PremChatHistory } from "modules/prem-chat/types";
 
-export type HeaderProps = {
-  setRightSidebar: (value: boolean) => void;
-  rightSidebar: boolean;
-  hamburgerMenuOpen: boolean;
-  setHamburgerMenu: (value: boolean) => void;
-  title: string;
-};
-
 export type BotReplyProps = {
   reply: string;
 };
