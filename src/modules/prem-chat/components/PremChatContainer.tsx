@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import UserReply from "shared/components/UserReply";
 import BotReply from "shared/components/BotReply";
-import usePremChat from "shared/hooks/usePremChat";
 import InputBox from "./InputBox";
 import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
@@ -11,13 +10,9 @@ import { Message, PremChatContainerProps } from "../types";
 import clsx from "clsx";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
 import useBodyLock from "shared/hooks/useBodyLock";
+import usePremChatStream from "shared/hooks/usePremChatStream";
 
-const PremChatContainer = ({
-  chatId,
-  isStreaming,
-  serviceId,
-  serviceName,
-}: PremChatContainerProps) => {
+const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainerProps) => {
   const model = serviceId;
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
@@ -27,7 +22,7 @@ const PremChatContainer = ({
   const responsiveMatches = useMediaQuery("(min-width: 768px)");
 
   const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
-    usePremChat(isStreaming, serviceId!, chatId || null);
+    usePremChatStream(serviceId, chatId || null);
 
   const { bodyLocked, setBodyLocked } = useBodyLock();
   const hamburgerMenuToggle = () => {
