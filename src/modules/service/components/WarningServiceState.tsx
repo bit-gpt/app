@@ -42,9 +42,9 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
         return <WarningShapeIcon />;
       case "not_supported":
       case "not_enough_system_memory":
-        return <WarningIcon />;
+        return <WarningIcon className="warning-icon" />;
       default:
-        return <WarningIcon />;
+        return <WarningIcon className="warning-icon" />;
     }
   };
 

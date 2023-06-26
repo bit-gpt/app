@@ -1,6 +1,8 @@
+import { ForwardedRef, forwardRef } from "react";
 import { InputBoxProps } from "../types";
 
-const InputBox = ({ question, setQuestion, disabled, placeholder }: InputBoxProps) => {
+const InputBox = forwardRef((props: InputBoxProps, ref: ForwardedRef<HTMLInputElement>) => {
+  const { question, setQuestion, disabled, placeholder } = props;
   return (
     <div className="prem-chat-input flex items-center relative">
       <input
@@ -10,6 +12,8 @@ const InputBox = ({ question, setQuestion, disabled, placeholder }: InputBoxProp
         onChange={(e) => setQuestion(e.target.value)}
         disabled={disabled}
         placeholder={placeholder}
+        ref={ref}
+        autoFocus
       />
       <button>
         <svg
@@ -29,6 +33,6 @@ const InputBox = ({ question, setQuestion, disabled, placeholder }: InputBoxProp
       </button>
     </div>
   );
-};
+});
 
 export default InputBox;

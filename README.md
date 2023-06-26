@@ -70,6 +70,13 @@ Each service we support it's published on the [Prem Registry](https://premai-io.
 
 ## Contributing
 
+### Requirements
+
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Node](https://nodejs.org/en/download)
+- [Docker](https://docs.docker.com/engine/install/)
+- [Tauri](https://tauri.app/v1/guides/getting-started/prerequisites#installing)
+
 ### Run the app with Tauri
 
 > Make sure to remove any value in the `.env` file.

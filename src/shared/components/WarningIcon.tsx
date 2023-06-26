@@ -1,7 +1,10 @@
-const WarningIcon = () => {
+interface WarningIconProps {
+  className?: string;
+}
+const WarningIcon = ({ className }: WarningIconProps) => {
   return (
     <svg
-      className="warning-icon"
+      className={className}
       width="33"
       height="33"
       viewBox="0 0 37 34"
