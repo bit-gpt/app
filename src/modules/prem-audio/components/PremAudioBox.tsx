@@ -6,8 +6,10 @@ import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import uploadIcon from "assets/images/upload.svg";
 import clsx from "clsx";
 import { PremAudioContainerProps } from "../types";
+import { useNavigate } from "react-router-dom";
 
 const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>) => {
+  const navigate = useNavigate();
   const { isLoading, onSubmit, file, setFile, currentHistory } = usePremAudio(
     serviceId!,
     historyId
@@ -21,12 +23,19 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
     setFile(acceptedFiles[0]);
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     onDrop,
+    multiple: false,
     accept: {
       "audio/*": [".mp3", ".wav"],
     },
   });
+
+  const onClear = () => {
+    setFile(null);
+    navigate(`/prem-audio/${serviceId}`);
+  };
+
   return (
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
       <div className="max-w-[650px] mx-auto">
@@ -48,9 +57,17 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
             </PrimaryButton>
             <span className="text-spanishgray mt-[14px]">or drag a file here</span>
           </div>
+          {acceptedFiles.map((file) => (
+            <div key={file.name} className="mt-4">
+              <p className="text-white text-sm">{file.name}</p>
+            </div>
+          ))}
         </div>
         <div className="mt-4 flex justify-end gap-3">
-          <OutlineCircleButton className="!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm">
+          <OutlineCircleButton
+            className="!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm"
+            onClick={onClear}
+          >
             Clear
           </OutlineCircleButton>
           <PrimaryButton

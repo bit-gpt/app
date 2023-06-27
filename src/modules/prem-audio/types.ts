@@ -8,7 +8,7 @@ export type TranscriptionsGeneration = {
 export type PremAudioHook = {
   currentHistory: PremAudioHistory | undefined;
   file: File | null;
-  setFile: (file: File) => void;
+  setFile: (file: File | null) => void;
   isLoading: boolean;
   isError: boolean;
   onSubmit: () => void;
