@@ -1,31 +1,14 @@
 import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import clsx from "clsx";
-import PrimaryButton from "shared/components/PrimaryButton";
-import usePremAudio from "shared/hooks/usePremAudio";
 import PremImageLeftSidebar from "./PremAudioLeftSidebar";
 import Header from "./Header";
 import PremImageRightSidebar from "./PremAudioRightSidebar";
 import { PremAudioContainerProps } from "../types";
+import PremAudioBox from "./PremAudioBox";
 
-const PremAudioContainer = ({ serviceName, historyId, serviceId }: PremAudioContainerProps) => {
+const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
-
-  const { isLoading, onSubmit, file, setFile, currentHistory } = usePremAudio(serviceId, historyId);
-
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: {
-    'audio/*': ['.mp3', '.wav']
-  } });
-
-  const generateTranscriptions = () => {
-    if (!file) return;
-    onSubmit();
-  };
 
   return (
     <section>
@@ -45,27 +28,7 @@ const PremAudioContainer = ({ serviceName, historyId, serviceId }: PremAudioCont
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-
-              <div className="m-2 p-10 border-2" {...getRootProps()}>
-                <input type="file" {...getInputProps()} />
-                <p className="text-white p-5">
-                  Drag 'n' drop some files here, or click to select files
-                </p>
-              </div>
-              <div className="m-2">
-                <PrimaryButton
-                  className={clsx("!px-12 !py-2 !text-sm", {
-                    "opacity-50": !file,
-                    "animate-fill-effect": isLoading,
-                  })}
-                  onClick={generateTranscriptions}
-                  disabled={isLoading || !file}
-                >
-                  Submit
-                </PrimaryButton>
-              </div>
-
-              <div className="m-2 text-white">{currentHistory?.transcriptions}</div>
+              <PremAudioBox serviceId={serviceId} historyId={historyId} />
             </div>
           </div>
         </div>

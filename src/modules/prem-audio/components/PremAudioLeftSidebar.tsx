@@ -32,7 +32,6 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
     }
   };
 
-
   return (
     <>
       <div className="md:pt-7 !bg-darkgunmetal pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
@@ -48,7 +47,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
-        <div className="prem-image-sidebar custom-scroll">
+        <div className="mt-10 overflow-y-auto custom-scroll">
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(history, "timestamp", "desc").map((item) => {
               return (
@@ -67,7 +66,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             })}
           </ul>
         </div>
-        <div className="sidebar-toggle__btn !mt-5 !-mx-2 px-5 border-t pt-4 pb-2 close-sidebar">
+        <div className="sidebar-toggle__btn !mt-auto !-mx-2 px-5 border-t pt-4 pb-2 close-sidebar">
           <button onClick={onCloseClick} className="bg-Onyx px-[8.4px] mr-3 py-[10px] rounded-md">
             <LeftArrowIcon />
           </button>

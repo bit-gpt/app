@@ -1072,9 +1072,20 @@ p.service-is__not-running {
 .prem-img-promptbox textarea {
   @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll;
 }
+.prem-audio-box {
+  @apply pt-6 pb-10 px-8 rounded custom-scroll;
+}
 .prem-img-promptbox span {
   @apply text-sm text-spanishgray font-proximaNova-regular;
 }
+.btn-primary--addon {
+  @apply relative;
+}
+.btn-primary--addon::after {
+  content: "";
+  @apply absolute left-0 h-[38px] -top-3 bottom-0 border-l;
+}
+
 .animate-fill-effect {
   @apply relative overflow-hidden;
 }
