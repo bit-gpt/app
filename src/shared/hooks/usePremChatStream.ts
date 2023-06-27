@@ -69,7 +69,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     const backendUrl = `https://${serviceId}.prem.ninja`;
 
     try {
-      fetchEventSource(`${backendUrl}v1/chat/completions`, {
+      fetchEventSource(`${backendUrl}/v1/chat/completions`, {
         method: "POST",
         openWhenHidden: true,
         headers: {
