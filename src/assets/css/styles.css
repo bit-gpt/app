@@ -1073,7 +1073,7 @@ p.service-is__not-running {
   @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll;
 }
 .prem-audio-box {
-  @apply pt-6 pb-10 px-8 rounded custom-scroll;
+  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll;
 }
 .prem-img-promptbox span {
   @apply text-sm text-spanishgray font-proximaNova-regular;
