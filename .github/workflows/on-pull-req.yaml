@@ -1,4 +1,4 @@
-name: Push Docker Image from branch
+name: Format and build
 
 on:
   pull_request:
@@ -7,10 +7,6 @@ on:
 jobs:
   prettier:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -23,37 +19,6 @@ jobs:
       
       - name: Run prettier
         run: npm run prettier:check
-  
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
-      id-token: write
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-          install: true
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and Push the Images
-        run: |
-          docker buildx build \
-            --push \
-            --file ./Dockerfile \
-            --tag ghcr.io/premai-io/prem-app:pr-${{ github.event.pull_request.number }} \
-            --platform linux/arm64,linux/amd64 .
+      - name: Build frontend
+        run: npm run build
