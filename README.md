@@ -49,7 +49,7 @@ docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 
 And you will have the UI at `http://{localhost|server_ip}:1420`.
 
-> Make sure that in `Settings` the Backend URL is set to `http://localhost:8000` or the ip of your server.
+> Make sure that in `Settings` the Backend URL is set to `http://{localhost|server_ip}:8000`
 
 ## Product Roadmap
 
