@@ -23,7 +23,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
     setFile(acceptedFiles[0]);
   }, []);
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
     accept: {
@@ -57,11 +57,11 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
             </PrimaryButton>
             <span className="text-spanishgray mt-[14px]">or drag a file here</span>
           </div>
-          {acceptedFiles.map((file) => (
+          {file && (
             <div key={file.name} className="mt-4">
               <p className="text-white text-sm">{file.name}</p>
             </div>
-          ))}
+          )}
         </div>
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
