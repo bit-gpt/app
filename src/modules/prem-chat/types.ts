@@ -54,7 +54,6 @@ export type HamburgerMenuProps = {
 
 export type PremChatContainerProps = {
   chatId: string | undefined;
-  isStreaming: boolean;
   serviceId: string;
   serviceName: string;
 };
