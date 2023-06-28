@@ -333,6 +333,10 @@ header img {
 .right-sidebar__list li span:last-child {
   @apply text-spanishgray;
 }
+.right-sidebar__list li input[type="number"] {
+  @apply focus:outline-none text-cultured rounded px-1;
+  background-color: rgba(237, 237, 237, 0.1) !important;
+}
 
 .range-slider {
   @apply !h-[3px];

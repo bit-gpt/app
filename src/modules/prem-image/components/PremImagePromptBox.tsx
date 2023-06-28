@@ -31,7 +31,7 @@ const PremImagePromptBox = ({
           <span className="ml-auto">Optional</span>
         </div>
         <textarea
-          className="h-[80px]"
+          className="h-[134px]"
           value={negativePrompt}
           onChange={(e) => setNegativePrompt(e.target.value)}
         ></textarea>
