@@ -16,10 +16,17 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, prompt, setPrompt, currentHistory, n, deleteHistory } = usePremImage(
-    serviceId,
-    historyId
-  );
+  const {
+    isLoading,
+    onSubmit,
+    prompt,
+    setPrompt,
+    currentHistory,
+    n,
+    deleteHistory,
+    negativePrompt,
+    setNegativePrompt,
+  } = usePremImage(serviceId, historyId);
 
   const generateImages = () => {
     if (!prompt) return;
@@ -49,7 +56,12 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <PremImagePromptBox prompt={prompt} setPrompt={setPrompt} />
+              <PremImagePromptBox
+                prompt={prompt}
+                setPrompt={setPrompt}
+                negativePrompt={negativePrompt}
+                setNegativePrompt={setNegativePrompt}
+              />
               <div className="prem-img-services__container">
                 <div className="py-[30px] flex flex-wrap max-md:gap-2">
                   <PrimaryButton

@@ -333,6 +333,10 @@ header img {
 .right-sidebar__list li span:last-child {
   @apply text-spanishgray;
 }
+.right-sidebar__list li input[type="number"] {
+  @apply focus:outline-none text-cultured rounded px-1;
+  background-color: rgba(237, 237, 237, 0.1) !important;
+}
 
 .range-slider {
   @apply !h-[3px];
@@ -986,8 +990,7 @@ p.service-is__not-running {
   @apply md:px-[50px] px-[25px];
 }
 .prem-img-services__container img {
-  @apply mx-auto rounded;
-  border: 1.15px solid;
+  @apply mx-auto rounded p-[1.2px];
   border-image-source: linear-gradient(
     131.93deg,
     rgba(245, 142, 142, 0.6) 11.72%,
@@ -1020,9 +1023,9 @@ p.service-is__not-running {
 .prem-image-sidebar li {
   @apply items-start;
 }
-.prem-image-sidebar li::after {
+.prem-image-sidebar ul::after {
   content: "";
-  @apply absolute left-1 border-l top-[21px] bottom-[75px] opacity-20;
+  @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
   border-color: rgba(237, 237, 237, 0.5);
 }
 .prem-image-sidebar li::before {
@@ -1061,7 +1064,7 @@ p.service-is__not-running {
 
 .prem-img__box a {
   background: rgba(237, 237, 237, 0.2);
-  @apply w-[35px] h-[35px] rounded absolute bottom-[18px] left-[18px] z-10;
+  @apply w-[35px] h-[35px] rounded absolute bottom-[18px] left-[18px] z-10 flex items-center justify-center;
 }
 
 .prem-img__box a svg {
