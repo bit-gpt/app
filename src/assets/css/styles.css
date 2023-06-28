@@ -270,10 +270,10 @@ header img {
 
 @media (max-width: 767px) {
   .prem-chat-bottom {
-    @apply flex items-end mt-0 w-full left-0;
+    @apply flex items-center mt-0 w-full left-0 bg-darkjunglegreen;
   }
   .prem-chat-body {
-    @apply pb-[70px] overflow-y-auto;
+    @apply pb-[100px] overflow-y-auto;
   }
 }
 
@@ -739,6 +739,9 @@ svg.warning-icon {
 .welcome-container {
   height: calc(100vh - 61px);
   @apply relative z-[11] justify-center items-center flex-col flex;
+}
+.prem-chat-container .bg-lines::before {
+  @apply max-md:hidden;
 }
 
 .prem-chat-sidebar .sidebar li a span {

@@ -70,7 +70,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     backendUrl.port = `${service?.runningPort!}`;
 
     try {
-      fetchEventSource(`${backendUrl}api/v1/chat/completions`, {
+      fetchEventSource(`${backendUrl}v1/chat/completions`, {
         method: "POST",
         openWhenHidden: true,
         headers: {
