@@ -1,9 +1,8 @@
-import RangeSlider from "react-range-slider-input";
-import "react-range-slider-input/dist/style.css";
 import { shallow } from "zustand/shallow";
 import usePremChatStore from "shared/store/prem-chat";
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
-import { RightSidebarProps } from "../types";
+import { RightSidebarProps } from "shared/types";
+import RangeSlider from "shared/components/RangeSlider";
 
 const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
   const {

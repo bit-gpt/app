@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { PremChatHistory } from "modules/prem-chat/types";
 import { PremChatStore } from "shared/types";
+import storage from "shared/helpers/custom-storage";
 
 const usePremChatStore = create<PremChatStore>()(
   persist(
@@ -42,6 +43,7 @@ const usePremChatStore = create<PremChatStore>()(
     }),
     {
       name: "prem-chat",
+      storage: createJSONStorage(() => storage),
     }
   )
 );

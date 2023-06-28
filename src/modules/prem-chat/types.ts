@@ -44,14 +44,6 @@ export type RegenerateButtonProps = {
   onRgenerateClick: () => void;
 };
 
-export type RightSidebarProps = {
-  setRightSidebar: (value: boolean) => void;
-};
-
-export type HamburgerMenuProps = {
-  setHamburgerMenu: (value: boolean) => void;
-};
-
 export type PremChatContainerProps = {
   chatId: string | undefined;
   serviceId: string;

@@ -717,14 +717,17 @@ svg.warning-icon {
 .documentation-markdown {
   @apply px-4;
 }
-.documentation-modal::-webkit-scrollbar {
+.documentation-modal::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
   @apply w-[3px];
 }
-.documentation-modal::-webkit-scrollbar-track {
+.documentation-modal::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
   @apply rounded-md;
   background-color: rgba(237, 237, 237, 0.1);
 }
-.documentation-modal::-webkit-scrollbar-thumb {
+.documentation-modal::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb {
   @apply rounded-md;
   background: linear-gradient(90deg, #f58e8e 0%, #f9d4a4 99.36%);
 }
@@ -961,6 +964,161 @@ p.service-is__not-running {
 @media (min-width: 768px) and (max-width: 1023px) {
   .services-detail--header {
     width: 70%;
+  }
+}
+
+.prem-img-services {
+  @apply md:pb-16 pb-10;
+}
+
+.prem-img-services textarea {
+  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
+  border-radius: 0px 4.34204px 4.34204px 4.34204px;
+}
+
+.prem-img-services__container {
+  background: linear-gradient(
+    131.09deg,
+    rgba(47, 47, 47, 0.4) 8.8%,
+    rgba(103, 100, 98, 0.11) 88.99%
+  );
+  backdrop-filter: blur(15.3228px);
+  @apply md:px-[50px] px-[25px];
+}
+.prem-img-services__container img {
+  @apply mx-auto rounded;
+  border: 1.15px solid;
+  border-image-source: linear-gradient(
+    131.93deg,
+    rgba(245, 142, 142, 0.6) 11.72%,
+    rgba(246, 162, 148, 0.23) 38.41%,
+    rgba(248, 190, 157, 0.23) 66.36%,
+    rgba(249, 212, 164, 0.6) 91.8%
+  );
+  background: linear-gradient(
+    131.93deg,
+    rgba(245, 142, 142, 0.6) 11.72%,
+    rgba(246, 162, 148, 0.23) 38.41%,
+    rgba(248, 190, 157, 0.23) 66.36%,
+    rgba(249, 212, 164, 0.6) 91.8%
+  );
+  box-shadow: 0px 3.06457px 18.3874px -0.766141px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15.3228px);
+}
+
+.custom-select {
+  background: url("../images/down-arrow.svg") no-repeat;
+  @apply text-white py-2 pl-3 pr-8 text-sm focus:outline-none rounded bg-transparent appearance-none bg-[90%] border;
+  border-color: rgba(245, 245, 245, 0.21);
+}
+.prem-image-sidebar {
+  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full;
+}
+.prem-image-sidebar ul {
+  @apply relative mt-7;
+}
+.prem-image-sidebar li {
+  @apply items-start;
+}
+.prem-image-sidebar li::after {
+  content: "";
+  @apply absolute left-1 border-l top-[21px] bottom-[75px] opacity-20;
+  border-color: rgba(237, 237, 237, 0.5);
+}
+.prem-image-sidebar li::before {
+  content: "";
+  @apply rounded absolute left-0 border border-brightgray h-[9px] w-[9px];
+}
+.prem-image-sidebar ul li:hover {
+  @apply bg-transparent;
+}
+.prem-image-sidebar ul li span,
+.prem-image-sidebar ul li a {
+  @apply text-sm;
+}
+.prem-image-sidebar ul li a {
+  @apply flex-wrap;
+}
+
+.close-sidebar {
+  border-color: rgba(219, 213, 213, 0.3);
+}
+
+.prem-image--right-sidebar {
+  @apply max-md:h-full max-md:fixed;
+}
+
+.prem-img__box:hover {
+  transition: color 0.5s;
+}
+.prem-img__box:hover:before {
+  @apply bg-tulip opacity-30;
+}
+.prem-img__box:before {
+  content: "";
+  @apply absolute rounded right-0 left-0 bottom-0 top-0 bg-transparent opacity-50 z-[1];
+}
+
+.prem-img__box a {
+  background: rgba(237, 237, 237, 0.2);
+  @apply w-[35px] h-[35px] rounded absolute bottom-[18px] left-[18px] z-10;
+}
+
+.prem-img__box a svg {
+  @apply mx-auto w-4 h-4;
+}
+.prem-img__box:hover a {
+  transition: background-color 0.5s;
+  background-color: rgba(33, 36, 44, 0.435);
+}
+
+.prem-img-promptbox textarea {
+  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll;
+}
+.prem-img-promptbox span {
+  @apply text-sm text-spanishgray font-proximaNova-regular;
+}
+.animate-fill-effect {
+  @apply relative overflow-hidden;
+}
+.animate-fill-effect::before {
+  content: "";
+  @apply absolute top-0 h-full w-full left-[-100%];
+  background: rgba(0, 0, 0, 0.2);
+}
+.animate-fill-effect::before {
+  animation: progress 16s ease-in-out forwards;
+}
+@keyframes progress {
+  0% {
+    left: -100%;
+  }
+  10% {
+    left: -97%;
+  }
+  20% {
+    left: -92%;
+  }
+  30% {
+    left: -82%;
+  }
+  40% {
+    left: -78%;
+  }
+  50% {
+    left: -61%;
+  }
+  60% {
+    left: -53%;
+  }
+  80% {
+    left: -40%;
+  }
+  90% {
+    left: -30%;
+  }
+  100% {
+    left: -10%;
   }
 }
 
