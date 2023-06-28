@@ -1023,15 +1023,6 @@ p.service-is__not-running {
 .prem-image-sidebar li {
   @apply items-start;
 }
-.prem-image-sidebar ul::after {
-  content: "";
-  @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
-  border-color: rgba(237, 237, 237, 0.5);
-}
-.prem-image-sidebar li::before {
-  content: "";
-  @apply rounded absolute left-0 border border-brightgray h-[9px] w-[9px];
-}
 .prem-image-sidebar ul li:hover {
   @apply bg-transparent;
 }
