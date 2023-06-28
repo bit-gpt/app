@@ -8,6 +8,7 @@ const usePremImageStore = create<PremImageStore>()(
     (set) => ({
       history: [],
       n: 1,
+      setN: (n: number) => set(() => ({ n })),
       size: "512x512",
       response_format: "b64_json",
       addHistory: (newHistory: PremImageHistory) =>
@@ -16,6 +17,8 @@ const usePremImageStore = create<PremImageStore>()(
         set((state) => ({
           history: state.history.filter((_history) => _history.id !== id),
         })),
+      seed: 0,
+      setSeed: (seed: number) => set(() => ({ seed })),
     }),
     {
       name: "prem-image",

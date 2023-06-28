@@ -1,14 +1,16 @@
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import RangeSlider from "shared/components/RangeSlider";
-import usePremChatStore from "shared/store/prem-chat";
+import usePremImageStore from "shared/store/prem-image";
 import { RightSidebarProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
 const PremImageRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
-  const { n, setN } = usePremChatStore(
+  const { n, setN, seed, setSeed } = usePremImageStore(
     (state) => ({
       n: state.n,
       setN: state.setN,
+      seed: state.seed,
+      setSeed: state.setSeed,
     }),
     shallow
   );
@@ -41,6 +43,19 @@ const PremImageRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             step={1}
             onInput={(value: number[]) => setN(value[1])}
           />
+        </li>
+        <li>
+          <p>
+            <span>Seed</span>
+            <input
+              name="seed"
+              type="number"
+              min={0}
+              max={1000000}
+              value={seed}
+              onChange={(e) => setSeed(+e.target.value)}
+            />
+          </p>
         </li>
       </ul>
     </div>

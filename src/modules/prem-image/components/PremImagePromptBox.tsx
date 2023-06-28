@@ -1,9 +1,16 @@
-import PrimaryButton from "shared/components/PrimaryButton";
 import { PremImageResponse } from "../types";
 
-type PromptProps = Pick<PremImageResponse, "prompt" | "setPrompt">;
+type PromptProps = Pick<
+  PremImageResponse,
+  "prompt" | "setPrompt" | "negativePrompt" | "setNegativePrompt"
+>;
 
-const PremImagePromptBox = ({ prompt, setPrompt }: PromptProps) => {
+const PremImagePromptBox = ({
+  prompt,
+  setPrompt,
+  negativePrompt,
+  setNegativePrompt,
+}: PromptProps) => {
   return (
     <div className="md:m-[50px] flex max-lg:flex-wrap gap-10 m-[25px] prem-img-promptbox">
       <div className="flex lg:w-1/2 w-full flex-col">
@@ -23,10 +30,11 @@ const PremImagePromptBox = ({ prompt, setPrompt }: PromptProps) => {
           </span>
           <span className="ml-auto">Optional</span>
         </div>
-        <textarea className="h-[80px]"></textarea>
-        <div className="mt-3">
-          <PrimaryButton className="!px-12 !py-2 !text-sm">Generate Image</PrimaryButton>
-        </div>
+        <textarea
+          className="h-[80px]"
+          value={negativePrompt}
+          onChange={(e) => setNegativePrompt(e.target.value)}
+        ></textarea>
       </div>
     </div>
   );

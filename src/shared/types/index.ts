@@ -105,6 +105,9 @@ export type PremImageStore = {
   response_format: string;
   addHistory: (newHistory: PremImageHistory) => void;
   deleteHistory: (id: string) => void;
+  setN: (n: number) => void;
+  seed: number;
+  setSeed: (seed: number) => void;
 };
 
 export type PremImageHistory = {

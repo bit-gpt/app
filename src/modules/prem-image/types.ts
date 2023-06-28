@@ -5,6 +5,8 @@ export type ImageGeneration = {
   n?: number;
   size?: string;
   response_format?: string;
+  negative_prompt?: string;
+  seed?: number;
 };
 
 export type UrlResponse = {
@@ -24,6 +26,8 @@ export type PremImageResponse = {
   currentHistory: PremImageHistory | undefined;
   n: number;
   deleteHistory: (id: string) => void;
+  negativePrompt: string;
+  setNegativePrompt: (question: string) => void;
 };
 
 export type PremImageContainerProps = {
