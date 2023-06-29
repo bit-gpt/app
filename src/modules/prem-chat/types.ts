@@ -46,7 +46,6 @@ export type RegenerateButtonProps = {
 
 export type PremChatContainerProps = {
   chatId: string | undefined;
-  isStreaming: boolean;
   serviceId: string;
   serviceName: string;
 };

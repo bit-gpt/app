@@ -23,14 +23,7 @@ function PremChat() {
     return <PlayGroundSpinner />;
   }
 
-  return (
-    <PremChatContainer
-      chatId={chatId}
-      serviceName={service?.name!}
-      serviceId={serviceId!}
-      isStreaming={service?.modelInfo.streaming!}
-    />
-  );
+  return <PremChatContainer chatId={chatId} serviceName={service?.name!} serviceId={serviceId!} />;
 }
 
 export default PremChat;

@@ -11,12 +11,13 @@ import useService from "./useService";
 
 const usePremImage = (serviceId: string, historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
+  const [negativePrompt, setNegativePrompt] = useState("");
   const navigate = useNavigate();
 
   const { data: response } = useService(serviceId, false);
   const service = response?.data;
 
-  const { n, size, response_format, addHistory, history, deleteHistory } = usePremImageStore(
+  const { n, size, response_format, addHistory, history, deleteHistory, seed } = usePremImageStore(
     (state) => ({
       n: state.n,
       size: state.size,
@@ -24,6 +25,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
       addHistory: state.addHistory,
       history: state.history,
       deleteHistory: state.deleteHistory,
+      seed: state.seed,
     }),
     shallow
   );
@@ -35,6 +37,8 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
         n,
         response_format,
         size,
+        negative_prompt: negativePrompt,
+        seed,
       }),
     {
       onSuccess: (response) => {
@@ -66,6 +70,8 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
     onSubmit: mutate,
     n,
     deleteHistory,
+    negativePrompt,
+    setNegativePrompt,
   };
 };
 

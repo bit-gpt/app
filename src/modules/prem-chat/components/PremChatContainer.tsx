@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import UserReply from "shared/components/UserReply";
 import BotReply from "shared/components/BotReply";
-import usePremChat from "shared/hooks/usePremChat";
 import InputBox from "./InputBox";
 import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
@@ -11,13 +10,9 @@ import { Message, PremChatContainerProps } from "../types";
 import clsx from "clsx";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
 import useBodyLock from "shared/hooks/useBodyLock";
+import usePremChatStream from "shared/hooks/usePremChatStream";
 
-const PremChatContainer = ({
-  chatId,
-  isStreaming,
-  serviceId,
-  serviceName,
-}: PremChatContainerProps) => {
+const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainerProps) => {
   const model = serviceId;
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
@@ -27,7 +22,7 @@ const PremChatContainer = ({
   const responsiveMatches = useMediaQuery("(min-width: 768px)");
 
   const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
-    usePremChat(isStreaming, serviceId!, chatId || null);
+    usePremChatStream(serviceId, chatId || null);
 
   const { bodyLocked, setBodyLocked } = useBodyLock();
   const hamburgerMenuToggle = () => {
@@ -54,7 +49,7 @@ const PremChatContainer = ({
         >
           <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
-        <div className="flex flex-1">
+        <div className="flex flex-1 prem-chat-container">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
             <div
               className="main-content h-full z-10 relative max-h-full overflow-hidden scrollbar-none"
@@ -68,8 +63,8 @@ const PremChatContainer = ({
                 rightSidebar={rightSidebar}
               />
               <div
-                className="z-10 relative mt-[40px] flex flex-col prem-chat-body scrollbar-none"
-                style={{ height: height - (responsiveMatches ? 200 : 140) }}
+                className="z-10 relative md:mt-[40px] mt-0 flex flex-col prem-chat-body scrollbar-none"
+                style={{ height: height - (responsiveMatches ? 200 : 100) }}
               >
                 <div className="md:w-[65%] w-[90%] mx-auto md:mt-8">
                   {chatMessages.map((message: Message, index: number) => (
@@ -84,7 +79,7 @@ const PremChatContainer = ({
                 </div>
               </div>
               <div className="prem-chat-bottom border-transparent">
-                <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto">
+                <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto max-md:mt-[14px]">
                   {chatMessages.length > 0 && !isLoading && !isError && (
                     <div>
                       <RegenerateButton onRgenerateClick={onRegenerate} />

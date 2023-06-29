@@ -17,7 +17,12 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
         <li>
           <p>Memory</p>
           <div className="flex gap-[6px] items-center">
-            <p className="!mb-0 whitespace-nowrap">{response?.data?.memory_usage} GiB</p>
+            <p className="!mb-0 whitespace-nowrap">
+              {response?.data?.memory_percentage == undefined && (
+                <span className="lg:hidden">-</span>
+              )}
+              {response?.data?.memory_usage} GiB
+            </p>
             <div className="progress">
               <div
                 className="progress-container"
@@ -29,7 +34,10 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
         <li>
           <p>CPU</p>
           <div className="flex gap-[6px] items-center">
-            <p className="!mb-0 whitespace-nowrap">{response?.data?.cpu_percentage}%</p>
+            <p className="!mb-0 whitespace-nowrap">
+              {response?.data?.cpu_percentage == undefined && <span className="lg:hidden">-</span>}
+              {response?.data?.cpu_percentage}%
+            </p>
             <div className="progress">
               <div
                 className="progress-container"
@@ -41,7 +49,12 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
         <li>
           <p>Image Size</p>
           <div className="flex gap-[6px] items-center">
-            <p className="!mb-0 whitespace-nowrap">{response?.data?.storage_usage} GiB</p>
+            <p className="!mb-0 whitespace-nowrap">
+              {response?.data?.storage_percentage == undefined && (
+                <span className="lg:hidden">-</span>
+              )}
+              {response?.data?.storage_usage} GiB
+            </p>
             <div className="progress">
               <div
                 className="progress-container"
@@ -52,7 +65,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
         </li>
       </ul>
       {status !== "running" && (
-        <p className="flex items-center pb-3 md:mx-4 -mx-1 gap-[7px] !text-[12px] service-is__not-running">
+        <p className="flex items-center pb-3 md:mx-4 max-md:mt-4 gap-[7px] !text-[12px] service-is__not-running">
           <WarningIcon />
           The service is not Running. Resources not available
         </p>
