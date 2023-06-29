@@ -5,7 +5,7 @@ const GPUResources = () => {
   const { data: response } = useGPUStats();
   return (
     <>
-      <h2 className="text-brightgray mb-[37px] text-lg">GPUs</h2>
+      <h2 className="text-brightgray mb-[37px] text-lg mt-20">GPUs</h2>
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
         {response?.data?.gpu_name ? (
           <div className="shadow-default">
