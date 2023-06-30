@@ -38,34 +38,6 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     navigate(`/prem-image/${serviceId}`);
   };
 
-  const renderSwitch = ({ index, image }: any) => {
-    switch (index && image) {
-      case index == 1:
-        console.log(index);
-        return (
-          <div className={clsx("relative prem-img__box", "gridcol2")} key={index}>
-            <img src={image} className="w-full  " />
-            <a href={image} download>
-              <DownloadIcon />
-            </a>
-          </div>
-        );
-      case index == 2:
-        return "3";
-      case index == 3:
-        return (
-          <div className={clsx("relative prem-img__box", "gridcol4")} key={index}>
-            <img src={image} className="w-full  " />
-            <a href={image} download>
-              <DownloadIcon />
-            </a>
-          </div>
-        );
-      default:
-        return "defualt";
-    }
-  };
-
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
