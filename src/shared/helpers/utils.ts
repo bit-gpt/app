@@ -49,7 +49,7 @@ export const getBackendUrl = () => {
     backendURL = import.meta.env.VITE_BACKEND_URL;
   }
   if (isPackaged()) {
-    backendURL = `${window.location.protocol}//${window.location.host}/api`;
+    backendURL = `${window.location.protocol}//${window.location.host}/api/`;
   }
   return backendURL;
 };
@@ -159,3 +159,13 @@ export const formatInfo = (value: ServiceInfoValue) => {
 export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
 
 export const SYSTEM_MEMORY_LIMIT = 8;
+
+export const CHAT_ID = "chat";
+export const DIFFUSER_ID = "diffuser";
+
+export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
+  const url = new URL(baseUrl);
+  url.port = `${port}`;
+  url.pathname = pathname;
+  return url.toString();
+};

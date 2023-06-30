@@ -14,8 +14,8 @@ import exportData from "assets/images/export-data.svg";
 import importData from "assets/images/import-data.svg";
 import WarningModal from "modules/service/components/WarningModal";
 import WarningIcon from "shared/components/WarningIcon";
-import { HamburgerMenuProps } from "../types";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
+import { HamburgerMenuProps } from "shared/types";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(

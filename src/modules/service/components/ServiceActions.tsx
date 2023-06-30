@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import DocumentationModal from "./DocumentationModal";
 import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
 import { round } from "lodash";
+import { CHAT_ID, DIFFUSER_ID } from "shared/helpers/utils";
 
 const ServiceActions = ({
   status,
@@ -25,7 +26,11 @@ const ServiceActions = ({
   const onOpenClick = useCallback(() => {
     const isPlayground = interfaces.some((app) => app.playground);
     if (isPlayground) {
-      navigate(`/prem-chat/${serviceId}`);
+      if (interfaces.some((app) => app.id === CHAT_ID)) {
+        navigate(`/prem-chat/${serviceId}`);
+      } else if (interfaces.some((app) => app.id === DIFFUSER_ID)) {
+        navigate(`/prem-image/${serviceId}`);
+      }
       return;
     }
     setIsOpen(true);

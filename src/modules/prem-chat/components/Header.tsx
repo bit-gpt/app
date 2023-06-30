@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import setting from "assets/images/setting.svg";
 import hamburgerMenu from "assets/images/hamburger-menu.svg";
-import { HeaderProps } from "shared/types";
 import WarningModal from "modules/service/components/WarningModal";
 import { useState } from "react";
 import WarningIcon from "shared/components/WarningIcon";
+import { HeaderProps } from "shared/types";
 
 const Header = ({
   setRightSidebar,
