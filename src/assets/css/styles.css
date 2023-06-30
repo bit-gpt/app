@@ -287,6 +287,9 @@ header img {
   border-color: rgb(40 41 45 / 32%) !important;
 }
 
+.prem-chat-body {
+  @apply overflow-y-auto;
+}
 .prem-chat-body .bot-reply .markdown-body h2,
 .prem-chat-body .bot-reply .markdown-body h1 {
   border-color: rgb(40 41 45 / 32%) !important;
