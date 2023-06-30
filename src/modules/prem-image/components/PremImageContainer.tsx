@@ -82,15 +82,23 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                     </div>
                   )}
                 </div>
-                <div className="grid grid-cols-2 gap-[13px]">
-                  {currentHistory?.images.map((image, index) => {
+                <div className="gallery gap-[13px]">
+                  {currentHistory?.images.map((image, index: number) => {
                     return (
-                      <div className="relative prem-img__box" key={index}>
-                        <img src={image} className="w-full" />
-                        <a href={image} download>
-                          <DownloadIcon />
-                        </a>
-                      </div>
+                      <>
+                        <div
+                          data-cols={index}
+                          className={clsx("relative prem-img__box", {
+                            [`gridcol${index + 1}`]: index > 0,
+                          })}
+                          key={index}
+                        >
+                          <img src={image} className="w-full  " />
+                          <a href={image} download>
+                            <DownloadIcon />
+                          </a>
+                        </div>
+                      </>
                     );
                   })}
                 </div>
