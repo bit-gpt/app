@@ -116,7 +116,9 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                       <>
                         <div
                           data-cols={index}
-                          className={clsx("relative prem-img__box", {[`gridcol${index + 1}`]: index > 0})}
+                          className={clsx("relative prem-img__box", {
+                            [`gridcol${index + 1}`]: index > 0,
+                          })}
                           key={index}
                         >
                           <img src={image} className="w-full  " />
