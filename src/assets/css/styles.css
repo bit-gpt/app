@@ -337,6 +337,11 @@ header img {
   @apply focus:outline-none text-cultured rounded px-1;
   background-color: rgba(237, 237, 237, 0.1) !important;
 }
+.right-sidebar__list li input[type="number"]::-webkit-outer-spin-button,
+.right-sidebar__list li input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 .range-slider {
   @apply !h-[3px];
@@ -1027,10 +1032,6 @@ p.service-is__not-running {
   content: "";
   @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
   border-color: rgba(237, 237, 237, 0.5);
-}
-.prem-image-sidebar li::before {
-  content: "";
-  @apply rounded absolute left-0 border border-brightgray h-[9px] w-[9px];
 }
 .prem-image-sidebar ul li:hover {
   @apply bg-transparent;
