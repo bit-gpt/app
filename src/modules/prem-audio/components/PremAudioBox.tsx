@@ -23,7 +23,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
     setFile(acceptedFiles[0]);
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple: false,
     accept: {
@@ -55,7 +55,9 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
                 <img src={uploadIcon} alt="msg" width={14} height={14} />
               </div>
             </PrimaryButton>
-            <span className="text-spanishgray mt-[14px]">or drag a file here</span>
+            <span className="text-spanishgray mt-[14px]">
+              {isDragActive ? "Drop the files here ..." : "or drag a file here"}
+            </span>
           </div>
           {file && (
             <div key={file.name} className="mt-4">
@@ -65,8 +67,14 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
         </div>
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
-            className="!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm"
+            className={clsx(
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm",
+              {
+                "opacity-50": isLoading,
+              }
+            )}
             onClick={onClear}
+            disabled={isLoading}
           >
             Clear
           </OutlineCircleButton>
