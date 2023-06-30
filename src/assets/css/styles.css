@@ -976,10 +976,6 @@ p.service-is__not-running {
   }
 }
 
-.prem-img-services {
-  @apply md:pb-16 pb-10;
-}
-
 .prem-img-services textarea {
   @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
   border-radius: 0px 4.34204px 4.34204px 4.34204px;
