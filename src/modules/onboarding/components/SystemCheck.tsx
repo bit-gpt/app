@@ -63,14 +63,14 @@ const SystemCheck = ({
                 <Dependency
                   isRunning={isDockerRunning}
                   status={isDockerRunning ? "Found" : "Not Found"}
-                  name="Docker"
+                  name="Docker Engine"
                   id={"docker"}
                   tooltip={<div>Prem App requires Docker installed and running.</div>}
                 />
                 <Dependency
                   isRunning={isServerRunning}
                   status={isServerRunning ? "Running" : "Not Running"}
-                  name="Daemon"
+                  name="Prem Daemon"
                   id={"daemon"}
                   tooltip={
                     <div>
@@ -83,7 +83,7 @@ const SystemCheck = ({
                   isLoading={isLoading}
                   isRunning={isMemorySufficient}
                   status={isMemorySufficient ? `${memoryLimit}GiB` : `> ${SYSTEM_MEMORY_LIMIT}GiB`}
-                  name="Memory"
+                  name="Memory Allocated to Docker"
                   id={"memory"}
                   tooltip={
                     <div>
