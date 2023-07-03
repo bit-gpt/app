@@ -18,6 +18,10 @@ Prem provides a unified environment to develop AI applications and deploy AI mod
 - Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
 - Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
 
+## 📄 Usage
+
+In-depth documentation for installing and using Prem is available at [dev.premai.io](https://dev.premai.io)
+
 ## Demo
 
 https://github.com/premAI-io/prem-app/assets/29598954/856af04d-bded-423e-8e90-1e891ec6824f
