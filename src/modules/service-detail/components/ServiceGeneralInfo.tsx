@@ -1,4 +1,4 @@
-import { startCase } from "lodash";
+import { isArray, startCase } from "lodash";
 import { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 import { useMemo } from "react";
 import { formatInfo } from "shared/helpers/utils";
@@ -45,10 +45,6 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     return url.toString();
   }, [backendUrlFromStore, service]);
 
-  const envVariableInfoValue = (value: string[]) => {
-    return value;
-  };
-
   return (
     <div className="card px-[22px] py-8 mt-4">
       <h3 className="text-brightgray font-bold text-xl mb-6">General</h3>
@@ -64,16 +60,17 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
           )}
         </span>
       </div>
-      {generalInfo.map((info, index) => (
-        <div className="right-general-card" key={index}>
+      {generalInfo.map((info) => (
+        <div className="right-general-card" key={info.key}>
           <span className="opacity-70">{info.key}</span>
-          {info.key === "Env Variables" && (
+          {info.key === "Env Variables" && isArray(info.value) && (
             <ul className="list-disc right-general-card__list">
-              {envVariableInfoValue(info.value as Array<string>).map((item) => (
-                <li key={item}>{item}</li>
+              {info.value.map((item, index) => (
+                <li key={index}>{item}</li>
               ))}
             </ul>
           )}
+          {info.key === "Env Variables" && !isArray(info.value) && <span>{`${info.value}`}</span>}
           {info.key !== "Env Variables" && <span>{`${info.value}`}</span>}
         </div>
       ))}
