@@ -98,7 +98,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
           }
         },
         onerror: (err: AxiosError) => {
-          const errorMessage = `Something went wrong: ${err.message || ''}`;
+          const errorMessage = `Something went wrong: ${err.message || ""}`;
           setLoading(false);
           setIsError(true);
           setTempQuestion("");
