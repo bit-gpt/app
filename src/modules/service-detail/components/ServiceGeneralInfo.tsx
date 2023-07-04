@@ -45,6 +45,10 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     return url.toString();
   }, [backendUrlFromStore, service]);
 
+  const envVariableInfoValue = (value: string[]) => {
+    return value;
+  };
+
   return (
     <div className="card px-[22px] py-8 mt-4">
       <h3 className="text-brightgray font-bold text-xl mb-6">General</h3>
@@ -63,15 +67,14 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       {generalInfo.map((info, index) => (
         <div className="right-general-card" key={index}>
           <span className="opacity-70">{info.key}</span>
-          {info.key == "Env Variables" ? (
+          {info.key === "Env Variables" && (
             <ul className="list-disc right-general-card__list">
-              {info.value.map((item) => (
+              {envVariableInfoValue(info.value as Array<string>).map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-          ) : (
-            <span>{`${info.value}`}</span>
           )}
+          {info.key !== "Env Variables" && <span>{`${info.value}`}</span>}
         </div>
       ))}
 
