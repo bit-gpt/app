@@ -60,10 +60,18 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
           )}
         </span>
       </div>
-      {generalInfo.map((info) => (
-        <div className="right-general-card" key={info.key}>
+      {generalInfo.map((info, index) => (
+        <div className="right-general-card" key={index}>
           <span className="opacity-70">{info.key}</span>
-          <span>{`${info.value}`}</span>
+          {info.key == "Env Variables" ? (
+            <ul className="list-disc right-general-card__list">
+              {info.value.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <span>{`${info.value}`}</span>
+          )}
         </div>
       ))}
 

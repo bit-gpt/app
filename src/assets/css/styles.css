@@ -703,6 +703,13 @@ svg.warning-icon {
   @apply text-brightgray font-proximaNova-regular md:text-base text-sm md:w-1/2 min-w-[45%];
   word-wrap: break-word;
 }
+.right-general-card__list li {
+  word-wrap: break-word;
+  @apply text-brightgray font-proximaNova-regular md:text-base text-sm;
+}
+.right-general-card__list {
+  width: calc(50% - 2rem);
+}
 
 .ReactModal__Overlay {
   @apply !bg-transparent z-[11];
