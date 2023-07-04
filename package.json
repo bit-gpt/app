@@ -5,7 +5,9 @@
     "@tauri-apps/api": "^1.2.0",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
+    "date-fns": "^2.30.0",
     "github-markdown-css": "^5.2.0",
+    "idb-keyval": "^6.2.1",
     "lodash": "^4.17.21",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
@@ -56,5 +58,5 @@
     "tauri": "tauri"
   },
   "type": "module",
-  "version": "0.0.15"
+  "version": "0.0.20"
 }

@@ -33,14 +33,6 @@ export type PremChatResponse = {
   onRegenerate: () => void;
 };
 
-export type HeaderProps = {
-  setRightSidebar: (value: boolean) => void;
-  rightSidebar: boolean;
-  hamburgerMenuOpen: boolean;
-  setHamburgerMenu: (value: boolean) => void;
-  title: string;
-};
-
 export type InputBoxProps = {
   question: string;
   setQuestion: (question: string) => void;
@@ -52,17 +44,8 @@ export type RegenerateButtonProps = {
   onRgenerateClick: () => void;
 };
 
-export type RightSidebarProps = {
-  setRightSidebar: (value: boolean) => void;
-};
-
-export type HamburgerMenuProps = {
-  setHamburgerMenu: (value: boolean) => void;
-};
-
 export type PremChatContainerProps = {
   chatId: string | undefined;
-  isStreaming: boolean;
   serviceId: string;
   serviceName: string;
 };

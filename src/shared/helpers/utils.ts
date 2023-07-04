@@ -49,7 +49,7 @@ export const getBackendUrl = () => {
     backendURL = import.meta.env.VITE_BACKEND_URL;
   }
   if (isPackaged()) {
-    backendURL = `${window.location.protocol}//${window.location.host}/api`;
+    backendURL = `${window.location.protocol}//${window.location.host}/api/`;
   }
   return backendURL;
 };
@@ -73,6 +73,17 @@ export const serviceSearchStyle = {
       },
     },
   }),
+  input: (base: CSSObjectWithLabel) => ({
+    ...base,
+    color: "#9597A3",
+  }),
+  placeholder: (base: CSSObjectWithLabel) => {
+    return {
+      ...base,
+      color: "#9597A3",
+    };
+  },
+
   multiValue: (base: CSSObjectWithLabel) => ({
     ...base,
     backgroundColor: "transparent",
@@ -120,7 +131,9 @@ export const serviceSearchStyle = {
 };
 
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (!service.supported) {
+  if (service.comingSoon) {
+    return "coming_soon";
+  } else if (!service.supported) {
     return "not_supported";
   } else if (!service.enoughSystemMemory) {
     return "not_enough_system_memory";
@@ -145,4 +158,14 @@ export const formatInfo = (value: ServiceInfoValue) => {
 
 export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
 
-export const SYSTEM_MEMORY_LIMIT = 16;
+export const SYSTEM_MEMORY_LIMIT = 8;
+
+export const CHAT_ID = "chat";
+export const DIFFUSER_ID = "diffuser";
+
+export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
+  const url = new URL(baseUrl);
+  url.port = `${port}`;
+  url.pathname = pathname;
+  return url.toString();
+};

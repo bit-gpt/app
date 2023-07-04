@@ -14,8 +14,8 @@ import exportData from "assets/images/export-data.svg";
 import importData from "assets/images/import-data.svg";
 import WarningModal from "modules/service/components/WarningModal";
 import WarningIcon from "shared/components/WarningIcon";
-import { HamburgerMenuProps } from "../types";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
+import { HamburgerMenuProps } from "shared/types";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
@@ -62,6 +62,11 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
     setIsOpenWarningModal(true);
   };
 
+  const createNewChatClick = () => {
+    setHamburgerMenu(true);
+    navigate(`/prem-chat/${serviceId}`);
+  };
+
   return (
     <>
       <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
@@ -83,7 +88,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             alt="search"
             width={18}
             height={18}
-            className="absolute left-[20px] md:top-[15px] top-[11px] max-md:max-w-[15px]"
+            className="absolute left-[20px] md:top-[15px] top-[12px] max-md:max-w-[13px]"
           />
           <input
             className="w-full rounded-md mr-[6px] pr-5 pl-[44px] py-2"
@@ -91,7 +96,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={() => navigate(`/prem-chat/${serviceId}`)}>
+          <button onClick={createNewChatClick}>
             <img className="max-md:max-w-[15px]" src={edit} alt="edit" width={18} height={18} />
           </button>
         </div>
@@ -102,7 +107,11 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
               return (
-                <li key={item.id} className={clsx({ "bg-darkjunglegreen": chatId === item.id })}>
+                <li
+                  onClick={() => setHamburgerMenu(true)}
+                  key={item.id}
+                  className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": chatId === item.id })}
+                >
                   <Link to={`/prem-chat/${serviceId}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
                     <span>{item.title}</span>
@@ -150,8 +159,8 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             })}
           </ul>
         </div>
-        <ul className="absolute md:bottom-[33px] bottom-[22px] md:left-0 left-[22px] right-0">
-          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
+        <ul>
+          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] max-md:hidden"></div>
           {filteredHistory.length > 0 && (
             <li>
               <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>

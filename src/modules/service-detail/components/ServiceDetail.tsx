@@ -15,6 +15,7 @@ import { SERVICES_KEY } from "shared/hooks/useServices";
 import { useCallback } from "react";
 import useInterfaces from "shared/hooks/useInterfaces";
 import arrow from "assets/images/arrow.svg";
+import UseScrollToTop from "shared/hooks/useScrollToTop";
 
 const ServiceDetail = () => {
   const queryClient = useQueryClient();
@@ -38,34 +39,41 @@ const ServiceDetail = () => {
   const status = getServiceStatus(service);
 
   if (isLoading) return <ServiceLoading />;
+
   return (
     <AppContainer>
+      <UseScrollToTop />
       <button
-        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-8 xl:-mx-14 lg:-mx-8 md:-mx-6"
+        className="w-[30px] h-[30px] mt-10 md:mb-14 mb-3 xl:-mx-14 lg:-mx-8 md:-mx-6"
         onClick={back}
       >
-        <img className="mx-auto" src={arrow} alt="arrow-logo" />
+        <img className="md:mx-auto" src={arrow} alt="arrow-logo" />
       </button>
-      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header max-sm:gap-4">
-        <ServiceHeader
-          title={service.name}
-          tags={service.interfaces}
-          icon={service.icon}
-          subtitle={service.id}
-        />
-        <ServiceActions
-          serviceId={serviceId!}
-          status={status}
-          refetch={refetchServices}
-          isDetailView={true}
-          interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
-          needsUpdate={service.needsUpdate}
-          memoryRequirements={service.modelInfo?.memoryRequirements}
-        />
+      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header max-sm:gap-4 md:justify-between md:gap-4">
+        <div className="services-detail--header">
+          <ServiceHeader
+            title={service.name}
+            tags={service.interfaces}
+            icon={service.icon}
+            subtitle={service.id}
+            isInBeta={service.beta}
+          />
+        </div>
+        <div className="services-detail-header">
+          <ServiceActions
+            serviceId={serviceId!}
+            status={status}
+            refetch={refetchServices}
+            isDetailView={true}
+            interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
+            needsUpdate={service.needsUpdate}
+            memoryRequirements={service.modelInfo?.memoryRequirements}
+          />
+        </div>
       </div>
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
-        <div className="lg:w-[40%]">
+        <div className="lg:w-[40%] w-full">
           <ServiceResourceBars serviceId={service.id} status={status} />
           <ServiceGeneralInfo service={service} />
           <ServiceDescription description={service.description} />

@@ -17,7 +17,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const [pending, setPending] = useState<string | null>();
-  const { data: response } = useService(serviceId);
+  const { data: response } = useService(serviceId, false);
   const service = response?.data;
 
   const {
@@ -71,7 +71,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     backendUrl.port = `${service?.runningPort!}`;
 
     try {
-      fetchEventSource(`${backendUrl}api/v1/chat/completions`, {
+      fetchEventSource(`${backendUrl}v1/chat/completions`, {
         method: "POST",
         openWhenHidden: true,
         headers: {

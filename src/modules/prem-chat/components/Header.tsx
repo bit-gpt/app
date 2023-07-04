@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import setting from "assets/images/setting.svg";
 import hamburgerMenu from "assets/images/hamburger-menu.svg";
-import { HeaderProps } from "../types";
 import WarningModal from "modules/service/components/WarningModal";
 import { useState } from "react";
 import WarningIcon from "shared/components/WarningIcon";
+import { HeaderProps } from "shared/types";
 
 const Header = ({
   setRightSidebar,
@@ -38,18 +38,10 @@ const Header = ({
           </h1>
         </div>
         <div className="md:border-l border-light md:pl-6 flex items-center ml-auto max-w-max w-full md:absolute md:right-0">
-          <button
-            type="button"
-            onClick={openModal}
-            className={clsx("share-chat__btn", rightSidebar && "mr-6")}
-          >
+          <button type="button" onClick={openModal} className="share-chat__btn">
             Share Chat
           </button>
-          <button
-            onClick={() => setRightSidebar(true)}
-            className={clsx(rightSidebar && "hidden", "setting__btn")}
-            type="button"
-          >
+          <button onClick={() => setRightSidebar(true)} className="setting__btn" type="button">
             <img src={setting} alt="msg" width={22} height={22} />
           </button>
         </div>

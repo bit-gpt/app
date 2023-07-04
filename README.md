@@ -5,16 +5,22 @@
 [![Version](https://img.shields.io/github/v/release/premAI-io/prem-app?color=%235351FB&label=version)](https://github.com/premAI-io/prem-app/releases)
 [![Release](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml/badge.svg?event=push)](https://github.com/premAI-io/prem-app/actions/workflows/on-tag.yaml)
 [![Twitter](https://img.shields.io/twitter/follow/premai_io?style=social)](https://twitter.com/premai_io)
-[![Discord](https://dcbadge.vercel.app/api/server/WkBkzVEp?style=social)](https://discord.com/invite/WkBkzVEp)
+[![Discord](https://dcbadge.vercel.app/api/server/kpKk6vYVAn?style=social)](https://discord.com/invite/kpKk6vYVAn)
 
 
 Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical complexities for AI deployment and ushering in a new era of privacy-centric AI applications - users can finally retain control and ownership of their models. 
 
 ## 🚀 Getting started
 
-- Install Prem on your MacOS (16GB+ RAM required) - [Dowload the latest Prem App](https://github.com/premAI-io/prem-app/releases)
-- Install Prem on your Linux sever (Ubuntu,Debian) - [Installer script](#install-on-linux)
+- Install Prem on your MacOS - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
+  - 16GB+ RAM required to be allocated to your Docker engine.
+  - If you installed Docker Desktop for Mac for the first time, from the Whale 🐳 icon in the task bar, go to `Settings` -> `Resources` and increase it to more than 8GB. 
+- Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
 - Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
+
+## 📄 Usage
+
+In-depth documentation for installing and using Prem is available at [dev.premai.io](https://dev.premai.io)
 
 ## Demo
 
@@ -38,12 +44,16 @@ cd ./prem-app
 docker-compose up -d
 ```
 
-### GPU 
+### GPU (NVIDIA)
 ```bash
 git clone https://github.com/premAI-io/prem-app.git
 cd ./prem-app
 docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
 ```
+
+And you will have the UI at `http://{localhost|server_ip}:1420`.
+
+> Make sure that in `Settings` the Backend URL is set to `http://{localhost|server_ip}:8000`
 
 ## Product Roadmap
 
@@ -67,6 +77,13 @@ Each service we support it's published on the [Prem Registry](https://premai-io.
 - [ ] 📹 Video
 
 ## Contributing
+
+### Requirements
+
+- [Rust](https://www.rust-lang.org/tools/install)
+- [Node](https://nodejs.org/en/download)
+- [Docker](https://docs.docker.com/engine/install/)
+- [Tauri](https://tauri.app/v1/guides/getting-started/prerequisites#installing)
 
 ### Run the app with Tauri
 
