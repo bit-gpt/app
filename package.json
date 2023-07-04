@@ -25,6 +25,7 @@
     "remark-gfm": "^3.0.1",
     "usehooks-ts": "^2.9.1",
     "uuid": "^9.0.0",
+    "yet-another-react-lightbox": "^3.11.3",
     "zustand": "^4.3.7"
   },
   "devDependencies": {
