@@ -336,14 +336,19 @@ header img {
 .right-sidebar__list li span:last-child {
   @apply text-spanishgray;
 }
+.right-sidebar__list li {
+  @apply relative;
+}
+
 .right-sidebar__list li input[type="number"] {
-  @apply focus:outline-none text-cultured rounded px-1;
+  @apply focus:outline-none text-cultured rounded pl-1;
   background-color: rgba(237, 237, 237, 0.1) !important;
 }
 .right-sidebar__list li input[type="number"]::-webkit-outer-spin-button,
 .right-sidebar__list li input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
+  background: url("../images/arrows-up-down-light.png") no-repeat;
+  @apply w-4 bg-contain bg-[-2px];
 }
 
 .range-slider {
