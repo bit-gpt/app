@@ -13,7 +13,7 @@ Prem provides a unified environment to develop AI applications and deploy AI mod
 ## 🚀 Getting started
 
 - Install Prem on your MacOS - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
-  - 16GB+ RAM required to be allocated to your Docker engine.
+  - 8GB+ RAM required to be allocated to your Docker engine.
   - If you installed Docker Desktop for Mac for the first time, from the Whale 🐳 icon in the task bar, go to `Settings` -> `Resources` and increase it to more than 8GB. 
 - Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
 - Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
