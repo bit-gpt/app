@@ -1143,6 +1143,10 @@ p.service-is__not-running {
     width: calc(50% - 13px);
   }
 }
+.gallery .prem-img__box {
+  @apply cursor-pointer;
+}
+
 .gallery .prem-img__box:first-child {
   grid-column-start: 1;
   grid-column-end: 5;
