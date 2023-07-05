@@ -710,6 +710,12 @@ svg.warning-icon {
 .right-general-card__list {
   width: calc(50% - 2rem);
 }
+@media (max-width: 767px) {
+  .right-general-card__list {
+    width: calc(50% - 1rem);
+    @apply ml-3;
+  }
+}
 
 .ReactModal__Overlay {
   @apply !bg-transparent z-[11];
