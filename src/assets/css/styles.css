@@ -1029,7 +1029,6 @@ p.service-is__not-running {
   @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
   border-color: rgba(237, 237, 237, 0.5);
 }
-
 .prem-image-sidebar ul li span,
 .prem-image-sidebar ul li a {
   @apply text-sm;
@@ -1138,6 +1137,10 @@ p.service-is__not-running {
     width: calc(50% - 13px);
   }
 }
+.gallery .prem-img__box {
+  @apply cursor-pointer;
+}
+
 .gallery .prem-img__box:first-child {
   grid-column-start: 1;
   grid-column-end: 5;
