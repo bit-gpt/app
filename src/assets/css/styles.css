@@ -759,9 +759,6 @@ svg.warning-icon {
 .prem-chat-sidebar .sidebar li a span {
   @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
 }
-.prem-chat-sidebar .sidebar li a {
-  width: calc(100% - 18px);
-}
 .prem-chat-sidebar .sidebar li {
   @apply max-md:px-2;
 }
@@ -1032,9 +1029,7 @@ p.service-is__not-running {
   @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
   border-color: rgba(237, 237, 237, 0.5);
 }
-.prem-image-sidebar ul li:hover {
-  @apply bg-transparent;
-}
+
 .prem-image-sidebar ul li span,
 .prem-image-sidebar ul li a {
   @apply text-sm;
@@ -1131,9 +1126,9 @@ p.service-is__not-running {
 }
 
 .gallery {
-  @apply md:grid flex flex-wrap;
+  @apply md:grid flex flex-wrap mb-8;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 5vw);
+  grid-template-rows: repeat(6, 5vw);
 }
 .gallery img {
   @apply w-full h-full object-cover;
