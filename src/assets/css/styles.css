@@ -978,7 +978,7 @@ p.service-is__not-running {
 
 .prem-img-services textarea {
   @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
-  border-radius: 0px 4.34204px 4.34204px 4.34204px;
+  border-radius: 0px 4.34204px 4.34204px 4.34204px !important;
 }
 
 .prem-img-services__container {
@@ -1016,18 +1016,13 @@ p.service-is__not-running {
   border-color: rgba(245, 245, 245, 0.21);
 }
 .prem-image-sidebar {
-  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full;
+  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full max-md:pr-3;
 }
 .prem-image-sidebar ul {
   @apply relative mt-7;
 }
 .prem-image-sidebar li {
   @apply items-start;
-}
-.prem-image-sidebar ul::after {
-  content: "";
-  @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
-  border-color: rgba(237, 237, 237, 0.5);
 }
 .prem-image-sidebar ul li span,
 .prem-image-sidebar ul li a {
@@ -1070,7 +1065,7 @@ p.service-is__not-running {
 }
 
 .prem-img-promptbox textarea {
-  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll;
+  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
 }
 .prem-img-promptbox span {
   @apply text-sm text-spanishgray font-proximaNova-regular;
@@ -1125,7 +1120,7 @@ p.service-is__not-running {
 }
 
 .gallery {
-  @apply md:grid flex flex-wrap mb-8;
+  @apply md:grid flex flex-wrap pb-8;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(6, 5vw);
 }

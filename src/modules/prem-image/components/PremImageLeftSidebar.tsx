@@ -8,10 +8,12 @@ import usePremImageStore from "shared/store/prem-image";
 import { orderBy } from "lodash";
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
+import { useMediaQuery } from "usehooks-ts";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const { serviceId, historyId } = useParams();
+  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history } = usePremImageStore(
     (state) => ({
       history: state.history,
@@ -24,6 +26,9 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   const scrollToTop = () => {
+    {
+      responsiveMatches && setHamburgerMenu(true);
+    }
     document
       .querySelector(".prem-img-promptbox")
       ?.scrollIntoView({ behavior: "smooth", block: "center" });
