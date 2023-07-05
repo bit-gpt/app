@@ -21,8 +21,16 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
   const { height } = useWindowSize();
   const responsiveMatches = useMediaQuery("(min-width: 768px)");
 
-  const { chatMessages, onSubmit, question, setQuestion, isLoading, isError, onRegenerate } =
-    usePremChatStream(serviceId, chatId || null);
+  const {
+    chatMessages,
+    onSubmit,
+    question,
+    setQuestion,
+    isLoading,
+    isError,
+    onRegenerate,
+    resetPromptTemplate,
+  } = usePremChatStream(serviceId, chatId || null);
 
   const { bodyLocked, setBodyLocked } = useBodyLock();
   const hamburgerMenuToggle = () => {
@@ -105,7 +113,14 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
             </div>
           </div>
         </div>
-        <div>{rightSidebar && <RightSidebar setRightSidebar={setRightSidebar} />}</div>
+        <div>
+          {rightSidebar && (
+            <RightSidebar
+              setRightSidebar={setRightSidebar}
+              resetPromptTemplate={resetPromptTemplate}
+            />
+          )}
+        </div>
       </div>
     </section>
   );

@@ -4,7 +4,7 @@ import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import { RightSidebarProps } from "shared/types";
 import RangeSlider from "shared/components/RangeSlider";
 
-const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
+const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: RightSidebarProps) => {
   const {
     temperature,
     setTemperature,
@@ -18,6 +18,8 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
     setN,
     presence_penalty,
     setPresencePenalty,
+    promptTemplate,
+    setPromptTemplate,
   } = usePremChatStore(
     (state) => ({
       temperature: state.temperature,
@@ -32,6 +34,8 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
       setN: state.setN,
       presence_penalty: state.presence_penalty,
       setPresencePenalty: state.setPresencePenalty,
+      promptTemplate: state.promptTemplate,
+      setPromptTemplate: state.setPromptTemplate,
     }),
     shallow
   );
@@ -148,6 +152,23 @@ const RightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             step={0.1}
             onInput={(value: number[]) => setFrequencyPenalty(value[1])}
           />
+        </li>
+
+        <li>
+          <p>
+            <span>Prompt Template</span>
+            <button className="text-white" onClick={resetPromptTemplate}>
+              Reset
+            </button>
+          </p>
+          <p className="w-full">
+            <textarea
+              className="w-full rounded p-1"
+              value={promptTemplate}
+              onChange={(e) => setPromptTemplate(e.target.value)}
+              rows={5}
+            ></textarea>
+          </p>
         </li>
       </ul>
     </div>

@@ -30,6 +30,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     frequency_penalty,
     n,
     presence_penalty,
+    promptTemplate,
+    setPromptTemplate,
   } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -41,9 +43,17 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       frequency_penalty: state.frequency_penalty,
       n: state.n,
       presence_penalty: state.presence_penalty,
+      promptTemplate: state.promptTemplate,
+      setPromptTemplate: state.setPromptTemplate,
     }),
     shallow
   );
+
+  useEffect(() => {
+    if (!promptTemplate) {
+      setPromptTemplate(service?.promptTemplate || "");
+    }
+  }, [service]);
 
   const messages = history.find((_history) => _history.id === chatId)?.messages || [];
 
@@ -62,7 +72,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     }
     setTempQuestion(query);
     setQuestion("");
-    const newMessage = { role: "user", content: query };
+    const newMessage = { role: "user", content: `${promptTemplate}${query}` };
     setPending(undefined);
     setLoading(true);
     const ctrl = new AbortController();
@@ -161,6 +171,10 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     return messages;
   }, [messages, pending, tempQuestion]);
 
+  const resetPromptTemplate = useCallback(() => {
+    setPromptTemplate(service?.promptTemplate || "");
+  }, [service, setPromptTemplate]);
+
   return {
     chatMessages,
     onSubmit,
@@ -169,6 +183,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     isLoading,
     isError,
     onRegenerate,
+    resetPromptTemplate,
   };
 };
 
