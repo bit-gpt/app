@@ -8,6 +8,7 @@ import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
 import { toast } from "react-toastify";
 import { getBackendUrlFromStore } from "shared/store/setting";
+import { AxiosError } from "axios";
 
 const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
@@ -96,12 +97,13 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
             setPending((state) => (state ?? "") + (data.choices[0].delta.content || ""));
           }
         },
-        onerror: () => {
+        onerror: (err: AxiosError) => {
+          const errorMessage = `Something went wrong: ${err.message || ""}`;
           setLoading(false);
           setIsError(true);
           setTempQuestion("");
-          toast.error("Something went wrong");
-          throw new Error("Something went wrong");
+          toast.error(errorMessage);
+          throw new Error(errorMessage);
         },
       });
     } catch (e) {
