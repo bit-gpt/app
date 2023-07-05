@@ -341,14 +341,14 @@ header img {
 }
 
 .right-sidebar__list li input[type="number"] {
-  @apply focus:outline-none text-cultured rounded pl-1;
-  background-color: rgba(237, 237, 237, 0.1) !important;
+  @apply focus:outline-none text-cultured rounded px-1 min-w-[96px] text-right;
+  background-color: #35383f !important;
 }
 .right-sidebar__list li input[type="number"]::-webkit-outer-spin-button,
 .right-sidebar__list li input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  background: url("../images/arrows-up-down-light.png") no-repeat;
-  @apply w-4 bg-contain bg-[-2px];
+  background: url("../images/up-down-arrow.svg") no-repeat;
+  @apply w-4 bg-[7px];
 }
 
 .range-slider {
