@@ -130,3 +130,17 @@ export type PremAudioHistory = {
   transcriptions: string;
   timestamp: string;
 };
+
+export type PremTextAudioHistory = {
+  id: string;
+  file: string;
+  prompt: string;
+  timestamp: string;
+  fileUrl: string;
+};
+
+export type PremTextAudioStore = {
+  history: PremTextAudioHistory[];
+  addHistory: (newHistory: PremTextAudioHistory) => void;
+  deleteHistory: (id: string) => void;
+};
