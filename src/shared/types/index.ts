@@ -116,3 +116,17 @@ export type PremImageHistory = {
   images: string[];
   timestamp: string;
 };
+
+export type PremAudioStore = {
+  history: PremAudioHistory[];
+  model: string;
+  addHistory: (newHistory: PremAudioHistory) => void;
+  deleteHistory: (id: string) => void;
+};
+
+export type PremAudioHistory = {
+  id: string;
+  file: string;
+  transcriptions: string;
+  timestamp: string;
+};

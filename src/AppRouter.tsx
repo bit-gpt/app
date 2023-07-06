@@ -7,6 +7,7 @@ import NotFound from "shared/components/NotFound";
 import { ToastContainer } from "react-toastify";
 import PremImage from "modules/prem-image/components/PremImage";
 import "react-toastify/dist/ReactToastify.css";
+import PremAudio from "modules/prem-audio/components/PremAudio";
 
 const AppRouter = () => {
   return (
@@ -18,6 +19,7 @@ const AppRouter = () => {
           <Route path="/services/:serviceId/detail" element={<ServiceDetail />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/prem-image/:serviceId/:historyId?" element={<PremImage />} />
+          <Route path="/prem-audio/:serviceId/:historyId?" element={<PremAudio />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
