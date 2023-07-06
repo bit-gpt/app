@@ -7,6 +7,9 @@ import uploadIcon from "assets/images/upload.svg";
 import clsx from "clsx";
 import { PremAudioContainerProps } from "../types";
 import { useNavigate } from "react-router-dom";
+import { useReactMediaRecorder } from "react-media-recorder";
+import AudioRecorder from "./AudioRecorder";
+import { v4 as uuid } from "uuid";
 
 const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>) => {
   const navigate = useNavigate();
@@ -15,8 +18,27 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
     historyId
   );
 
+  const {
+    status,
+    startRecording,
+    stopRecording,
+    pauseRecording,
+    mediaBlobUrl,
+    resumeRecording,
+    error,
+    clearBlobUrl,
+  } = useReactMediaRecorder({
+    video: false,
+    audio: true,
+    askPermissionOnMount: true,
+    onStop(blobUrl, blob) {
+      setFile(new File([blob], `${uuid()}.wav`));
+    },
+  });
+
   const generateTranscriptions = () => {
     if (!file) return;
+    clearBlobUrl();
     onSubmit();
   };
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -33,6 +55,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
 
   const onClear = () => {
     setFile(null);
+    clearBlobUrl();
     navigate(`/prem-audio/${serviceId}`);
   };
 
@@ -43,7 +66,15 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
           Audio
         </span>
         <div className="prem-audio-box bg-darkcharcoal">
-          <p className="mb-[18px] text-spanishgray">Pick an audio file to convert in text</p>
+          <p className="mb-[18px] text-spanishgray">Pick an audio file to convert in text OR</p>
+          <AudioRecorder
+            error={error}
+            pauseRecording={pauseRecording}
+            resumeRecording={resumeRecording}
+            startRecording={startRecording}
+            status={status}
+            stopRecording={stopRecording}
+          />
           <div
             className="border-2 border-lavendergray rounded-lg h-[162px] flex justify-center items-center flex-col"
             {...getRootProps()}
