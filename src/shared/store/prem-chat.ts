@@ -40,6 +40,8 @@ const usePremChatStore = create<PremChatStore>()(
       setN: (n) => set(() => ({ n })),
       presence_penalty: 0,
       setPresencePenalty: (presence_penalty) => set(() => ({ presence_penalty })),
+      promptTemplate: "",
+      setPromptTemplate: (promptTemplate) => set(() => ({ promptTemplate })),
     }),
     {
       name: "prem-chat",
