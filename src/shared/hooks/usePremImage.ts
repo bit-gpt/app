@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { shallow } from "zustand/shallow";
 import { toast } from "react-toastify";
@@ -61,9 +61,13 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
 
   const currentHistory = history.find((_history) => _history.id === historyId);
 
+  useEffect(() => {
+    setPrompt(currentHistory?.prompt || "");
+  }, [currentHistory]);
+
   return {
     currentHistory,
-    prompt: prompt || currentHistory?.prompt || "",
+    prompt: prompt,
     setPrompt,
     isLoading,
     isError,

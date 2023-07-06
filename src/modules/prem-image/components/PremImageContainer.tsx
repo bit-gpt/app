@@ -10,10 +10,16 @@ import DeleteIconNew from "shared/components/DeleteIconNew";
 import { useNavigate } from "react-router-dom";
 import PremImagePromptBox from "./PremImagePromptBox";
 import { PremImageContainerProps } from "../types";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
 const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
+
+  const [index, setIndex] = useState(0);
+  const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const {
@@ -36,6 +42,11 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
   const onDeleteClick = () => {
     deleteHistory(historyId as string);
     navigate(`/prem-image/${serviceId}`);
+  };
+
+  const handleClickOnImg = (index: number) => {
+    setIndex(index);
+    setOpen(true);
   };
 
   return (
@@ -85,23 +96,28 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 <div className="gallery gap-[13px]">
                   {currentHistory?.images.map((image, index: number) => {
                     return (
-                      <>
-                        <div
-                          data-cols={index}
-                          className={clsx("relative prem-img__box", {
-                            [`gridcol${index + 1}`]: index > 0,
-                          })}
-                          key={index}
-                        >
-                          <img src={image} className="w-full  " />
-                          <a href={image} download>
-                            <DownloadIcon />
-                          </a>
-                        </div>
-                      </>
+                      <div
+                        onClick={() => handleClickOnImg(index)}
+                        data-cols={index}
+                        className={clsx("relative prem-img__box", {
+                          [`gridcol${index + 1}`]: index > 0,
+                        })}
+                        key={index}
+                      >
+                        <img src={image} className="w-full" />
+                        <a href={image} download onClick={(e) => e.stopPropagation()}>
+                          <DownloadIcon />
+                        </a>
+                      </div>
                     );
                   })}
                 </div>
+                <Lightbox
+                  open={open}
+                  close={() => setOpen(false)}
+                  slides={currentHistory?.images.map((img) => ({ src: img }))}
+                  index={index}
+                />
               </div>
             </div>
           </div>

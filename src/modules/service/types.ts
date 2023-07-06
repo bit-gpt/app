@@ -46,6 +46,7 @@ export type Service = {
   volumePath: string | null;
   beta: boolean;
   comingSoon: boolean;
+  promptTemplate: string;
 };
 
 export type SearchFilterProps = {

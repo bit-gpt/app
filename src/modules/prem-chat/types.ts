@@ -1,3 +1,5 @@
+import { RightSidebarProps } from "shared/types";
+
 export type Message = {
   role: string;
   content: string;
@@ -31,6 +33,7 @@ export type PremChatResponse = {
   isLoading: boolean;
   isError: boolean;
   onRegenerate: () => void;
+  resetPromptTemplate: () => void;
 };
 
 export type InputBoxProps = {
@@ -49,3 +52,7 @@ export type PremChatContainerProps = {
   serviceId: string;
   serviceName: string;
 };
+
+export interface ChatRightSidebarProps extends RightSidebarProps {
+  resetPromptTemplate: () => void;
+}

@@ -703,6 +703,19 @@ svg.warning-icon {
   @apply text-brightgray font-proximaNova-regular md:text-base text-sm md:w-1/2 min-w-[45%];
   word-wrap: break-word;
 }
+.right-general-card__list li {
+  word-wrap: break-word;
+  @apply text-brightgray font-proximaNova-regular md:text-base text-sm;
+}
+.right-general-card__list {
+  width: calc(50% - 2rem);
+}
+@media (max-width: 767px) {
+  .right-general-card__list {
+    width: calc(50% - 1rem);
+    @apply ml-3;
+  }
+}
 
 .ReactModal__Overlay {
   @apply !bg-transparent z-[11];
@@ -758,9 +771,6 @@ svg.warning-icon {
 
 .prem-chat-sidebar .sidebar li a span {
   @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
-}
-.prem-chat-sidebar .sidebar li a {
-  width: calc(100% - 18px);
 }
 .prem-chat-sidebar .sidebar li {
   @apply max-md:px-2;
@@ -979,9 +989,14 @@ p.service-is__not-running {
   }
 }
 
+textarea {
+  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
+  border-radius: 0px 4.34204px 4.34204px 4.34204px;
+}
+
 .prem-img-services textarea {
   @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
-  border-radius: 0px 4.34204px 4.34204px 4.34204px;
+  border-radius: 0px 4.34204px 4.34204px 4.34204px !important;
 }
 
 .prem-img-services__container {
@@ -1019,21 +1034,13 @@ p.service-is__not-running {
   border-color: rgba(245, 245, 245, 0.21);
 }
 .prem-image-sidebar {
-  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full;
+  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full max-md:pr-3;
 }
 .prem-image-sidebar ul {
   @apply relative mt-7;
 }
 .prem-image-sidebar li {
   @apply items-start;
-}
-.prem-image-sidebar ul::after {
-  content: "";
-  @apply absolute left-1 border-l top-[21px] bottom-0 opacity-20;
-  border-color: rgba(237, 237, 237, 0.5);
-}
-.prem-image-sidebar ul li:hover {
-  @apply bg-transparent;
 }
 .prem-image-sidebar ul li span,
 .prem-image-sidebar ul li a {
@@ -1076,11 +1083,22 @@ p.service-is__not-running {
 }
 
 .prem-img-promptbox textarea {
-  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll;
+  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
+}
+.prem-audio-box {
+  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll;
 }
 .prem-img-promptbox span {
-  @apply text-sm text-spanishgray font-proximaNova-regular;
+  @apply text-sm text-spanishgray font-proximaNova-regular text-center;
 }
+.btn-primary--addon {
+  @apply relative;
+}
+.btn-primary--addon::after {
+  content: "";
+  @apply absolute left-0 h-[38px] -top-3 bottom-0 border-l;
+}
+
 .animate-fill-effect {
   @apply relative overflow-hidden;
 }
@@ -1131,9 +1149,9 @@ p.service-is__not-running {
 }
 
 .gallery {
-  @apply md:grid flex flex-wrap;
+  @apply md:grid flex flex-wrap pb-8;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 5vw);
+  grid-template-rows: repeat(6, 5vw);
 }
 .gallery img {
   @apply w-full h-full object-cover;
@@ -1143,6 +1161,10 @@ p.service-is__not-running {
     width: calc(50% - 13px);
   }
 }
+.gallery .prem-img__box {
+  @apply cursor-pointer;
+}
+
 .gallery .prem-img__box:first-child {
   grid-column-start: 1;
   grid-column-end: 5;
