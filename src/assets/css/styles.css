@@ -979,8 +979,8 @@ p.service-is__not-running {
   }
 }
 
-.prem-img-services textarea {
-  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
+textarea {
+  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
   border-radius: 0px 4.34204px 4.34204px 4.34204px;
 }
 
@@ -1071,9 +1071,6 @@ p.service-is__not-running {
   background-color: rgba(33, 36, 44, 0.435);
 }
 
-.prem-img-promptbox textarea {
-  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll;
-}
 .prem-img-promptbox span {
   @apply text-sm text-spanishgray font-proximaNova-regular;
 }

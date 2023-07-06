@@ -155,9 +155,9 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: RightSidebarProp
         </li>
 
         <li>
-          <p>
+          <p className="!mb-[18px]">
             <span>Prompt Template</span>
-            <button className="text-white" onClick={resetPromptTemplate}>
+            <button className="text-spanishgray" onClick={resetPromptTemplate}>
               Reset
             </button>
           </p>
