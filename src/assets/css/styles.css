@@ -1071,7 +1071,7 @@ p.service-is__not-running {
   @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll;
 }
 .prem-img-promptbox span {
-  @apply text-sm text-spanishgray font-proximaNova-regular;
+  @apply text-sm text-spanishgray font-proximaNova-regular text-center;
 }
 .btn-primary--addon {
   @apply relative;
