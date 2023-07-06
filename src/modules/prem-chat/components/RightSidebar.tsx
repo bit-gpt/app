@@ -1,10 +1,10 @@
 import { shallow } from "zustand/shallow";
 import usePremChatStore from "shared/store/prem-chat";
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
-import { RightSidebarProps } from "shared/types";
 import RangeSlider from "shared/components/RangeSlider";
+import { ChatRightSidebarProps } from "../types";
 
-const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: RightSidebarProps) => {
+const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebarProps) => {
   const {
     temperature,
     setTemperature,

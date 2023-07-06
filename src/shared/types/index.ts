@@ -94,10 +94,9 @@ export type HamburgerMenuProps = {
   setHamburgerMenu: (value: boolean) => void;
 };
 
-export type RightSidebarProps = {
+export interface RightSidebarProps {
   setRightSidebar: (value: boolean) => void;
-  resetPromptTemplate: () => void;
-};
+}
 
 export type PremImageSize = "256x256" | "512x512" | "1024x1024";
 
