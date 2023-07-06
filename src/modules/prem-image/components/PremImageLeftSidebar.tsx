@@ -8,11 +8,12 @@ import usePremImageStore from "shared/store/prem-image";
 import { orderBy } from "lodash";
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
-import LeftArrowIcon from "shared/components/LeftArrowIcon";
+import { useMediaQuery } from "usehooks-ts";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const { serviceId, historyId } = useParams();
+  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history } = usePremImageStore(
     (state) => ({
       history: state.history,
@@ -22,6 +23,15 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   const onCloseClick = () => {
     navigate("/");
+  };
+
+  const scrollToTop = () => {
+    {
+      responsiveMatches && setHamburgerMenu(true);
+    }
+    document
+      .querySelector(".prem-img-promptbox")
+      ?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -44,20 +54,27 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             {orderBy(history, "timestamp", "desc").map((item) => {
               return (
                 <li
+                  onClick={scrollToTop}
                   key={item.id}
                   className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": historyId === item.id })}
                 >
                   <Link to={`/prem-image/${serviceId}/${item.id}`}>
-                    <span className="text-white">
-                      {format(parseISO(item.timestamp), "LLLL dd, hh:mm a")}
-                    </span>
-                    <div className="flex flex-wrap gap-[2px] mt-[11px]">
-                      {item.images?.map((image, index) => {
-                        return <img key={index} src={image} className="w-8 h-8" />;
-                      })}
+                    <div className="flex w-full">
+                      <div>
+                        <span className="text-white">
+                          {format(parseISO(item.timestamp), "LLLL dd, hh:mm a")}
+                        </span>
+                        <div className="flex flex-wrap gap-[2px] mt-[11px]">
+                          {item.images?.map((image, index) => {
+                            return <img key={index} src={image} className="w-8 h-8" />;
+                          })}
+                        </div>
+                      </div>
+                      <span className="text-[#58595E] text-end">
+                        {item.images.length}&nbsp;images
+                      </span>
                     </div>
                   </Link>
-                  <span className="text-[#58595E]">{item.images.length}&nbsp;images</span>
                 </li>
               );
             })}
