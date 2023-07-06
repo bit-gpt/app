@@ -69,6 +69,8 @@ export type PremChatStore = {
   setN: (n: number) => void;
   presence_penalty: number;
   setPresencePenalty: (presence_penalty: number) => void;
+  promptTemplate: string;
+  setPromptTemplate: (promptTemplate: string) => void;
 };
 
 export type MarkdownProps = {
@@ -92,9 +94,9 @@ export type HamburgerMenuProps = {
   setHamburgerMenu: (value: boolean) => void;
 };
 
-export type RightSidebarProps = {
+export interface RightSidebarProps {
   setRightSidebar: (value: boolean) => void;
-};
+}
 
 export type PremImageSize = "256x256" | "512x512" | "1024x1024";
 
