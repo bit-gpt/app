@@ -759,9 +759,6 @@ svg.warning-icon {
 .prem-chat-sidebar .sidebar li a span {
   @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
 }
-.prem-chat-sidebar .sidebar li a {
-  width: calc(100% - 18px);
-}
 .prem-chat-sidebar .sidebar li {
   @apply max-md:px-2;
 }
@@ -984,6 +981,11 @@ textarea {
   border-radius: 0px 4.34204px 4.34204px 4.34204px;
 }
 
+.prem-img-services textarea {
+  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
+  border-radius: 0px 4.34204px 4.34204px 4.34204px !important;
+}
+
 .prem-img-services__container {
   background: linear-gradient(
     131.09deg,
@@ -1019,17 +1021,13 @@ textarea {
   border-color: rgba(245, 245, 245, 0.21);
 }
 .prem-image-sidebar {
-  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full;
+  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full max-md:pr-3;
 }
 .prem-image-sidebar ul {
   @apply relative mt-7;
 }
 .prem-image-sidebar li {
   @apply items-start;
-}
-
-.prem-image-sidebar ul li:hover {
-  @apply bg-transparent;
 }
 .prem-image-sidebar ul li span,
 .prem-image-sidebar ul li a {
@@ -1071,9 +1069,23 @@ textarea {
   background-color: rgba(33, 36, 44, 0.435);
 }
 
+.prem-img-promptbox textarea {
+  @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
+}
+.prem-audio-box {
+  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll;
+}
 .prem-img-promptbox span {
   @apply text-sm text-spanishgray font-proximaNova-regular;
 }
+.btn-primary--addon {
+  @apply relative;
+}
+.btn-primary--addon::after {
+  content: "";
+  @apply absolute left-0 h-[38px] -top-3 bottom-0 border-l;
+}
+
 .animate-fill-effect {
   @apply relative overflow-hidden;
 }
@@ -1124,9 +1136,9 @@ textarea {
 }
 
 .gallery {
-  @apply md:grid flex flex-wrap;
+  @apply md:grid flex flex-wrap pb-8;
   grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 5vw);
+  grid-template-rows: repeat(6, 5vw);
 }
 .gallery img {
   @apply w-full h-full object-cover;

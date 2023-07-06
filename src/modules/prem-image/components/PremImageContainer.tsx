@@ -104,8 +104,8 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                         })}
                         key={index}
                       >
-                        <img src={image} className="w-full  " />
-                        <a href={image} download>
+                        <img src={image} className="w-full" />
+                        <a href={image} download onClick={(e) => e.stopPropagation()}>
                           <DownloadIcon />
                         </a>
                       </div>
