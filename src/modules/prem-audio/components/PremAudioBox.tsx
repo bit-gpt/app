@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, FileRejection } from "react-dropzone";
 import usePremAudio from "shared/hooks/usePremAudio";
 import PrimaryButton from "shared/components/PrimaryButton";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
@@ -7,6 +7,7 @@ import uploadIcon from "assets/images/upload.svg";
 import clsx from "clsx";
 import { PremAudioContainerProps } from "../types";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>) => {
   const navigate = useNavigate();
@@ -25,6 +26,9 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
+    onDropRejected(fileRejections: FileRejection[]) {
+      toast.error(fileRejections[0].errors[0].message);
+    },
     multiple: false,
     accept: {
       "audio/*": [".mp3", ".wav"],
@@ -51,7 +55,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
             <input type="file" {...getInputProps()} />
             <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
               <p className="pr-4 font-proximaNova-regular">Upload wav or mp3</p>
-              <div className="pl-4 btn-primary--addon">
+              <div className="pl-[15px] pr-[5px] btn-primary--addon">
                 <img src={uploadIcon} alt="msg" width={14} height={14} />
               </div>
             </PrimaryButton>
@@ -61,14 +65,14 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
           </div>
           {file && (
             <div key={file.name} className="mt-4">
-              <p className="text-white text-sm">{file.name}</p>
+              <p className="text-americanpink text-sm break-words">{file.name}</p>
             </div>
           )}
         </div>
-        <div className="mt-4 flex justify-end gap-3">
+        <div className="mt-4 flex justify-end md:gap-3 gap-5">
           <OutlineCircleButton
             className={clsx(
-              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm",
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
                 "opacity-50": isLoading,
               }
@@ -79,10 +83,13 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
             Clear
           </OutlineCircleButton>
           <PrimaryButton
-            className={clsx("!px-12 flex items-center !py-2 !h-[38px] !text-sm", {
-              "opacity-50": !file,
-              "animate-fill-effect": isLoading,
-            })}
+            className={clsx(
+              "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center max-sm:!h-10",
+              {
+                "opacity-50": !file,
+                "animate-fill-effect": isLoading,
+              }
+            )}
             onClick={generateTranscriptions}
             disabled={isLoading || !file}
           >
@@ -97,7 +104,9 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
         <div className="prem-audio-box bg-darkcharcoal">
           <p className="mb-[18px] text-spanishgray">Output</p>
           <div className="border-2 border-lavendergray rounded-lg min-h-[262px] flex justify-center items-center flex-col">
-            <div className="m-4 text-white text-sm">{currentHistory?.transcriptions}</div>
+            <div className="px-4 py-4 text-white text-sm max-h-[350px] overflow-y-auto custom-scroll">
+              {currentHistory?.transcriptions}
+            </div>
           </div>
         </div>
       </div>
