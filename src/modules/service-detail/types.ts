@@ -25,4 +25,4 @@ export type ServiceResourceBarsProps = {
   status: ServiceStatus;
 };
 
-export type ServiceInfoValue = string | number | null | boolean;
+export type ServiceInfoValue = string | number | null | boolean | string[];

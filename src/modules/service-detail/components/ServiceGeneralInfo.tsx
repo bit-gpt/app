@@ -1,4 +1,4 @@
-import { startCase } from "lodash";
+import { isArray, startCase } from "lodash";
 import { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 import { useMemo } from "react";
 import { formatInfo } from "shared/helpers/utils";
@@ -63,7 +63,15 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       {generalInfo.map((info) => (
         <div className="right-general-card" key={info.key}>
           <span className="opacity-70">{info.key}</span>
-          <span>{`${info.value}`}</span>
+          {isArray(info.value) ? (
+            <ul className="list-disc right-general-card__list">
+              {info.value.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <span>{`${info.value}`}</span>
+          )}
         </div>
       ))}
 
