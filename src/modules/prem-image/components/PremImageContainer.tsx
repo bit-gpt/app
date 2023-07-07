@@ -11,12 +11,14 @@ import { useNavigate } from "react-router-dom";
 import PremImagePromptBox from "./PremImagePromptBox";
 import { PremImageContainerProps } from "../types";
 import Lightbox from "yet-another-react-lightbox";
+import Inline from "yet-another-react-lightbox/plugins/inline";
 import "yet-another-react-lightbox/styles.css";
+import { useMediaQuery } from "usehooks-ts";
 
 const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
-
+  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
 
@@ -48,6 +50,8 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     setIndex(index);
     setOpen(true);
   };
+
+  const plugins = responsiveMatches ? [Inline] : [];
 
   return (
     <section>
@@ -93,7 +97,7 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                     </div>
                   )}
                 </div>
-                <div className="gallery gap-[13px]">
+                <div className="gallery gap-[13px] max-md:hidden">
                   {currentHistory?.images.map((image, index: number) => {
                     return (
                       <div
@@ -113,6 +117,8 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                   })}
                 </div>
                 <Lightbox
+                  plugins={plugins}
+                  inline={{ style: { width: "100%", aspectRatio: "3 / 2" } }}
                   open={open}
                   close={() => setOpen(false)}
                   slides={currentHistory?.images.map((img) => ({ src: img }))}

@@ -54,7 +54,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             {orderBy(history, "timestamp", "desc").map((item) => {
               return (
                 <li
-                  onClick={()=> responsiveMatches && setHamburgerMenu(true)}
+                  onClick={() => responsiveMatches && setHamburgerMenu(true)}
                   key={item.id}
                   className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": historyId === item.id })}
                 >

@@ -1218,3 +1218,7 @@ textarea {
 .gallery .prem-img__box[data-cols="1"]:last-child.gridcol4 {
   grid-row-end: 7;
 }
+
+.yarl__container[aria-live="polite"] {
+  @apply !bg-darkcharcoal;
+}
