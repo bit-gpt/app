@@ -122,7 +122,11 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
             </div>
           </div>
         </div>
-        <div>{rightSidebar && <PremImageRightSidebar setRightSidebar={setRightSidebar} />}</div>
+        <div>
+          {rightSidebar && (
+            <PremImageRightSidebar isLoading={isLoading} setRightSidebar={setRightSidebar} />
+          )}
+        </div>
       </div>
     </section>
   );
