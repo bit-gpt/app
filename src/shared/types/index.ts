@@ -95,7 +95,7 @@ export type HamburgerMenuProps = {
 };
 
 export interface RightSidebarProps {
-  isLoading: boolean;
+  isLoading?: boolean;
   setRightSidebar: (value: boolean) => void;
 }
 
