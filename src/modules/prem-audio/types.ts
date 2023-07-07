@@ -22,11 +22,7 @@ export type PremAudioContainerProps = {
   serviceId: string;
 };
 
-export type AudioRecorderProps = {
-  error: string;
-  startRecording: () => void;
-  pauseRecording: () => void;
-  stopRecording: () => void;
-  resumeRecording: () => void;
-  status: StatusMessages;
+export type PremAudioRecordTabsProps = {
+  file: File | null;
+  setFile: (file: File | null) => void;
 };

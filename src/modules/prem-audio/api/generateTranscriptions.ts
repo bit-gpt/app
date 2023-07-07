@@ -4,7 +4,7 @@ import { generateUrl } from "shared/helpers/utils";
 import { getBackendUrlFromStore } from "shared/store/setting";
 
 const generateTranscriptions = async (port: number, data: TranscriptionsGeneration) => {
-  const backendUrl = generateUrl(getBackendUrlFromStore(), port, "v1/audio/transcriptions");
+  const backendUrl = generateUrl(getBackendUrlFromStore(), port, "api/v1/audio/transcriptions");
   const formData = new FormData();
   formData.append("file", data.file);
   formData.append("model", data.model);

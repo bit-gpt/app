@@ -1206,3 +1206,7 @@ textarea {
 .gallery .prem-img__box[data-cols="1"]:last-child.gridcol4 {
   grid-row-end: 7;
 }
+
+.tabs-header button {
+  @apply inline-block py-2 px-[14px] min-w-[90px] w-fit text-sm text-spanishgray font-proximaNova-regular text-center;
+}
