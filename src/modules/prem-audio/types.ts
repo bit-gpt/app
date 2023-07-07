@@ -20,3 +20,9 @@ export type PremAudioContainerProps = {
   historyId?: string;
   serviceId: string;
 };
+
+export type PremAudioRecordTabsProps = {
+  file: File;
+  setFile: (file: File | null) => void;
+  activeTab: number;
+};
