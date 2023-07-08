@@ -24,7 +24,7 @@ In-depth documentation for installing and using Prem is available at [dev.premai
 
 ## Demo
 
-https://github.com/premAI-io/prem-app/assets/29598954/856af04d-bded-423e-8e90-1e891ec6824f
+https://github.com/premAI-io/prem-app/assets/29598954/e2c4f9d9-636d-4bbb-ae62-e6eb929495ee
 
 ## Install on Linux
 
