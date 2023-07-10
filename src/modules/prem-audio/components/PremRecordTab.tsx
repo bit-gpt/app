@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import { useState } from "react";
 import MicError from "./MicError";
 import RecordControls from "./RecordControls";
+import PremAudioPlayer from "shared/components/PremAudioPlayer";
 
 const PremRecordTab = ({ setFile }: Pick<PremAudioRecordTabsProps, "setFile">) => {
   const [url, setUrl] = useState("");
@@ -34,9 +35,11 @@ const PremRecordTab = ({ setFile }: Pick<PremAudioRecordTabsProps, "setFile">) =
         )}
       </div>
       {!!url && (
-        <div className="gradient-border relative mt-5">
-          <p>Prem.AI Speech File</p>
-          <audio src={url} controls />
+        <div className="gradient-border relative mt-5 prem-audio-recording">
+          <p className="text-cultured text-sm whitespace-nowrap font-proximaNova-regular">
+            Prem.AI Speech File
+          </p>
+          <PremAudioPlayer url={url} />
         </div>
       )}
     </div>

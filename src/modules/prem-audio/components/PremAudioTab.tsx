@@ -3,6 +3,7 @@ import { useDropzone } from "react-dropzone";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { PremAudioRecordTabsProps } from "../types";
 import uploadIcon from "assets/images/upload.svg";
+import PremAudioPlayer from "shared/components/PremAudioPlayer";
 
 const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   const [url, setUrl] = useState("");
@@ -42,9 +43,11 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
       </div>
 
       {!!url && (
-        <div className="gradient-border relative mt-5">
-          <p>Prem.AI Speech File</p>
-          <audio src={url} controls />
+        <div className="gradient-border relative mt-5 prem-audio-recording">
+          <p className="text-cultured text-sm whitespace-nowrap font-proximaNova-regular">
+            Prem.AI Speech File
+          </p>
+          <PremAudioPlayer url={url} />
         </div>
       )}
     </div>
