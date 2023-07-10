@@ -49,6 +49,12 @@ header img {
   @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
 }
 
+@media (max-width: 767px) {
+  .bg-lines::before {
+    @apply hidden;
+  }
+}
+
 .docker-modal-wrap {
   background: linear-gradient(
     131.93deg,
@@ -81,7 +87,10 @@ header img {
 }
 
 .btn-primary {
-  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md hover:bg-[#ff7e7b];
+  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
+}
+:not(:disabled).btn-primary {
+  @apply hover:bg-[#ff7e7b];
 }
 
 .dashboard {
@@ -775,7 +784,7 @@ svg.warning-icon {
 }
 
 .prem-chat-sidebar .sidebar li a span {
-  @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
+  @apply whitespace-nowrap w-[180px] text-ellipsis overflow-hidden;
 }
 .prem-chat-sidebar .sidebar li {
   @apply max-md:px-2;
@@ -1091,10 +1100,13 @@ textarea {
   @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
 }
 .prem-audio-box {
-  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll;
+  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll break-words;
+}
+.prem-audio-box span {
+  @apply w-full;
 }
 .prem-img-promptbox span {
-  @apply text-sm text-spanishgray font-proximaNova-regular text-center;
+  @apply text-sm text-spanishgray font-proximaNova-regular text-center break-words;
 }
 .btn-primary--addon {
   @apply relative;
@@ -1210,4 +1222,8 @@ textarea {
 }
 .gallery .prem-img__box[data-cols="1"]:last-child.gridcol4 {
   grid-row-end: 7;
+}
+
+.yarl__container[aria-live="polite"] {
+  @apply !bg-darkcharcoal;
 }
