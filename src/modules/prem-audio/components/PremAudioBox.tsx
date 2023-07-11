@@ -50,7 +50,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
           </button>
         </div>
         {activeTab === AUDIO_TAB && <PremAudioTab file={file} setFile={setFile} />}
-        {activeTab === RECORD_TAB && <PremRecordTab setFile={setFile} />}
+        {activeTab === RECORD_TAB && <PremRecordTab file={file} setFile={setFile} />}
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
             className={clsx(

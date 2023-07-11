@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { PremAudioRecordTabsProps } from "../types";
@@ -9,11 +9,6 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   const [url, setUrl] = useState("");
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
-    const reader = new FileReader();
-    reader.readAsDataURL(acceptedFiles[0]);
-    reader.onload = (e) => {
-      setUrl(e.target?.result as string);
-    };
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -23,6 +18,19 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
       "audio/*": [".mp3", ".wav"],
     },
   });
+
+  useEffect(() => {
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        setUrl(e.target?.result as string);
+      };
+    } else {
+      setUrl("");
+    }
+  }, [file]);
+
   return (
     <div className="prem-audio-box bg-darkcharcoal">
       <p className="mb-[18px] text-spanishgray">Pick an audio file to convert in text</p>

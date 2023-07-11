@@ -1,12 +1,12 @@
 import { PremAudioRecordTabsProps } from "../types";
 import { useReactMediaRecorder } from "react-media-recorder";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MicError from "./MicError";
 import RecordControls from "./RecordControls";
 import PremAudioPlayer from "shared/components/PremAudioPlayer";
 
-const PremRecordTab = ({ setFile }: Pick<PremAudioRecordTabsProps, "setFile">) => {
+const PremRecordTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   const [url, setUrl] = useState("");
 
   const { status, startRecording, stopRecording, mediaBlobUrl, error, clearBlobUrl } =
@@ -20,6 +20,12 @@ const PremRecordTab = ({ setFile }: Pick<PremAudioRecordTabsProps, "setFile">) =
         clearBlobUrl();
       },
     });
+
+  useEffect(() => {
+    if (!file) {
+      setUrl("");
+    }
+  }, [file]);
 
   return (
     <div className="prem-audio-box bg-darkcharcoal">
