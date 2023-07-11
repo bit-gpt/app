@@ -1,13 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 import usePremAudio from "shared/hooks/usePremAudio";
 import PrimaryButton from "shared/components/PrimaryButton";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
-import clsx from "clsx";
+import { AUDIO_TAB, RECORD_TAB } from "shared/helpers/utils";
 import { PremAudioContainerProps } from "../types";
-import { useNavigate } from "react-router-dom";
 import PremAudioTab from "./PremAudioTab";
 import PremRecordTab from "./PremRecordTab";
-import { AUDIO_TAB, RECORD_TAB } from "shared/helpers/utils";
 
 const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>) => {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
             className={clsx(
-              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm",
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
                 "opacity-50": isLoading,
               }
@@ -65,10 +65,13 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
             Clear
           </OutlineCircleButton>
           <PrimaryButton
-            className={clsx("!px-12 flex items-center !py-2 !h-[38px] !text-sm", {
-              "opacity-50": !file,
-              "animate-fill-effect": isLoading,
-            })}
+            className={clsx(
+              "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center max-sm:!h-10",
+              {
+                "opacity-50": !file,
+                "animate-fill-effect": isLoading,
+              }
+            )}
             onClick={generateTranscriptions}
             disabled={isLoading || !file}
           >

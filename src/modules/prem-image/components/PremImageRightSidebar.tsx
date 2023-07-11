@@ -4,7 +4,7 @@ import usePremImageStore from "shared/store/prem-image";
 import { RightSidebarProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
-const PremImageRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
+const PremImageRightSidebar = ({ setRightSidebar, isLoading }: RightSidebarProps) => {
   const { n, setN, seed, setSeed } = usePremImageStore(
     (state) => ({
       n: state.n,
@@ -42,6 +42,7 @@ const PremImageRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             max={4}
             step={1}
             onInput={(value: number[]) => setN(value[1])}
+            disabled={isLoading}
           />
         </li>
         <li>

@@ -9,10 +9,12 @@ import clsx from "clsx";
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import usePremAudioStore from "shared/store/prem-audio";
 import DeleteIcon from "shared/components/DeleteIcon";
+import { useMediaQuery } from "usehooks-ts";
 
 const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const { serviceId, historyId } = useParams();
+  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history, deleteHistory } = usePremAudioStore(
     (state) => ({
       history: state.history,
@@ -52,6 +54,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             {orderBy(history, "timestamp", "desc").map((item) => {
               return (
                 <li
+                  onClick={() => responsiveMatches && setHamburgerMenu(true)}
                   key={item.id}
                   className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": historyId === item.id })}
                 >
