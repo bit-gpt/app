@@ -7,8 +7,8 @@
   --plyr-range-thumb-shadow: 0 0 0 2px rgba(245, 197, 140, 0.2);
   --plyr-range-track-height: 4px;
   --plyr-audio-range-track-background: rgba(237, 237, 237, 0.1);
-  --plyr-audio-progress-buffered-background	: rgba(237, 237, 237, 0.1);
-  --plyr-tooltip-background	: rgba(237, 237, 237, 0.1);
+  --plyr-audio-progress-buffered-background: rgba(237, 237, 237, 0.1);
+  --plyr-tooltip-background: rgba(237, 237, 237, 0.1);
 }
 
 @tailwind base;
@@ -1247,7 +1247,7 @@ textarea {
 }
 
 @screen minMaxMd {
-  .plyr__volume input[type=range] {
+  .plyr__volume input[type="range"] {
     max-width: 60px !important;
     min-width: 40px !important;
   }
