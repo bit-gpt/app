@@ -540,38 +540,23 @@ header img {
   background-color: rgba(77, 77, 79, 0.22);
 }
 .dropdown-menu {
-  @apply bg-darkjunglegreen border py-4 pl-6 pr-3 invisible rounded-lg opacity-0 top-[50px] right-0 w-[244px] absolute translate-y-[-20px];
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
-  border-color: rgba(149, 151, 163, 0.5);
+  @apply py-3 px-[22px] invisible rounded opacity-0 top-[50px] md:top-[65px] right-0 w-[154px] absolute translate-y-[-20px];
+  background: linear-gradient(134deg, rgba(47, 47, 47, 0.40) 0%, rgba(103, 100, 98, 0.11) 100%);
+  box-shadow: 0px 4px 25px -1px rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(21.176469802856445px);
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
 }
 .dropdown-menu.dropdown-active {
   @apply opacity-100 visible translate-y-0 z-[11];
 }
 .dropdown-menu li {
-  @apply text-spanishgray flex cursor-pointer;
+  @apply text-cultured flex cursor-pointer font-proximaNova-regular hover:text-lightsalmonpink;
 }
-.dropdown-menu input[type="checkbox"] {
-  @apply w-4 h-4 border border-lavendergray;
+.dropdown-menu li:not(:last-child) {
+  @apply mb-4;
 }
-.dropdown-menu input[type="checked"] {
-  @apply bg-tulip;
-}
-.dropdown-menu li label {
-  @apply flex items-center cursor-pointer w-full pb-4 text-sm;
-}
-.dropdown-menu li label span {
-  @apply font-proximaNova-regular select-none;
-}
-.dropdown-menu li input[type="checkbox"] {
-  @apply border mr-4 border-lavendergray w-5 h-5 appearance-none cursor-pointer rounded-sm;
-}
-.dropdown-menu li input:checked {
-  @apply relative border-transparent bg-tulip;
-}
-.dropdown-menu li input:checked::before {
-  content: "\2713";
-  @apply absolute top-[-1px] right-[1px] text-[1.1rem] text-darkcharcoal;
+.dropdown-menu li:last-child.red-badge::before {
+  @apply top-[6px];
 }
 
 .warning-modal {
@@ -1226,4 +1211,12 @@ textarea {
 
 .yarl__container[aria-live="polite"] {
   @apply !bg-darkcharcoal;
+}
+
+.red-badge {
+  @apply relative;
+}
+.red-badge::before {
+  content: "";
+  @apply bg-[#F24822] h-[10px] w-[10px] top-[-10px] right-[-3px] rounded-2xl absolute;
 }

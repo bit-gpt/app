@@ -9,6 +9,7 @@ import DocumentationModal from "./DocumentationModal";
 import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
 import { round } from "lodash";
 import { AUDIO_TO_TEXT_ID, CHAT_ID, DIFFUSER_ID } from "shared/helpers/utils";
+import ServiceDropdown from "./ServiceDropdown";
 
 const ServiceActions = ({
   status,
@@ -22,7 +23,6 @@ const ServiceActions = ({
 }: ServiceActionsProps) => {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
-
   const onOpenClick = useCallback(() => {
     const isPlayground = interfaces.some((app) => app.playground);
     if (isPlayground) {
@@ -69,10 +69,10 @@ const ServiceActions = ({
         {status === "not_downloaded" && (
           <NotDownloadedServiceState serviceId={serviceId} refetch={refetch} />
         )}
-
         {["not_supported", "not_enough_memory", "not_enough_system_memory", "coming_soon"].includes(
           status
         ) && <WarningServiceState status={status} memoryRequirements={memoryInGib} />}
+        <ServiceDropdown />
       </div>
       {modalIsOpen && (
         <DocumentationModal
