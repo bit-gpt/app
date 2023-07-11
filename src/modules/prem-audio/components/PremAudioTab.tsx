@@ -53,7 +53,7 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
       {!!url && (
         <div className="gradient-border relative mt-5 prem-audio-recording">
           <p className="text-cultured text-sm whitespace-nowrap font-proximaNova-regular">
-            Prem.AI Speech File
+            {file?.name}
           </p>
           <PremAudioPlayer url={url} />
         </div>

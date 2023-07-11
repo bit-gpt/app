@@ -1,22 +1,26 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import clsx from "clsx";
-import PremImageLeftSidebar from "./PremAudioLeftSidebar";
 import Header from "./Header";
 import PremImageRightSidebar from "./PremAudioRightSidebar";
 import { PremAudioContainerProps } from "../types";
 import PremAudioBox from "./PremAudioBox";
+import PremAudioLeftSidebar from "./PremAudioLeftSidebar";
+import { useMediaQuery } from "usehooks-ts";
 
 const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
+  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
 
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
         <div
-          className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "max-md:hidden")}
+          className={clsx("prem-chat-sidebar md:relative", {
+            hidden: responsiveMatches && hamburgerMenuOpen,
+          })}
         >
-          <PremImageLeftSidebar setHamburgerMenu={setHamburgerMenu} />
+          <PremAudioLeftSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
