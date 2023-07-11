@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { PremTextAudioContainerProps } from "../types";
 import { useNavigate } from "react-router-dom";
 import usePremTextAudio from "shared/hooks/usePremTextAudio";
+import PremAudioPlayer from "shared/components/PremAudioPlayer";
 
 const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContainerProps>) => {
   const navigate = useNavigate();
@@ -69,10 +70,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
           <div className="prem-audio-box bg-darkcharcoal">
             <div>
               <p className="mb-[18px] text-spanishgray">{currentHistory.file}</p>
-              <audio controls key={currentHistory.id}>
-                <source src={currentHistory.fileUrl} type="audio/wav" />
-                Your browser does not support the audio element.
-              </audio>
+              <PremAudioPlayer url={currentHistory.fileUrl} />
             </div>
           </div>
         </div>
