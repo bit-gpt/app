@@ -3,22 +3,24 @@ import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import deleteService from "../api/deleteService";
 import DeleteIcon from "shared/components/DeleteIcon";
-import { useState } from "react";
 import WarningModal from "./WarningModal";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 import useStartService from "shared/hooks/useStartService";
-import useBodyLock from "shared/hooks/useBodyLock";
 
+type DeleteModalProps = {
+  openDeleteModal: boolean;
+  setOpenDeleteModal: (value: boolean) => void;
+  setBodyLocked: (value: boolean) => void;
+};
 const StoppedServiceState = ({
   serviceId,
   refetch,
-  isDetailView,
   onOpenClick,
-}: ServiceStateProps) => {
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { bodyLocked, setBodyLocked } = useBodyLock();
-
+  openDeleteModal,
+  setOpenDeleteModal,
+  setBodyLocked,
+}: ServiceStateProps & DeleteModalProps) => {
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
     deleteService(id)
   );
@@ -37,12 +39,6 @@ const StoppedServiceState = ({
         toast.error("Failed to start service");
       },
     });
-  };
-
-  const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setOpenDeleteModal(true);
-    setBodyLocked(true);
   };
 
   const deleteServiceHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -81,11 +77,6 @@ const StoppedServiceState = ({
       >
         Open
       </PrimaryButton>
-      {isDetailView && (
-        <button onClick={onDelete}>
-          <DeleteIcon />
-        </button>
-      )}
       {openDeleteModal && (
         <WarningModal
           icon={<DeleteIcon />}

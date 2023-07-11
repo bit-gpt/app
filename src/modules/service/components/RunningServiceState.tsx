@@ -1,48 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
-import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
-import StopIcon from "shared/components/StopIcon";
-import stopService from "../api/stopService";
 import PrimaryButton from "shared/components/PrimaryButton";
-import { toast } from "react-toastify";
-import useStopService from "shared/hooks/useStopService";
 import useBodyLock from "shared/hooks/useBodyLock";
 
-const RunningServiceState = ({
-  serviceId,
-  refetch,
-  isDetailView = false,
-  onOpenClick,
-}: ServiceStateProps) => {
-  const { mutate, isLoading } = useStopService();
-  const { bodyLocked, setBodyLocked } = useBodyLock();
-
-  const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    mutate(serviceId, {
-      onSuccess: () => {
-        refetch();
-        toast.success("Service stopped successfully");
-      },
-      onError: () => {
-        toast.error("Failed to stop service");
-      },
-    });
-  };
+const RunningServiceState = ({ onOpenClick }: Pick<ServiceStateProps, "onOpenClick">) => {
+  const { setBodyLocked } = useBodyLock();
 
   const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBodyLocked(true);
     onOpenClick && onOpenClick();
   };
-
-  if (isLoading) {
-    return (
-      <div className="mt-2">
-        <Spinner className="w-5 h-5" />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -58,11 +25,6 @@ const RunningServiceState = ({
       >
         Open
       </PrimaryButton>
-      {isDetailView && (
-        <button onClick={onStop}>
-          <StopIcon />
-        </button>
-      )}
     </>
   );
 };
