@@ -1,5 +1,14 @@
 @import url("./fonts.css");
 
+:root {
+  --plyr-color-main: hsla(0, 84%, 76%, 1);
+  --plyr-range-thumb-height: 10px;
+  --plyr-range-thumb-background: #f5c58c;
+  --plyr-range-thumb-shadow: 0 0 0 2px rgba(245, 197, 140, 0.2);
+  --plyr-range-track-height: 4px;
+  --plyr-audio-range-track-background: rgba(237, 237, 237, 0.1);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,6 +58,12 @@ header img {
   @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
 }
 
+@media (max-width: 767px) {
+  .bg-lines::before {
+    @apply hidden;
+  }
+}
+
 .docker-modal-wrap {
   background: linear-gradient(
     131.93deg,
@@ -81,7 +96,10 @@ header img {
 }
 
 .btn-primary {
-  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md hover:bg-[#ff7e7b];
+  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
+}
+:not(:disabled).btn-primary {
+  @apply hover:bg-[#ff7e7b];
 }
 
 .dashboard {
@@ -336,14 +354,19 @@ header img {
 .right-sidebar__list li span:last-child {
   @apply text-spanishgray;
 }
+.right-sidebar__list li {
+  @apply relative;
+}
+
 .right-sidebar__list li input[type="number"] {
-  @apply focus:outline-none text-cultured rounded px-1;
-  background-color: rgba(237, 237, 237, 0.1) !important;
+  @apply focus:outline-none text-cultured rounded px-1 min-w-[96px] text-right;
+  background-color: #35383f !important;
 }
 .right-sidebar__list li input[type="number"]::-webkit-outer-spin-button,
 .right-sidebar__list li input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
+  background: url("../images/up-down-arrow.svg") no-repeat;
+  @apply w-4 bg-[7px];
 }
 
 .range-slider {
@@ -770,7 +793,7 @@ svg.warning-icon {
 }
 
 .prem-chat-sidebar .sidebar li a span {
-  @apply whitespace-nowrap w-full text-ellipsis overflow-hidden;
+  @apply whitespace-nowrap w-[180px] text-ellipsis overflow-hidden;
 }
 .prem-chat-sidebar .sidebar li {
   @apply max-md:px-2;
@@ -1086,10 +1109,13 @@ textarea {
   @apply py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
 }
 .prem-audio-box {
-  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll;
+  @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll break-words;
+}
+.prem-audio-box span {
+  @apply w-full;
 }
 .prem-img-promptbox span {
-  @apply text-sm text-spanishgray font-proximaNova-regular text-center;
+  @apply text-sm text-spanishgray font-proximaNova-regular text-center break-words;
 }
 .btn-primary--addon {
   @apply relative;
@@ -1205,4 +1231,35 @@ textarea {
 }
 .gallery .prem-img__box[data-cols="1"]:last-child.gridcol4 {
   grid-row-end: 7;
+}
+
+.tabs-header button {
+  @apply inline-block py-2 px-[14px] min-w-[90px] w-fit text-sm text-spanishgray font-proximaNova-regular text-center;
+}
+
+.prem-audio-recording {
+  @apply flex items-center max-lg:flex-wrap px-4 py-1;
+}
+.plyr--audio .plyr__controls {
+  @apply !bg-transparent;
+}
+.plyr__progress__buffer {
+  @apply !bg-transparent;
+}
+
+.plyr__controls__item.plyr__menu {
+  @apply hidden;
+}
+.plyr__control svg {
+  @apply !h-[14px] !w-[14px] !fill-white;
+}
+.plyr__controls .plyr__controls__item {
+  @apply text-xs text-spanishgray;
+}
+.plyr__time + .plyr__time:before {
+  @apply !mr-[6px];
+}
+
+.yarl__container[aria-live="polite"] {
+  @apply !bg-darkcharcoal;
 }

@@ -171,3 +171,6 @@ export const generateUrl = (baseUrl: string, port: number, pathname: string) => 
   url.pathname = pathname;
   return url.toString();
 };
+
+export const AUDIO_TAB = "AUDIO_TAB";
+export const RECORD_TAB = "RECORD_TAB";
