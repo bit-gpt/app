@@ -541,8 +541,8 @@ header img {
 }
 .dropdown-menu {
   @apply py-3 px-[22px] invisible rounded opacity-0 top-[50px] md:top-[65px] right-0 w-[154px] absolute translate-y-[-20px];
-  background: linear-gradient(134deg, rgba(47, 47, 47, 0.40) 0%, rgba(103, 100, 98, 0.11) 100%);
-  box-shadow: 0px 4px 25px -1px rgba(0, 0, 0, 0.20);
+  background: linear-gradient(134deg, rgba(47, 47, 47, 0.4) 0%, rgba(103, 100, 98, 0.11) 100%);
+  box-shadow: 0px 4px 25px -1px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(21.176469802856445px);
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
 }
