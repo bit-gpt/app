@@ -550,12 +550,14 @@ header img {
   @apply opacity-100 visible translate-y-0 z-[11];
 }
 .dropdown-menu li {
-  @apply text-cultured md:py-2 py-1 px-[22px] flex w-full cursor-pointer font-proximaNova-regular hover:text-lightsalmonpink;
+  @apply text-cultured px-0 flex w-full cursor-pointer font-proximaNova-regular hover:text-lightsalmonpink;
 }
 .dropdown-menu li button {
-  @apply w-full text-left;
+  @apply w-full h-[30px] px-5 text-left;
 }
-
+.dropdown-menu li:not(:first-child) {
+  @apply mt-2;
+}
 .dropdown-menu li.red-badge::before {
   @apply top-[14px] right-[15px];
 }
