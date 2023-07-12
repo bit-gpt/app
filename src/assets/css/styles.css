@@ -1227,3 +1227,13 @@ textarea {
 .yarl__container[aria-live="polite"] {
   @apply !bg-darkcharcoal;
 }
+
+.custom-service__markdown {
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 3.9602210521698px 23.76132583618164px 0px rgba(0, 0, 0, 0.2);
+  background-color: linear-gradient(
+    134deg,
+    rgba(47, 47, 47, 0.4) 0%,
+    rgba(103, 100, 98, 0.11) 100%
+  );
+}

@@ -8,17 +8,19 @@ const CustomServiceCard = () => {
 
   return (
     <>
-      <div className={"dashboard-bottom__card flex-wrap"}>
+      <div className="dashboard-bottom__card flex-wrap">
         <div className="flex gap-8 items-start flex-wrap w-full relative">
-          <div className="dashboard-bottom__card-box">
-            <img src={icon} alt={"logo"} />
+          <div className="dashboard-bottom__card-box bg-lightsalmonpink p-3 rounded-lg">
+            <img src={icon} alt={"logo"} className="!w-6 !h-6 !rounded" />
           </div>
-          <PrimaryButton
-            className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
-            onClick={() => setOpenCustomService(true)}
-          >
-            Add
-          </PrimaryButton>
+          <div className="flex flex-wrap items-center gap-4 ml-auto">
+            <PrimaryButton
+              className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
+              onClick={() => setOpenCustomService(true)}
+            >
+              Add
+            </PrimaryButton>
+          </div>
         </div>
         <h3>Custom Service</h3>
       </div>

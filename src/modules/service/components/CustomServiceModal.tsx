@@ -77,20 +77,20 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
         document.getElementById("#root")?.removeAttribute("aria-hidden");
       }}
     >
-      <div className="warning-modal__content gradient-border">
-        <div className="documentation-modal scrollbar-custom">
-          <button onClick={closeModal} className="w-[40px] -mx-2 mb-5">
-            <img src={cross} alt="cross" className="h-4 w-4 mx-auto" />
-          </button>
-          <div className="documentation-markdown">
+      <div className="warning-modal__content gradient-border w-[550px]">
+        <h1 className="text-brightgray text-2xl my-4">Custom Service</h1>
+        <div className="documentation-modal mb-4">
+          <div className="documentation-markdown custom-service__markdown">
             <Editor
               value={code}
               onValueChange={(code) => setCode(code)}
               highlight={(code) => highlight(code, languages.javascript, "javascript")}
               padding={10}
+              textareaClassName="scrollbar-custom"
               style={{
-                fontFamily: '"Fira code", "Fira Mono", monospace',
-                fontSize: 12,
+                borderRadius: 11,
+                fontFamily: "ProximaNova-Regular",
+                fontSize: 14,
               }}
             />
           </div>
