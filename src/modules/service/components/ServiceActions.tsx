@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import DocumentationModal from "./DocumentationModal";
 import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
 import { round } from "lodash";
-import { AUDIO_TO_TEXT_ID, CHAT_ID, DIFFUSER_ID } from "shared/helpers/utils";
+import { AUDIO_TO_TEXT_ID, CHAT_ID, DIFFUSER_ID, TEXT_TO_AUDIO_ID } from "shared/helpers/utils";
 
 const ServiceActions = ({
   status,
@@ -32,6 +32,8 @@ const ServiceActions = ({
         navigate(`/prem-image/${serviceId}`);
       } else if (interfaces.some((app) => app.id === AUDIO_TO_TEXT_ID)) {
         navigate(`/prem-audio/${serviceId}`);
+      } else if (interfaces.some((app) => app.id === TEXT_TO_AUDIO_ID)) {
+        navigate(`prem-text-audio/${serviceId}`);
       }
       return;
     }
