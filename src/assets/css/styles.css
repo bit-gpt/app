@@ -97,7 +97,7 @@ header img {
   padding: 12px 20px;
 }
 :not(:disabled).btn-outline-circle {
-  @apply hover:bg-[#ff7e7b];
+  @apply hover:border-[#ff7e7b] hover:text-[#ff7e7b];
 }
 
 .btn-primary {
