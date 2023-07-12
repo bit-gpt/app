@@ -6,11 +6,13 @@ import { useParams } from "react-router-dom";
 import useInterfaces from "shared/hooks/useInterfaces";
 import useServices from "shared/hooks/useServices";
 import ServiceCard from "./ServiceCard";
+import { isDeveloperMode } from "shared/helpers/utils";
+import CustomServiceCard from "./CustomServiceCard";
 
 const Service = () => {
   const { appId } = useParams();
 
-  const { data: response, isLoading: isServicesLoading } = useServices();
+  const { data: response, isLoading: isServicesLoading, refetch: refetchServices } = useServices();
   const { data: appResponse } = useInterfaces();
 
   const [filter, setFilter] = useState(new Map<string, boolean>());
@@ -23,6 +25,8 @@ const Service = () => {
     if (![...filter.values()].includes(true)) return apps;
     return apps.filter((app) => filter.get(app.id) as boolean);
   }, [apps, filter]);
+
+  const isDevMode = isDeveloperMode();
 
   return (
     <AppContainer>
@@ -57,6 +61,7 @@ const Service = () => {
                 <div className="text-white opacity-70">No services found</div>
               )}
               {isServicesLoading && <div className="text-center text-[#8C8C8C]">Loading...</div>}
+              {isDevMode && <CustomServiceCard />}
             </div>
           </div>
         );

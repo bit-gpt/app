@@ -170,3 +170,7 @@ export const generateUrl = (baseUrl: string, port: number, pathname: string) => 
   url.pathname = pathname;
   return url.toString();
 };
+
+export const isDeveloperMode = () => {
+  return import.meta.env.VITE_DEVELOPER_MODE === "1";
+};
