@@ -34,8 +34,10 @@ const Registries = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <div className="flex items-center">
-        <label className="text-white mr-2 backend-url md:text-lg text-[11px]">Registries</label>
+      <div className="flex">
+        <label className="text-white mr-2 backend-url md:text-lg text-[11px] mt-2">
+          Registries
+        </label>
         <div className="flex w-full">
           <div className="text-right w-full">
             {isLoading && (
