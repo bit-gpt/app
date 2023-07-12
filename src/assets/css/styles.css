@@ -540,7 +540,7 @@ header img {
   background-color: rgba(77, 77, 79, 0.22);
 }
 .dropdown-menu {
-  @apply py-3 px-[22px] invisible rounded opacity-0 top-[50px] md:top-[65px] right-0 w-[154px] absolute translate-y-[-20px];
+  @apply invisible py-2 rounded opacity-0 top-[50px] md:top-[65px] right-0 w-[154px] absolute translate-y-[-20px];
   background: linear-gradient(134deg, rgba(47, 47, 47, 0.4) 0%, rgba(103, 100, 98, 0.11) 100%);
   box-shadow: 0px 4px 25px -1px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(21.176469802856445px);
@@ -550,13 +550,14 @@ header img {
   @apply opacity-100 visible translate-y-0 z-[11];
 }
 .dropdown-menu li {
-  @apply text-cultured flex cursor-pointer font-proximaNova-regular hover:text-lightsalmonpink;
+  @apply text-cultured md:py-2 py-1 px-[22px] flex w-full cursor-pointer font-proximaNova-regular hover:text-lightsalmonpink;
 }
-.dropdown-menu li:not(:first-child) {
-  @apply md:mt-4 mt-2;
+.dropdown-menu li button {
+  @apply w-full text-left;
 }
+
 .dropdown-menu li.red-badge::before {
-  @apply top-[6px];
+  @apply top-[14px] right-[15px];
 }
 
 .warning-modal {
@@ -1218,5 +1219,5 @@ textarea {
 }
 .red-badge::before {
   content: "";
-  @apply bg-[#F24822] h-[10px] w-[10px] top-[-10px] right-[-3px] rounded-2xl absolute;
+  @apply bg-[#F24822] h-[10px] w-[10px] top-[-8px] right-[-4px] rounded-2xl absolute;
 }

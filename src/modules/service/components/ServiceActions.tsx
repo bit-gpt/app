@@ -108,7 +108,7 @@ const ServiceActions = ({
       <>
         {progress > 0 && <p className="text-brightgray">{progress}%</p>}
         <div className="flex justify-center">
-          <Spinner className="h-10 w-10" />
+          <Spinner className="md:h-10 md:w-10 h-5 w-5" />
         </div>
       </>
     );
