@@ -52,9 +52,7 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "maxMd:hidden")}
-        >
+        <div className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "maxMd:hidden")}>
           <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1 prem-chat-container">
