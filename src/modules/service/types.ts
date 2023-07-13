@@ -146,3 +146,8 @@ export type App = {
   playground: boolean;
   documentation: string;
 };
+
+export type CustomServiceModalProps = {
+  isOpen: boolean;
+  closeModal: () => void;
+};

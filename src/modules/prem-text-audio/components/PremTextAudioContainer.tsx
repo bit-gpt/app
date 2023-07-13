@@ -1,26 +1,24 @@
 import { useState } from "react";
 import clsx from "clsx";
+import PremTextAudioLeftSidebar from "./PremTextAudioLeftSidebar";
 import Header from "./Header";
-import PremImageRightSidebar from "./PremAudioRightSidebar";
-import { PremAudioContainerProps } from "../types";
-import PremAudioBox from "./PremAudioBox";
-import PremAudioLeftSidebar from "./PremAudioLeftSidebar";
-import { useMediaQuery } from "usehooks-ts";
+import PremTextAudioRightSidebar from "./PremTextAudioRightSidebar";
+import { PremTextAudioContainerProps } from "../types";
+import PremTextAudioBox from "./PremTextAudioBox";
 
-const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioContainerProps) => {
+const PremTextAudioContainer = ({
+  serviceName,
+  serviceId,
+  historyId,
+}: PremTextAudioContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
-  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
 
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", {
-            hidden: responsiveMatches && hamburgerMenuOpen,
-          })}
-        >
-          <PremAudioLeftSidebar setHamburgerMenu={setHamburgerMenu} />
+        <div className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "maxMd:hidden")}>
+          <PremTextAudioLeftSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1">
           <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
@@ -32,14 +30,14 @@ const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioCont
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <PremAudioBox serviceId={serviceId} historyId={historyId} />
+              <PremTextAudioBox serviceId={serviceId} historyId={historyId} />
             </div>
           </div>
         </div>
-        <div>{rightSidebar && <PremImageRightSidebar setRightSidebar={setRightSidebar} />}</div>
+        <div>{rightSidebar && <PremTextAudioRightSidebar setRightSidebar={setRightSidebar} />}</div>
       </div>
     </section>
   );
 };
 
-export default PremAudioContainer;
+export default PremTextAudioContainer;

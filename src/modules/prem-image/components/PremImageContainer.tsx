@@ -56,9 +56,7 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "max-md:hidden")}
-        >
+        <div className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "maxMd:hidden")}>
           <PremImageLeftSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1">
@@ -78,7 +76,7 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 setNegativePrompt={setNegativePrompt}
               />
               <div className="prem-img-services__container">
-                <div className="py-[30px] flex flex-wrap max-md:gap-2">
+                <div className="py-[30px] flex flex-wrap maxMd:gap-2">
                   <PrimaryButton
                     className={clsx("!px-12 !py-2 !text-sm", {
                       "opacity-50": !prompt,
@@ -97,7 +95,7 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                     </div>
                   )}
                 </div>
-                <div className="gallery gap-[13px] max-md:hidden">
+                <div className="gallery gap-[13px] maxMd:hidden">
                   {currentHistory?.images.map((image, index: number) => {
                     return (
                       <div

@@ -43,7 +43,7 @@ const Header = ({
             onClick={openModal}
             className={clsx("share-chat__btn", rightSidebar && "mr-6")}
           >
-            Share Image
+            Share Chat
           </button>
           <button
             onClick={() => setRightSidebar(true)}
@@ -55,7 +55,7 @@ const Header = ({
         </div>
       </div>
       <WarningModal
-        description="Share Image is not available yet"
+        description="Share Chat is not available yet"
         title="Coming Soon"
         isOpen={open}
         onCancel={closeModal}
