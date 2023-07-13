@@ -9,7 +9,7 @@ const usePremTextAudioStore = create<PremTextAudioStore>()(
       (set) => ({
         history: [],
         addHistory: (newHistory: PremTextAudioHistory) =>
-          set((state) => ({history: [...state.history, newHistory]})),
+          set((state) => ({ history: [...state.history, newHistory] })),
         deleteHistory: (id: string) =>
           set((state) => ({
             history: state.history.filter((_history) => _history.id !== id),
@@ -20,7 +20,7 @@ const usePremTextAudioStore = create<PremTextAudioStore>()(
         storage: createJSONStorage(() => storage),
       }
     ),
-    {name: 'store', store: 'prem-text-audio'}
+    { name: "store", store: "prem-text-audio" }
   )
 );
 

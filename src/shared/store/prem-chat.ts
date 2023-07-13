@@ -9,9 +9,9 @@ const usePremChatStore = create<PremChatStore>()(
     persist(
       (set) => ({
         history: [],
-        clearHistory: () => set(() => ({history: []})),
+        clearHistory: () => set(() => ({ history: [] })),
         addHistory: (newHistory: PremChatHistory) =>
-          set((state) => ({history: [...state.history, newHistory]})),
+          set((state) => ({ history: [...state.history, newHistory] })),
         updateHistoryMessages: (id, messages) =>
           set((state) => ({
             history: state.history.map((_history) => {
@@ -30,26 +30,26 @@ const usePremChatStore = create<PremChatStore>()(
             history: state.history.filter((_history) => _history.id !== id),
           })),
         temperature: 0.2,
-        setTemperature: (temperature) => set(() => ({temperature})),
+        setTemperature: (temperature) => set(() => ({ temperature })),
         max_tokens: 256,
-        setMaxTokens: (max_tokens) => set(() => ({max_tokens})),
+        setMaxTokens: (max_tokens) => set(() => ({ max_tokens })),
         top_p: 0.95,
-        setTopP: (top_p) => set(() => ({top_p})),
+        setTopP: (top_p) => set(() => ({ top_p })),
         frequency_penalty: 0,
-        setFrequencyPenalty: (frequency_penalty) => set(() => ({frequency_penalty})),
+        setFrequencyPenalty: (frequency_penalty) => set(() => ({ frequency_penalty })),
         n: 1,
-        setN: (n) => set(() => ({n})),
+        setN: (n) => set(() => ({ n })),
         presence_penalty: 0,
-        setPresencePenalty: (presence_penalty) => set(() => ({presence_penalty})),
+        setPresencePenalty: (presence_penalty) => set(() => ({ presence_penalty })),
         promptTemplate: "",
-        setPromptTemplate: (promptTemplate) => set(() => ({promptTemplate})),
+        setPromptTemplate: (promptTemplate) => set(() => ({ promptTemplate })),
       }),
       {
         name: "prem-chat",
         storage: createJSONStorage(() => storage),
-      },
+      }
     ),
-    { name: 'store', store: 'prem-chat' }
+    { name: "store", store: "prem-chat" }
   )
 );
 

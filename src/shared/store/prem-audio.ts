@@ -10,7 +10,7 @@ const usePremAudioStore = create<PremAudioStore>()(
         history: [],
         model: "whisper-1",
         addHistory: (newHistory: PremAudioHistory) =>
-          set((state) => ({history: [...state.history, newHistory]})),
+          set((state) => ({ history: [...state.history, newHistory] })),
         deleteHistory: (id: string) =>
           set((state) => ({
             history: state.history.filter((_history) => _history.id !== id),
@@ -21,8 +21,8 @@ const usePremAudioStore = create<PremAudioStore>()(
         storage: createJSONStorage(() => storage),
       }
     ),
-    {name: 'store', store: 'prem-audio'}
-  ),
+    { name: "store", store: "prem-audio" }
+  )
 );
 
 export default usePremAudioStore;

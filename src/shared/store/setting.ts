@@ -6,17 +6,17 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 const useSettingStore = create<SettingStore>()(
   devtools(
-  persist(
-    (set) => ({
-      backendUrl: getBackendUrl(),
-      setBackendUrl: (backendUrl) => set(() => ({ backendUrl })),
-    }),
-    {
-      name: "setting",
-      storage: createJSONStorage(() => storage),
-    }
-  ),
-  {name: 'store', store: 'setting'}
+    persist(
+      (set) => ({
+        backendUrl: getBackendUrl(),
+        setBackendUrl: (backendUrl) => set(() => ({ backendUrl })),
+      }),
+      {
+        name: "setting",
+        storage: createJSONStorage(() => storage),
+      }
+    ),
+    { name: "store", store: "setting" }
   )
 );
 
