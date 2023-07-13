@@ -40,7 +40,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
         </button>
       )}
       <div className="min-h-screen flex w-full">
-        <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "max-md:hidden")}>
+        <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "maxMd:hidden")}>
           <Sidebar />
         </div>
         <div className="main-container">{children}</div>

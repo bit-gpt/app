@@ -26,7 +26,7 @@ const Header = ({
   return (
     <>
       <div className="md:border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0 md:justify-center">
-        <div className="max-md:w-full flex md:justify-center header__center max-md:items-center">
+        <div className="maxMd:w-full flex md:justify-center header__center maxMd:items-center">
           <button
             onClick={() => setHamburgerMenu(!hamburgerMenuOpen)}
             className="md:hidden ml-5 w-10 h-10"
