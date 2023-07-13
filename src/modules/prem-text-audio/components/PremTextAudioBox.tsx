@@ -50,7 +50,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
             className={clsx(
-              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm",
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
               {
                 "opacity-50": isLoading,
               }
@@ -61,10 +61,13 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
             Clear
           </OutlineCircleButton>
           <PrimaryButton
-            className={clsx("!px-12 flex items-center !py-2 !h-[38px] !text-sm", {
-              "opacity-50": !prompt,
-              "animate-fill-effect": isLoading,
-            })}
+            className={clsx(
+              "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:w-1/2 maxSm:justify-center",
+              {
+                "opacity-50": !prompt,
+                "animate-fill-effect": isLoading,
+              }
+            )}
             onClick={generateAudio}
             disabled={isLoading || !prompt}
           >
