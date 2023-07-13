@@ -28,7 +28,7 @@ const SystemCheck = ({
 
   return (
     <section className="system-check flex flex-wrap bg-lines relative">
-      <div className="bg-tulip w-full py-2 h-9 text-center max-sm:px-1 z-[11]">
+      <div className="bg-tulip w-full py-2 h-9 text-center maxSm:px-1 z-[11]">
         <p className="text-brightgray text-sm">
           Don't have requirements? Try the &nbsp;
           <a href="https://app.prem.ninja/" target="_blank" className="underline decoration">
@@ -43,8 +43,8 @@ const SystemCheck = ({
           <img src={arrow} alt="arrow" />
         </button>
       </div>
-      <div className="relative z-[1] mx-auto max-md:w-full system-check__container">
-        <div className="mx-auto md:max-w-[600px] max-md:px-6 w-full rounded-xl">
+      <div className="relative z-[1] mx-auto maxMd:w-full system-check__container">
+        <div className="mx-auto md:max-w-[600px] maxMd:px-6 w-full rounded-xl">
           <div className="">
             <div className="md:max-w-[450px] mx-auto relative z-10">
               <img

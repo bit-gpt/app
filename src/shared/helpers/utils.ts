@@ -172,5 +172,9 @@ export const generateUrl = (baseUrl: string, port: number, pathname: string) => 
   return url.toString();
 };
 
+export const isDeveloperMode = () => {
+  return import.meta.env.VITE_DEVELOPER_MODE === "1";
+};
+
 export const AUDIO_TAB = "AUDIO_TAB";
 export const RECORD_TAB = "RECORD_TAB";

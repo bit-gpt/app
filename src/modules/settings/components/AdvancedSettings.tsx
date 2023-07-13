@@ -53,7 +53,7 @@ const AdvancedSettings = () => {
           <div className="flex w-full">
             <div className="text-right w-full">
               <input
-                className="form-control max-md:!py-2 max-md:text-[10px]"
+                className="form-control maxMd:!py-2 maxMd:text-[10px]"
                 type="url"
                 value={backendUrl}
                 onChange={onChange}
@@ -61,7 +61,7 @@ const AdvancedSettings = () => {
             </div>
             <button
               id="reset"
-              className="w-[50px] h-[45px] max-md:hidden"
+              className="w-[50px] h-[45px] maxMd:hidden"
               type="button"
               onClick={onReset}
             >
@@ -79,7 +79,7 @@ const AdvancedSettings = () => {
         </div>
         <div className="text-right mt-[44px] mr-[45px]">
           <PrimaryButton
-            className="!px-9 max-md:text-[12px] max-md:absolute left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
+            className="!px-9 maxMd:text-[12px] maxMd:absolute left-0 right-0 bottom-0 maxMd:max-w-[322px] maxMd:mx-auto maxMd:py-1 maxMd:h-[36px]"
             type="submit"
             disabled={isLoading}
           >

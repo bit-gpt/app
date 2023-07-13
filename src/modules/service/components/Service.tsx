@@ -6,11 +6,13 @@ import { useParams } from "react-router-dom";
 import useInterfaces from "shared/hooks/useInterfaces";
 import useServices from "shared/hooks/useServices";
 import ServiceCard from "./ServiceCard";
+import { isDeveloperMode } from "shared/helpers/utils";
+import CustomServiceCard from "./CustomServiceCard";
 
 const Service = () => {
   const { appId } = useParams();
 
-  const { data: response, isLoading: isServicesLoading } = useServices();
+  const { data: response, isLoading: isServicesLoading, refetch: refetchServices } = useServices();
   const { data: appResponse } = useInterfaces();
 
   const [filter, setFilter] = useState(new Map<string, boolean>());
@@ -24,10 +26,12 @@ const Service = () => {
     return apps.filter((app) => filter.get(app.id) as boolean);
   }, [apps, filter]);
 
+  const isDevMode = isDeveloperMode();
+
   return (
     <AppContainer>
       <div className="mask-heading mb-5 md:-mx-6 xl:-mx-10">
-        <h2 className="md:!mt-10 max-md:!mt-4">Dashboard</h2>
+        <h2 className="md:!mt-10 maxMd:!mt-4">Dashboard</h2>
       </div>
 
       {apps.length > 0 && (
@@ -38,7 +42,7 @@ const Service = () => {
         const filteredServices = services.filter((service) => service.interfaces.includes(app.id));
         return (
           <div key={app.id} className="mt-10">
-            <h3 className="text-brightgray font-bold md:text-xl max-md:text-sm text-base flex md:mb-5 mb-[13px]">
+            <h3 className="text-brightgray font-bold md:text-xl maxMd:text-sm text-base flex md:mb-5 mb-[13px]">
               {app.name}
             </h3>
             <div className="flex gap-[22px] flex-wrap ">
@@ -57,6 +61,7 @@ const Service = () => {
                 <div className="text-white opacity-70">No services found</div>
               )}
               {isServicesLoading && <div className="text-center text-[#8C8C8C]">Loading...</div>}
+              {isDevMode && <CustomServiceCard />}
             </div>
           </div>
         );
