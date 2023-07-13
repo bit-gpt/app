@@ -33,7 +33,7 @@ const ServiceActions = ({
       } else if (interfaces.some((app) => app.id === AUDIO_TO_TEXT_ID)) {
         navigate(`/prem-audio/${serviceId}`);
       } else if (interfaces.some((app) => app.id === TEXT_TO_AUDIO_ID)) {
-        navigate(`prem-text-audio/${serviceId}`);
+        navigate(`/prem-text-audio/${serviceId}`);
       }
       return;
     }
