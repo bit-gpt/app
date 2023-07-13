@@ -27,7 +27,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
       <div className="max-w-[650px] mx-auto">
         <div className="max-w-[650px] mx-auto mt-20">
-          <div className="prem-audio-box bg-darkcharcoal">
+          <div className="prem-audio-box bg-darkcharcoal rounded-tl">
             <p className="mb-[18px] text-spanishgray">Input your text</p>
             <div className="border-2 border-lavendergray rounded-lg flex justify-center items-center flex-col">
               <textarea
@@ -37,6 +37,14 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
                 rows={10}
               ></textarea>
             </div>
+            {currentHistory && (
+              <div className="gradient-border mt-5 relative prem-audio-recording">
+                <p className="text-cultured text-sm whitespace-nowrap font-proximaNova-regular overflow-hidden text-ellipsis lg:max-w-[160px] maxSm:mt-[10px] maxLg:mx-1">
+                  {currentHistory.file}
+                </p>
+                <PremAudioPlayer url={currentHistory.fileUrl} />
+              </div>
+            )}
           </div>
         </div>
         <div className="mt-4 flex justify-end gap-3">
@@ -64,17 +72,6 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
           </PrimaryButton>
         </div>
       </div>
-
-      {currentHistory && (
-        <div className="max-w-[650px] mx-auto mt-20">
-          <div className="prem-audio-box rounded-tl bg-darkcharcoal">
-            <div>
-              <p className="mb-[18px] text-spanishgray">{currentHistory.file}</p>
-              <PremAudioPlayer url={currentHistory.fileUrl} />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
