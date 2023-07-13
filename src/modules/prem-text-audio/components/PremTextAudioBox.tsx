@@ -67,7 +67,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
 
       {currentHistory && (
         <div className="max-w-[650px] mx-auto mt-20">
-          <div className="prem-audio-box bg-darkcharcoal">
+          <div className="prem-audio-box rounded-tl bg-darkcharcoal">
             <div>
               <p className="mb-[18px] text-spanishgray">{currentHistory.file}</p>
               <PremAudioPlayer url={currentHistory.fileUrl} />
