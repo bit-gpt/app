@@ -1,4 +1,5 @@
 import { PremAudioHistory } from "shared/types";
+import { StatusMessages } from "react-media-recorder";
 
 export type TranscriptionsGeneration = {
   file: File;
@@ -19,4 +20,9 @@ export type PremAudioContainerProps = {
   serviceName: string;
   historyId?: string;
   serviceId: string;
+};
+
+export type PremAudioRecordTabsProps = {
+  file: File | null;
+  setFile: (file: File | null) => void;
 };

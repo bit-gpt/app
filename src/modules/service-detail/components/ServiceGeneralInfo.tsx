@@ -40,7 +40,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       return "";
     }
     const url = new URL(backendUrlFromStore);
-    url.port = service.runningPort.toString();
+    url.port = `${service.runningPort}`;
     url.pathname = "docs";
     return url.toString();
   }, [backendUrlFromStore, service]);

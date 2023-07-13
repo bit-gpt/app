@@ -163,6 +163,7 @@ export const SYSTEM_MEMORY_LIMIT = 8;
 export const CHAT_ID = "chat";
 export const DIFFUSER_ID = "diffuser";
 export const AUDIO_TO_TEXT_ID = "audio-to-text";
+export const TEXT_TO_AUDIO_ID = "text-to-audio";
 
 export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
   const url = new URL(baseUrl);
@@ -170,3 +171,6 @@ export const generateUrl = (baseUrl: string, port: number, pathname: string) => 
   url.pathname = pathname;
   return url.toString();
 };
+
+export const AUDIO_TAB = "AUDIO_TAB";
+export const RECORD_TAB = "RECORD_TAB";
