@@ -68,12 +68,6 @@ const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             })}
           </ul>
         </div>
-        <div className="sidebar-toggle__btn !mt-auto !-mx-2 px-5 border-t pt-4 pb-2 close-sidebar">
-          <button onClick={onCloseClick} className="bg-Onyx px-[8.4px] mr-3 py-[10px] rounded-md">
-            <LeftArrowIcon />
-          </button>
-          <span>Close Sidebar</span>
-        </div>
       </div>
     </>
   );

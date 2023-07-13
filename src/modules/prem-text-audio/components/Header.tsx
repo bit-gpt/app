@@ -37,14 +37,7 @@ const Header = ({
             {title}
           </h1>
         </div>
-        <div className="md:border-l border-light md:pl-6 flex items-center ml-auto max-w-max w-full md:absolute md:right-0">
-          <button
-            type="button"
-            onClick={openModal}
-            className={clsx("share-chat__btn", rightSidebar && "mr-6")}
-          >
-            Share Chat
-          </button>
+        <div className="flex items-center ml-auto max-w-max w-full md:absolute md:right-0">
           <button
             onClick={() => setRightSidebar(true)}
             className={clsx(rightSidebar && "hidden", "setting__btn")}
