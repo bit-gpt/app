@@ -8,9 +8,7 @@ const AdvancedSettings = () => {
         Advanced
       </h2>
       <BackendUrl />
-      <div className="mt-5">
-        <Registries />
-      </div>
+      <Registries />
     </div>
   );
 };

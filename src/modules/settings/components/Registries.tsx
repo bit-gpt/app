@@ -33,13 +33,13 @@ const Registries = () => {
   const registries = response?.data || [];
 
   return (
-    <form onSubmit={onSubmit}>
+    <form className="mt-[42px]" onSubmit={onSubmit}>
       <div className="flex">
         <label className="text-white mr-2 backend-url md:text-lg text-[11px] mt-2">
           Registries
         </label>
         <div className="flex w-full">
-          <div className="text-right w-full mr-[45px]">
+          <div className="text-right w-full md:mr-[45px]">
             {isLoading && (
               <div className="flex justify-center mb-5">
                 <Spinner className="h-10 w-10" />

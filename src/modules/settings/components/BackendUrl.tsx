@@ -74,7 +74,7 @@ const BackendUrl = () => {
           </Tooltip>
         </div>
       </div>
-      <div className="text-right mt-[44px] mr-[45px]">
+      <div className="text-right mt-[29px] mr-[45px]">
         <PrimaryButton
           className="!px-9 max-md:text-[12px] max-md:absolute left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
           type="submit"
