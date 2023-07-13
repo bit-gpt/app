@@ -49,7 +49,7 @@ const ServiceDetail = () => {
       >
         <img className="md:mx-auto" src={arrow} alt="arrow-logo" />
       </button>
-      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] max-md:justify-between services-header max-sm:gap-4 md:justify-between md:gap-4">
+      <div className="flex flex-wrap items-start md:mb-[62px] mb-[22px] maxMd:justify-between services-header maxSm:gap-4 md:justify-between md:gap-4">
         <div className="services-detail--header">
           <ServiceHeader
             title={service.name}

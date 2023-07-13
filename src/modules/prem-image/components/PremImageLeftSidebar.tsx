@@ -37,9 +37,9 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   return (
     <>
       <div className="md:pt-7 !bg-darkgunmetal pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
-        <div className="flex max-md:flex-wrap md:gap-4">
+        <div className="flex maxMd:flex-wrap md:gap-4">
           <button className="mx-2" onClick={onCloseClick}>
-            <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
+            <img src={leftArrow} alt="left-arrow" className="maxMd:max-w-[15px]" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
           <button

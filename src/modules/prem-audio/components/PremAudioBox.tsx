@@ -54,7 +54,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
             className={clsx(
-              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
               {
                 "opacity-50 pointer-events-none": isLoading,
               }
@@ -66,7 +66,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
           </OutlineCircleButton>
           <PrimaryButton
             className={clsx(
-              "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center max-sm:!h-10",
+              "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:w-1/2 maxSm:justify-center maxSm:!h-10",
               {
                 "opacity-50": !file,
                 "animate-fill-effect": isLoading,
