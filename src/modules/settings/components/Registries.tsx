@@ -5,6 +5,7 @@ import fetchRegistries from "../api/fetchRegistries";
 import addRegistry from "../api/addRegistry";
 import Spinner from "shared/components/Spinner";
 import { toast } from "react-toastify";
+import MinusArrow from "shared/components/MinusArrow";
 
 const Registries = () => {
   const [registryUrl, setRegistryUrl] = useState("");
@@ -39,7 +40,7 @@ const Registries = () => {
           Registries
         </label>
         <div className="flex w-full">
-          <div className="text-right w-full md:mr-[45px]">
+          <div className="text-right w-full">
             {isLoading && (
               <div className="flex justify-center mb-5">
                 <Spinner className="h-10 w-10" />
@@ -57,13 +58,18 @@ const Registries = () => {
                 />
               );
             })}
-            <input
-              className="form-control maxMd:!py-2 maxMd:text-[10px]"
-              type="url"
-              value={registryUrl}
-              onChange={(e) => setRegistryUrl(e.target.value)}
-              required
-            />
+            <div className="flex">
+              <input
+                className="form-control maxMd:!py-2 maxMd:text-[10px]"
+                type="url"
+                value={registryUrl}
+                onChange={(e) => setRegistryUrl(e.target.value)}
+                required
+              />
+              <button className="w-[50px] h-[45px] maxMd:hidden" type="button">
+                <MinusArrow />
+              </button>
+            </div>
           </div>
         </div>
       </div>
