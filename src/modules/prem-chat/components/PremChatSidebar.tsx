@@ -70,9 +70,9 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   return (
     <>
       <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
-        <div className="flex max-md:flex-wrap md:gap-4">
+        <div className="flex maxMd:flex-wrap md:gap-4">
           <button className="mx-2" onClick={onCloseClick}>
-            <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
+            <img src={leftArrow} alt="left-arrow" className="maxMd:max-w-[15px]" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
           <button
@@ -88,7 +88,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             alt="search"
             width={18}
             height={18}
-            className="absolute left-[20px] md:top-[15px] top-[12px] max-md:max-w-[13px]"
+            className="absolute left-[20px] md:top-[15px] top-[12px] maxMd:max-w-[13px]"
           />
           <input
             className="w-full rounded-md mr-[6px] pr-5 pl-[44px] py-2"
@@ -97,7 +97,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             onChange={(e) => setSearch(e.target.value)}
           />
           <button onClick={createNewChatClick}>
-            <img className="max-md:max-w-[15px]" src={edit} alt="edit" width={18} height={18} />
+            <img className="maxMd:max-w-[15px]" src={edit} alt="edit" width={18} height={18} />
           </button>
         </div>
         <div
@@ -160,7 +160,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           </ul>
         </div>
         <ul>
-          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] max-md:hidden"></div>
+          <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] maxMd:hidden"></div>
           {filteredHistory.length > 0 && (
             <li>
               <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>

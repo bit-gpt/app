@@ -12,7 +12,7 @@ const PremImagePromptBox = ({
   setNegativePrompt,
 }: PromptProps) => {
   return (
-    <div className="md:m-[50px] flex max-lg:flex-wrap gap-10 m-[25px] prem-img-promptbox">
+    <div className="md:m-[50px] flex maxLg:flex-wrap gap-10 m-[25px] prem-img-promptbox">
       <div className="flex lg:w-1/2 w-full flex-col">
         <span className="bg-darkcharcoal py-2 px-[14px] min-w-[129px] w-fit rounded-tl rounded-tr">
           Prompt

@@ -53,7 +53,7 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
     <section>
       <div className="md:flex md:h-screen w-full relative">
         <div
-          className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "max-md:hidden")}
+          className={clsx("prem-chat-sidebar md:relative", hamburgerMenuOpen && "maxMd:hidden")}
         >
           <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
@@ -87,7 +87,7 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
                 </div>
               </div>
               <div className="prem-chat-bottom border-transparent">
-                <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto max-md:mt-[14px]">
+                <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto maxMd:mt-[14px]">
                   {chatMessages.length > 0 && !isLoading && !isError && (
                     <div>
                       <RegenerateButton onRgenerateClick={onRegenerate} />

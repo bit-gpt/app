@@ -99,7 +99,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
         <div className="warning-modal__footer">
           <OutlineCircleButton
             onClick={onCancel}
-            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full max-md:order-2"
+            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full maxMd:order-2"
           >
             Cancel
           </OutlineCircleButton>
