@@ -1022,11 +1022,6 @@ textarea {
   border-radius: 0px 4.34204px 4.34204px 4.34204px;
 }
 
-.prem-img-services textarea {
-  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none;
-  border-radius: 0px 4.34204px 4.34204px 4.34204px !important;
-}
-
 .prem-img-services__container {
   background: linear-gradient(
     131.09deg,
