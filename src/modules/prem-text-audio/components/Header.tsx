@@ -25,7 +25,7 @@ const Header = ({
 
   return (
     <>
-      <div className="md:border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0">
+      <div className="md:border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0 justify-center">
         <div className="maxMd:w-full flex md:justify-center header__center maxMd:items-center">
           <button
             onClick={() => setHamburgerMenu(!hamburgerMenuOpen)}
@@ -33,7 +33,7 @@ const Header = ({
           >
             <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
           </button>
-          <h1 className="flex items-center text-white md:text-xl text-md font-proximaNova-regular mx-[18px]">
+          <h1 className="flex items-center text-white md:text-xl text-md font-proximaNova-regular">
             {title}
           </h1>
         </div>
