@@ -46,7 +46,7 @@ const ServiceActions = ({
 
   return (
     <>
-      <div className="flex flex-wrap items-center gap-4 ml-auto">
+      <div className="flex flex-wrap items-center md:gap-4 gap-3 ml-auto">
         {children}
         {isDetailView && needsUpdate && (
           <NeedsUpdateServiceState serviceId={serviceId} refetch={refetch} />

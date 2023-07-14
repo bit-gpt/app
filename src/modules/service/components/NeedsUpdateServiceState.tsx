@@ -33,7 +33,7 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
 
   return (
     <>
-      <button className="refresh-icon mx-4" onClick={onDownload}>
+      <button className="refresh-icon md:mx-4" onClick={onDownload}>
         <RefreshIcon />
       </button>
       <Tooltip anchorSelect=".refresh-icon" place="bottom" className="topltip">
