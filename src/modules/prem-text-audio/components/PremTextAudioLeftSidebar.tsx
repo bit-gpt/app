@@ -48,7 +48,7 @@ const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
-        {history.length === 0 && <NoPrompts />}
+        {history.length === 0 && <NoPrompts text="No Audio" />}
         <div className="mt-10 overflow-y-auto custom-scroll">
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(history, "timestamp", "desc").map((item) => {

@@ -51,7 +51,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           </button>
         </div>
 
-        {history.length === 0 && <NoPrompts />}
+        {history.length === 0 && <NoPrompts text="No Audio" />}
         <div className="mt-10 overflow-y-auto custom-scroll">
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(history, "timestamp", "desc").map((item) => {

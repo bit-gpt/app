@@ -105,7 +105,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           style={{ height: height - (responsiveMatches ? 290 : 250) }}
           className="overflow-y-auto overflow-x-hidden flex flex-col"
         >
-          {history.length === 0 && <NoPrompts />}
+          {history.length === 0 && <NoPrompts text="No Chat" />}
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
               return (

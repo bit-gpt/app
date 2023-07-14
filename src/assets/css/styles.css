@@ -963,7 +963,7 @@ p.service-is__not-running {
   @apply maxMd:max-w-[100px] maxMd:ml-3;
 }
 .prem-chat-sidebar .sidebar__search {
-  @apply maxMd:h-[38px] mb-[18px];
+  @apply maxMd:h-[38px];
 }
 .prem-chat-sidebar .sidebar li a {
   @apply maxMd:text-[12px];

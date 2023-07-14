@@ -1,10 +1,14 @@
 import NoPromptsIcon from "./NoPromptsIcon";
 
-const NoPrompts = () => {
+type textProps = {
+  text: string;
+};
+
+const NoPrompts = ({ text }: textProps) => {
   return (
-    <p className="text-spanishgray text-sm mt-6 font-proximaNova-regular text-center">
+    <p className="text-spanishgray text-sm mt-8 font-proximaNova-regular text-center">
       <NoPromptsIcon />
-      No prompts.
+      {text}
     </p>
   );
 };
