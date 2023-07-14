@@ -824,6 +824,15 @@ p.service-is__not-running {
   @apply !bg-transparent !text-brightgray !text-sm;
 }
 
+.markdown-body :not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background-color: transparent !important;
+}
+
+.markdown-body pre {
+  background-color: rgb(30, 30, 30) !important;
+}
+
 .markdown-body ul,
 .markdown-body ol {
   list-style: unset;
