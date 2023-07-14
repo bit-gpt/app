@@ -1,7 +1,7 @@
 <svg width="135" height="124" viewBox="0 0 135 124" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_552_22664)">
 <path d="M62.3038 23C64.6132 19 70.3867 19 72.6962 23L109.502 86.75C111.812 90.75 108.925 95.75 104.306 95.75H30.6939C26.0751 95.75 23.1884 90.75 25.4978 86.75L62.3038 23Z" fill="#F39894"/>
-<path d="M67.5 47V66.5" stroke="#F7F0ED" stroke-width="8" stroke-linecap="round"/>
+<path d="M67.5 47V66.5" stroke="#F7F0ED" strokeWidth="8" strokeLinecap="round"/>
 <circle cx="67" cy="78" r="4" fill="#F7F0ED"/>
 </g>
 <defs>

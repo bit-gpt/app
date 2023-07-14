@@ -9,6 +9,7 @@ import { orderBy } from "lodash";
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
 import { useMediaQuery } from "usehooks-ts";
+import NoPrompts from "shared/components/NoPrompts";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
+        <NoPrompts history={history} />
         <div className="prem-image-sidebar custom-scroll">
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(history, "timestamp", "desc").map((item) => {
