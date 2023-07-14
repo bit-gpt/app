@@ -9,6 +9,15 @@
   --plyr-audio-range-track-background: rgba(237, 237, 237, 0.1);
   --plyr-audio-progress-buffered-background: rgba(237, 237, 237, 0.1);
   --plyr-tooltip-background: rgba(237, 237, 237, 0.1);
+
+  /* COLOR THEME */
+  --primary-color: #e7a29a;
+  --secondary-color: #ebc19d;
+  --success-color: #4b9f81;
+  --danger-color: #b82d37;
+  --warning-color: #f8d4cf;
+  --info-color: #fbe9e7;
+  --gray-color: #353b3d;
 }
 
 @tailwind base;
