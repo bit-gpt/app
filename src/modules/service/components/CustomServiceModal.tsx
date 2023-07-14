@@ -4,7 +4,7 @@ import cross from "assets/images/cross.svg";
 import Editor from "react-simple-code-editor";
 import { useState } from "react";
 import { highlight, languages } from "prismjs";
-import "prismjs/themes/prism-solarizedlight.css"; //Example style, you can use another
+import "assets/css/prismjs-prem.css";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { useMutation } from "@tanstack/react-query";
