@@ -30,13 +30,9 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
     isError,
     onRegenerate,
     resetPromptTemplate,
+    abort,
   } = usePremChatStream(serviceId, chatId || null);
 
-  const { bodyLocked, setBodyLocked } = useBodyLock();
-  const hamburgerMenuToggle = () => {
-    setBodyLocked(!bodyLocked);
-  };
-  useEffect(() => {}, [hamburgerMenuToggle]);
   useEffect(() => {
     if (chatMessageListRef.current) {
       chatMessageListRef.current.scrollTop = chatMessageListRef.current.scrollHeight;
@@ -48,6 +44,13 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
       inputRef.current.focus();
     }
   }, [isLoading]);
+
+  // abort chat request on unmount
+  useEffect(() => {
+    return () => {
+      abort();
+    };
+  }, [abort, chatId]);
 
   return (
     <section>
