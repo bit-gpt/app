@@ -7,6 +7,7 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 import useStopService from "shared/hooks/useStopService";
 import useBodyLock from "shared/hooks/useBodyLock";
+import { useState } from "react";
 
 const RunningServiceState = ({
   serviceId,
@@ -16,11 +17,13 @@ const RunningServiceState = ({
 }: ServiceStateProps) => {
   const { mutate, isLoading } = useStopService();
   const { bodyLocked, setBodyLocked } = useBodyLock();
+  const [refresh, setRefresh] = useState(false);
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(serviceId, {
       onSuccess: () => {
+        setRefresh(true);
         refetch();
         toast.success("Service stopped successfully");
       },
@@ -36,7 +39,7 @@ const RunningServiceState = ({
     onOpenClick && onOpenClick();
   };
 
-  if (isLoading) {
+  if (isLoading || refresh) {
     return (
       <div className="mt-2">
         <Spinner className="w-5 h-5" />
