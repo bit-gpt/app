@@ -9,6 +9,7 @@ import clsx from "clsx";
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import DeleteIcon from "shared/components/DeleteIcon";
 import usePremTextAudioStore from "shared/store/prem-text-audio";
+import NoPrompts from "shared/components/NoPrompts";
 
 const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
+        {history.length === 0 && <NoPrompts text="No Audio" />}
         <div className="mt-10 overflow-y-auto custom-scroll">
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(history, "timestamp", "desc").map((item) => {
