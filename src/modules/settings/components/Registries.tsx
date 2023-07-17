@@ -6,6 +6,7 @@ import addRegistry from "../api/addRegistry";
 import Spinner from "shared/components/Spinner";
 import { toast } from "react-toastify";
 import MinusArrow from "shared/components/MinusArrow";
+import PlusArrow from "shared/components/PlusArrow";
 
 const Registries = () => {
   const [registryUrl, setRegistryUrl] = useState("");
@@ -49,13 +50,17 @@ const Registries = () => {
 
             {registries.map((registry, index) => {
               return (
-                <input
-                  key={index}
-                  className="form-control maxMd:!py-2 maxMd:text-[10px] mb-4"
-                  type="text"
-                  defaultValue={registry.url}
-                  readOnly
-                />
+                <div key={index} className="flex">
+                  <input
+                    className="form-control maxMd:!py-2 maxMd:text-[10px] mb-4"
+                    type="text"
+                    defaultValue={registry.url}
+                    readOnly
+                  />
+                  <button className="w-[50px] h-[45px] maxMd:hidden" type="button">
+                    <MinusArrow />
+                  </button>
+                </div>
               );
             })}
             <div className="flex">
@@ -67,7 +72,7 @@ const Registries = () => {
                 required
               />
               <button className="w-[50px] h-[45px] maxMd:hidden" type="button">
-                <MinusArrow />
+                <PlusArrow />
               </button>
             </div>
           </div>
