@@ -2,9 +2,10 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import clsx from "clsx";
 import { PremTextAudioContainerProps } from "../types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import usePremTextAudio from "shared/hooks/usePremTextAudio";
 import PremAudioPlayer from "shared/components/PremAudioPlayer";
+import DownloadIcon from "shared/components/DownloadIcon";
 
 const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContainerProps>) => {
   const navigate = useNavigate();
@@ -43,6 +44,9 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
                   {currentHistory.file}
                 </p>
                 <PremAudioPlayer url={currentHistory.fileUrl} />
+                <Link to={currentHistory.fileUrl} target="_blank" className="prem-audio__download">
+                  <DownloadIcon />
+                </Link>
               </div>
             )}
           </div>
