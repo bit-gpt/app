@@ -147,3 +147,16 @@ export type PremTextAudioStore = {
   addHistory: (newHistory: PremTextAudioHistory) => void;
   deleteHistory: (id: string) => void;
 };
+
+export type PremUpscalerStore = {
+  history: PremUpscalerHistory[];
+  addHistory: (newHistory: PremUpscalerHistory) => void;
+  deleteHistory: (id: string) => void;
+};
+
+export type PremUpscalerHistory = {
+  id: string;
+  file: string;
+  name: string;
+  timestamp: string;
+};
