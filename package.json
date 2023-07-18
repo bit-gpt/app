@@ -2,7 +2,7 @@
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
     "@tanstack/react-query": "^4.29.5",
-    "@tauri-apps/api": "^1.2.0",
+    "@tauri-apps/api": "^1.4.0",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
@@ -34,7 +34,7 @@
     "zustand": "^4.3.7"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.3",
+    "@tauri-apps/cli": "^1.4.0",
     "@types/lodash": "^4.14.194",
     "@types/node": "^18.7.10",
     "@types/prismjs": "^1.26.0",
@@ -65,5 +65,5 @@
     "tauri": "tauri"
   },
   "type": "module",
-  "version": "0.0.22"
+  "version": "0.0.25"
 }

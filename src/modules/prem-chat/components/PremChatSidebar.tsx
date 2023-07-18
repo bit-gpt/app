@@ -16,6 +16,7 @@ import WarningModal from "modules/service/components/WarningModal";
 import WarningIcon from "shared/components/WarningIcon";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
 import { HamburgerMenuProps } from "shared/types";
+import NoPrompts from "shared/components/NoPrompts";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
@@ -104,6 +105,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           style={{ height: height - (responsiveMatches ? 290 : 250) }}
           className="overflow-y-auto overflow-x-hidden flex flex-col"
         >
+          {history.length === 0 && <NoPrompts text="No Chat" />}
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
               return (

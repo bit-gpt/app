@@ -156,9 +156,9 @@ pytest
 ### Release Checklist
 
 - [ ] Create a tag with the new version in `prem-daemon` 
-- [ ] Update the version in `prem-box` [here](https://github.com/premAI-io/prem-box/blob/main/versions.json)
 - [ ] Create a tag with the new version in `prem-app`
-- [ ] Update the version in `prem-box` [here](https://github.com/premAI-io/prem-box/blob/main/versions.json)
+- [ ] Manually set the new tag as latest in `prem-app`
+- [ ] Update the version in `prem-box` using the `bump.sh` command.
 
 ## Acknowledgments
 

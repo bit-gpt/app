@@ -1,0 +1,133 @@
+/**
+ * prism.js custom Prem theme for JavaScript, CSS and HTML
+ * Based on the slides of the talk “/Reg(exp){2}lained/”
+ */
+
+.custom-service__markdown code[class*="language-"],
+.custom-service__markdown pre[class*="language-"] {
+  color: white;
+  background: none;
+  text-shadow: 0 -0.1em 0.2em black;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+@media print {
+  .custom-service__markdown code[class*="language-"],
+  .custom-service__markdown pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+
+.custom-service__markdown pre[class*="language-"],
+.custom-service__markdown :not(pre) > code[class*="language-"] {
+  background: hsl(30, 20%, 25%);
+}
+
+/* Code blocks */
+.custom-service__markdown pre[class*="language-"] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border: 0.3em solid hsl(30, 20%, 40%);
+  border-radius: 0.5em;
+  box-shadow: 1px 1px 0.5em black inset;
+}
+
+/* Inline code */
+.custom-service__markdown :not(pre) > code[class*="language-"] {
+  padding: 0.15em 0.2em 0.05em;
+  border-radius: 0.3em;
+  border: 0.13em solid hsl(30, 20%, 40%);
+  box-shadow: 1px 1px 0.3em -0.1em black inset;
+  white-space: normal;
+}
+
+.custom-service__markdown .token.comment,
+.custom-service__markdown .token.prolog,
+.custom-service__markdown .token.doctype,
+.custom-service__markdown .token.cdata {
+  color: hsl(30, 20%, 50%);
+}
+
+.custom-service__markdown .token.punctuation {
+  opacity: 0.7;
+  color: var(--info-color);
+}
+
+.custom-service__markdown .token.namespace {
+  opacity: 0.7;
+  color: var(--info-color);
+}
+
+.custom-service__markdown .token.property,
+.custom-service__markdown .token.tag,
+.custom-service__markdown .token.boolean,
+.custom-service__markdown .token.constant,
+.custom-service__markdown .token.symbol {
+  color: var(--primary-color);
+}
+
+.custom-service__markdown .token.number {
+  color: var(--success-color);
+}
+
+.custom-service__markdown .token.selector,
+.custom-service__markdown .token.attr-name,
+.custom-service__markdown .token.string,
+.custom-service__markdown .token.char,
+.custom-service__markdown .token.builtin,
+.custom-service__markdown .token.inserted {
+  color: var(--success-color);
+}
+
+.custom-service__markdown .token.operator,
+.custom-service__markdown .token.entity,
+.custom-service__markdown .token.url,
+.custom-service__markdown .language-css .token.string,
+.custom-service__markdown .style .token.string,
+.custom-service__markdown .token.variable {
+  color: var(--secondary-color);
+}
+
+.custom-service__markdown .token.atrule,
+.custom-service__markdown .token.attr-value,
+.custom-service__markdown .token.keyword {
+  color: hsl(350, 40%, 70%);
+}
+
+.custom-service__markdown .token.regex,
+.custom-service__markdown .token.important {
+  color: #e90;
+}
+
+.custom-service__markdown .token.important,
+.custom-service__markdown .token.bold {
+  font-weight: bold;
+}
+.custom-service__markdown .token.italic {
+  font-style: italic;
+}
+
+.custom-service__markdown .token.entity {
+  cursor: help;
+}
+
+.custom-service__markdown .token.deleted {
+  color: red;
+}
