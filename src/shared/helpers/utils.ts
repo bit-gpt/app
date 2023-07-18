@@ -49,9 +49,15 @@ export const getBackendUrl = () => {
     backendURL = import.meta.env.VITE_BACKEND_URL;
   }
   if (isPackaged()) {
-    backendURL = `${window.location.protocol}//${window.location.host}/api/`;
+    backendURL = `${window.location.protocol}/${window.location.host}/api/`;
   }
   return backendURL;
+};
+
+export const getServiceUrl = () => {
+  const backendURL = getBackendUrl();
+  const url = new URL(backendURL);
+  return url.href;
 };
 
 export const serviceSearchStyle = {
