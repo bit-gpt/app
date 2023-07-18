@@ -19,6 +19,8 @@ const ServiceActions = ({
   interfaces,
   needsUpdate,
   memoryRequirements,
+  progress,
+  download,
 }: ServiceActionsProps) => {
   const navigate = useNavigate();
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -49,7 +51,12 @@ const ServiceActions = ({
       <div className="flex flex-wrap items-center md:gap-4 gap-3 ml-auto">
         {children}
         {isDetailView && needsUpdate && (
-          <NeedsUpdateServiceState serviceId={serviceId} refetch={refetch} />
+          <NeedsUpdateServiceState
+            serviceId={serviceId}
+            refetch={refetch}
+            download={download}
+            progress={progress}
+          />
         )}
         {status === "running" && (
           <RunningServiceState
@@ -69,7 +76,12 @@ const ServiceActions = ({
         )}
 
         {status === "not_downloaded" && (
-          <NotDownloadedServiceState serviceId={serviceId} refetch={refetch} />
+          <NotDownloadedServiceState
+            serviceId={serviceId}
+            refetch={refetch}
+            download={download}
+            progress={progress}
+          />
         )}
 
         {["not_supported", "not_enough_memory", "not_enough_system_memory", "coming_soon"].includes(

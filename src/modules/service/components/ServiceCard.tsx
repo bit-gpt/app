@@ -10,7 +10,7 @@ import useInterfaces from "shared/hooks/useInterfaces";
 import clsx from "clsx";
 import Beta from "./Beta";
 
-const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
+const ServiceCard = ({ className, icon, service, progress, download }: ServiceCardProps) => {
   const queryClient = useQueryClient();
 
   const serviceId = service.id;
@@ -40,6 +40,8 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
           interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
           needsUpdate={service.needsUpdate}
           memoryRequirements={service.modelInfo?.memoryRequirements}
+          progress={progress}
+          download={download}
         />
       </div>
       <h3>

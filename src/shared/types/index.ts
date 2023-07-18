@@ -79,7 +79,10 @@ export type MarkdownProps = {
 
 export type SettingStore = {
   backendUrl: string;
+  serviceDownloadsInProgress: string[];
   setBackendUrl: (backendUrl: string) => void;
+  addServiceDownloadInProgress: (serviceId: string) => void;
+  removeServiceDownloadInProgress: (serviceId: string) => void;
 };
 
 export type HeaderProps = {

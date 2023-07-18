@@ -17,7 +17,7 @@ import useInterfaces from "shared/hooks/useInterfaces";
 import arrow from "assets/images/arrow.svg";
 import UseScrollToTop from "shared/hooks/useScrollToTop";
 
-const ServiceDetail = () => {
+const ServiceDetail = ({ progress, download }: any) => {
   const queryClient = useQueryClient();
   const { serviceId } = useParams();
   const navigate = useNavigate();
@@ -68,6 +68,8 @@ const ServiceDetail = () => {
             interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
             needsUpdate={service.needsUpdate}
             memoryRequirements={service.modelInfo?.memoryRequirements}
+            progress={progress}
+            download={download}
           />
         </div>
       </div>

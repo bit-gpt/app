@@ -88,6 +88,8 @@ export type DownloadMessage = {
 export type ServiceStateProps = {
   serviceId: string;
   refetch: () => void;
+  progress?: number;
+  download?: (serviceId: string, refetch: any) => void;
   isDetailView?: boolean;
   onOpenClick?: () => void;
 };
@@ -105,6 +107,8 @@ export type ServiceCardProps = {
   className: string;
   icon: string;
   service: Service;
+  progress: number;
+  download: (serviceId: string, refetch: any) => void;
 };
 
 export type ServiceActionsProps = PropsWithChildren<{
@@ -115,6 +119,8 @@ export type ServiceActionsProps = PropsWithChildren<{
   interfaces: App[];
   needsUpdate: boolean;
   memoryRequirements: number;
+  progress: number;
+  download: (serviceId: string, refetch: any) => void;
 }>;
 
 export type WarningServiceStateProps = {

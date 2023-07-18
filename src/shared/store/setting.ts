@@ -9,7 +9,29 @@ const useSettingStore = create<SettingStore>()(
     persist(
       (set) => ({
         backendUrl: getBackendUrl(),
-        setBackendUrl: (backendUrl) => set(() => ({ backendUrl })),
+        serviceDownloadsInProgress: [],
+        addServiceDownloadInProgress: (serviceId) => {
+          set(
+            (state) => {
+              if (!state.serviceDownloadsInProgress.includes(serviceId)) {
+                state.serviceDownloadsInProgress.push(serviceId);
+              }
+              return { serviceDownloadsInProgress: state.serviceDownloadsInProgress };
+            },
+            false,
+            "addServiceDownloadInProgress"
+          );
+        },
+        removeServiceDownloadInProgress: (serviceId) => {
+          set((state) => {
+            const index = state.serviceDownloadsInProgress.indexOf(serviceId);
+            if (index > -1) {
+              state.serviceDownloadsInProgress.splice(index, 1);
+            }
+            return { serviceDownloadsInProgress: state.serviceDownloadsInProgress };
+          });
+        },
+        setBackendUrl: (backendUrl) => set(() => ({ backendUrl }), false, "setBackendUrl"),
       }),
       {
         name: "setting",

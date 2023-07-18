@@ -1,8 +1,10 @@
 import downloadServiceStream from "modules/service/api/downloadServiceStream";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const useDownloadServiceStream = () => {
-  const [progress, setProgress] = useState(-1);
+  const [progresses, setProgress] = useState<Record<string, number>>(() => ({}));
+  const progressesRef = useRef<Record<string, number>>({});
+
   const download = useCallback((serviceId: string, afterSuccess?: () => void) => {
     downloadServiceStream(
       serviceId,
@@ -11,16 +13,17 @@ const useDownloadServiceStream = () => {
       },
       (message) => {
         console.log(message.status);
-        if ("percentage" in message) setProgress(message.percentage as number);
+        progressesRef.current = { ...progressesRef.current, [serviceId]: message.percentage };
+        if ("percentage" in message) setProgress(progressesRef.current);
       },
       () => {
-        setProgress(-1);
+        setProgress({ ...progresses, [serviceId]: -1 });
         afterSuccess && afterSuccess();
       }
     );
   }, []);
 
-  return { progress, download };
+  return { progresses: progressesRef.current, download };
 };
 
 export default useDownloadServiceStream;
