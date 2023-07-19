@@ -3,7 +3,7 @@ import { ServiceInfoValue } from "modules/service-detail/types";
 import { Option, Service, ServiceStatus } from "modules/service/types";
 import { CSSObjectWithLabel, ControlProps } from "react-select";
 
-export const SERVICE_CHECK_REFETCH_INTERVAL = 1000;
+export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
 export const checkIsDockerRunning = async () => {
   const check = await invoke("is_docker_running");
