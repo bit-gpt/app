@@ -7,6 +7,7 @@ import { PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
 import { toast } from "react-toastify";
+import { generateUrl } from "shared/helpers/utils";
 import { getBackendUrlFromStore } from "shared/store/setting";
 import { AxiosError } from "axios";
 
@@ -78,11 +79,10 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     abortController.current = new AbortController();
 
-    const backendUrl = new URL(getBackendUrlFromStore());
-    backendUrl.port = `${service?.runningPort!}`;
-
+    const backendUrl = generateUrl(getBackendUrlFromStore(), service?.runningPort!, "v1/chat/completions");
+    
     try {
-      fetchEventSource(`${backendUrl}v1/chat/completions`, {
+      fetchEventSource(backendUrl, {
         method: "POST",
         openWhenHidden: true,
         headers: {
