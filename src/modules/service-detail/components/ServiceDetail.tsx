@@ -30,7 +30,7 @@ const ServiceDetail = () => {
   const refetchServices = useCallback(() => {
     refetch();
     queryClient.refetchQueries([SERVICES_KEY]);
-  }, [refetch]);
+  }, [refetch, queryClient]);
 
   const back = () => {
     navigate("/");

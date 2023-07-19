@@ -1,6 +1,5 @@
 import { CustomServiceModalProps, Service } from "../types";
 import Modal from "react-modal";
-import cross from "assets/images/cross.svg";
 import Editor from "react-simple-code-editor";
 import { useState } from "react";
 import { highlight, languages } from "prismjs";
@@ -8,7 +7,6 @@ import "assets/css/prismjs-prem.css";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { useMutation } from "@tanstack/react-query";
-import { add } from "lodash";
 import addService from "../api/addService";
 import { toast } from "react-toastify";
 

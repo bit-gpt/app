@@ -22,7 +22,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const refetch = useCallback(() => {
     queryClient.refetchQueries([SERVICES_KEY]);
     queryClient.invalidateQueries([SERVICE_KEY, serviceId]);
-  }, []);
+  }, [queryClient, serviceId]);
 
   const isGreyCard = ["not_supported", "not_enough_system_memory", "coming_soon"].includes(status);
   const redirectLink = status === "coming_soon" ? "/" : `/services/${serviceId}/detail`;

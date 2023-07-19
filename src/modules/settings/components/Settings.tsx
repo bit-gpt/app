@@ -5,7 +5,7 @@ import AdvancedSettings from "./AdvancedSettings";
 import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import cross from "assets/images/cross.svg";
 import useBodyLock from "shared/hooks/useBodyLock";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import clsx from "clsx";
 import Sidebar from "shared/components/Sidebar";
 import { useMediaQuery } from "usehooks-ts";
@@ -14,11 +14,12 @@ const Settings = () => {
   const matches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
   const { bodyLocked, setBodyLocked } = useBodyLock();
-  const hamburgerMenuToggle = () => {
+
+  const hamburgerMenuToggle = useCallback(() => {
     setBodyLocked(!bodyLocked);
     setHamburgerMenu(!hamburgerMenuOpen);
-  };
-  useEffect(() => {}, [hamburgerMenuToggle]);
+  }, [bodyLocked, hamburgerMenuOpen, setBodyLocked]);
+
   return (
     <AppContainer>
       {hamburgerMenuOpen && (

@@ -19,10 +19,6 @@ const Header = ({
     setIsOpen(false);
   };
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
   return (
     <>
       <div className="md:border-b border-light w-full h-[77px] py-3 flex sticky bg-darkjunglegreen z-[11] top-0 justify-center">

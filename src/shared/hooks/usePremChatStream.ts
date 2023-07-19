@@ -3,12 +3,14 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 import { useNavigate } from "react-router-dom";
-import { PremChatResponse } from "modules/prem-chat/types";
+import { Message, PremChatResponse } from "modules/prem-chat/types";
 import usePremChatStore from "../store/prem-chat";
 import useService from "./useService";
 import { toast } from "react-toastify";
 import { getBackendUrlFromStore } from "shared/store/setting";
 import { AxiosError } from "axios";
+
+const emptyMessages: Message[] = [];
 
 const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
@@ -33,11 +35,13 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     presence_penalty,
     promptTemplate,
     setPromptTemplate,
+    replaceHistoryMessages,
   } = usePremChatStore(
     (state) => ({
       history: state.history,
       addHistory: state.addHistory,
       updateHistoryMessages: state.updateHistoryMessages,
+      replaceHistoryMessages: state.replaceHistoryMessages,
       temperature: state.temperature,
       max_tokens: state.max_tokens,
       top_p: state.top_p,
@@ -54,76 +58,93 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     if (!promptTemplate) {
       setPromptTemplate(service?.promptTemplate || "");
     }
-  }, [service]);
+  }, [service, promptTemplate, setPromptTemplate]);
 
-  const messages = history.find((_history) => _history.id === chatId)?.messages || [];
+  const messages = useMemo(
+    () => history.find((_history) => _history.id === chatId)?.messages || emptyMessages,
+    [chatId, history]
+  );
+
+  const processQuestion = useCallback(
+    (question: string) => {
+      const query = question.trim();
+      if (!query) {
+        return;
+      }
+      setTempQuestion(query);
+      setQuestion("");
+      const newMessage = { role: "user", content: `${promptTemplate}${query}` };
+      setPending(undefined);
+      setLoading(true);
+      abortController.current = new AbortController();
+
+      const backendUrl = new URL(getBackendUrlFromStore());
+      backendUrl.port = `${service?.runningPort!}`;
+
+      try {
+        fetchEventSource(`${backendUrl}v1/chat/completions`, {
+          method: "POST",
+          openWhenHidden: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: serviceId,
+            messages: [...messages, newMessage],
+            stream: true,
+            temperature,
+            max_tokens,
+            top_p,
+            frequency_penalty,
+            n,
+            presence_penalty,
+          }),
+          signal: abortController.current.signal,
+          onmessage: (event) => {
+            if (event.data === "[DONE]") {
+              setLoading(false);
+            } else {
+              const data = JSON.parse(event.data);
+              setPending((state) => (state ?? "") + (data.choices[0].delta.content || ""));
+            }
+          },
+          onerror: (err: AxiosError) => {
+            const errorMessage = `Something went wrong: ${err.message || ""}`;
+            setLoading(false);
+            setIsError(true);
+            setTempQuestion("");
+            toast.error(errorMessage);
+            throw new Error(errorMessage);
+          },
+        });
+      } catch (e) {
+        setLoading(false);
+        setIsError(true);
+        setTempQuestion("");
+        toast.error("Something went wrong");
+      }
+    },
+    [
+      messages,
+      promptTemplate,
+      service,
+      serviceId,
+      temperature,
+      max_tokens,
+      top_p,
+      frequency_penalty,
+      n,
+      presence_penalty,
+    ]
+  );
 
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       processQuestion(question);
     },
-    [question]
+    [processQuestion, question]
   );
-
-  const processQuestion = (question: string) => {
-    const query = question.trim();
-    if (!query) {
-      return;
-    }
-    setTempQuestion(query);
-    setQuestion("");
-    const newMessage = { role: "user", content: `${promptTemplate}${query}` };
-    setPending(undefined);
-    setLoading(true);
-    abortController.current = new AbortController();
-
-    const backendUrl = new URL(getBackendUrlFromStore());
-    backendUrl.port = `${service?.runningPort!}`;
-
-    try {
-      fetchEventSource(`${backendUrl}v1/chat/completions`, {
-        method: "POST",
-        openWhenHidden: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: serviceId,
-          messages: [...messages, newMessage],
-          stream: true,
-          temperature,
-          max_tokens,
-          top_p,
-          frequency_penalty,
-          n,
-          presence_penalty,
-        }),
-        signal: abortController.current.signal,
-        onmessage: (event) => {
-          if (event.data === "[DONE]") {
-            setLoading(false);
-          } else {
-            const data = JSON.parse(event.data);
-            setPending((state) => (state ?? "") + (data.choices[0].delta.content || ""));
-          }
-        },
-        onerror: (err: AxiosError) => {
-          const errorMessage = `Something went wrong: ${err.message || ""}`;
-          setLoading(false);
-          setIsError(true);
-          setTempQuestion("");
-          toast.error(errorMessage);
-          throw new Error(errorMessage);
-        },
-      });
-    } catch (e) {
-      setLoading(false);
-      setIsError(true);
-      setTempQuestion("");
-      toast.error("Something went wrong");
-    }
-  };
 
   const abort = useCallback(() => {
     abortController.current?.abort();
@@ -135,18 +156,21 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     const newMessages = [...messages];
     const lastConversation = newMessages.splice(-2);
     if (chatId) {
-      updateHistoryMessages(chatId, newMessages);
+      replaceHistoryMessages(chatId, newMessages);
       processQuestion(lastConversation[0].content);
     }
-  }, [messages]);
+  }, [chatId, messages, processQuestion, replaceHistoryMessages]);
 
-  const tempConversation = [
-    { role: "user", content: tempQuestion },
-    {
-      role: "assistant",
-      content: pending || "",
-    },
-  ];
+  const tempConversation = useMemo(
+    () => [
+      { role: "user", content: tempQuestion },
+      {
+        role: "assistant",
+        content: pending || "",
+      },
+    ],
+    [tempQuestion, pending]
+  );
 
   useEffect(() => {
     if (!isLoading && pending) {
@@ -163,10 +187,19 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
         });
         navigate(`/prem-chat/${serviceId}/${newChatId}`);
       } else {
-        updateHistoryMessages(chatId, [...messages, ...tempConversation]);
+        updateHistoryMessages(chatId, [...tempConversation]);
       }
     }
-  }, [pending, isLoading]);
+  }, [
+    pending,
+    isLoading,
+    chatId,
+    tempConversation,
+    addHistory,
+    serviceId,
+    navigate,
+    updateHistoryMessages,
+  ]);
 
   const chatMessages = useMemo(() => {
     if (pending) {
@@ -176,7 +209,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       return [...messages, { role: "user", content: tempQuestion }];
     }
     return messages;
-  }, [messages, pending, tempQuestion]);
+  }, [messages, pending, tempQuestion, tempConversation]);
 
   const resetPromptTemplate = useCallback(() => {
     setPromptTemplate(service?.promptTemplate || "");

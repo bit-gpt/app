@@ -1,8 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
 import Spinner from "shared/components/Spinner";
 import { ServiceStateProps } from "../types";
 import StopIcon from "shared/components/StopIcon";
-import stopService from "../api/stopService";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
 import useStopService from "shared/hooks/useStopService";
@@ -16,7 +14,7 @@ const RunningServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const { mutate, isLoading } = useStopService();
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  const { setBodyLocked } = useBodyLock();
   const [refresh, setRefresh] = useState(false);
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {

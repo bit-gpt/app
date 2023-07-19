@@ -27,8 +27,8 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   const scrollToTop = () => {
-    {
-      responsiveMatches && setHamburgerMenu(true);
+    if (responsiveMatches) {
+      setHamburgerMenu(true);
     }
     document
       .querySelector(".prem-img-promptbox")
@@ -68,7 +68,9 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                         </span>
                         <div className="flex flex-wrap gap-[2px] mt-[11px]">
                           {item.images?.map((image, index) => {
-                            return <img key={index} src={image} className="w-8 h-8" />;
+                            return (
+                              <img key={index} src={image} className="w-8 h-8" alt={item.id} />
+                            );
                           })}
                         </div>
                       </div>

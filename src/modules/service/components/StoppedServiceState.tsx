@@ -17,7 +17,7 @@ const StoppedServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  const { setBodyLocked } = useBodyLock();
 
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
     deleteService(id)

@@ -13,11 +13,11 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   useEffect(() => {
     const newSearch = new Map(apps.map((app) => [app.id, app.id === appId]));
     setSearch(newSearch);
-  }, [appId]);
+  }, [appId, apps]);
 
   useEffect(() => {
     onFilterChange(search);
-  }, [search]);
+  }, [search, onFilterChange]);
 
   const handleSearch = (appId: string) => {
     const newSearch = new Map(search.entries());

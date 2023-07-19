@@ -7,9 +7,13 @@ import PremAudioPlayer from "shared/components/PremAudioPlayer";
 
 const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   const [url, setUrl] = useState("");
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFile(acceptedFiles[0]);
+    },
+    [setFile]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

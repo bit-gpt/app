@@ -4,17 +4,17 @@ import { useMemo } from "react";
 import { formatInfo } from "shared/helpers/utils";
 import useSettingStore from "shared/store/setting";
 
-const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
-  const skippableFields = [
-    "id",
-    "name",
-    "description",
-    "documentation",
-    "icon",
-    "interfaces",
-    "modelInfo",
-  ];
+const skippableFields = [
+  "id",
+  "name",
+  "description",
+  "documentation",
+  "icon",
+  "interfaces",
+  "modelInfo",
+];
 
+const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
   const backendUrlFromStore = useSettingStore((state) => state.backendUrl);
 
   const generalInfo = useMemo(() => {
@@ -52,7 +52,12 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
         <span className="opacity-70">Docs</span>
         <span>
           {!!docUrl ? (
-            <a href={docUrl} target="_blank" className="text-blue-400 hover:underline">
+            <a
+              href={docUrl}
+              target="_blank"
+              className="text-blue-400 hover:underline"
+              rel="noreferrer"
+            >
               {docUrl}
             </a>
           ) : (

@@ -61,7 +61,7 @@ const useDocker = () => {
     }, 5000);
     // cleanup function - clear the interval when the component unmounts
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [handleCheckIsDockerRunning, isBrowser]);
 
   return {
     isDockerRunning: isDockerRunning,

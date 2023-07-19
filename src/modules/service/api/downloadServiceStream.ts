@@ -1,7 +1,4 @@
-import { AxiosResponse } from "axios";
-import api from "shared/api/v1";
 import { DownloadMessage } from "../types";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { getBackendUrlFromStore } from "shared/store/setting";
 
 const downloadServiceStream = async (

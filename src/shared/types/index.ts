@@ -56,6 +56,7 @@ export type PremChatStore = {
   clearHistory: () => void;
   addHistory: (newHistory: PremChatHistory) => void;
   updateHistoryMessages: (id: string, messages: Message[]) => void;
+  replaceHistoryMessages: (id: string, messages: Message[]) => void;
   deleteHistory: (id: string) => void;
   temperature: number;
   setTemperature: (temperature: number) => void;

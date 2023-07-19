@@ -6,7 +6,6 @@ import { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 import { orderBy } from "lodash";
 import clsx from "clsx";
-import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import usePremAudioStore from "shared/store/prem-audio";
 import DeleteIcon from "shared/components/DeleteIcon";
 import { useMediaQuery } from "usehooks-ts";

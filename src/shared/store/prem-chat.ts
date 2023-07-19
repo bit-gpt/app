@@ -19,6 +19,19 @@ const usePremChatStore = create<PremChatStore>()(
                 return {
                   ..._history,
                   timestamp: Date.now(),
+                  messages: [..._history.messages, ...messages],
+                };
+              }
+              return _history;
+            }),
+          })),
+        replaceHistoryMessages: (id, messages) =>
+          set((state) => ({
+            history: state.history.map((_history) => {
+              if (_history.id === id) {
+                return {
+                  ..._history,
+                  timestamp: Date.now(),
                   messages,
                 };
               }

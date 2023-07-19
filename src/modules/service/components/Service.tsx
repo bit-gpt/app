@@ -12,13 +12,13 @@ import CustomServiceCard from "./CustomServiceCard";
 const Service = () => {
   const { appId } = useParams();
 
-  const { data: response, isLoading: isServicesLoading, refetch: refetchServices } = useServices();
+  const { data: response, isLoading: isServicesLoading } = useServices();
   const { data: appResponse } = useInterfaces();
 
   const [filter, setFilter] = useState(new Map<string, boolean>());
 
   const services = response?.data || [];
-  const apps = appResponse?.data || [];
+  const apps = useMemo(() => appResponse?.data || [], [appResponse]);
 
   const filteredApps = useMemo(() => {
     if (filter.size === 0) return apps;

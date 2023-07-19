@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import setting from "assets/images/setting.svg";
 import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import WarningModal from "modules/service/components/WarningModal";

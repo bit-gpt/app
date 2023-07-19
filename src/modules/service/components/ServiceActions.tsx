@@ -38,7 +38,7 @@ const ServiceActions = ({
       return;
     }
     setIsOpen(true);
-  }, []);
+  }, [navigate, interfaces, serviceId]);
 
   const documentation = `${interfaces[0]?.documentation || ""}`.trim();
 

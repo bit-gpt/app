@@ -4,7 +4,7 @@ import { shallow } from "zustand/shallow";
 import { toast } from "react-toastify";
 import usePremImageStore from "shared/store/prem-image";
 import generateImage from "modules/prem-image/api/generateImage";
-import { B64JsonResponse, PremImageResponse, UrlResponse } from "modules/prem-image/types";
+import { B64JsonResponse, PremImageResponse } from "modules/prem-image/types";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import useService from "./useService";

@@ -18,9 +18,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>Memory</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.memory_percentage == undefined && (
-                <span className="lg:hidden">-</span>
-              )}
+              {!response?.data?.memory_percentage && <span className="lg:hidden">-</span>}
               {response?.data?.memory_usage} GiB
             </p>
             <div className="progress">
@@ -35,7 +33,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>CPU</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.cpu_percentage == undefined && <span className="lg:hidden">-</span>}
+              {!response?.data?.cpu_percentage && <span className="lg:hidden">-</span>}
               {response?.data?.cpu_percentage}%
             </p>
             <div className="progress">
@@ -50,9 +48,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>Image Size</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.storage_percentage == undefined && (
-                <span className="lg:hidden">-</span>
-              )}
+              {!response?.data?.storage_percentage && <span className="lg:hidden">-</span>}
               {response?.data?.storage_usage} GiB
             </p>
             <div className="progress">

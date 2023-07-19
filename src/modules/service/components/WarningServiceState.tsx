@@ -15,11 +15,14 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
     setBodyLocked(!bodyLocked);
   };
 
-  const closeWarningModal = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsOpen(false);
-    setBodyLocked(false);
-  }, []);
+  const closeWarningModal = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setIsOpen(false);
+      setBodyLocked(false);
+    },
+    [setBodyLocked]
+  );
 
   const getServiceWarningDescription = (status: ServiceStatus) => {
     switch (status) {

@@ -31,7 +31,12 @@ const SystemCheck = ({
       <div className="bg-tulip w-full py-2 h-9 text-center maxSm:px-1 z-[11]">
         <p className="text-brightgray text-sm">
           Don't have requirements? Try the &nbsp;
-          <a href="https://app.prem.ninja/" target="_blank" className="underline decoration">
+          <a
+            href="https://app.prem.ninja/"
+            target="_blank"
+            className="underline decoration"
+            rel="noreferrer"
+          >
             Prem App
           </a>
           &nbsp; demo.
@@ -114,6 +119,7 @@ const SystemCheck = ({
                 className="border border-white text-white !rounded-[6px] font-proximaNova-regular py-3 px-[22px] flex justify-center"
                 href="https://www.docker.com/products/docker-desktop/"
                 target="_blank"
+                rel="noreferrer"
               >
                 <img className="mr-3" src={appleLogo} alt="appleLogo" />
                 Download Docker Desktop
