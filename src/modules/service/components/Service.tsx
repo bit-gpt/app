@@ -46,9 +46,9 @@ const Service = () => {
               {app.name}
             </h3>
             <div className="flex gap-[22px] flex-wrap ">
-              {filteredServices.map((service) => (
+              {filteredServices.map((service, index) => (
                 <ServiceCard
-                  key={service.id}
+                  key={`${service.id}_${index}`}
                   icon={service.icon}
                   className={clsx("dashboard-bottom__card flex-wrap", {
                     "services-running": service.running,
