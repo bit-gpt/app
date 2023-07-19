@@ -10,6 +10,12 @@ export default {
         maxLg: { max: "1023px" },
         minMaxMd: { min: "768px", max: "1023px" },
       },
+      backgroundImage: {
+        "gradient-default":
+          "linear-gradient(131.09deg,rgba(47, 47, 47, 0.4) 8.8%,rgba(103, 100, 98, 0.11) 88.99%)",
+        "gradient-border-bg":
+          "linear-gradient(131.93deg,rgba(245, 142, 142, 0.6) 11.72%,rgba(246, 162, 148, 23) 38.41%,rgba(248, 190, 157, 0.23) 66.36%,rgba(249, 212, 164, 0.6) 91.8%)",
+      },
       boxShadow: {
         default: "box-shadow(0px 4.49864px 26.9918px -1.12466px rgba(0, 0, 0, 0.2))",
       },

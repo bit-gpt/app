@@ -6,7 +6,7 @@ const ServiceHeader = (props: ServiceHeaderProps) => {
   const { tags, icon, subtitle, title, isInBeta } = props;
   return (
     <div className="flex flex-wrap maxLg:gap-3">
-      <div className="dashboard-bottom__card-box">
+      <div className="service-card__logo">
         <img src={icon} alt={title} />
       </div>
       <div className="mask-heading lg:ml-6">

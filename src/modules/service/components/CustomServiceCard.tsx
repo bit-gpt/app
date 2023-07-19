@@ -8,9 +8,9 @@ const CustomServiceCard = () => {
 
   return (
     <>
-      <div className="dashboard-bottom__card flex-wrap">
+      <div className="service-card flex-wrap">
         <div className="flex gap-8 items-start flex-wrap w-full relative">
-          <div className="dashboard-bottom__card-box bg-lightsalmonpink p-3 rounded-lg">
+          <div className="service-card__logo bg-lightsalmonpink p-3 rounded-lg">
             <img src={icon} alt={"logo"} className="!w-6 !h-6 !rounded" />
           </div>
           <div className="flex flex-wrap items-center gap-4 ml-auto">

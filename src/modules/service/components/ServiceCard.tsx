@@ -30,7 +30,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   return (
     <Link className={clsx(className, isGreyCard && "disabled--card")} to={redirectLink}>
       <div className="flex gap-8 items-start flex-wrap w-full relative">
-        <div className="dashboard-bottom__card-box">
+        <div className="service-card__logo">
           <img src={icon} alt={title} />
         </div>
         <ServiceActions

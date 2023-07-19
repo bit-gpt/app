@@ -32,7 +32,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
             <p className="mb-[18px] text-spanishgray">Input your text</p>
             <div className="border-2 border-lavendergray rounded-lg flex justify-center items-center flex-col">
               <textarea
-                className="w-full"
+                className="w-full rounded-lg"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 rows={10}
