@@ -79,8 +79,12 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     abortController.current = new AbortController();
 
-    const backendUrl = generateUrl(getBackendUrlFromStore(), service?.runningPort!, "v1/chat/completions");
-    
+    const backendUrl = generateUrl(
+      getBackendUrlFromStore(),
+      service?.runningPort!,
+      "v1/chat/completions"
+    );
+
     try {
       fetchEventSource(backendUrl, {
         method: "POST",
