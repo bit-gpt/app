@@ -19,9 +19,9 @@ const PremUpscalerImageBox = ({
 
   return (
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
-      <div className="max-w-[650px] mx-auto">
+      <div className="max-w-[950px] mx-auto">
         <PrimaryButton
-          className="px-4 flex items-center !py-2 !h-[38px] !text-sm mb-4"
+          className="px-4 flex items-center !py-2 !h-[38px] !text-sm mb-[26px]"
           onClick={redirecToIndex}
         >
           <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
@@ -29,15 +29,15 @@ const PremUpscalerImageBox = ({
             <img src={uploadIcon} alt="msg" width={14} height={14} />
           </div>
         </PrimaryButton>
-        <div className="prem-audio-box bg-darkcharcoal">
-          <img src={history.file} alt="input" />
+        <div>
+          <img className="max-h-[490px] w-full object-cover" src={history.file} alt="input" />
         </div>
 
         <div className="mt-4 flex justify-end gap-3">
           <a href={history.file} download onClick={(e) => e.stopPropagation()}>
             <PrimaryButton
               className={clsx(
-                "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:w-1/2 maxSm:justify-center maxSm:!h-10"
+                "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:justify-center maxSm:!h-10"
               )}
             >
               Download

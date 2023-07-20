@@ -39,17 +39,6 @@ const PremUpscalerRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
       <ul className="mb-[18px] mt-[42px] right-sidebar__list overflow-y-auto scrollbar-none">
         <li>
           <p>
-            <span>Prompt</span>
-            <input
-              name="prompt"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              type="text"
-            />
-          </p>
-        </li>
-        <li>
-          <p>
             <span>Guidance Scale</span>
             <span>{guidance_scale}</span>
           </p>
@@ -79,6 +68,19 @@ const PremUpscalerRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
             step={1}
             onInput={(value: number[]) => setNumInferenceSteps(value[1])}
           />
+        </li>
+        <li>
+          <p className="!mb-[18px]">
+            <span>Prompt</span>
+          </p>
+          <p className="w-full">
+            <textarea
+              className="w-full rounded p-1"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              rows={5}
+            ></textarea>
+          </p>
         </li>
       </ul>
     </div>
