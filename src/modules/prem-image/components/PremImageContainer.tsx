@@ -34,6 +34,8 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     deleteHistory,
     negativePrompt,
     setNegativePrompt,
+    file,
+    setFile,
   } = usePremImage(serviceId, historyId);
 
   const generateImages = () => {
@@ -75,6 +77,9 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 negativePrompt={negativePrompt}
                 setNegativePrompt={setNegativePrompt}
               />
+              <div className="mb-5 ml-5">
+                <input type="file" onChange={(e) => setFile(e.target.files?.[0])} />
+              </div>
               <div className="prem-img-services__container">
                 <div className="py-[30px] flex flex-wrap maxMd:gap-2">
                   <PrimaryButton

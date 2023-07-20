@@ -8,7 +8,6 @@ const generateImage = async (port: number, data: ImageGeneration) => {
 
   return axios.post(`${backendUrl}`, data, {
     headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
       "Content-Type": "application/json",
     },
   });
