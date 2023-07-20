@@ -54,12 +54,6 @@ export const getBackendUrl = () => {
   return backendURL;
 };
 
-export const getServiceUrl = () => {
-  const backendURL = getBackendUrl();
-  const url = new URL(backendURL);
-  return url.href;
-};
-
 export const serviceSearchStyle = {
   control: (base: CSSObjectWithLabel, state: ControlProps<Option>) => ({
     ...base,
