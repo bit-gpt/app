@@ -1,7 +1,12 @@
 import { PremUpscalerHistory } from "shared/types";
 
 export type ImageGeneration = {
-  file: File;
+  image: File;
+  prompt: string;
+  n: number;
+  response_format: string;
+  guidance_scale: number;
+  num_inference_steps: number;
 };
 
 export type PremUpscalerHook = {

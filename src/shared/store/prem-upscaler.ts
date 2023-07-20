@@ -8,6 +8,15 @@ const usePremUpscalerStore = create<PremUpscalerStore>()(
     persist(
       (set) => ({
         history: [],
+        n: 1,
+        response_format: "b64_json",
+        prompt: "a high resolution image",
+        guidance_scale: 7.5,
+        num_inference_steps: 25,
+        setPrompt: (prompt: string) => set(() => ({ prompt })),
+        setGuidanceScale: (guidance_scale: number) => set(() => ({ guidance_scale })),
+        setNumInferenceSteps: (num_inference_steps: number) => set(() => ({ num_inference_steps })),
+
         addHistory: (newHistory: PremUpscalerHistory) =>
           set((state) => ({ history: [...state.history, newHistory] })),
         deleteHistory: (id: string) =>

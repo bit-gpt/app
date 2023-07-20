@@ -1,17 +1,17 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
-import usePremAudio from "shared/hooks/usePremAudio";
 import PrimaryButton from "shared/components/PrimaryButton";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import { PremUpscalerContainerProps } from "../types";
 import { useDropzone } from "react-dropzone";
 import uploadIcon from "assets/images/upload.svg";
+import usePremUpscaler from "shared/hooks/usePremUpscaler";
 
 const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainerProps>) => {
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, file, setFile, currentHistory } = usePremAudio(
+  const { isLoading, onSubmit, file, setFile, currentHistory } = usePremUpscaler(
     serviceId!,
     historyId
   );
@@ -40,7 +40,9 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
   return (
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
       <div className="max-w-[650px] mx-auto">
-        <div className="prem-audio-box bg-darkcharcoal">
+        <div
+          className={clsx("prem-audio-box bg-darkcharcoal", { "pointer-events-none": isLoading })}
+        >
           <p className="mb-[18px] text-spanishgray">Pick an image to increase resolution</p>
           <div
             className="border-2 border-lavendergray rounded-lg h-[162px] flex justify-center items-center flex-col"

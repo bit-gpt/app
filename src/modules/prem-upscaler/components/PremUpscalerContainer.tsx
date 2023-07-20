@@ -6,6 +6,8 @@ import { PremUpscalerContainerProps } from "../types";
 import PremUpscalerBox from "./PremUpscalerBox";
 import PremUpscalerLeftSidebar from "./PremUpscalerLeftSidebar";
 import { useMediaQuery } from "usehooks-ts";
+import usePremUpscaler from "shared/hooks/usePremUpscaler";
+import PremUpscalerImageBox from "./PremUpscalerImageBox";
 
 const PremUpscalerContainer = ({
   serviceName,
@@ -15,6 +17,7 @@ const PremUpscalerContainer = ({
   const [rightSidebar, setRightSidebar] = useState(false);
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
+  const { currentHistory } = usePremUpscaler(serviceId!, historyId);
 
   return (
     <section>
@@ -36,7 +39,10 @@ const PremUpscalerContainer = ({
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <PremUpscalerBox serviceId={serviceId} historyId={historyId} />
+              {currentHistory && (
+                <PremUpscalerImageBox serviceId={serviceId} history={currentHistory} />
+              )}
+              {!currentHistory && <PremUpscalerBox serviceId={serviceId} historyId={historyId} />}
             </div>
           </div>
         </div>

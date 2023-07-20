@@ -16,11 +16,25 @@ const usePremUpscaler = (serviceId: string, historyId: string | undefined): Prem
   const { data: response } = useService(serviceId, false);
   const service = response?.data;
 
-  const { addHistory, history, deleteHistory } = usePremUpscalerStore(
+  const {
+    addHistory,
+    history,
+    deleteHistory,
+    n,
+    prompt,
+    response_format,
+    guidance_scale,
+    num_inference_steps,
+  } = usePremUpscalerStore(
     (state) => ({
       addHistory: state.addHistory,
       history: state.history,
       deleteHistory: state.deleteHistory,
+      n: state.n,
+      prompt: state.prompt,
+      response_format: state.response_format,
+      guidance_scale: state.guidance_scale,
+      num_inference_steps: state.num_inference_steps,
     }),
     shallow
   );
@@ -28,14 +42,19 @@ const usePremUpscaler = (serviceId: string, historyId: string | undefined): Prem
   const { isLoading, isError, mutate } = useMutation(
     () =>
       generateUpscalerImage(service?.runningPort!, {
-        file: file!,
+        image: file!,
+        prompt,
+        n,
+        response_format,
+        guidance_scale,
+        num_inference_steps,
       }),
     {
       onSuccess: (response) => {
         const id = uuid();
         addHistory({
           id,
-          file: response.data.file || "",
+          file: `data:image/png;base64, ${response.data?.data[0]?.b64_json || ""}`,
           name: file?.name || "File.jpg",
           timestamp: new Date().toISOString(),
         });
