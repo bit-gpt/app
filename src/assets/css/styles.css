@@ -428,7 +428,7 @@ header img {
   z-index: 100;
 }
 
-.sidebar-main .sidebar li:hover {
+.sidebar-main .sidebar li {
   @apply bg-[#323232] maxMd:bg-transparent font-semibold;
 }
 .sidebar-main .sidebar li:hover svg:not(.svg-stroke) path {

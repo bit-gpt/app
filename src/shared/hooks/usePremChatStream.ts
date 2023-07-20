@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
@@ -19,6 +19,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   const [pending, setPending] = useState<string | null>();
   const { data: response } = useService(serviceId, false);
   const service = response?.data;
+  const abortController = useRef<AbortController>();
 
   const {
     history,
@@ -75,7 +76,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     const newMessage = { role: "user", content: `${promptTemplate}${query}` };
     setPending(undefined);
     setLoading(true);
-    const ctrl = new AbortController();
+    abortController.current = new AbortController();
 
     const backendUrl = new URL(getBackendUrlFromStore());
     backendUrl.port = `${service?.runningPort!}`;
@@ -98,7 +99,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
           n,
           presence_penalty,
         }),
-        signal: ctrl.signal,
+        signal: abortController.current.signal,
         onmessage: (event) => {
           if (event.data === "[DONE]") {
             setLoading(false);
@@ -123,6 +124,12 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       toast.error("Something went wrong");
     }
   };
+
+  const abort = useCallback(() => {
+    abortController.current?.abort();
+    setLoading(false);
+    setTempQuestion("");
+  }, []);
 
   const onRegenerate = useCallback(() => {
     const newMessages = [...messages];
@@ -184,6 +191,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     isError,
     onRegenerate,
     resetPromptTemplate,
+    abort,
   };
 };
 

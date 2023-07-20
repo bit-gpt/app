@@ -34,6 +34,7 @@ export type PremChatResponse = {
   isError: boolean;
   onRegenerate: () => void;
   resetPromptTemplate: () => void;
+  abort: () => void;
 };
 
 export type InputBoxProps = {
