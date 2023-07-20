@@ -30,7 +30,7 @@ const PremUpscalerImageBox = ({
           </div>
         </PrimaryButton>
         <div>
-          <img className="max-h-[490px] w-full object-cover" src={history.file} alt="input" />
+          <img className="w-full object-contain" src={history.file} alt="input" />
         </div>
 
         <div className="mt-4 flex justify-end gap-3">
