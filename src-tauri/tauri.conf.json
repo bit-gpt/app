@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Prem",
-    "version": "0.0.25"
+    "version": "0.0.26"
   },
   "tauri": {
     "allowlist": {
@@ -57,10 +57,10 @@
         "fullscreen": false,
         "height": 800,
         "minHeight": 300,
-        "width": 1220,
         "minWidth": 500,
         "resizable": true,
-        "title": "Prem App"
+        "title": "Prem App",
+        "width": 1220
       }
     ]
   }
