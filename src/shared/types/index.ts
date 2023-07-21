@@ -147,3 +147,26 @@ export type PremTextAudioStore = {
   addHistory: (newHistory: PremTextAudioHistory) => void;
   deleteHistory: (id: string) => void;
 };
+
+export type PremUpscalerStore = {
+  history: PremUpscalerHistory[];
+  n: number;
+  response_format: string;
+  prompt: string;
+  guidance_scale: number;
+  num_inference_steps: number;
+
+  addHistory: (newHistory: PremUpscalerHistory) => void;
+  deleteHistory: (id: string) => void;
+
+  setPrompt: (prompt: string) => void;
+  setGuidanceScale: (guidance_scale: number) => void;
+  setNumInferenceSteps: (num_inference_steps: number) => void;
+};
+
+export type PremUpscalerHistory = {
+  id: string;
+  file: string;
+  name: string;
+  timestamp: string;
+};

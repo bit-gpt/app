@@ -164,6 +164,7 @@ export const CHAT_ID = "chat";
 export const DIFFUSER_ID = "diffuser";
 export const AUDIO_TO_TEXT_ID = "audio-to-text";
 export const TEXT_TO_AUDIO_ID = "text-to-audio";
+export const UPSCALER_ID = "upscaler";
 
 export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
   const url = new URL(baseUrl);
