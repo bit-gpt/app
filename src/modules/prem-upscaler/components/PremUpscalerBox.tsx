@@ -11,13 +11,13 @@ import usePremUpscaler from "shared/hooks/usePremUpscaler";
 const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainerProps>) => {
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, file, setFile, currentHistory } = usePremUpscaler(
-    serviceId!,
-    historyId
+  const { isLoading, onSubmit, file, setFile } = usePremUpscaler(serviceId!, historyId);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFile(acceptedFiles[0]);
+    },
+    [setFile]
   );
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
