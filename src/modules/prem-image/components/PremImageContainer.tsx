@@ -29,38 +29,13 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
 
   const {
     isLoading,
-    onSubmit,
     prompt,
     setPrompt,
     currentHistory,
-    n,
     deleteHistory,
     negativePrompt,
     setNegativePrompt,
-    file,
-    setFile,
   } = usePremImage(serviceId, historyId);
-
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    multiple: false,
-    noDrag: true,
-    accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".svg"],
-    },
-    onDropRejected() {
-      toast.error("Please upload a valid image file");
-    },
-  });
-
-  const generateImages = () => {
-    if (!prompt) return;
-    onSubmit();
-  };
 
   const onDeleteClick = () => {
     deleteHistory(historyId as string);
@@ -95,37 +70,19 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 setPrompt={setPrompt}
                 negativePrompt={negativePrompt}
                 setNegativePrompt={setNegativePrompt}
+                isLoading={isLoading}
+                historyId={historyId}
+                serviceId={serviceId}
               />
-              <div {...getRootProps()}>
-                <input type="file" {...getInputProps()} />
-                <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
-                  <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
-                  <div className="pl-4 btn-primary--addon">
-                    <img src={uploadIcon} alt="msg" width={14} height={14} />
-                  </div>
-                </PrimaryButton>
-                {file && <span className="mt-1 text-white">{file.name}</span>}
-              </div>
+
               <div className="prem-img-services__container">
-                <div className="py-[30px] flex flex-wrap maxMd:gap-2">
-                  <PrimaryButton
-                    className={clsx("!px-12 !py-2 !text-sm", {
-                      "opacity-50": !prompt,
-                      "animate-fill-effect": isLoading,
-                    })}
-                    onClick={generateImages}
-                    disabled={isLoading || !prompt}
-                  >
-                    {isLoading ? `Generating ${n} Images` : `Generate Image`}
-                  </PrimaryButton>
-                  {currentHistory && (
-                    <div className="ml-auto flex gap-4">
-                      <button className="px-2" onClick={onDeleteClick}>
-                        <DeleteIconNew />
-                      </button>
-                    </div>
-                  )}
-                </div>
+                {currentHistory && (
+                  <div className="ml-auto text-right py-4">
+                    <button className="px-2" onClick={onDeleteClick}>
+                      <DeleteIconNew />
+                    </button>
+                  </div>
+                )}
                 <div className="gallery gap-[13px] maxMd:hidden">
                   {currentHistory?.images.map((image, index: number) => {
                     return (

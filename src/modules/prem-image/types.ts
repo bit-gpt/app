@@ -30,6 +30,8 @@ export type PremImageResponse = {
   setNegativePrompt: (question: string) => void;
   file: File | undefined;
   setFile: (file: File | undefined) => void;
+  historyId?: string;
+  serviceId: string;
 };
 
 export type PremImageContainerProps = {
