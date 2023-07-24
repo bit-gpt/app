@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PremImageLeftSidebar from "./PremImageLeftSidebar";
 import Header from "./Header";
 import clsx from "clsx";
@@ -14,6 +14,9 @@ import Lightbox from "yet-another-react-lightbox";
 import Inline from "yet-another-react-lightbox/plugins/inline";
 import "yet-another-react-lightbox/styles.css";
 import { useMediaQuery } from "usehooks-ts";
+import uploadIcon from "assets/images/upload.svg";
+import { useDropzone } from "react-dropzone";
+import { toast } from "react-toastify";
 
 const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
@@ -37,6 +40,22 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     file,
     setFile,
   } = usePremImage(serviceId, historyId);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    setFile(acceptedFiles[0]);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple: false,
+    noDrag: true,
+    accept: {
+      "image/*": [".jpeg", ".jpg", ".png", ".svg"],
+    },
+    onDropRejected() {
+      toast.error("Please upload a valid image file");
+    },
+  });
 
   const generateImages = () => {
     if (!prompt) return;
@@ -77,8 +96,15 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 negativePrompt={negativePrompt}
                 setNegativePrompt={setNegativePrompt}
               />
-              <div className="mb-5 ml-5">
-                <input type="file" onChange={(e) => setFile(e.target.files?.[0])} />
+              <div {...getRootProps()}>
+                <input type="file" {...getInputProps()} />
+                <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
+                  <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
+                  <div className="pl-4 btn-primary--addon">
+                    <img src={uploadIcon} alt="msg" width={14} height={14} />
+                  </div>
+                </PrimaryButton>
+                {file && <span className="mt-1 text-white">{file.name}</span>}
               </div>
               <div className="prem-img-services__container">
                 <div className="py-[30px] flex flex-wrap maxMd:gap-2">
