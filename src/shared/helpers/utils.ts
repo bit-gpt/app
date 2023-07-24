@@ -3,7 +3,7 @@ import { ServiceInfoValue } from "modules/service-detail/types";
 import { Option, Service, ServiceStatus } from "modules/service/types";
 import { CSSObjectWithLabel, ControlProps } from "react-select";
 
-export const SERVICE_CHECK_REFETCH_INTERVAL = 1000;
+export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
 export const checkIsDockerRunning = async () => {
   const check = await invoke("is_docker_running");
@@ -164,6 +164,7 @@ export const CHAT_ID = "chat";
 export const DIFFUSER_ID = "diffuser";
 export const AUDIO_TO_TEXT_ID = "audio-to-text";
 export const TEXT_TO_AUDIO_ID = "text-to-audio";
+export const UPSCALER_ID = "upscaler";
 
 export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
   const url = new URL(baseUrl);

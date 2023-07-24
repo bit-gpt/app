@@ -1,0 +1,6 @@
+:8000 {
+    handle_path /api/* {
+        reverse_proxy premd:8000
+    }
+    reverse_proxy prem_app:1420
+}

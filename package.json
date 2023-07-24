@@ -70,5 +70,5 @@
     "lint": "npm run eslint && npm run prettier:check"
   },
   "type": "module",
-  "version": "0.0.25"
+  "version": "0.0.26"
 }
