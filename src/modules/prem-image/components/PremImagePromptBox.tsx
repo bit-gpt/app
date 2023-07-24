@@ -5,18 +5,11 @@ import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import uploadIcon from "assets/images/upload.svg";
-import usePremImage from "shared/hooks/usePremImage";
-import { useNavigate } from "react-router-dom";
+import usePremImageStore from "shared/store/prem-image";
 
 type PromptProps = Pick<
   PremImageResponse,
-  | "prompt"
-  | "setPrompt"
-  | "negativePrompt"
-  | "setNegativePrompt"
-  | "isLoading"
-  | "serviceId"
-  | "historyId"
+  "prompt" | "setPrompt" | "negativePrompt" | "setNegativePrompt" | "isLoading" | "setFile" | "file"
 >;
 
 const PremImagePromptBox = ({
@@ -25,26 +18,23 @@ const PremImagePromptBox = ({
   negativePrompt,
   setNegativePrompt,
   isLoading,
-  historyId,
-  serviceId,
-}: PromptProps) => {
-  const { n, file, setFile, onSubmit } = usePremImage(serviceId, historyId);
-
-  const generateImages = () => {
-    if (!prompt) return;
-    onSubmit();
-  };
-
+  generateImages,
+  file,
+  setFile,
+}: PromptProps & {
+  generateImages: () => void;
+}) => {
+  const n = usePremImageStore((state) => state.n);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple: false,
     noDrag: true,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".svg"],
+      "image/*": [".jpeg", ".jpg", ".png"],
     },
     onDropRejected() {
       toast.error("Please upload a valid image file");

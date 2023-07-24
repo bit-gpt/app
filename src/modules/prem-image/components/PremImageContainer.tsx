@@ -3,7 +3,6 @@ import PremImageLeftSidebar from "./PremImageLeftSidebar";
 import Header from "./Header";
 import clsx from "clsx";
 import PremImageRightSidebar from "./PremImageRightSidebar";
-import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
 import DownloadIcon from "shared/components/DownloadIcon";
 import DeleteIconNew from "shared/components/DeleteIconNew";
@@ -14,9 +13,6 @@ import Lightbox from "yet-another-react-lightbox";
 import Inline from "yet-another-react-lightbox/plugins/inline";
 import "yet-another-react-lightbox/styles.css";
 import { useMediaQuery } from "usehooks-ts";
-import uploadIcon from "assets/images/upload.svg";
-import { useDropzone } from "react-dropzone";
-import { toast } from "react-toastify";
 
 const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
@@ -29,12 +25,15 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
 
   const {
     isLoading,
+    onSubmit,
     prompt,
     setPrompt,
     currentHistory,
     deleteHistory,
     negativePrompt,
     setNegativePrompt,
+    file,
+    setFile,
   } = usePremImage(serviceId, historyId);
 
   const onDeleteClick = () => {
@@ -46,6 +45,11 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     setIndex(index);
     setOpen(true);
   };
+
+  const generateImages = useCallback(() => {
+    if (!prompt) return;
+    onSubmit();
+  }, [prompt, onSubmit]);
 
   const plugins = responsiveMatches ? [Inline] : [];
 
@@ -71,8 +75,9 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 negativePrompt={negativePrompt}
                 setNegativePrompt={setNegativePrompt}
                 isLoading={isLoading}
-                historyId={historyId}
-                serviceId={serviceId}
+                generateImages={generateImages}
+                setFile={setFile}
+                file={file}
               />
 
               <div className="prem-img-services__container">
