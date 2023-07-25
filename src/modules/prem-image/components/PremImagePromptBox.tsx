@@ -48,11 +48,11 @@ const PremImagePromptBox = ({
           Prompt
         </span>
         <textarea
-          className="h-[150px]"
+          className="h-[134px]"
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
         ></textarea>
-        <div className="mt-10" {...getRootProps()}>
+        <div className="mt-5 w-max" {...getRootProps()}>
           <input type="file" {...getInputProps()} />
           <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
             <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
@@ -71,13 +71,13 @@ const PremImagePromptBox = ({
           <span className="ml-auto">Optional</span>
         </div>
         <textarea
-          className="h-[88px]"
+          className="h-[134px]"
           value={negativePrompt}
           onChange={(e) => setNegativePrompt(e.target.value)}
         ></textarea>
-        <div className="pt-3 flex flex-wrap maxMd:gap-2">
+        <div className="mt-5 flex flex-wrap maxMd:gap-2">
           <PrimaryButton
-            className={clsx("!px-12 !pt-2 !text-sm", {
+            className={clsx("!px-8 !py-2 !h-[38px] !text-sm", {
               "opacity-50": !prompt,
               "animate-fill-effect": isLoading,
             })}
