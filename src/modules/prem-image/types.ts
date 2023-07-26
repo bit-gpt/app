@@ -28,6 +28,8 @@ export type PremImageResponse = {
   deleteHistory: (id: string) => void;
   negativePrompt: string;
   setNegativePrompt: (question: string) => void;
+  file: File | undefined;
+  setFile: (file: File | undefined) => void;
 };
 
 export type PremImageContainerProps = {

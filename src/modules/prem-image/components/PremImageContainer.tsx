@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import PremImageLeftSidebar from "./PremImageLeftSidebar";
 import Header from "./Header";
 import clsx from "clsx";
 import PremImageRightSidebar from "./PremImageRightSidebar";
-import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImage from "shared/hooks/usePremImage";
 import DownloadIcon from "shared/components/DownloadIcon";
 import DeleteIconNew from "shared/components/DeleteIconNew";
@@ -30,16 +29,12 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     prompt,
     setPrompt,
     currentHistory,
-    n,
     deleteHistory,
     negativePrompt,
     setNegativePrompt,
+    file,
+    setFile,
   } = usePremImage(serviceId, historyId);
-
-  const generateImages = () => {
-    if (!prompt) return;
-    onSubmit();
-  };
 
   const onDeleteClick = () => {
     deleteHistory(historyId as string);
@@ -50,6 +45,11 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     setIndex(index);
     setOpen(true);
   };
+
+  const generateImages = useCallback(() => {
+    if (!prompt) return;
+    onSubmit();
+  }, [prompt, onSubmit]);
 
   const plugins = responsiveMatches ? [Inline] : [];
 
@@ -74,27 +74,20 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                 setPrompt={setPrompt}
                 negativePrompt={negativePrompt}
                 setNegativePrompt={setNegativePrompt}
+                isLoading={isLoading}
+                generateImages={generateImages}
+                setFile={setFile}
+                file={file}
               />
+
               <div className="prem-img-services__container">
-                <div className="py-[30px] flex flex-wrap maxMd:gap-2">
-                  <PrimaryButton
-                    className={clsx("!px-12 !py-2 !text-sm", {
-                      "opacity-50": !prompt,
-                      "animate-fill-effect": isLoading,
-                    })}
-                    onClick={generateImages}
-                    disabled={isLoading || !prompt}
-                  >
-                    {isLoading ? `Generating ${n} Images` : `Generate Image`}
-                  </PrimaryButton>
-                  {currentHistory && (
-                    <div className="ml-auto flex gap-4">
-                      <button className="px-2" onClick={onDeleteClick}>
-                        <DeleteIconNew />
-                      </button>
-                    </div>
-                  )}
-                </div>
+                {currentHistory && (
+                  <div className="ml-auto text-right py-4">
+                    <button className="px-2" onClick={onDeleteClick}>
+                      <DeleteIconNew />
+                    </button>
+                  </div>
+                )}
                 <div className="gallery gap-[13px] maxMd:hidden">
                   {currentHistory?.images.map((image, index: number) => {
                     return (
@@ -114,14 +107,16 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                     );
                   })}
                 </div>
-                <Lightbox
-                  plugins={plugins}
-                  inline={{ style: { width: "100%", aspectRatio: "3 / 2" } }}
-                  open={open}
-                  close={() => setOpen(false)}
-                  slides={currentHistory?.images.map((img) => ({ src: img }))}
-                  index={index}
-                />
+                {currentHistory !== undefined && (
+                  <Lightbox
+                    plugins={plugins}
+                    inline={{ style: { width: "100%", aspectRatio: "3 / 2" } }}
+                    open={open}
+                    close={() => setOpen(false)}
+                    slides={currentHistory?.images?.map((img) => ({ src: img }))}
+                    index={index}
+                  />
+                )}
               </div>
             </div>
           </div>

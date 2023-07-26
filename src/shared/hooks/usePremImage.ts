@@ -8,10 +8,12 @@ import { B64JsonResponse, PremImageResponse, UrlResponse } from "modules/prem-im
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import useService from "./useService";
+import generateImageViaBaseImage from "modules/prem-image/api/generateImageViaBaseImage";
 
 const usePremImage = (serviceId: string, historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
+  const [file, setFile] = useState<File | undefined>(undefined);
   const navigate = useNavigate();
 
   const { data: response } = useService(serviceId, false);
@@ -30,18 +32,23 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
     shallow
   );
 
+  const payload = {
+    prompt,
+    n,
+    response_format,
+    size,
+    negative_prompt: negativePrompt,
+    seed,
+  };
+
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateImage(service?.runningPort!, {
-        prompt,
-        n,
-        response_format,
-        size,
-        negative_prompt: negativePrompt,
-        seed,
-      }),
+      file
+        ? generateImageViaBaseImage(service?.runningPort!, file, payload)
+        : generateImage(service?.runningPort!, payload),
     {
       onSuccess: (response) => {
+        setFile(undefined);
         const id = uuid();
         addHistory({
           id,
@@ -76,6 +83,8 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
     deleteHistory,
     negativePrompt,
     setNegativePrompt,
+    file,
+    setFile,
   };
 };
 
