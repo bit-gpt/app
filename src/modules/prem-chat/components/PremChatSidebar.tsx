@@ -83,7 +83,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
           </button>
         </div>
-        <div className="flex md:mt-8 mt-6 sidebar__search relative">
+        <div className="flex md:mt-8 mt-6 mb-6 sidebar__search relative">
           <img
             src={searchIcon}
             alt="search"

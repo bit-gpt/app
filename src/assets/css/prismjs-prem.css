@@ -3,6 +3,14 @@
  * Based on the slides of the talk “/Reg(exp){2}lained/”
  */
 
+/* COLOR THEME */
+:root {
+  --primary-color: #e7a29a;
+  --secondary-color: #ebc19d;
+  --success-color: #4b9f81;
+  --info-color: #fbe9e7;
+}
+
 .custom-service__markdown code[class*="language-"],
 .custom-service__markdown pre[class*="language-"] {
   color: white;
