@@ -58,9 +58,11 @@ And you will have the UI at `http://{localhost|server_ip}:1420`.
 ## Product Roadmap
 
 The AI services expose an HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
-Each service we support it's published on the [Prem Registry](https://premai-io.github.io/prem-registry-ui). 
+Each service we support it's published on the [Prem Registry](https://registry.premai.io). 
 
 > Anyone can prepare, package and publish an AI service on Prem. Instructions coming soon.
+
+Let us know which Model / Feature you wanna see in Prem [here](https://feedback.prem.ninja)
 
 ### Interfaces
 
