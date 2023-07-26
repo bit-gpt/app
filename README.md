@@ -67,13 +67,13 @@ Each service we support it's published on the [Prem Registry](https://premai-io.
 - [x] 😃 Chat
 - [x] 📕 Embedding
 - [x] 🏛️ Vector Store
-- [ ] 🎨 Diffuser
+- [x] 🎨 Diffuser
 - [ ] 💻 Coder
-- [ ] 🎵 Text to Audio
-- [ ] 🎵 Audio to Text
+- [x] 🎵 Text to Audio
+- [x] 🎵 Audio to Text
 - [ ] 📷 Vision
 - [ ] 📖 Summary
-- [ ] 🖼️ Upscaler
+- [x] 🖼️ Upscaler
 - [ ] 📹 Video
 
 ## Contributing
