@@ -54,9 +54,9 @@ const PremImagePromptBox = ({
         ></textarea>
         <div className="mt-5 w-max" {...getRootProps()}>
           <input type="file" {...getInputProps()} />
-          <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
+          <PrimaryButton className="pl-4 !pr-0 flex items-center !py-2 !h-[38px] !text-sm">
             <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
-            <div className="pl-4 btn-primary--addon">
+            <div className="px-4 btn-primary--addon">
               <img src={uploadIcon} alt="msg" width={14} height={14} />
             </div>
           </PrimaryButton>
