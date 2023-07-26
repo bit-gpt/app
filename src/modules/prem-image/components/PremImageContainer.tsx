@@ -107,14 +107,16 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                     );
                   })}
                 </div>
-                <Lightbox
-                  plugins={plugins}
-                  inline={{ style: { width: "100%", aspectRatio: "3 / 2" } }}
-                  open={open}
-                  close={() => setOpen(false)}
-                  slides={currentHistory?.images.map((img) => ({ src: img }))}
-                  index={index}
-                />
+                {currentHistory !== undefined && (
+                  <Lightbox
+                    plugins={plugins}
+                    inline={{ style: { width: "100%", aspectRatio: "3 / 2" } }}
+                    open={open}
+                    close={() => setOpen(false)}
+                    slides={currentHistory?.images?.map((img) => ({ src: img }))}
+                    index={index}
+                  />
+                )}
               </div>
             </div>
           </div>
