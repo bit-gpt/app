@@ -315,14 +315,17 @@ header img {
 }
 
 .right-sidebar__list li input[type="number"] {
-  @apply focus:outline-none text-cultured rounded px-1 min-w-[96px] text-right;
+  @apply focus:outline-none text-cultured rounded px-2 min-w-[96px] text-right max-w-[100px];
   background-color: #35383f !important;
+}
+.right-sidebar__list li input[type="number"] {
+  -moz-appearance: textfield;
 }
 .right-sidebar__list li input[type="number"]::-webkit-outer-spin-button,
 .right-sidebar__list li input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  background: url("../images/up-down-arrow.svg") no-repeat;
-  @apply w-4 bg-[7px];
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .range-slider {
