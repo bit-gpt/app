@@ -1,11 +1,12 @@
 import PrimaryButton from "shared/components/PrimaryButton";
 import { PremImageResponse } from "../types";
 import clsx from "clsx";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import uploadIcon from "assets/images/upload.svg";
 import usePremImageStore from "shared/store/prem-image";
+import ImgThumbCloseIcon from "shared/components/ImgThumbCloseIcon";
 
 type PromptProps = Pick<
   PremImageResponse,
@@ -41,6 +42,12 @@ const PremImagePromptBox = ({
     },
   });
 
+  const imageClose = (e: any) => {
+    if (file) {
+      setFile(e.target.files);
+    }
+  };
+
   return (
     <div className="md:mt-[50px] mb-10 mx-[50px] flex maxLg:flex-wrap gap-10 prem-img-promptbox">
       <div className="flex lg:w-1/2 w-full flex-col">
@@ -52,6 +59,16 @@ const PremImagePromptBox = ({
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
         ></textarea>
+        <div className="upload-photo-preview mt-4 flex">
+          {file && (
+            <div className="relative">
+              <button onClick={imageClose}>
+                <ImgThumbCloseIcon />
+              </button>
+              <img src={URL.createObjectURL(file)} />
+            </div>
+          )}
+        </div>
         <div className="mt-5 w-max" {...getRootProps()}>
           <input type="file" {...getInputProps()} />
           <PrimaryButton className="pl-4 !pr-0 flex items-center !py-2 !h-[38px] !text-sm">

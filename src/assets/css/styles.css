@@ -1094,3 +1094,10 @@ textarea {
 .prem-audio__download svg {
   @apply w-4;
 }
+
+.upload-photo-preview img {
+  @apply w-16 h-16 object-cover rounded-[2px];
+}
+.upload-photo-preview button {
+  @apply absolute right-[-8px] top-[-8px];
+}
