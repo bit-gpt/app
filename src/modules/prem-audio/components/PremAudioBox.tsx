@@ -1,11 +1,13 @@
+import clsx from "clsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
-import usePremAudio from "shared/hooks/usePremAudio";
-import PrimaryButton from "shared/components/PrimaryButton";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
+import PrimaryButton from "shared/components/PrimaryButton";
 import { AUDIO_TAB, RECORD_TAB } from "shared/helpers/utils";
-import { PremAudioContainerProps } from "../types";
+import usePremAudio from "shared/hooks/usePremAudio";
+
+import type { PremAudioContainerProps } from "../types";
+
 import PremAudioTab from "./PremAudioTab";
 import PremRecordTab from "./PremRecordTab";
 
@@ -13,7 +15,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
   const navigate = useNavigate();
   const { isLoading, onSubmit, file, setFile, currentHistory } = usePremAudio(
     serviceId!,
-    historyId
+    historyId,
   );
   const [activeTab, setActiveTab] = useState(AUDIO_TAB);
 
@@ -57,7 +59,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
               "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
               {
                 "opacity-50 pointer-events-none": isLoading,
-              }
+              },
             )}
             onClick={onClear}
             disabled={isLoading}
@@ -70,7 +72,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
               {
                 "opacity-50": !file,
                 "animate-fill-effect": isLoading,
-              }
+              },
             )}
             onClick={generateTranscriptions}
             disabled={isLoading || !file}

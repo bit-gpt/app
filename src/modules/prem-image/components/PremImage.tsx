@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import PremImageContainer from "./PremImageContainer";
-import useService from "shared/hooks/useService";
 import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
+import useService from "shared/hooks/useService";
+
+import PremImageContainer from "./PremImageContainer";
 
 const PremImage = () => {
   const { historyId, serviceId } = useParams();
@@ -15,7 +16,11 @@ const PremImage = () => {
   }
 
   return (
-    <PremImageContainer serviceName={service?.name!} historyId={historyId} serviceId={serviceId!} />
+    <PremImageContainer
+      serviceName={service?.name ?? ""}
+      historyId={historyId}
+      serviceId={serviceId!}
+    />
   );
 };
 

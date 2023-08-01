@@ -1,16 +1,15 @@
-import { CustomServiceModalProps, Service } from "../types";
-import Modal from "react-modal";
-import cross from "assets/images/cross.svg";
-import Editor from "react-simple-code-editor";
-import { useState } from "react";
-import { highlight, languages } from "prismjs";
 import "assets/css/prismjs-prem.css";
+import { useMutation } from "@tanstack/react-query";
+import { highlight, languages } from "prismjs";
+import { useState } from "react";
+import Modal from "react-modal";
+import Editor from "react-simple-code-editor";
+import { toast } from "react-toastify";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
-import { useMutation } from "@tanstack/react-query";
-import { add } from "lodash";
+
 import addService from "../api/addService";
-import { toast } from "react-toastify";
+import type { CustomServiceModalProps, Service } from "../types";
 
 const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => {
   const [code, setCode] = useState(
@@ -31,7 +30,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
         "string"
       ],
       "promptTemplate": "string"
-    }`
+    }`,
   );
 
   const { mutate, isLoading } = useMutation((request: Service) => addService(request));

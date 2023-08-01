@@ -1,15 +1,15 @@
-import PremChat from "modules/prem-chat/components/PremChat";
-import ServiceDetail from "modules/service-detail/components/ServiceDetail";
-import Service from "modules/service/components/Service";
-import Settings from "modules/settings/components/Settings";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import NotFound from "shared/components/NotFound";
-import { ToastContainer } from "react-toastify";
-import PremImage from "modules/prem-image/components/PremImage";
-import "react-toastify/dist/ReactToastify.css";
 import PremAudio from "modules/prem-audio/components/PremAudio";
+import PremChat from "modules/prem-chat/components/PremChat";
+import PremImage from "modules/prem-image/components/PremImage";
 import PremTextAudio from "modules/prem-text-audio/components/PremTextAudio";
 import PremUpscaler from "modules/prem-upscaler/components/PremUpscaler";
+import Service from "modules/service/components/Service";
+import ServiceDetail from "modules/service-detail/components/ServiceDetail";
+import Settings from "modules/settings/components/Settings";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import NotFound from "shared/components/NotFound";
+import "react-toastify/dist/ReactToastify.css";
 
 const AppRouter = () => {
   return (

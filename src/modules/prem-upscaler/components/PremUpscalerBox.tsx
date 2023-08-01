@@ -1,23 +1,25 @@
-import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
-import PrimaryButton from "shared/components/PrimaryButton";
-import OutlineCircleButton from "shared/components/OutlineCircleButton";
-import { PremUpscalerContainerProps } from "../types";
-import { useDropzone } from "react-dropzone";
 import uploadIcon from "assets/images/upload.svg";
+import clsx from "clsx";
+import { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { useNavigate } from "react-router-dom";
+import OutlineCircleButton from "shared/components/OutlineCircleButton";
+import PrimaryButton from "shared/components/PrimaryButton";
 import usePremUpscaler from "shared/hooks/usePremUpscaler";
+
+import type { PremUpscalerContainerProps } from "../types";
 
 const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainerProps>) => {
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, file, setFile, currentHistory } = usePremUpscaler(
-    serviceId!,
-    historyId
+  const { isLoading, onSubmit, file, setFile } = usePremUpscaler(serviceId!, historyId);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFile(acceptedFiles[0]);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   );
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -68,7 +70,7 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
               "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
               {
                 "opacity-50 pointer-events-none": isLoading,
-              }
+              },
             )}
             onClick={onClear}
             disabled={isLoading}
@@ -81,7 +83,7 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
               {
                 "opacity-50": !file,
                 "animate-fill-effect": isLoading,
-              }
+              },
             )}
             onClick={generateImages}
             disabled={isLoading || !file}

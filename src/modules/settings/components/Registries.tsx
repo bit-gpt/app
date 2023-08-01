@@ -1,12 +1,14 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FormEvent, useState } from "react";
-import PrimaryButton from "shared/components/PrimaryButton";
-import fetchRegistries from "../api/fetchRegistries";
-import addRegistry from "../api/addRegistry";
-import Spinner from "shared/components/Spinner";
+import type { FormEvent } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import MinusArrow from "shared/components/MinusArrow";
 import PlusArrow from "shared/components/PlusArrow";
+import PrimaryButton from "shared/components/PrimaryButton";
+import Spinner from "shared/components/Spinner";
+
+import addRegistry from "../api/addRegistry";
+import fetchRegistries from "../api/fetchRegistries";
 
 const Registries = () => {
   const [registryUrl, setRegistryUrl] = useState("");
@@ -28,7 +30,7 @@ const Registries = () => {
         onError: () => {
           toast.error("Something went wrong while adding registry");
         },
-      }
+      },
     );
   };
 

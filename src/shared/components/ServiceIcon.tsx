@@ -1,4 +1,4 @@
-import { ServiceIconPorps } from "shared/types";
+import type { ServiceIconPorps } from "shared/types";
 
 const ServiceIcon = ({ className }: ServiceIconPorps) => {
   return (

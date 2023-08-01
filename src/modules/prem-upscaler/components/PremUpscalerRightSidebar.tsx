@@ -1,7 +1,7 @@
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import RangeSlider from "shared/components/RangeSlider";
 import usePremUpscalerStore from "shared/store/prem-upscaler";
-import { RightSidebarProps } from "shared/types";
+import type { RightSidebarProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
 const PremUpscalerRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
@@ -21,7 +21,7 @@ const PremUpscalerRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
       setGuidanceScale: state.setGuidanceScale,
       setNumInferenceSteps: state.setNumInferenceSteps,
     }),
-    shallow
+    shallow,
   );
 
   return (

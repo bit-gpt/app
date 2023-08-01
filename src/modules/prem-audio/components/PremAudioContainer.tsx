@@ -1,11 +1,13 @@
-import { useState } from "react";
 import clsx from "clsx";
+import { useState } from "react";
+import { useMediaQuery } from "usehooks-ts";
+
+import type { PremAudioContainerProps } from "../types";
+
 import Header from "./Header";
-import PremImageRightSidebar from "./PremAudioRightSidebar";
-import { PremAudioContainerProps } from "../types";
 import PremAudioBox from "./PremAudioBox";
 import PremAudioLeftSidebar from "./PremAudioLeftSidebar";
-import { useMediaQuery } from "usehooks-ts";
+import PremImageRightSidebar from "./PremAudioRightSidebar";
 
 const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);

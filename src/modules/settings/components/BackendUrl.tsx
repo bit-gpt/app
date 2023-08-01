@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FormEvent, useState } from "react";
+import type { FormEvent } from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
 import PrimaryButton from "shared/components/PrimaryButton";
 import ResetIcon from "shared/components/ResetIcon";
-import { toast } from "react-toastify";
-import useSettingStore from "shared/store/setting";
 import { getBackendUrl } from "shared/helpers/utils";
+import useSettingStore from "shared/store/setting";
+
 import checkHealth from "../api/checkHealth";
 
 const BackendUrl = () => {

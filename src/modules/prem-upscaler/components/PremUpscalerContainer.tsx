@@ -1,13 +1,15 @@
-import { useState } from "react";
 import clsx from "clsx";
-import Header from "./Header";
-import PremUpscalerRightSidebar from "./PremUpscalerRightSidebar";
-import { PremUpscalerContainerProps } from "../types";
-import PremUpscalerBox from "./PremUpscalerBox";
-import PremUpscalerLeftSidebar from "./PremUpscalerLeftSidebar";
-import { useMediaQuery } from "usehooks-ts";
+import { useState } from "react";
 import usePremUpscaler from "shared/hooks/usePremUpscaler";
+import { useMediaQuery } from "usehooks-ts";
+
+import type { PremUpscalerContainerProps } from "../types";
+
+import Header from "./Header";
+import PremUpscalerBox from "./PremUpscalerBox";
 import PremUpscalerImageBox from "./PremUpscalerImageBox";
+import PremUpscalerLeftSidebar from "./PremUpscalerLeftSidebar";
+import PremUpscalerRightSidebar from "./PremUpscalerRightSidebar";
 
 const PremUpscalerContainer = ({
   serviceName,

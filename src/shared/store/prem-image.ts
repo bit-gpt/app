@@ -1,5 +1,5 @@
 import storage from "shared/helpers/custom-storage";
-import { PremImageHistory, PremImageStore } from "shared/types";
+import type { PremImageHistory, PremImageStore } from "shared/types";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -24,10 +24,10 @@ const usePremImageStore = create<PremImageStore>()(
       {
         name: "prem-image",
         storage: createJSONStorage(() => storage),
-      }
+      },
     ),
-    { name: "store", store: "prem-image" }
-  )
+    { name: "store", store: "prem-image" },
+  ),
 );
 
 export default usePremImageStore;

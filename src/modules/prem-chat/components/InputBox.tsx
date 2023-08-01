@@ -1,5 +1,7 @@
-import { ForwardedRef, forwardRef } from "react";
-import { InputBoxProps } from "../types";
+import type { ForwardedRef } from "react";
+import { forwardRef } from "react";
+
+import type { InputBoxProps } from "../types";
 
 const InputBox = forwardRef((props: InputBoxProps, ref: ForwardedRef<HTMLInputElement>) => {
   const { question, setQuestion, disabled, placeholder } = props;

@@ -1,6 +1,7 @@
 import { Tooltip } from "react-tooltip";
-import { DependencyProps } from "../types";
 import Spinner from "shared/components/Spinner";
+
+import type { DependencyProps } from "../types";
 
 const Dependency = ({
   isRunning,

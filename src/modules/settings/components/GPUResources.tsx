@@ -1,5 +1,5 @@
-import useGPUStats from "shared/hooks/useGPUStats";
 import nvidia_logo from "assets/images/nvidia_logo.svg";
+import useGPUStats from "shared/hooks/useGPUStats";
 
 const GPUResources = () => {
   const { data: response } = useGPUStats();

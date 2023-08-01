@@ -1,11 +1,12 @@
-import PrimaryButton from "shared/components/PrimaryButton";
-import { PremImageResponse } from "../types";
+import uploadIcon from "assets/images/upload.svg";
 import clsx from "clsx";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
-import uploadIcon from "assets/images/upload.svg";
+import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImageStore from "shared/store/prem-image";
+
+import type { PremImageResponse } from "../types";
 
 type PromptProps = Pick<
   PremImageResponse,
@@ -25,9 +26,12 @@ const PremImagePromptBox = ({
   generateImages: () => void;
 }) => {
   const n = usePremImageStore((state) => state.n);
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFile(acceptedFiles[0]);
+    },
+    [setFile],
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

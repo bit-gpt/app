@@ -1,24 +1,30 @@
-import AppContainer from "shared/components/AppContainer";
-import SystemResources from "./SystemResources";
-import GPUResources from "./GPUResources";
-import AdvancedSettings from "./AdvancedSettings";
-import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import cross from "assets/images/cross.svg";
-import useBodyLock from "shared/hooks/useBodyLock";
-import { useEffect, useState } from "react";
+import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import clsx from "clsx";
+import { useCallback, useEffect, useState } from "react";
+import AppContainer from "shared/components/AppContainer";
 import Sidebar from "shared/components/Sidebar";
+import useBodyLock from "shared/hooks/useBodyLock";
 import { useMediaQuery } from "usehooks-ts";
+
+import AdvancedSettings from "./AdvancedSettings";
+import GPUResources from "./GPUResources";
+import SystemResources from "./SystemResources";
 
 const Settings = () => {
   const matches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
   const { bodyLocked, setBodyLocked } = useBodyLock();
-  const hamburgerMenuToggle = () => {
+
+  const hamburgerMenuToggle = useCallback(() => {
     setBodyLocked(!bodyLocked);
     setHamburgerMenu(!hamburgerMenuOpen);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {}, [hamburgerMenuToggle]);
+
   return (
     <AppContainer>
       {hamburgerMenuOpen && (

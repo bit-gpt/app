@@ -1,9 +1,11 @@
 import { useCallback, useState } from "react";
 import WarningIcon from "shared/components/WarningIcon";
-import WarningModal from "./WarningModal";
-import { ServiceStatus, WarningServiceStateProps } from "../types";
 import WarningShapeIcon from "shared/components/WarningShapeIcon";
 import useBodyLock from "shared/hooks/useBodyLock";
+
+import type { ServiceStatus, WarningServiceStateProps } from "../types";
+
+import WarningModal from "./WarningModal";
 
 const WarningServiceState = ({ status, memoryRequirements }: WarningServiceStateProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,11 +17,15 @@ const WarningServiceState = ({ status, memoryRequirements }: WarningServiceState
     setBodyLocked(!bodyLocked);
   };
 
-  const closeWarningModal = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsOpen(false);
-    setBodyLocked(false);
-  }, []);
+  const closeWarningModal = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setIsOpen(false);
+      setBodyLocked(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   const getServiceWarningDescription = (status: ServiceStatus) => {
     switch (status) {

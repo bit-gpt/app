@@ -1,17 +1,18 @@
-import PrimaryButton from "shared/components/PrimaryButton";
-import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import clsx from "clsx";
-import { PremTextAudioContainerProps } from "../types";
 import { Link, useNavigate } from "react-router-dom";
-import usePremTextAudio from "shared/hooks/usePremTextAudio";
-import PremAudioPlayer from "shared/components/PremAudioPlayer";
 import DownloadIcon from "shared/components/DownloadIcon";
+import OutlineCircleButton from "shared/components/OutlineCircleButton";
+import PremAudioPlayer from "shared/components/PremAudioPlayer";
+import PrimaryButton from "shared/components/PrimaryButton";
+import usePremTextAudio from "shared/hooks/usePremTextAudio";
+
+import type { PremTextAudioContainerProps } from "../types";
 
 const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContainerProps>) => {
   const navigate = useNavigate();
   const { isLoading, onSubmit, prompt, setPrompt, currentHistory } = usePremTextAudio(
     serviceId!,
-    historyId
+    historyId,
   );
 
   const generateAudio = () => {
@@ -57,7 +58,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
               "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
               {
                 "opacity-50": isLoading,
-              }
+              },
             )}
             onClick={onClear}
             disabled={isLoading}
@@ -70,7 +71,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
               {
                 "opacity-50": !prompt,
                 "animate-fill-effect": isLoading,
-              }
+              },
             )}
             onClick={generateAudio}
             disabled={isLoading || !prompt}

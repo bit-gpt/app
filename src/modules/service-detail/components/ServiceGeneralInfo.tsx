@@ -1,8 +1,9 @@
 import { isArray, startCase } from "lodash";
-import { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 import { useMemo } from "react";
 import { formatInfo } from "shared/helpers/utils";
 import useSettingStore from "shared/store/setting";
+
+import type { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 
 const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
   const skippableFields = [
@@ -24,6 +25,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
         key: startCase(key),
         value: formatInfo(value as ServiceInfoValue),
       }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
 
   const modelInfo = useMemo(() => {
@@ -33,6 +35,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
         key: startCase(key),
         value: formatInfo(value as ServiceInfoValue),
       }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
 
   const docUrl = useMemo(() => {
@@ -51,8 +54,13 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       <div className="right-general-card">
         <span className="opacity-70">Docs</span>
         <span>
-          {!!docUrl ? (
-            <a href={docUrl} target="_blank" className="text-blue-400 hover:underline">
+          {docUrl ? (
+            <a
+              href={docUrl}
+              target="_blank"
+              className="text-blue-400 hover:underline"
+              rel="noreferrer"
+            >
               {docUrl}
             </a>
           ) : (

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+
 import {
   checkIsDockerRunning,
   runDockerContainer,
@@ -14,41 +15,38 @@ const useDocker = () => {
   const [isServerRunning, setIsServerRunning] = useState<boolean>(false);
 
   const handleCheckIsDockerRunning = useCallback(async () => {
-    try {
-      const dockerRunning = await checkIsDockerRunning();
-      if (!dockerRunning) {
-        setIsDockerRunning(false);
-        return;
-      }
-      setIsDockerRunning(true);
-
-      const containerRunning = await checkIsContainerRunning();
-      if (!containerRunning) {
-        setIsContainerRunning(false);
-        await runDockerContainer();
-        return;
-      }
-      setIsContainerRunning(true);
-
-      const serverRunning = await checkIsServerRunning();
-      if (!serverRunning) {
-        setIsServerRunning(false);
-        const interval = setInterval(async () => {
-          const serverRunning = await checkIsServerRunning();
-          if (serverRunning) {
-            setIsServerRunning(true);
-            clearInterval(interval);
-          }
-        }, 500);
-        return;
-      }
-      setIsServerRunning(true);
-    } catch (error) {
-      throw error;
+    const dockerRunning = await checkIsDockerRunning();
+    if (!dockerRunning) {
+      setIsDockerRunning(false);
+      return;
     }
+    setIsDockerRunning(true);
+
+    const containerRunning = await checkIsContainerRunning();
+    if (!containerRunning) {
+      setIsContainerRunning(false);
+      await runDockerContainer();
+      return;
+    }
+    setIsContainerRunning(true);
+
+    const serverRunning = await checkIsServerRunning();
+    if (!serverRunning) {
+      setIsServerRunning(false);
+      const interval = setInterval(async () => {
+        const serverRunning = await checkIsServerRunning();
+        if (serverRunning) {
+          setIsServerRunning(true);
+          clearInterval(interval);
+        }
+      }, 500);
+      return;
+    }
+    setIsServerRunning(true);
   }, [setIsDockerRunning, setIsContainerRunning, setIsServerRunning]);
 
   const intervalRef = useRef<NodeJS.Timeout>();
+
   useEffect(() => {
     if (isBrowser) return;
 
@@ -61,7 +59,7 @@ const useDocker = () => {
     }, 5000);
     // cleanup function - clear the interval when the component unmounts
     return () => clearInterval(intervalRef.current);
-  }, []);
+  }, [handleCheckIsDockerRunning, isBrowser]);
 
   return {
     isDockerRunning: isDockerRunning,

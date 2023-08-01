@@ -1,5 +1,6 @@
 import Markdown from "shared/components/Markdown";
-import { ServiceDescriptionProps } from "../types";
+
+import type { ServiceDescriptionProps } from "../types";
 
 const ServiceDescription = ({ description }: ServiceDescriptionProps) => {
   return (

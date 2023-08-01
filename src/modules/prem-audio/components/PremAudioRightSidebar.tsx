@@ -1,5 +1,5 @@
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
-import { RightSidebarProps } from "shared/types";
+import type { RightSidebarProps } from "shared/types";
 
 const PremAudioRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
   return (

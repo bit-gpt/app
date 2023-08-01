@@ -15,8 +15,8 @@ const useDownloadServiceStream = () => {
       },
       () => {
         setProgress(-1);
-        afterSuccess && afterSuccess();
-      }
+        afterSuccess?.();
+      },
     );
   }, []);
 

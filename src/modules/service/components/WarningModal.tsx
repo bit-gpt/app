@@ -1,8 +1,8 @@
+import Modal from "react-modal";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 import WarningModalIcon from "shared/components/WarningModalIcon";
-import { WarningModalProps } from "shared/types";
-import Modal from "react-modal";
+import type { WarningModalProps } from "shared/types";
 
 const WarningModal = ({
   onCancel,

@@ -1,4 +1,4 @@
-import { PremTextAudioHistory } from "shared/types";
+import type { PremTextAudioHistory } from "shared/types";
 
 export type AudioGenerationData = {
   prompt: string;

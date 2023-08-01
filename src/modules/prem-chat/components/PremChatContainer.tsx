@@ -1,16 +1,17 @@
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import UserReply from "shared/components/UserReply";
 import BotReply from "shared/components/BotReply";
+import UserReply from "shared/components/UserReply";
+import usePremChatStream from "shared/hooks/usePremChatStream";
+import { useMediaQuery, useWindowSize } from "usehooks-ts";
+
+import type { Message, PremChatContainerProps } from "../types";
+
+import Header from "./Header";
 import InputBox from "./InputBox";
 import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
-import Header from "./Header";
 import RightSidebar from "./RightSidebar";
-import { Message, PremChatContainerProps } from "../types";
-import clsx from "clsx";
-import { useMediaQuery, useWindowSize } from "usehooks-ts";
-import useBodyLock from "shared/hooks/useBodyLock";
-import usePremChatStream from "shared/hooks/usePremChatStream";
 
 const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainerProps) => {
   const model = serviceId;

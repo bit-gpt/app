@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import useService from "shared/hooks/useService";
 import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
+import useService from "shared/hooks/useService";
+
 import PremTextAudioContainer from "./PremTextAudioContainer";
 
 const PremTextAudio = () => {
@@ -16,7 +17,7 @@ const PremTextAudio = () => {
 
   return (
     <PremTextAudioContainer
-      serviceName={service?.name!}
+      serviceName={service?.name ?? ""}
       historyId={historyId}
       serviceId={serviceId!}
     />

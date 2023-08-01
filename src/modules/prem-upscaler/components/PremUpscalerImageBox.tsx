@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
-import PrimaryButton from "shared/components/PrimaryButton";
-import { PremUpscalerHistory } from "shared/types";
 import uploadIcon from "assets/images/upload.svg";
+import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
+import PrimaryButton from "shared/components/PrimaryButton";
+import type { PremUpscalerHistory } from "shared/types";
 
 const PremUpscalerImageBox = ({
   serviceId,
@@ -37,7 +37,7 @@ const PremUpscalerImageBox = ({
           <a href={history.file} download onClick={(e) => e.stopPropagation()}>
             <PrimaryButton
               className={clsx(
-                "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:justify-center maxSm:!h-10"
+                "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:justify-center maxSm:!h-10",
               )}
             >
               Download

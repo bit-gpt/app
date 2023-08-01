@@ -1,15 +1,15 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Logo from "assets/images/logo.svg";
 import leftArrow from "assets/images/arrow.svg";
 import cross from "assets/images/cross.svg";
-import { HamburgerMenuProps } from "shared/types";
-import { shallow } from "zustand/shallow";
-import usePremImageStore from "shared/store/prem-image";
-import { orderBy } from "lodash";
+import Logo from "assets/images/logo.svg";
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
-import { useMediaQuery } from "usehooks-ts";
+import { orderBy } from "lodash";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NoPrompts from "shared/components/NoPrompts";
+import usePremImageStore from "shared/store/prem-image";
+import type { HamburgerMenuProps } from "shared/types";
+import { useMediaQuery } from "usehooks-ts";
+import { shallow } from "zustand/shallow";
 
 const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
     (state) => ({
       history: state.history,
     }),
-    shallow
+    shallow,
   );
 
   const onCloseClick = () => {
@@ -27,9 +27,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   const scrollToTop = () => {
-    {
-      responsiveMatches && setHamburgerMenu(true);
-    }
+    responsiveMatches && setHamburgerMenu(true);
     document
       .querySelector(".prem-img-promptbox")
       ?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -68,7 +66,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                         </span>
                         <div className="flex flex-wrap gap-[2px] mt-[11px]">
                           {item.images?.map((image, index) => {
-                            return <img key={index} src={image} className="w-8 h-8" />;
+                            return <img key={index} src={image} className="w-8 h-8" alt="" />;
                           })}
                         </div>
                       </div>

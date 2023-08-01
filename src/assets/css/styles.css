@@ -110,7 +110,9 @@ header img {
 .gradient-border::after {
   content: "";
   @apply absolute inset-0 rounded-[10px] p-[1.5px] pointer-events-none bg-gradient-border-bg;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
@@ -292,7 +294,8 @@ header img {
 }
 .user-reply p {
   @apply bg-isabelline border py-4 px-[22px] ml-auto max-w-[660px] font-proximaNova-regular text-base text-arsenic;
-  box-shadow: 10.4294px 10.4294px 26.0736px rgba(112, 124, 151, 0.05),
+  box-shadow:
+    10.4294px 10.4294px 26.0736px rgba(112, 124, 151, 0.05),
     15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);

@@ -1,7 +1,8 @@
-import CopyToClipboard from "react-copy-to-clipboard";
-import { BotReplyProps } from "shared/types";
 import chatReplay from "assets/images/chat-replay.svg";
 import copy from "assets/images/copy.svg";
+import CopyToClipboard from "react-copy-to-clipboard";
+import type { BotReplyProps } from "shared/types";
+
 import Markdown from "./Markdown";
 
 const BotReply = ({ reply }: BotReplyProps) => {

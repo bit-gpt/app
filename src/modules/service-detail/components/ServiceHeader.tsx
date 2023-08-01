@@ -1,6 +1,7 @@
-import TagsOutline from "shared/components/TagsOutline";
-import { ServiceHeaderProps } from "../types";
 import Beta from "modules/service/components/Beta";
+import TagsOutline from "shared/components/TagsOutline";
+
+import type { ServiceHeaderProps } from "../types";
 
 const ServiceHeader = (props: ServiceHeaderProps) => {
   const { tags, icon, subtitle, title, isInBeta } = props;

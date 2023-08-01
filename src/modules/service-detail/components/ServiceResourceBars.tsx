@@ -1,7 +1,8 @@
-import useServiceStats from "shared/hooks/useServiceStats";
-import { ServiceResourceBarsProps } from "../types";
-import WarningIcon from "shared/components/WarningIcon";
 import clsx from "clsx";
+import WarningIcon from "shared/components/WarningIcon";
+import useServiceStats from "shared/hooks/useServiceStats";
+
+import type { ServiceResourceBarsProps } from "../types";
 
 const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) => {
   const { data: response } = useServiceStats(serviceId);
@@ -11,14 +12,14 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
       <ul
         className={clsx(
           "grid lg:grid-cols-3 items-end gap-4 !ml-0 md:p-5",
-          status !== "running" && "status-not-running"
+          status !== "running" && "status-not-running",
         )}
       >
         <li>
           <p>Memory</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.memory_percentage == undefined && (
+              {response?.data?.memory_percentage === undefined && (
                 <span className="lg:hidden">-</span>
               )}
               {response?.data?.memory_usage} GiB
@@ -35,7 +36,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>CPU</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.cpu_percentage == undefined && <span className="lg:hidden">-</span>}
+              {response?.data?.cpu_percentage === undefined && <span className="lg:hidden">-</span>}
               {response?.data?.cpu_percentage}%
             </p>
             <div className="progress">
@@ -50,7 +51,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>Image Size</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.storage_percentage == undefined && (
+              {response?.data?.storage_percentage === undefined && (
                 <span className="lg:hidden">-</span>
               )}
               {response?.data?.storage_usage} GiB

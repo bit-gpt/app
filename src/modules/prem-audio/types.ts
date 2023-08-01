@@ -1,5 +1,4 @@
-import { PremAudioHistory } from "shared/types";
-import { StatusMessages } from "react-media-recorder";
+import type { PremAudioHistory } from "shared/types";
 
 export type TranscriptionsGeneration = {
   file: File;

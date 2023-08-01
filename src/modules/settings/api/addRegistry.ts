@@ -1,7 +1,9 @@
-import axios, { AxiosResponse } from "axios";
-import { Registries } from "../types";
+import type { AxiosResponse } from "axios";
+import axios from "axios";
+import type { Message } from "modules/service/types";
 import { getBackendUrlFromStore } from "shared/store/setting";
-import { Message } from "modules/service/types";
+
+import type { Registries } from "../types";
 
 const addRegistry = async (data: Registries): Promise<AxiosResponse<Message>> => {
   const backendUrl = getBackendUrlFromStore();

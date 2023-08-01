@@ -1,4 +1,4 @@
-import { PremImageHistory } from "shared/types";
+import type { PremImageHistory } from "shared/types";
 
 export type ImageGeneration = {
   prompt: string;

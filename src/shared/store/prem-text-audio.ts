@@ -1,5 +1,5 @@
 import storage from "shared/helpers/custom-storage";
-import { PremTextAudioHistory, PremTextAudioStore } from "shared/types";
+import type { PremTextAudioHistory, PremTextAudioStore } from "shared/types";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -18,10 +18,10 @@ const usePremTextAudioStore = create<PremTextAudioStore>()(
       {
         name: "prem-text-audio",
         storage: createJSONStorage(() => storage),
-      }
+      },
     ),
-    { name: "store", store: "prem-text-audio" }
-  )
+    { name: "store", store: "prem-text-audio" },
+  ),
 );
 
 export default usePremTextAudioStore;

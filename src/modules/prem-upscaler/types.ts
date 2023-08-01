@@ -1,4 +1,4 @@
-import { PremUpscalerHistory } from "shared/types";
+import type { PremUpscalerHistory } from "shared/types";
 
 export type ImageGeneration = {
   image: File;

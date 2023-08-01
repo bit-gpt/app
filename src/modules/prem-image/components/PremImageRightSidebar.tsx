@@ -1,7 +1,7 @@
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import RangeSlider from "shared/components/RangeSlider";
 import usePremImageStore from "shared/store/prem-image";
-import { RightSidebarProps } from "shared/types";
+import type { RightSidebarProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
 const PremImageRightSidebar = ({ setRightSidebar, isLoading }: RightSidebarProps) => {
@@ -12,7 +12,7 @@ const PremImageRightSidebar = ({ setRightSidebar, isLoading }: RightSidebarProps
       seed: state.seed,
       setSeed: state.setSeed,
     }),
-    shallow
+    shallow,
   );
 
   return (

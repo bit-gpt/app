@@ -1,9 +1,11 @@
+import { useState } from "react";
 import useDocker from "shared/hooks/useDocker";
 import useWelcomeScreen from "shared/hooks/useWelcomeScreen";
-import WelcomeScreen from "./WelcomeScreen";
+
+import type { OnboardingProps } from "../types";
+
 import SystemCheck from "./SystemCheck";
-import { useState } from "react";
-import { OnboardingProps } from "../types";
+import WelcomeScreen from "./WelcomeScreen";
 
 const Onboarding = ({ redirectTo }: OnboardingProps) => {
   const { displayWelcomeScreen, setDisplayWelcomeScreen, closeWelcomeScreen } = useWelcomeScreen();

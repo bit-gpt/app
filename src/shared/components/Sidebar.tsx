@@ -1,9 +1,10 @@
 import brandLogo from "assets/images/brand-logo.svg";
+
 import DashboardIcon from "./DashboardIcon";
-import SettingIcon from "./SettingIcon";
 import DocumentationIcon from "./DocumentationIcon";
-import NavLinkItem from "./NavLinkItem";
 import NavLinkContainer from "./NavLinkContainer";
+import NavLinkItem from "./NavLinkItem";
+import SettingIcon from "./SettingIcon";
 
 const Sidebar = () => {
   return (
