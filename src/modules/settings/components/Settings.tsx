@@ -1,7 +1,7 @@
 import cross from "assets/images/cross.svg";
 import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import clsx from "clsx";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import AppContainer from "shared/components/AppContainer";
 import Sidebar from "shared/components/Sidebar";
 import { useLockedBody, useMediaQuery } from "usehooks-ts";
@@ -15,14 +15,10 @@ const Settings = () => {
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
   const [bodyLocked, setBodyLocked] = useLockedBody(false, "root");
 
-  const hamburgerMenuToggle = useCallback(() => {
+  const hamburgerMenuToggle = () => {
     setBodyLocked(!bodyLocked);
     setHamburgerMenu(!hamburgerMenuOpen);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  useEffect(() => {}, [hamburgerMenuToggle]);
+  };
 
   return (
     <AppContainer>
