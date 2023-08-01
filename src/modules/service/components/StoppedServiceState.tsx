@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import DeleteIcon from "shared/components/DeleteIcon";
 import PrimaryButton from "shared/components/PrimaryButton";
 import Spinner from "shared/components/Spinner";
-import useBodyLock from "shared/hooks/useBodyLock";
 import useStartService from "shared/hooks/useStartService";
+import { useLockedBody } from "usehooks-ts";
 
 import deleteService from "../api/deleteService";
 import type { ServiceStateProps } from "../types";
@@ -19,7 +19,8 @@ const StoppedServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { setBodyLocked } = useBodyLock();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setBodyLocked] = useLockedBody(false, "root");
 
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
     deleteService(id),

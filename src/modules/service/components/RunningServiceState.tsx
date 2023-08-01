@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import PrimaryButton from "shared/components/PrimaryButton";
 import Spinner from "shared/components/Spinner";
 import StopIcon from "shared/components/StopIcon";
-import useBodyLock from "shared/hooks/useBodyLock";
 import useStopService from "shared/hooks/useStopService";
+import { useLockedBody } from "usehooks-ts";
 
 import type { ServiceStateProps } from "../types";
 
@@ -15,7 +15,9 @@ const RunningServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const { mutate, isLoading } = useStopService();
-  const { setBodyLocked } = useBodyLock();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setBodyLocked] = useLockedBody(false, "root");
+
   const [refresh, setRefresh] = useState(false);
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {

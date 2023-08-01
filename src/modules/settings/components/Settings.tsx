@@ -4,8 +4,7 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import AppContainer from "shared/components/AppContainer";
 import Sidebar from "shared/components/Sidebar";
-import useBodyLock from "shared/hooks/useBodyLock";
-import { useMediaQuery } from "usehooks-ts";
+import { useLockedBody, useMediaQuery } from "usehooks-ts";
 
 import AdvancedSettings from "./AdvancedSettings";
 import GPUResources from "./GPUResources";
@@ -14,7 +13,7 @@ import SystemResources from "./SystemResources";
 const Settings = () => {
   const matches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  const [bodyLocked, setBodyLocked] = useLockedBody(false, "root");
 
   const hamburgerMenuToggle = useCallback(() => {
     setBodyLocked(!bodyLocked);

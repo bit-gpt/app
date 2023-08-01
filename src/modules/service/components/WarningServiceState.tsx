@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import WarningIcon from "shared/components/WarningIcon";
 import WarningShapeIcon from "shared/components/WarningShapeIcon";
-import useBodyLock from "shared/hooks/useBodyLock";
+import { useLockedBody } from "usehooks-ts";
 
 import type { ServiceStatus, WarningServiceStateProps } from "../types";
 
@@ -9,7 +9,7 @@ import WarningModal from "./WarningModal";
 
 const WarningServiceState = ({ status, memoryRequirements }: WarningServiceStateProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  const [bodyLocked, setBodyLocked] = useLockedBody(false, "root");
 
   const openWarningModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

@@ -3,15 +3,14 @@ import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import clsx from "clsx";
 import type { PropsWithChildren } from "react";
 import { useState } from "react";
-import useBodyLock from "shared/hooks/useBodyLock";
-import { useMediaQuery } from "usehooks-ts";
+import { useLockedBody, useMediaQuery } from "usehooks-ts";
 
 import Sidebar from "./Sidebar";
 
 const AppContainer = ({ children }: PropsWithChildren) => {
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
   const matches = useMediaQuery("(max-width: 767px)");
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  const [bodyLocked, setBodyLocked] = useLockedBody(false, "root");
 
   const hamburgerMenuToggle = () => {
     setHamburgerMenu(!hamburgerMenuOpen);
