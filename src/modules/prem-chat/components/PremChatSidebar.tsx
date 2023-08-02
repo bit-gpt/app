@@ -1,22 +1,22 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import clsx from "clsx";
-import orderBy from "lodash/orderBy";
-import { shallow } from "zustand/shallow";
-import usePremChatStore from "shared/store/prem-chat";
-import Logo from "assets/images/logo.svg";
 import leftArrow from "assets/images/arrow.svg";
 import cross from "assets/images/cross.svg";
 import edit from "assets/images/edit.svg";
-import msg from "assets/images/msg.svg";
-import searchIcon from "assets/images/search.svg";
 import exportData from "assets/images/export-data.svg";
 import importData from "assets/images/import-data.svg";
+import Logo from "assets/images/logo.svg";
+import msg from "assets/images/msg.svg";
+import searchIcon from "assets/images/search.svg";
+import clsx from "clsx";
+import orderBy from "lodash/orderBy";
 import WarningModal from "modules/service/components/WarningModal";
-import WarningIcon from "shared/components/WarningIcon";
-import { useMediaQuery, useWindowSize } from "usehooks-ts";
-import { HamburgerMenuProps } from "shared/types";
+import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NoPrompts from "shared/components/NoPrompts";
+import WarningIcon from "shared/components/WarningIcon";
+import usePremChatStore from "shared/store/prem-chat";
+import type { HamburgerMenuProps } from "shared/types";
+import { useMediaQuery, useWindowSize } from "usehooks-ts";
+import { shallow } from "zustand/shallow";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const { history, deleteHistory, clearHistory } = usePremChatStore(
@@ -25,7 +25,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
       deleteHistory: state.deleteHistory,
       clearHistory: state.clearHistory,
     }),
-    shallow
+    shallow,
   );
 
   const [search, setSearch] = useState("");

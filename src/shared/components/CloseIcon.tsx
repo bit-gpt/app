@@ -1,4 +1,4 @@
-import { CloseIconProps } from "shared/types";
+import type { CloseIconProps } from "shared/types";
 
 const CloseIcon = ({ className }: CloseIconProps) => {
   return (

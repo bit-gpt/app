@@ -1,10 +1,12 @@
-import { useState } from "react";
 import clsx from "clsx";
-import PremTextAudioLeftSidebar from "./PremTextAudioLeftSidebar";
+import { useState } from "react";
+
+import type { PremTextAudioContainerProps } from "../types";
+
 import Header from "./Header";
-import PremTextAudioRightSidebar from "./PremTextAudioRightSidebar";
-import { PremTextAudioContainerProps } from "../types";
 import PremTextAudioBox from "./PremTextAudioBox";
+import PremTextAudioLeftSidebar from "./PremTextAudioLeftSidebar";
+import PremTextAudioRightSidebar from "./PremTextAudioRightSidebar";
 
 const PremTextAudioContainer = ({
   serviceName,

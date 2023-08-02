@@ -1,15 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
-import { v4 as uuid } from "uuid";
-import { shallow } from "zustand/shallow";
+import type { AxiosError } from "axios";
+import type { PremChatResponse } from "modules/prem-chat/types";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PremChatResponse } from "modules/prem-chat/types";
-import usePremChatStore from "../store/prem-chat";
-import useService from "./useService";
 import { toast } from "react-toastify";
 import { generateUrl } from "shared/helpers/utils";
 import { getBackendUrlFromStore } from "shared/store/setting";
-import { AxiosError } from "axios";
+import { v4 as uuid } from "uuid";
+import { shallow } from "zustand/shallow";
+
+import usePremChatStore from "../store/prem-chat";
+
+import useService from "./useService";
 
 const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
   const [question, setQuestion] = useState("");
@@ -48,13 +50,14 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       promptTemplate: state.promptTemplate,
       setPromptTemplate: state.setPromptTemplate,
     }),
-    shallow
+    shallow,
   );
 
   useEffect(() => {
     if (!promptTemplate) {
       setPromptTemplate(service?.promptTemplate || "");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
 
   const messages = history.find((_history) => _history.id === chatId)?.messages || [];
@@ -64,7 +67,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       e.preventDefault();
       processQuestion(question);
     },
-    [question]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [question],
   );
 
   const processQuestion = (question: string) => {
@@ -81,8 +85,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
 
     const backendUrl = generateUrl(
       getBackendUrlFromStore(),
-      service?.runningPort!,
-      "v1/chat/completions"
+      service?.runningPort ?? 0,
+      "v1/chat/completions",
     );
 
     try {
@@ -142,6 +146,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       updateHistoryMessages(chatId, newMessages);
       processQuestion(lastConversation[0].content);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   const tempConversation = [
@@ -170,6 +175,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
         updateHistoryMessages(chatId, [...messages, ...tempConversation]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending, isLoading]);
 
   const chatMessages = useMemo(() => {
@@ -180,6 +186,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       return [...messages, { role: "user", content: tempQuestion }];
     }
     return messages;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages, pending, tempQuestion]);
 
   const resetPromptTemplate = useCallback(() => {

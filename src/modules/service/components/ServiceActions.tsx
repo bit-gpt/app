@@ -1,13 +1,6 @@
-import { useCallback, useState } from "react";
-import { ServiceActionsProps } from "../types";
-import NotDownloadedServiceState from "./NotDownloadedServiceState";
-import RunningServiceState from "./RunningServiceState";
-import StoppedServiceState from "./StoppedServiceState";
-import WarningServiceState from "./WarningServiceState";
-import { useNavigate } from "react-router-dom";
-import DocumentationModal from "./DocumentationModal";
-import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
 import { round } from "lodash";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AUDIO_TO_TEXT_ID,
   CHAT_ID,
@@ -15,6 +8,15 @@ import {
   TEXT_TO_AUDIO_ID,
   UPSCALER_ID,
 } from "shared/helpers/utils";
+
+import type { ServiceActionsProps } from "../types";
+
+import DocumentationModal from "./DocumentationModal";
+import NeedsUpdateServiceState from "./NeedsUpdateServiceState";
+import NotDownloadedServiceState from "./NotDownloadedServiceState";
+import RunningServiceState from "./RunningServiceState";
+import StoppedServiceState from "./StoppedServiceState";
+import WarningServiceState from "./WarningServiceState";
 
 const ServiceActions = ({
   status,
@@ -46,7 +48,7 @@ const ServiceActions = ({
       return;
     }
     setIsOpen(true);
-  }, []);
+  }, [interfaces, navigate, serviceId]);
 
   const documentation = `${interfaces[0]?.documentation || ""}`.trim();
 
@@ -81,7 +83,7 @@ const ServiceActions = ({
         )}
 
         {["not_supported", "not_enough_memory", "not_enough_system_memory", "coming_soon"].includes(
-          status
+          status,
         ) && <WarningServiceState status={status} memoryRequirements={memoryInGib} />}
       </div>
       {modalIsOpen && (

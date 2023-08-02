@@ -1,16 +1,15 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Logo from "assets/images/logo.svg";
 import leftArrow from "assets/images/arrow.svg";
 import cross from "assets/images/cross.svg";
-import { HamburgerMenuProps } from "shared/types";
-import { shallow } from "zustand/shallow";
-import { orderBy } from "lodash";
+import Logo from "assets/images/logo.svg";
 import clsx from "clsx";
-import LeftArrowIcon from "shared/components/LeftArrowIcon";
-import usePremAudioStore from "shared/store/prem-audio";
+import { orderBy } from "lodash";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import DeleteIcon from "shared/components/DeleteIcon";
-import { useMediaQuery } from "usehooks-ts";
 import NoPrompts from "shared/components/NoPrompts";
+import usePremAudioStore from "shared/store/prem-audio";
+import type { HamburgerMenuProps } from "shared/types";
+import { useMediaQuery } from "usehooks-ts";
+import { shallow } from "zustand/shallow";
 
 const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
       history: state.history,
       deleteHistory: state.deleteHistory,
     }),
-    shallow
+    shallow,
   );
 
   const onCloseClick = () => {

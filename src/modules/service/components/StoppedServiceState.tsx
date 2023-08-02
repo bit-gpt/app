@@ -1,14 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
-import Spinner from "shared/components/Spinner";
-import { ServiceStateProps } from "../types";
-import deleteService from "../api/deleteService";
-import DeleteIcon from "shared/components/DeleteIcon";
 import { useState } from "react";
-import WarningModal from "./WarningModal";
-import PrimaryButton from "shared/components/PrimaryButton";
 import { toast } from "react-toastify";
+import DeleteIcon from "shared/components/DeleteIcon";
+import PrimaryButton from "shared/components/PrimaryButton";
+import Spinner from "shared/components/Spinner";
 import useStartService from "shared/hooks/useStartService";
-import useBodyLock from "shared/hooks/useBodyLock";
+import { useLockedBody } from "usehooks-ts";
+
+import deleteService from "../api/deleteService";
+import type { ServiceStateProps } from "../types";
+
+import WarningModal from "./WarningModal";
 
 const StoppedServiceState = ({
   serviceId,
@@ -17,10 +19,11 @@ const StoppedServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setBodyLocked] = useLockedBody(false, "root");
 
   const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
-    deleteService(id)
+    deleteService(id),
   );
 
   const { mutate: startMutate, isLoading: startLoading } = useStartService();
@@ -30,7 +33,7 @@ const StoppedServiceState = ({
     startMutate(serviceId, {
       onSuccess: () => {
         refetch();
-        onOpenClick && onOpenClick();
+        onOpenClick?.();
         toast.success("Service started successfully");
       },
       onError: () => {
@@ -62,7 +65,7 @@ const StoppedServiceState = ({
   const onCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setOpenDeleteModal(false);
-    setBodyLocked(false);
+    //setBodyLocked(false);
   };
 
   if (deleteLoading || startLoading) {

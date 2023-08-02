@@ -1,6 +1,8 @@
 import { useState } from "react";
-import icon from "../../../assets/images/chat.svg";
 import PrimaryButton from "shared/components/PrimaryButton";
+
+import icon from "../../../assets/images/chat.svg";
+
 import CustomServiceModal from "./CustomServiceModal";
 
 const CustomServiceCard = () => {

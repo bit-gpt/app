@@ -1,6 +1,7 @@
-import { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 import api from "shared/api/v1";
-import { App } from "../types";
+
+import type { App } from "../types";
 
 const getInterfaces = async (): Promise<AxiosResponse<App[]>> => {
   return api().get<App[]>("v1/interfaces/");

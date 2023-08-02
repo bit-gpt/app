@@ -1,15 +1,19 @@
+import uploadIcon from "assets/images/upload.svg";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import PrimaryButton from "shared/components/PrimaryButton";
-import { PremAudioRecordTabsProps } from "../types";
-import uploadIcon from "assets/images/upload.svg";
 import PremAudioPlayer from "shared/components/PremAudioPlayer";
+import PrimaryButton from "shared/components/PrimaryButton";
+
+import type { PremAudioRecordTabsProps } from "../types";
 
 const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   const [url, setUrl] = useState("");
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFile(acceptedFiles[0]);
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFile(acceptedFiles[0]);
+    },
+    [setFile],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

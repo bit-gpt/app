@@ -1,25 +1,26 @@
-import { PremAudioRecordTabsProps } from "../types";
-import { useReactMediaRecorder } from "react-media-recorder";
-import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
+import { useReactMediaRecorder } from "react-media-recorder";
+import PremAudioPlayer from "shared/components/PremAudioPlayer";
+import { v4 as uuid } from "uuid";
+
+import type { PremAudioRecordTabsProps } from "../types";
+
 import MicError from "./MicError";
 import RecordControls from "./RecordControls";
-import PremAudioPlayer from "shared/components/PremAudioPlayer";
 
 const PremRecordTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   const [url, setUrl] = useState("");
 
-  const { status, startRecording, stopRecording, mediaBlobUrl, error, clearBlobUrl } =
-    useReactMediaRecorder({
-      video: false,
-      audio: true,
-      askPermissionOnMount: true,
-      onStop(blobUrl, blob) {
-        setUrl(blobUrl);
-        setFile(new File([blob], `${uuid()}.wav`));
-        clearBlobUrl();
-      },
-    });
+  const { status, startRecording, stopRecording, error, clearBlobUrl } = useReactMediaRecorder({
+    video: false,
+    audio: true,
+    askPermissionOnMount: true,
+    onStop(blobUrl, blob) {
+      setUrl(blobUrl);
+      setFile(new File([blob], `${uuid()}.wav`));
+      clearBlobUrl();
+    },
+  });
 
   useEffect(() => {
     if (!file) {

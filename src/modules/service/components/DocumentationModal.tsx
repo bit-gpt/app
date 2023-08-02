@@ -1,7 +1,8 @@
-import { DocumentationModalProps } from "../types";
-import Modal from "react-modal";
 import cross from "assets/images/cross.svg";
+import Modal from "react-modal";
 import Markdown from "shared/components/Markdown";
+
+import type { DocumentationModalProps } from "../types";
 
 const DocumentationModal = ({ content, isOpen, closeModal }: DocumentationModalProps) => {
   return (

@@ -1,18 +1,21 @@
-import { useCallback, useState } from "react";
-import PremImageLeftSidebar from "./PremImageLeftSidebar";
-import Header from "./Header";
 import clsx from "clsx";
-import PremImageRightSidebar from "./PremImageRightSidebar";
-import usePremImage from "shared/hooks/usePremImage";
-import DownloadIcon from "shared/components/DownloadIcon";
-import DeleteIconNew from "shared/components/DeleteIconNew";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PremImagePromptBox from "./PremImagePromptBox";
-import { PremImageContainerProps } from "../types";
+import DeleteIconNew from "shared/components/DeleteIconNew";
+import DownloadIcon from "shared/components/DownloadIcon";
+import usePremImage from "shared/hooks/usePremImage";
+import { useMediaQuery } from "usehooks-ts";
 import Lightbox from "yet-another-react-lightbox";
 import Inline from "yet-another-react-lightbox/plugins/inline";
+
+import type { PremImageContainerProps } from "../types";
+
+import Header from "./Header";
+import PremImageLeftSidebar from "./PremImageLeftSidebar";
+import PremImagePromptBox from "./PremImagePromptBox";
+import PremImageRightSidebar from "./PremImageRightSidebar";
+
 import "yet-another-react-lightbox/styles.css";
-import { useMediaQuery } from "usehooks-ts";
 
 const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
@@ -99,7 +102,7 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
                         })}
                         key={index}
                       >
-                        <img src={image} className="w-full" />
+                        <img src={image} className="w-full" alt="" />
                         <a href={image} download onClick={(e) => e.stopPropagation()}>
                           <DownloadIcon />
                         </a>

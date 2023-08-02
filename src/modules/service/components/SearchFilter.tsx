@@ -1,11 +1,14 @@
 import searchLogo from "assets/images/search.svg";
-import { useEffect, useMemo, useState } from "react";
-import Select, { MultiValue } from "react-select";
-import { Option, SearchFilterProps } from "../types";
-import MultiValueRemove from "./MultiValueRemove";
-import { serviceSearchStyle } from "shared/helpers/utils";
 import clsx from "clsx";
+import { useEffect, useMemo, useState } from "react";
+import type { MultiValue } from "react-select";
+import Select from "react-select";
+import { serviceSearchStyle } from "shared/helpers/utils";
 import { getBackendUrlFromStore } from "shared/store/setting";
+
+import type { Option, SearchFilterProps } from "../types";
+
+import MultiValueRemove from "./MultiValueRemove";
 
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   const [search, setSearch] = useState(new Map());
@@ -13,11 +16,11 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   useEffect(() => {
     const newSearch = new Map(apps.map((app) => [app.id, app.id === appId]));
     setSearch(newSearch);
-  }, [appId]);
+  }, [appId, apps]);
 
   useEffect(() => {
     onFilterChange(search);
-  }, [search]);
+  }, [onFilterChange, search]);
 
   const handleSearch = (appId: string) => {
     const newSearch = new Map(search.entries());

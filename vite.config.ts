@@ -1,10 +1,12 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tsconfigPaths from 'vite-tsconfig-paths'
-import { splitVendorChunkPlugin } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from "vite";
+import eslint from "vite-plugin-eslint";
+import tsconfigPaths from "vite-tsconfig-paths";
+
 // https://vitejs.dev/config/
+// @ts-ignore
 export default defineConfig(async () => ({
-  plugins: [react(), tsconfigPaths(), splitVendorChunkPlugin()],
+  plugins: [react(), tsconfigPaths(), splitVendorChunkPlugin(), eslint()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors

@@ -1,4 +1,4 @@
-import { Message, PremChatHistory } from "modules/prem-chat/types";
+import type { Message, PremChatHistory } from "modules/prem-chat/types";
 
 export type BotReplyProps = {
   reply: string;

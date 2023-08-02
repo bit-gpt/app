@@ -1,13 +1,14 @@
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { shallow } from "zustand/shallow";
-import { toast } from "react-toastify";
-import { v4 as uuid } from "uuid";
-import { useNavigate } from "react-router-dom";
-import useService from "./useService";
 import generateTranscriptions from "modules/prem-audio/api/generateTranscriptions";
+import type { PremAudioHook } from "modules/prem-audio/types";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import usePremAudioStore from "shared/store/prem-audio";
-import { PremAudioHook } from "modules/prem-audio/types";
+import { v4 as uuid } from "uuid";
+import { shallow } from "zustand/shallow";
+
+import useService from "./useService";
 
 const usePremAudio = (serviceId: string, historyId: string | undefined): PremAudioHook => {
   const [file, setFile] = useState<File | null>(null);
@@ -23,12 +24,12 @@ const usePremAudio = (serviceId: string, historyId: string | undefined): PremAud
       history: state.history,
       deleteHistory: state.deleteHistory,
     }),
-    shallow
+    shallow,
   );
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateTranscriptions(service?.runningPort!, {
+      generateTranscriptions(service?.runningPort ?? 0, {
         file: file!,
         model,
       }),
@@ -46,7 +47,7 @@ const usePremAudio = (serviceId: string, historyId: string | undefined): PremAud
       onError: () => {
         toast.error("Something went wrong while generating the transcriptions");
       },
-    }
+    },
   );
 
   const currentHistory = history.find((_history) => _history.id === historyId);

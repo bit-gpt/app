@@ -1,4 +1,4 @@
-import { SettingIconProps } from "shared/types";
+import type { SettingIconProps } from "shared/types";
 
 const SettingIcon = ({ className }: SettingIconProps) => {
   return (

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
-import { NavLinkItemProps } from "shared/types";
+import type { NavLinkItemProps } from "shared/types";
 import { useMediaQuery } from "usehooks-ts";
 
 const NavLinkItem = ({ to, icon, label, target }: NavLinkItemProps) => {

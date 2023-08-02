@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { shallow } from "zustand/shallow";
+import generateImage from "modules/prem-image/api/generateImage";
+import generateImageViaBaseImage from "modules/prem-image/api/generateImageViaBaseImage";
+import type { B64JsonResponse, PremImageResponse } from "modules/prem-image/types";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import usePremImageStore from "shared/store/prem-image";
-import generateImage from "modules/prem-image/api/generateImage";
-import { B64JsonResponse, PremImageResponse, UrlResponse } from "modules/prem-image/types";
 import { v4 as uuid } from "uuid";
-import { useNavigate } from "react-router-dom";
+import { shallow } from "zustand/shallow";
+
 import useService from "./useService";
-import generateImageViaBaseImage from "modules/prem-image/api/generateImageViaBaseImage";
 
 const usePremImage = (serviceId: string, historyId: string | undefined): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
@@ -29,7 +30,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
       deleteHistory: state.deleteHistory,
       seed: state.seed,
     }),
-    shallow
+    shallow,
   );
 
   const payload = {
@@ -44,8 +45,8 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
   const { isLoading, isError, mutate } = useMutation(
     () =>
       file
-        ? generateImageViaBaseImage(service?.runningPort!, file, payload)
-        : generateImage(service?.runningPort!, payload),
+        ? generateImageViaBaseImage(service?.runningPort ?? 0, file, payload)
+        : generateImage(service?.runningPort ?? 0, payload),
     {
       onSuccess: (response) => {
         setFile(undefined);
@@ -54,7 +55,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
           id,
           prompt,
           images: (response.data.data || []).map(
-            (image: B64JsonResponse) => `data:image/png;base64, ${image.b64_json}`
+            (image: B64JsonResponse) => `data:image/png;base64, ${image.b64_json}`,
           ),
           timestamp: new Date().toISOString(),
         });
@@ -63,7 +64,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
       onError: () => {
         toast.error("Something went wrong while generating the image");
       },
-    }
+    },
   );
 
   const currentHistory = history.find((_history) => _history.id === historyId);

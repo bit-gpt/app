@@ -1,7 +1,8 @@
 import DownloadIcon from "shared/components/DownloadIcon";
 import Spinner from "shared/components/Spinner";
-import { ServiceStateProps } from "../types";
 import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
+
+import type { ServiceStateProps } from "../types";
 
 const NotDownloadedServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   const { progress, download } = useDownloadServiceStream();

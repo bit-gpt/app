@@ -1,7 +1,7 @@
-import Modal from "react-modal";
-import Onboarding from "modules/onboarding/components/Onboarding";
-import { isBrowserEnv } from "shared/helpers/utils";
 import AppRouter from "AppRouter";
+import Onboarding from "modules/onboarding/components/Onboarding";
+import Modal from "react-modal";
+import { isBrowserEnv } from "shared/helpers/utils";
 
 Modal.setAppElement("#root");
 

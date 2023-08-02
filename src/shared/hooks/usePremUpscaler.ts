@@ -1,13 +1,14 @@
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { shallow } from "zustand/shallow";
-import { toast } from "react-toastify";
-import { v4 as uuid } from "uuid";
-import { useNavigate } from "react-router-dom";
-import useService from "./useService";
 import generateUpscalerImage from "modules/prem-upscaler/api/generateUpscalerImage";
+import type { PremUpscalerHook } from "modules/prem-upscaler/types";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import usePremUpscalerStore from "shared/store/prem-upscaler";
-import { PremUpscalerHook } from "modules/prem-upscaler/types";
+import { v4 as uuid } from "uuid";
+import { shallow } from "zustand/shallow";
+
+import useService from "./useService";
 
 const usePremUpscaler = (serviceId: string, historyId: string | undefined): PremUpscalerHook => {
   const [file, setFile] = useState<File | null>(null);
@@ -36,12 +37,12 @@ const usePremUpscaler = (serviceId: string, historyId: string | undefined): Prem
       guidance_scale: state.guidance_scale,
       num_inference_steps: state.num_inference_steps,
     }),
-    shallow
+    shallow,
   );
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateUpscalerImage(service?.runningPort!, {
+      generateUpscalerImage(service?.runningPort ?? 0, {
         image: file!,
         prompt,
         n,
@@ -63,7 +64,7 @@ const usePremUpscaler = (serviceId: string, historyId: string | undefined): Prem
       onError: () => {
         toast.error("Something went wrong while generating the upscaler image");
       },
-    }
+    },
   );
 
   const currentHistory = history.find((_history) => _history.id === historyId);

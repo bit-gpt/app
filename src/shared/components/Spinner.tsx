@@ -1,4 +1,4 @@
-import { SpinnerProps } from "shared/types";
+import type { SpinnerProps } from "shared/types";
 
 const Spinner = ({ className }: SpinnerProps) => {
   return (

@@ -1,6 +1,7 @@
-import { MultiValueRemoveProps } from "react-select";
-import { Option } from "../types";
 import { components } from "react-select";
+import type { MultiValueRemoveProps } from "react-select";
+
+import type { Option } from "../types";
 
 const MultiValueRemove = (props: MultiValueRemoveProps<Option>) => {
   return (

@@ -1,4 +1,4 @@
-import { Service, ServiceStatus } from "modules/service/types";
+import type { Service, ServiceStatus } from "modules/service/types";
 
 export type ServiceHeaderProps = {
   icon: string;

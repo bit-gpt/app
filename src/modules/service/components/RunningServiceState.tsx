@@ -1,13 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
-import Spinner from "shared/components/Spinner";
-import { ServiceStateProps } from "../types";
-import StopIcon from "shared/components/StopIcon";
-import stopService from "../api/stopService";
-import PrimaryButton from "shared/components/PrimaryButton";
-import { toast } from "react-toastify";
-import useStopService from "shared/hooks/useStopService";
-import useBodyLock from "shared/hooks/useBodyLock";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import PrimaryButton from "shared/components/PrimaryButton";
+import Spinner from "shared/components/Spinner";
+import StopIcon from "shared/components/StopIcon";
+import useStopService from "shared/hooks/useStopService";
+import { useLockedBody } from "usehooks-ts";
+
+import type { ServiceStateProps } from "../types";
 
 const RunningServiceState = ({
   serviceId,
@@ -16,7 +15,9 @@ const RunningServiceState = ({
   onOpenClick,
 }: ServiceStateProps) => {
   const { mutate, isLoading } = useStopService();
-  const { bodyLocked, setBodyLocked } = useBodyLock();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setBodyLocked] = useLockedBody(false, "root");
+
   const [refresh, setRefresh] = useState(false);
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,7 +37,7 @@ const RunningServiceState = ({
   const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBodyLocked(true);
-    onOpenClick && onOpenClick();
+    onOpenClick?.();
   };
 
   if (isLoading || refresh) {

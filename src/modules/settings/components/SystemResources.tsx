@@ -1,7 +1,7 @@
-import useSystemStats from "shared/hooks/useSystemStats";
-import memory from "assets/images/memory.svg";
 import cpu from "assets/images/cpu.svg";
+import memory from "assets/images/memory.svg";
 import storage from "assets/images/storage.svg";
+import useSystemStats from "shared/hooks/useSystemStats";
 
 const CPUResources = () => {
   const { data: response } = useSystemStats();

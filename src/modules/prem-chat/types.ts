@@ -1,4 +1,4 @@
-import { RightSidebarProps } from "shared/types";
+import type { RightSidebarProps } from "shared/types";
 
 export type Message = {
   role: string;

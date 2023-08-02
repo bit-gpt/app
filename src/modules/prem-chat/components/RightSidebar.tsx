@@ -1,8 +1,9 @@
-import { shallow } from "zustand/shallow";
-import usePremChatStore from "shared/store/prem-chat";
 import LeftArrowIcon from "shared/components/LeftArrowIcon";
 import RangeSlider from "shared/components/RangeSlider";
-import { ChatRightSidebarProps } from "../types";
+import usePremChatStore from "shared/store/prem-chat";
+import { shallow } from "zustand/shallow";
+
+import type { ChatRightSidebarProps } from "../types";
 
 const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebarProps) => {
   const {
@@ -37,7 +38,7 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
       promptTemplate: state.promptTemplate,
       setPromptTemplate: state.setPromptTemplate,
     }),
-    shallow
+    shallow,
   );
 
   return (

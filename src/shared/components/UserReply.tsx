@@ -1,5 +1,5 @@
-import { UserReplyProps } from "shared/types";
 import user from "assets/images/user.svg";
+import type { UserReplyProps } from "shared/types";
 
 const UserReply = ({ reply }: UserReplyProps) => {
   return (

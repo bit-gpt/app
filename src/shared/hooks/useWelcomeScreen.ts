@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-const useWelcomeScreen = () => {
+const useWelcomeScreen = (): any => {
   const [displayWelcomeScreen, setDisplayWelcomeScreen] = useState(true);
 
   const closeWelcomeScreen = useCallback(() => {

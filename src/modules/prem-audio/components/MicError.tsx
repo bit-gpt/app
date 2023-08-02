@@ -3,7 +3,7 @@ const MicError = ({ error }: { error: string }) => {
     return <p className="text-white">Mic Permisison denied</p>;
   }
 
-  if (!!error) {
+  if (error) {
     return <p className="text-white">Can not record audio</p>;
   }
 

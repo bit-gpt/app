@@ -1,5 +1,5 @@
 import storage from "shared/helpers/custom-storage";
-import { PremUpscalerStore, PremUpscalerHistory } from "shared/types";
+import type { PremUpscalerStore, PremUpscalerHistory } from "shared/types";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -27,10 +27,10 @@ const usePremUpscalerStore = create<PremUpscalerStore>()(
       {
         name: "prem-upscaler",
         storage: createJSONStorage(() => storage),
-      }
+      },
     ),
-    { name: "store", store: "prem-upscaler" }
-  )
+    { name: "store", store: "prem-upscaler" },
+  ),
 );
 
 export default usePremUpscalerStore;

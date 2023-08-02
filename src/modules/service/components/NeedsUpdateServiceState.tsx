@@ -1,10 +1,11 @@
-import Spinner from "shared/components/Spinner";
-import { ServiceStateProps } from "../types";
+import { Tooltip } from "react-tooltip";
 import RefreshIcon from "shared/components/RefreshIcon";
+import Spinner from "shared/components/Spinner";
 import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
 import useStartService from "shared/hooks/useStartService";
 import useStopService from "shared/hooks/useStopService";
-import { Tooltip } from "react-tooltip";
+
+import type { ServiceStateProps } from "../types";
 
 const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
   const { progress, download } = useDownloadServiceStream();

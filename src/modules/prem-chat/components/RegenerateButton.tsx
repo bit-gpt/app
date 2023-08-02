@@ -1,5 +1,6 @@
 import regenerate from "assets/images/regenerate.svg";
-import { RegenerateButtonProps } from "../types";
+
+import type { RegenerateButtonProps } from "../types";
 
 const RegenerateButton = ({ onRgenerateClick }: RegenerateButtonProps) => {
   return (

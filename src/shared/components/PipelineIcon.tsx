@@ -1,4 +1,4 @@
-import { PipelineIconProps } from "shared/types";
+import type { PipelineIconProps } from "shared/types";
 
 const PipelineIcon = ({ className }: PipelineIconProps) => {
   return (

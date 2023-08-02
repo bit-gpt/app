@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import { ServiceInfoValue } from "modules/service-detail/types";
-import { Option, Service, ServiceStatus } from "modules/service/types";
-import { CSSObjectWithLabel, ControlProps } from "react-select";
+import type { Option, Service, ServiceStatus } from "modules/service/types";
+import type { ServiceInfoValue } from "modules/service-detail/types";
+import type { CSSObjectWithLabel, ControlProps } from "react-select";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
@@ -23,7 +23,7 @@ export const checkIsServerRunning = async () => {
 
 export const runDockerContainer = async () => {
   const containerRunning = await checkIsContainerRunning();
-  if (Boolean(containerRunning)) return;
+  if (containerRunning) return;
   await invoke("run_container");
 };
 
