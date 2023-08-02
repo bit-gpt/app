@@ -1,74 +1,74 @@
 textarea {
-    @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
-    border-radius: 0 4px 4px 4px;
+  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
+  border-radius: 0 4px 4px 4px;
 }
 
 /**/
 
 .range-slider {
-    @apply !h-[3px];
-    background-color: rgba(237, 237, 237, 0.1) !important;
+  @apply !h-[3px];
+  background-color: rgba(237, 237, 237, 0.1) !important;
 }
 
 .range-slider .range-slider__range {
-    background-color: rgba(245, 142, 142, 1) !important;
-    @apply !left-0;
+  background-color: rgba(245, 142, 142, 1) !important;
+  @apply !left-0;
 }
 
 .range-slider .range-slider__thumb {
-    @apply !h-2 !w-2;
-    background: linear-gradient(146.31deg, #f58e8e 28.33%, #f5c58c 71.67%) !important;
+  @apply !h-2 !w-2;
+  background: linear-gradient(146.31deg, #f58e8e 28.33%, #f5c58c 71.67%) !important;
 }
 
 .range-slider .range-slider__thumb:nth-child(3) {
-    @apply hidden;
+  @apply hidden;
 }
 
 .range-slider .range-slider__thumb::before {
-    content: "";
-    background: rgba(249, 201, 161, 0.4);
-    @apply absolute right-[-1.5px] left-[-1.5px] bottom-[-1.5px] top-[-1.5px] rounded-full;
+  content: "";
+  background: rgba(249, 201, 161, 0.4);
+  @apply absolute right-[-1.5px] left-[-1.5px] bottom-[-1.5px] top-[-1.5px] rounded-full;
 }
 
 /**/
 
 .form-control {
-    background: rgba(77, 77, 79, 0.22);
-    color: rgba(255, 255, 255, 0.8);
-    @apply rounded-md py-3 px-5 w-full focus:!ring-0 focus:outline-none;
+  background: rgba(77, 77, 79, 0.22);
+  color: rgba(255, 255, 255, 0.8);
+  @apply rounded-md py-3 px-5 w-full focus:!ring-0 focus:outline-none;
 }
 
 .form-control::placeholder,
 .select-control select {
-    @apply text-sm;
-    color: rgba(255, 255, 255, 0.6);
+  @apply text-sm;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .form-label {
-    @apply font-semibold text-sm text-white;
+  @apply font-semibold text-sm text-white;
 }
 
 .form-control[disabled]::placeholder {
-    @apply opacity-20;
+  @apply opacity-20;
 }
 
 .select-control {
-    @apply w-full;
+  @apply w-full;
 }
 
 .select-control select {
-    background: rgba(77, 77, 79, 0.22) url("../images/down.svg") no-repeat 100% 50%;
-    background-position-x: 95%;
-    @apply appearance-none h-full;
+  background: rgba(77, 77, 79, 0.22) url("../images/down.svg") no-repeat 100% 50%;
+  background-position-x: 95%;
+  @apply appearance-none h-full;
 }
 
 /**/
 
 .search-filter {
-    @apply lg:h-[50px];
+  @apply lg:h-[50px];
 }
 
 .search-filter > input {
-    @apply rounded-sm w-full py-2 text-manatee px-12 focus:shadow-none focus:outline-none;
-    background-color: rgba(77, 77, 79, 0.22);
+  @apply rounded-sm w-full py-2 text-manatee px-12 focus:shadow-none focus:outline-none;
+  background-color: rgba(77, 77, 79, 0.22);
 }

@@ -1,52 +1,17 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
 import PrimaryButton from "shared/components/PrimaryButton";
-import Spinner from "shared/components/Spinner";
-import StopIcon from "shared/components/StopIcon";
-import useStopService from "shared/hooks/useStopService";
 import { useLockedBody } from "usehooks-ts";
 
 import type { ServiceStateProps } from "../types";
 
-const RunningServiceState = ({
-  serviceId,
-  refetch,
-  isDetailView = false,
-  onOpenClick,
-}: ServiceStateProps) => {
-  const { mutate, isLoading } = useStopService();
+const RunningServiceState = ({ onOpenClick }: Pick<ServiceStateProps, "onOpenClick">) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setBodyLocked] = useLockedBody(false, "root");
-
-  const [refresh, setRefresh] = useState(false);
-
-  const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    mutate(serviceId, {
-      onSuccess: () => {
-        setRefresh(true);
-        refetch();
-        toast.success("Service stopped successfully");
-      },
-      onError: () => {
-        toast.error("Failed to stop service");
-      },
-    });
-  };
 
   const onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setBodyLocked(true);
     onOpenClick?.();
   };
-
-  if (isLoading || refresh) {
-    return (
-      <div className="mt-2">
-        <Spinner className="w-5 h-5" />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -62,11 +27,6 @@ const RunningServiceState = ({
       >
         Open
       </PrimaryButton>
-      {isDetailView && (
-        <button onClick={onStop}>
-          <StopIcon />
-        </button>
-      )}
     </>
   );
 };
