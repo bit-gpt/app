@@ -1,11 +1,11 @@
 import uploadIcon from "assets/images/upload.svg";
 import clsx from "clsx";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
+import ImgThumbCloseIcon from "shared/components/ImgThumbCloseIcon";
 import PrimaryButton from "shared/components/PrimaryButton";
 import usePremImageStore from "shared/store/prem-image";
-import ImgThumbCloseIcon from "shared/components/ImgThumbCloseIcon";
 
 import type { PremImageResponse } from "../types";
 
@@ -69,7 +69,7 @@ const PremImagePromptBox = ({
               <button onClick={imageClose}>
                 <ImgThumbCloseIcon />
               </button>
-              <img src={URL.createObjectURL(file)} />
+              <img src={URL.createObjectURL(file)} alt="" />
             </div>
           )}
         </div>
