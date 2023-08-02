@@ -1,0 +1,31 @@
+.markdown-body {
+    @apply !bg-transparent !text-brightgray !text-sm;
+}
+
+.markdown-body :not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+    @apply !bg-transparent;
+}
+
+.markdown-body pre {
+    background-color: rgb(30, 30, 30) !important;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+    @apply list-[unset];
+}
+
+.markdown-body h2 {
+    border-color: rgb(219 213 213 / 30%) !important;
+    @apply !mb-5 !pb-5;
+}
+
+.markdown-body a:hover {
+    @apply !no-underline border-b;
+    border-color: rgb(219 213 213 / 30%) !important;
+}
+
+.markdown-body p {
+    @apply leading-6;
+}

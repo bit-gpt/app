@@ -37,7 +37,7 @@ const NeedsUpdateServiceState = ({ serviceId, refetch }: ServiceStateProps) => {
       <button className="refresh-icon md:mx-4" onClick={onDownload}>
         <RefreshIcon />
       </button>
-      <Tooltip anchorSelect=".refresh-icon" place="bottom" className="topltip">
+      <Tooltip anchorSelect=".refresh-icon" place="bottom" className="tooltip">
         There is a new version available for this service. Updating will dowload the new version and
         restart your service, causing a brief downtime.
       </Tooltip>

@@ -1,0 +1,56 @@
+/* Prem Audio Override Color */
+:root {
+    --plyr-color-main: hsla(0, 84%, 76%, 1);
+    --plyr-range-thumb-height: 10px;
+    --plyr-range-thumb-background: #f5c58c;
+    --plyr-range-thumb-shadow: 0 0 0 2px rgba(245, 197, 140, 0.2);
+    --plyr-range-track-height: 4px;
+    --plyr-audio-range-track-background: rgba(237, 237, 237, 0.1);
+    --plyr-audio-progress-buffered-background: rgba(237, 237, 237, 0.1);
+    --plyr-tooltip-background: rgba(237, 237, 237, 0.1);
+}
+
+.prem-audio-recording {
+    @apply flex items-center maxLg:flex-wrap lg:px-4 px-2 py-1;
+}
+
+.plyr--audio .plyr__controls {
+    @apply !bg-transparent maxMd:flex-wrap maxMd:justify-start maxLg:!px-0;
+}
+
+@screen minMaxMd {
+    .plyr__volume input[type="range"] {
+        @apply !max-w-[60px] !min-w-[40px];
+    }
+}
+.plyr__progress__buffer {
+    @apply !bg-transparent;
+}
+
+.plyr__controls__item.plyr__menu {
+    @apply hidden;
+}
+
+.plyr__control svg {
+    @apply !h-[14px] !w-[14px] !fill-white;
+}
+
+.plyr__controls .plyr__controls__item {
+    @apply text-xs text-spanishgray;
+}
+
+.plyr__time + .plyr__time:before {
+    @apply !mr-[6px];
+}
+
+.prem-audio__download svg {
+    @apply w-4;
+}
+
+.prem-audio-box {
+    @apply pt-6 pb-10 px-8 rounded-bl rounded-br rounded-tr custom-scroll break-words;
+}
+
+.prem-audio-box span {
+    @apply w-full;
+}

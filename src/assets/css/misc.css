@@ -1,0 +1,166 @@
+.mask-heading h2 {
+    background: linear-gradient(90.13deg, #f49e97 6.35%, #f4bf97 82.76%);
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold text-[24px] lg:text-[30px] leading-9;
+}
+
+
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+    .dashboard-bottom {
+        @apply gap-4;
+    }
+}
+
+.polygon-shape {
+    background: url("../images/polygon-shape.svg") no-repeat;
+    @apply w-[90px] h-[60px] maxMd:h-9 maxMd:w-[65px] flex justify-center items-center bg-contain maxMd:!bg-[12px] bg-center;
+}
+
+.polygon-shape svg {
+    @apply w-6 h-6 md:mt-[14px] mt-2 maxMd:h-4 maxMd:w-4 mx-auto;
+}
+
+svg.warning-icon {
+    @apply w-8 h-8 maxMd:h-6 maxMd:w-6 mx-auto;
+}
+
+.warning-icon path {
+    @apply stroke-white;
+}
+
+.settings-card h3 {
+    @apply text-brightgray md:text-lg text-xs mb-7;
+}
+
+.settings-card__border {
+    @apply border-b-2 opacity-50;
+    border-color: rgba(219, 213, 213, 0.2);
+}
+
+.progress {
+    @apply border w-full overflow-hidden rounded-[2px];
+}
+
+.progress-container {
+    @apply h-5 bg-lightsalmonpink;
+    transform: skew(-20deg) translateX(-10px);
+}
+
+.settings-card li {
+    @apply w-full;
+}
+
+.settings-card li span {
+    @apply text-brightgray font-semibold md:text-[13px] text-[10px] pb-3 gap-3;
+}
+
+.right-top-card p {
+    @apply text-brightgray text-sm mb-2 maxLg:min-w-[80px];
+}
+
+.right-top-card .progress-container {
+    @apply transform-none;
+}
+
+.right-general-card {
+    @apply flex gap-7 mb-3;
+}
+
+.right-general-card span {
+    @apply text-brightgray font-proximaNova-regular md:text-base text-sm md:w-1/2 min-w-[45%];
+    word-wrap: break-word;
+}
+
+.right-general-card__list li {
+    word-wrap: break-word;
+    @apply text-brightgray font-proximaNova-regular md:text-base text-sm;
+}
+
+.right-general-card__list {
+    width: calc(50% - 2rem);
+}
+
+@screen maxMd {
+    .right-general-card__list {
+        width: calc(50% - 1rem);
+        @apply ml-3;
+    }
+}
+
+.ReactModal__Overlay {
+    @apply !bg-transparent z-[11];
+}
+
+.welcome-logo {
+    @apply px-5 pt-7 flex items-center gap-6;
+}
+
+.welcome-container {
+    height: calc(100vh - 61px);
+    @apply relative z-[11] justify-center items-center flex-col flex;
+}
+
+@screen md {
+    .header__center {
+        width: calc(100% - 187px);
+    }
+}
+
+.status-not-running .progress-container {
+    background-color: rgba(217, 217, 217, 0.4);
+}
+
+.status-not-running .progress {
+    @apply border-lavendergray;
+}
+
+.status-not-running p {
+    color: rgba(217, 217, 217, 0.4);
+}
+
+.gpu-resources__header {
+    @apply bg-[#1D1D1D] rounded-[7px] p-8 backdrop-blur-[19px];
+    box-shadow: 0 4px 22px -0.93671px rgba(0, 0, 0, 0.2);
+}
+
+.gpu-resources__body {
+    @apply p-8 rounded-br-[7px] rounded-bl-[7px] backdrop-blur-[19px] bg-gradient-default;
+    box-shadow: 0 4px 22px -0.93671px rgba(0, 0, 0, 0.2);
+}
+
+.gpu-resources__body li span {
+    @apply text-brightgray text-[13px] mb-3;
+}
+
+.share-chat__btn {
+    @apply bg-sonicsilver py-3 px-4 maxMd:px-[11px] maxMd:py-2 rounded-md md:text-lg text-sm maxMd:text-[12px] font-proximaNova-regular text-white;
+}
+
+.setting__btn {
+    @apply w-[66px] h-[48px] maxMd:h-9 maxMd:w-[46px] maxMd:mr-2;
+}
+
+.setting__btn img {
+    @apply mx-auto maxMd:max-w-[17px];
+}
+
+.backend-url {
+    @apply w-[45%];
+}
+
+.tabs-header button {
+    @apply inline-block py-2 px-[14px] min-w-[90px] w-fit text-sm text-spanishgray font-proximaNova-regular text-center;
+}
+
+.yarl__container[aria-live="polite"] {
+    @apply !bg-darkcharcoal;
+}
+
+.upload-photo-preview img {
+    @apply w-16 h-16 object-cover rounded-[2px];
+}
+
+.upload-photo-preview button {
+    @apply absolute right-[-8px] top-[-8px];
+}

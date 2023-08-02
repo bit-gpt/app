@@ -1,0 +1,18 @@
+.system-check {
+    @apply dark:bg-darkjunglegreen min-h-screen;
+}
+
+.system-check__requirements p,
+.system-check__requirements button {
+    @apply text-sm;
+}
+
+.system-check__requirements p:last-child,
+.system-check__requirements button {
+    @apply min-w-[120px];
+}
+
+.system-check__container {
+    min-height: calc(100vh - 172px);
+    @apply flex mb-[70px] items-center;
+}

@@ -44,7 +44,7 @@ const Dependency = ({
             </svg>
             {status}
           </button>
-          <Tooltip anchorSelect={`#${id}`} place="right" className="topltip !left-[450px]">
+          <Tooltip anchorSelect={`#${id}`} place="right" className="tooltip !left-[450px]">
             {tooltip}
           </Tooltip>
         </>

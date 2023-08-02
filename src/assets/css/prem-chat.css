@@ -1,0 +1,140 @@
+.prem-chat-container .bg-lines::before {
+    @apply maxMd:hidden bg-cover;
+    background-position: 0 100%;
+}
+
+.prem-chat-right-sidebar {
+    @apply bg-darkgunmetal flex-col px-4 flex h-screen w-[260px] maxMd:absolute maxMd:z-10 right-0 maxMd:top-0;
+}
+
+.prem-chat-sidebar .sidebar {
+    @apply maxMd:fixed maxMd:z-[11] maxMd:w-full maxMd:p-5 maxMd:overflow-hidden;
+}
+
+@screen maxMd {
+    .prem-chat-sidebar .sidebar {
+        @apply top-0 bottom-0 overflow-hidden bg-darkgunmetal;
+    }
+
+    .prem-chat-sidebar .sidebar li.active {
+        @apply bg-[#1A1E23];
+    }
+}
+
+.prem-chat-sidebar .sidebar__logo {
+    @apply maxMd:max-w-[100px] maxMd:ml-3;
+}
+
+.prem-chat-sidebar .sidebar__search {
+    @apply maxMd:h-[38px];
+}
+
+.prem-chat-sidebar .sidebar li a {
+    @apply maxMd:text-[12px];
+}
+
+.prem-chat {
+    @apply mt-8 border-2 border-lavendergray rounded-md;
+}
+
+.prem-chat select {
+    @apply bg-transparent font-proximaNova-regular cursor-pointer border border-lavendergray text-cultured w-full z-10 px-4 py-[6px] appearance-none;
+}
+
+.prem-chat-input input {
+    @apply bg-darkcharcoal font-proximaNova-regular text-white md:text-sm text-[13px] outline-none rounded-[29px] h-[57px] mt-[14px] py-2 md:pl-[33px] md:pr-16 pr-12 pl-4 w-full;
+}
+
+.prem-chat-input input:-webkit-autofill,
+.prem-chat-input input:-webkit-autofill:hover,
+.prem-chat-input input:-webkit-autofill:active,
+.prem-chat-input input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #302f32;
+    -webkit-box-shadow: 0 0 0 1000px #302f32 inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.prem-chat-input svg {
+    @apply bg-americanpink p-2 w-[35px] h-[35px] rounded-full stroke-white;
+}
+
+.prem-chat-input button {
+    @apply absolute md:right-[21px] right-[12px] top-[25px];
+}
+
+.prem-chat-bottom {
+    width: calc(100% - 259px);
+    @apply fixed z-10 mt-auto bottom-0 pb-[33px] left-auto right-0;
+}
+
+@screen maxMd {
+    .prem-chat-bottom {
+        @apply flex items-center mt-0 w-full left-0 bg-darkjunglegreen;
+    }
+
+    .prem-chat-body {
+        @apply pb-[100px] overflow-y-auto;
+    }
+}
+
+.bot-reply {
+    @apply flex mb-[40px] w-full;
+}
+
+.bot-reply .markdown-body a {
+    @apply text-[#28292d];
+}
+
+.bot-reply .markdown-body a:hover {
+    border-color: rgb(40 41 45 / 32%) !important;
+}
+
+.prem-chat-body {
+    @apply overflow-y-auto;
+}
+
+.prem-chat-body .bot-reply .markdown-body h2,
+.prem-chat-body .bot-reply .markdown-body h1 {
+    border-color: rgb(40 41 45 / 32%) !important;
+}
+
+.prem-chat-body .bot-reply .markdown-body blockquote {
+    @apply !text-white;
+}
+
+.bot-reply > p {
+    @apply p-4 w-full text-white;
+    max-width: 660px;
+    border-radius: 0 10px 10px 10px;
+    background: linear-gradient(90.54deg, #e9928e 0%, #f49893 100%);
+    box-shadow: 0 4px 27px -1.12466px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(22px);
+}
+
+.bot-reply__icon {
+    @apply bg-ruddypink w-[38px] h-[38px] rounded-full flex justify-center items-center;
+}
+
+.user-reply {
+    @apply flex items-end mb-[40px];
+}
+
+.user-reply p {
+    @apply bg-isabelline border py-4 px-[22px] ml-auto max-w-[660px] font-proximaNova-regular text-base text-arsenic;
+    box-shadow: 10.4294px 10.4294px 26.0736px rgba(112, 124, 151, 0.05),
+    15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
+    border-radius: 10px 10px 0 10px;
+    border-color: rgba(112, 124, 151, 0.25);
+}
+
+.prem-chat-container .bg-lines::before {
+    @apply maxMd:hidden;
+}
+
+.prem-chat-sidebar .sidebar li a span {
+    @apply whitespace-nowrap w-[180px] text-ellipsis overflow-hidden;
+}
+
+.prem-chat-sidebar .sidebar li {
+    @apply maxMd:px-2;
+}

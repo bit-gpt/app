@@ -1,0 +1,24 @@
+.scrollbar-none {
+    scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
+.documentation-modal::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
+    @apply w-[3px];
+}
+
+.documentation-modal::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
+    @apply rounded-md;
+    background-color: rgba(237, 237, 237, 0.1);
+}
+
+.documentation-modal::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb {
+    @apply rounded-md;
+    background: linear-gradient(90deg, #f58e8e 0%, #f9d4a4 99.36%);
+}
