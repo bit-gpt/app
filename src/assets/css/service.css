@@ -1,0 +1,152 @@
+.services-running::after {
+    content: "";
+    @apply absolute inset-0 rounded-[12px] rotate-180 shadow-default pointer-events-none;
+    background: linear-gradient(
+            312.93deg,
+            rgba(245, 142, 142, 0.46) -4.82%,
+            rgba(245, 142, 142, 0.61) 8.19%,
+            rgba(245, 142, 142, 0.08) 61.08%
+    );
+}
+
+.services-running .service-card__logo {
+    @apply z-[1];
+}
+
+.service-detail {
+    @apply flex gap-4 maxLg:flex-wrap maxLg:gap-8;
+}
+
+.service-detail .card {
+    @apply rounded-md shadow-default maxLg:w-full maxMd:!bg-none maxMd:px-0 bg-gradient-default;
+}
+
+.services-header {
+    @apply relative;
+}
+
+.services-header button {
+    @apply !text-sm maxMd:py-0 maxMd:!text-[10px] maxMd:h-6;
+}
+
+.services-header button.btn-primary {
+    @apply !rounded-[30px] md:!px-6 md:!h-[40px] maxMd:!h-[27px] md:!text-[13px];
+}
+
+.service-detail h3 {
+    @apply maxMd:!text-base;
+}
+
+.custom-service__markdown {
+    @apply md:backdrop-blur-[20px];
+    box-shadow: 0 3.9602210521698px 23.76132583618164px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(134deg, rgba(47, 47, 47, 0.4) 0%, rgba(103, 100, 98, 0.11) 100%);
+}
+
+.services-detail--header .mask-heading {
+    @apply maxSm:basis-full maxSm:flex maxSm:gap-2 maxSm:items-baseline maxSm:flex-wrap;
+}
+
+.services-detail--header .mask-heading span {
+    @apply text-base font-proximaNova-regular;
+}
+
+@screen maxMd {
+    .services-detail--header .service-card__logo img {
+        @apply maxMd:h-12 maxMd:w-12;
+    }
+
+    .services-detail--header .service-card__logo {
+        @apply basis-full;
+    }
+
+    .services-detail--header span:not(.mask-heading span) {
+        @apply text-[10px] py-0 px-3 h-6 flex items-center;
+    }
+
+    .services-detail-header {
+        @apply absolute top-[10px] right-0;
+    }
+}
+
+@screen lg {
+    .services-detail--header .mask-heading {
+        @apply flex flex-col;
+    }
+}
+
+.service-is__not-running svg {
+    @apply w-6 h-6;
+}
+
+p.service-is__not-running {
+    @apply text-brightgray mt-[14px];
+}
+
+.service-is__not-running .warning-icon path:first-child {
+    @apply stroke-none;
+}
+
+
+.service-card {
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+    @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[330px] md:w-[265px] w-full maxMd:max-w-[300px];
+}
+
+.service-card::before,
+.gradient-border::after {
+    content: "";
+    @apply absolute inset-0 rounded-[10px] p-[1.5px] pointer-events-none bg-gradient-border-bg;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.service-card__logo img {
+    @apply rounded-[11px] h-[54px] w-[54px] flex items-center justify-center;
+}
+
+.service-card h3 {
+    letter-spacing: 0.035em;
+    @apply md:text-lg maxMd:text-sm text-base font-bold leading-[25px] text-brightgray;
+}
+
+.service-card p {
+    @apply text-sm leading-[30px] text-brightgray font-proximaNova-regular;
+}
+
+.service-card .btn-outline-circle {
+    @apply border-[1.5px] dark:border-brightgray dark:text-brightgray mt-[55px] flex items-center;
+}
+
+.service-card .btn-outline-circle:hover {
+    @apply border-tulip text-tulip;
+}
+
+.service-card .btn-outline-circle:hover svg path {
+    @apply fill-tulip;
+}
+
+.service-card-warning path:first-child {
+    @apply stroke-none;
+}
+
+
+.disabled--card {
+    background: linear-gradient(
+            131.09deg,
+            rgba(47, 47, 47, 0.2) 8.8%,
+            rgba(103, 100, 98, 0.055) 88.99%
+    );
+    box-shadow: 0 5px 28px -1.1671px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(23.342px);
+}
+
+.disabled--card.service-card__logo,
+.disabled--card.service-card h3 {
+    @apply opacity-60;
+}
+
+.disabled--card::before {
+    @apply hidden;
+}

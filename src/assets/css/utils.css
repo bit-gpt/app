@@ -1,0 +1,29 @@
+.transform-translateX-0 {
+    transform: translateX(0px);
+}
+
+.border-light {
+    border-color: rgba(219, 213, 213, 0.1);
+}
+
+.active {
+    @apply md:bg-[#323232];
+}
+
+.hr {
+    @apply border-t -mx-6 pt-6 opacity-50;
+    border-color: rgba(237, 237, 237, 0.34);
+}
+
+.bg-lines::before {
+    content: "";
+    opacity: 0.1;
+    background: url("../images/lines-bg.png") no-repeat 50% 100%;
+    @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
+}
+
+@screen maxMd {
+    .bg-lines::before {
+        @apply hidden;
+    }
+}

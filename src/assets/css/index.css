@@ -1,0 +1,70 @@
+@import url("./buttons.css");
+@import url("./documentation.css");
+@import url("./fonts.css");
+@import url("./forms.css");
+@import url("./markdown.css");
+@import url("./misc.css");
+@import url("./prem-audio.css");
+@import url("./prem-chat.css");
+@import url("./prem-image.css");
+@import url("./prismjs-prem.css");
+@import url("./scrollbar.css");
+@import url("./service.css");
+@import url("./sidebar.css");
+@import url("./system-check.css");
+@import url("./toast.css");
+@import url("./tooltip.css");
+@import url("./utils.css");
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* COLOR THEME */
+:root {
+    --primary-color: #e7a29a;
+    --secondary-color: #ebc19d;
+    --success-color: #4b9f81;
+    --info-color: #fbe9e7;
+}
+
+body {
+    font-family: "Pretendard", serif;
+}
+
+/**/
+
+header {
+    @apply h-[70px] mx-[19px] flex items-center;
+}
+
+header img {
+    @apply w-[140px];
+}
+
+/**/
+
+.main-container {
+    @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px] maxMd:mx-4;
+}
+
+@screen maxMd {
+    .main-container {
+        width: calc(100% - 2rem);
+    }
+}
+
+@screen md {
+    .main-container {
+        width: calc(100% - 150px);
+    }
+}
+
+@screen xl {
+    .main-container {
+        width: calc(100% - 210px);
+    }
+}
+
+/**/

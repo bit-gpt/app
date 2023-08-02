@@ -1,4 +1,3 @@
-import "assets/css/prismjs-prem.css";
 import { useMutation } from "@tanstack/react-query";
 import { highlight, languages } from "prismjs";
 import { useState } from "react";
