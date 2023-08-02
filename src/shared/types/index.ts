@@ -80,6 +80,10 @@ export type MarkdownProps = {
 export type SettingStore = {
   backendUrl: string;
   setBackendUrl: (backendUrl: string) => void;
+  serviceDownloadsInProgress: Record<string, number>;
+  setServiceDownloadProgress: (serviceId: string, percentage: number) => void;
+  addServiceDownloadInProgress: (serviceId: string) => void;
+  removeServiceDownloadInProgress: (serviceId: string) => void;
 };
 
 export type HeaderProps = {

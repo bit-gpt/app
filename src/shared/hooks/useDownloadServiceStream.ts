@@ -1,26 +1,36 @@
 import downloadServiceStream from "modules/service/api/downloadServiceStream";
-import { useCallback, useState } from "react";
+
+import useSettingStore from "../store/setting";
 
 const useDownloadServiceStream = () => {
-  const [progress, setProgress] = useState(-1);
-  const download = useCallback((serviceId: string, afterSuccess?: () => void) => {
-    downloadServiceStream(
+  const setServiceDownloadProgress = useSettingStore((state) => state.setServiceDownloadProgress);
+  const removeServiceDownloadInProgress = useSettingStore(
+    (state) => state.removeServiceDownloadInProgress,
+  );
+  const serviceDownloadsInProgress = useSettingStore((state) => state.serviceDownloadsInProgress);
+
+  const download = async (serviceId: string, afterSuccess?: () => void) => {
+    await downloadServiceStream(
       serviceId,
       (error) => {
-        console.log(error);
+        console.log("ERROR serviceId:", serviceId);
+        console.error(error);
+        removeServiceDownloadInProgress(serviceId);
       },
       (message) => {
-        console.log(message.status);
-        if ("percentage" in message) setProgress(message.percentage as number);
+        console.log(`${serviceId}: ${message.status} - ${message.percentage}`);
+        if ("percentage" in message) {
+          setServiceDownloadProgress(serviceId, message.percentage);
+        }
       },
       () => {
-        setProgress(-1);
+        console.log(`${serviceId} download completed`);
         afterSuccess?.();
       },
     );
-  }, []);
+  };
 
-  return { progress, download };
+  return { progresses: serviceDownloadsInProgress, download };
 };
 
 export default useDownloadServiceStream;

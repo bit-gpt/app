@@ -13,11 +13,11 @@ import {
   TEXT_TO_AUDIO_ID,
   UPSCALER_ID,
 } from "shared/helpers/utils";
-import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
 import useStartService from "shared/hooks/useStartService";
 import useStopService from "shared/hooks/useStopService";
 import { useLockedBody, useOnClickOutside } from "usehooks-ts";
 
+import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
 import useRestartService from "../../../shared/hooks/useRestartService";
 import type { ServiceActionsProps } from "../types";
 
@@ -43,7 +43,7 @@ const ServiceActions = ({
   const [modalIsOpen, setIsOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-  const { progress, download } = useDownloadServiceStream();
+  const { progresses, download } = useDownloadServiceStream();
   const { mutateAsync: startServiceAsync, isLoading: isStartServiceLoading } = useStartService();
   const {
     mutate: stopService,
@@ -133,14 +133,21 @@ const ServiceActions = ({
     );
   }
 
-  if (progress >= 0 || isStartServiceLoading || isStopServiceLoading || isRestartServiceLoading) {
+  if (
+    progresses[serviceId] >= 0 ||
+    isStartServiceLoading ||
+    isStopServiceLoading ||
+    isRestartServiceLoading
+  ) {
     return (
-      <>
-        {progress > 0 && <p className="text-brightgray">{progress}%</p>}
+      <div className="flex">
+        {progresses[serviceId] > 0 && (
+          <p className="text-brightgray mr-2">{progresses[serviceId]}%</p>
+        )}
         <div className="flex justify-center">
-          <Spinner className="md:h-10 md:w-10 h-5 w-5" />
+          <Spinner className="md:h-7 md:w-7 h-5 w-5" />
         </div>
-      </>
+      </div>
     );
   }
 
