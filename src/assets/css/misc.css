@@ -5,12 +5,6 @@
   @apply mt-[54px] tracking-[0.035rem] bg-clip-text font-bold text-[24px] lg:text-[30px] leading-9;
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1280px) {
-  .dashboard-bottom {
-    @apply gap-4;
-  }
-}
-
 .polygon-shape {
   background: url("../images/polygon-shape.svg") no-repeat;
   @apply w-[90px] h-[60px] maxMd:h-9 maxMd:w-[65px] flex justify-center items-center bg-contain maxMd:!bg-[12px] bg-center;
