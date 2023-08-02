@@ -1,15 +1,15 @@
 .reset-tooltip {
-    @apply !text-brightgray;
+  @apply !text-brightgray;
 }
 .reset-tooltip,
 .reset-topltip__arrow {
-    @apply !bg-[#353539] !rounded;
+  @apply !bg-[#353539] !rounded;
 }
 
 .reset-topltip__arrow {
-    @apply !w-7 !h-7 z-[-1] !top-[-10px];
+  @apply !w-7 !h-7 z-[-1] !top-[-10px];
 }
 
 .tooltip {
-    @apply !text-[10px] !text-brightgray rounded-md;
+  @apply !text-[10px] !text-brightgray rounded-md;
 }

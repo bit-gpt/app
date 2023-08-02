@@ -16,55 +16,54 @@
 @import url("./tooltip.css");
 @import url("./utils.css");
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* COLOR THEME */
 :root {
-    --primary-color: #e7a29a;
-    --secondary-color: #ebc19d;
-    --success-color: #4b9f81;
-    --info-color: #fbe9e7;
+  --primary-color: #e7a29a;
+  --secondary-color: #ebc19d;
+  --success-color: #4b9f81;
+  --info-color: #fbe9e7;
 }
 
 body {
-    font-family: "Pretendard", serif;
+  font-family: "Pretendard", serif;
 }
 
 /**/
 
 header {
-    @apply h-[70px] mx-[19px] flex items-center;
+  @apply h-[70px] mx-[19px] flex items-center;
 }
 
 header img {
-    @apply w-[140px];
+  @apply w-[140px];
 }
 
 /**/
 
 .main-container {
-    @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px] maxMd:mx-4;
+  @apply pb-[60px] px-3 mx-auto z-[1] relative xl:ml-[140px] md:ml-[110px] md:mr-[40px] xl:mr-[70px] ml-[80px] mr-[10px] maxMd:mx-4;
 }
 
 @screen maxMd {
-    .main-container {
-        width: calc(100% - 2rem);
-    }
+  .main-container {
+    width: calc(100% - 2rem);
+  }
 }
 
 @screen md {
-    .main-container {
-        width: calc(100% - 150px);
-    }
+  .main-container {
+    width: calc(100% - 150px);
+  }
 }
 
 @screen xl {
-    .main-container {
-        width: calc(100% - 210px);
-    }
+  .main-container {
+    width: calc(100% - 210px);
+  }
 }
 
 /**/

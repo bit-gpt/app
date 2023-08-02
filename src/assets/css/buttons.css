@@ -1,87 +1,87 @@
 .btn-outline {
-    padding: 8px 20px;
-    color: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 3px;
-    transition: 0.4s;
+  padding: 8px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  transition: 0.4s;
 }
 
 .btn-outline:hover {
-    @apply border-tulip text-white;
+  @apply border-tulip text-white;
 }
 
 .btn-outline-circle {
-    @apply rounded-full transition-colors;
-    font-family: "ProximaNova-bold", serif;
-    padding: 12px 20px;
+  @apply rounded-full transition-colors;
+  font-family: "ProximaNova-bold", serif;
+  padding: 12px 20px;
 }
 
 :not(:disabled).btn-outline-circle {
-    @apply hover:border-[#ff7e7b] hover:text-[#ff7e7b];
+  @apply hover:border-[#ff7e7b] hover:text-[#ff7e7b];
 }
 
 button.btn-primary {
-    @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
+  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
 }
 
 :not(:disabled).btn-primary {
-    @apply hover:bg-[#ff7e7b];
+  @apply hover:bg-[#ff7e7b];
 }
 
 .btn-primary--addon {
-    @apply relative;
+  @apply relative;
 }
 
 .btn-primary--addon::after {
-    content: "";
-    @apply absolute left-0 h-[38px] -top-3 bottom-0 border-l;
+  content: "";
+  @apply absolute left-0 h-[38px] -top-3 bottom-0 border-l;
 }
 
 /**/
 
 .animate-fill-effect {
-    @apply relative overflow-hidden;
+  @apply relative overflow-hidden;
 }
 
 .animate-fill-effect::before {
-    content: "";
-    @apply absolute top-0 h-full w-full left-[-100%];
-    background: rgba(0, 0, 0, 0.2);
+  content: "";
+  @apply absolute top-0 h-full w-full left-[-100%];
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .animate-fill-effect::before {
-    animation: progress 16s ease-in-out forwards;
+  animation: progress 16s ease-in-out forwards;
 }
 
 @keyframes progress {
-    0% {
-        left: -100%;
-    }
-    10% {
-        left: -97%;
-    }
-    20% {
-        left: -92%;
-    }
-    30% {
-        left: -82%;
-    }
-    40% {
-        left: -78%;
-    }
-    50% {
-        left: -61%;
-    }
-    60% {
-        left: -53%;
-    }
-    80% {
-        left: -40%;
-    }
-    90% {
-        left: -30%;
-    }
-    100% {
-        left: -10%;
-    }
+  0% {
+    left: -100%;
+  }
+  10% {
+    left: -97%;
+  }
+  20% {
+    left: -92%;
+  }
+  30% {
+    left: -82%;
+  }
+  40% {
+    left: -78%;
+  }
+  50% {
+    left: -61%;
+  }
+  60% {
+    left: -53%;
+  }
+  80% {
+    left: -40%;
+  }
+  90% {
+    left: -30%;
+  }
+  100% {
+    left: -10%;
+  }
 }
