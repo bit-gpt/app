@@ -5,7 +5,7 @@ use reqwest::blocking::get;
 use serde::Deserialize;
 use std::{env, thread};
 use tauri::{
-    api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
+    AboutMetadata, api::process::Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 
@@ -49,24 +49,38 @@ fn run_container() {
 
     // run in a separate thread the docker pull
     let _child = thread::spawn(move || {
-        Command::new("/usr/local/bin/docker")
-        .args(&[
-            "run",
-            "-d",
-            "-v",
-            "/var/run/docker.sock:/var/run/docker.sock",
-            "-p",
-            "54321:8000",
-            "--name",
-            "premd",
-            "-e",
-            "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json",
-            "--rm",
-            image.as_str(),
-        ])
-        .output()
-        .expect("Failed to execute docker run");
+        let status = Command::new("/usr/local/bin/docker")
+            .args(&[
+                "run",
+                "-d",
+                "-v",
+                "/var/run/docker.sock:/var/run/docker.sock",
+                "-p",
+                "54321:8000",
+                "--name",
+                "premd",
+                "-e",
+                "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json",
+                "--rm",
+                image.as_str(),
+            ])
+            .status();
+
+        match status {
+            Ok(exit_status) => {
+                if exit_status.success() {
+                    println!("Docker container started successfully!");
+                } else {
+                    println!("Docker command failed with exit status: {:?}", exit_status);
+                }
+            }
+            Err(error) => {
+                println!("Failed to execute docker command: {:?}", error);
+            }
+        }
     });
+
+    _child.join().expect("Thread panicked");
 }
 
 #[tauri::command]
@@ -120,7 +134,7 @@ fn main() {
                 .add_item(CustomMenuItem::new(
                     "quit",
                     "Quit Prem App", // ⌘Q is automatically mapped to Quit for macOS
-                ))
+                )),
         ))
         .add_submenu(Submenu::new(
             "Edit",
@@ -150,7 +164,7 @@ fn main() {
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
     #[allow(unused_mut)]
-    let mut app = tauri::Builder::default()
+        let mut app = tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             run_container,
             is_docker_running,
