@@ -1,4 +1,6 @@
 import leftArrow from "assets/images/arrow.svg";
+import binRed from "assets/images/bin-red.svg";
+import bin from "assets/images/bin.svg";
 import cross from "assets/images/cross.svg";
 import edit from "assets/images/edit.svg";
 import exportData from "assets/images/export-data.svg";
@@ -15,10 +17,10 @@ import NoPrompts from "shared/components/NoPrompts";
 import WarningIcon from "shared/components/WarningIcon";
 import usePremChatStore from "shared/store/prem-chat";
 import type { HamburgerMenuProps } from "shared/types";
-import { useMediaQuery, useWindowSize } from "usehooks-ts";
 import { shallow } from "zustand/shallow";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+  // TODO: shallow will only check for reference equality, not deep equality
   const { history, deleteHistory, clearHistory } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -31,8 +33,6 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const [search, setSearch] = useState("");
 
   const { chatId, serviceId } = useParams();
-  const { height } = useWindowSize();
-  const responsiveMatches = useMediaQuery("(min-width: 768px)");
   const navigate = useNavigate();
   const [openWarningModal, setIsOpenWarningModal] = useState(false);
 
@@ -101,10 +101,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <img className="maxMd:max-w-[15px]" src={edit} alt="edit" width={18} height={18} />
           </button>
         </div>
-        <div
-          style={{ height: height - (responsiveMatches ? 290 : 250) }}
-          className="overflow-y-auto overflow-x-hidden flex flex-col"
-        >
+        <div className="overflow-y-auto overflow-x-hidden flex flex-col flex-grow">
           {history.length === 0 && <NoPrompts text="No Chat" />}
           <ul className="md:flex-grow scrollbar-none w-full">
             {orderBy(filteredHistory, "timestamp", "desc").map((item) => {
@@ -119,42 +116,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                     <span>{item.title}</span>
                   </Link>
                   <button onClick={() => onDeleteClick(item.id)}>
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M2.20703 4.61902H3.67793H15.4451"
-                        stroke="white"
-                        strokeWidth="1.4709"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M13.974 4.61917V14.9155C13.974 15.3056 13.8191 15.6797 13.5432 15.9555C13.2674 16.2314 12.8932 16.3864 12.5031 16.3864H5.14863C4.75853 16.3864 4.3844 16.2314 4.10855 15.9555C3.8327 15.6797 3.67773 15.3056 3.67773 14.9155V4.61917M5.88408 4.61917V3.14827C5.88408 2.75816 6.03905 2.38403 6.3149 2.10818C6.59075 1.83234 6.96488 1.67737 7.35498 1.67737H10.2968C10.6869 1.67737 11.061 1.83234 11.3369 2.10818C11.6127 2.38403 11.7677 2.75816 11.7677 3.14827V4.61917"
-                        stroke="white"
-                        strokeWidth="1.4709"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M7.35352 8.29639V12.7091"
-                        stroke="white"
-                        strokeWidth="1.4709"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M10.2969 8.29639V12.7091"
-                        stroke="white"
-                        strokeWidth="1.4709"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <img src={bin} alt="bin" />
                   </button>
                 </li>
               );
@@ -166,43 +128,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           {filteredHistory.length > 0 && (
             <li>
               <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>
-                <svg
-                  className="mr-3 max-w-[20px]"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2.20703 4.61902H3.67793H15.4451"
-                    stroke="#D45118"
-                    strokeWidth="1.4709"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M13.974 4.61917V14.9155C13.974 15.3056 13.8191 15.6797 13.5432 15.9555C13.2674 16.2314 12.8932 16.3864 12.5031 16.3864H5.14863C4.75853 16.3864 4.3844 16.2314 4.10855 15.9555C3.8327 15.6797 3.67773 15.3056 3.67773 14.9155V4.61917M5.88408 4.61917V3.14827C5.88408 2.75816 6.03905 2.38403 6.3149 2.10818C6.59075 1.83234 6.96488 1.67737 7.35498 1.67737H10.2968C10.6869 1.67737 11.061 1.83234 11.3369 2.10818C11.6127 2.38403 11.7677 2.75816 11.7677 3.14827V4.61917"
-                    stroke="#D45118"
-                    strokeWidth="1.4709"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M7.35352 8.29639V12.7091"
-                    stroke="#D45118"
-                    strokeWidth="1.4709"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10.2969 8.29639V12.7091"
-                    stroke="#D45118"
-                    strokeWidth="1.4709"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <img src={binRed} alt="bin" className="mr-3 max-w-[20px]" />
                 <span>Clear Chat</span>
               </Link>
             </li>
