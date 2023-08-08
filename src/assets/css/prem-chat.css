@@ -54,7 +54,7 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.prem-chat-input svg {
+.prem-chat-input img {
   @apply bg-americanpink p-2 w-[35px] h-[35px] rounded-full stroke-white;
 }
 
@@ -126,10 +126,6 @@
     15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
-}
-
-.prem-chat-container .bg-lines::before {
-  @apply maxMd:hidden;
 }
 
 .prem-chat-sidebar .sidebar li a span {

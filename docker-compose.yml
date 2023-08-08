@@ -7,17 +7,17 @@ services:
     environment:
       - VITE_DESTINATION=browser
       - VITE_IS_PACKAGED=true
-  
+
   premd:
     container_name: premd
-    image: ghcr.io/premai-io/premd:v0.0.20
+    image: ghcr.io/premai-io/premd:v0.0.22
     restart: on-failure
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json
       - SENTRY_DSN=https://75592545ad6b472e9ad7c8ff51740b73@o1068608.ingest.sentry.io/4505244431941632
-  
+
   caddy:
     container_name: caddy
     image: caddy:2.6.4-alpine
