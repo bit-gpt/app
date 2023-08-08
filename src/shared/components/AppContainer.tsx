@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { useLockedBody, useMediaQuery } from "usehooks-ts";
 
-import Sidebar from "./Sidebar";
+import DashboardSidebar from "./DashboardSidebar";
 
 const AppContainer = ({ children }: PropsWithChildren) => {
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(false);
@@ -38,7 +38,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
       )}
       <div className="min-h-screen flex w-full">
         <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "maxMd:hidden")}>
-          <Sidebar />
+          <DashboardSidebar />
         </div>
         <div className="main-container">{children}</div>
       </div>

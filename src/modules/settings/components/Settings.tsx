@@ -3,7 +3,7 @@ import hamburgerMenu from "assets/images/hamburger-menu.svg";
 import clsx from "clsx";
 import { useState } from "react";
 import AppContainer from "shared/components/AppContainer";
-import Sidebar from "shared/components/Sidebar";
+import DashboardSidebar from "shared/components/DashboardSidebar";
 import { useLockedBody, useMediaQuery } from "usehooks-ts";
 
 import AdvancedSettings from "./AdvancedSettings";
@@ -31,7 +31,7 @@ const Settings = () => {
         </button>
       )}
       <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "maxMd:hidden")}>
-        {hamburgerMenuOpen && <Sidebar />}
+        {hamburgerMenuOpen && <DashboardSidebar />}
       </div>
       <div className="maxMd:pb-12 maxMd:relative maxMd:h-full">
         <button onClick={hamburgerMenuToggle} className="md:hidden -mx-3 mt-5 w-10 h-10 z-[11]">
