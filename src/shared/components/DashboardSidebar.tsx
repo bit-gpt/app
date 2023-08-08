@@ -6,7 +6,7 @@ import NavLinkContainer from "./NavLinkContainer";
 import NavLinkItem from "./NavLinkItem";
 import SettingIcon from "./SettingIcon";
 
-const Sidebar = () => {
+const DashboardSidebar = () => {
   return (
     <div className="sidebar-main sidebar-toggle">
       <div className="pt-10 flex-col px-2 flex md:h-screen sidebar maxMd:px-4">
@@ -36,4 +36,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default DashboardSidebar;
