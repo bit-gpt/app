@@ -1,2 +1,12 @@
 node_modules
-.git
+
+.git*
+.*ignore
+.env*
+Dockerfile
+docker-compose*.yml
+
+Caddyfile
+/scripts
+*.md
+.vscode
