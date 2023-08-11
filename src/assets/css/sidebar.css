@@ -3,7 +3,7 @@
 }
 
 .sidebar li {
-  @apply flex items-center py-[13px] px-5 hover:bg-darkjunglegreen rounded-md;
+  @apply flex items-center py-[13px] px-2 hover:bg-darkjunglegreen rounded-md;
 }
 
 .sidebar li a {
