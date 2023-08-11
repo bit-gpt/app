@@ -8,13 +8,13 @@
 [![Discord](https://dcbadge.vercel.app/api/server/kpKk6vYVAn?style=social)](https://discord.com/invite/kpKk6vYVAn)
 
 
-Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical complexities for AI deployment and ushering in a new era of privacy-centric AI applications - users can finally retain control and ownership of their models. 
+Prem provides a unified environment to develop AI applications and deploy AI models on your infrastructure. Abstracting away all technical complexities for AI deployment and ushering in a new era of privacy-centric AI applications - users can finally retain control and ownership of their models.
 
 ## 🚀 Getting started
 
 - Install Prem on your MacOS - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
   - 8GB+ RAM required to be allocated to your Docker engine.
-  - If you installed Docker Desktop for Mac for the first time, from the Whale 🐳 icon in the task bar, go to `Settings` -> `Resources` and increase it to more than 8GB. 
+  - If you installed Docker Desktop for Mac for the first time, from the Whale 🐳 icon in the task bar, go to `Settings` -> `Resources` and increase it to more than 8GB.
 - Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
 - Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
 
@@ -37,7 +37,7 @@ wget -q https://get.prem.ninja/install.sh -O install.sh; sudo bash ./install.sh
 
 If you encounter issues or you want to build the Prem App docker image inside your Linux server
 
-### CPU 
+### CPU
 ```bash
 git clone https://github.com/premAI-io/prem-app.git
 cd ./prem-app
@@ -48,17 +48,15 @@ docker-compose up -d
 ```bash
 git clone https://github.com/premAI-io/prem-app.git
 cd ./prem-app
-docker-compose up -f docker-compose.yml -f docker-compose.gpu.yml -d
+docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
 ```
 
-And you will have the UI at `http://{localhost|server_ip}:1420`.
-
-> Make sure that in `Settings` the Backend URL is set to `http://{localhost|server_ip}:8000`
+And you will have the UI at `http://{localhost|server_ip}:8000`.
 
 ## Product Roadmap
 
 The AI services expose an HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
-Each service we support it's published on the [Prem Registry](https://registry.premai.io). 
+Each service we support it's published on the [Prem Registry](https://registry.premai.io).
 
 > Anyone can prepare, package and publish an AI service on Prem. Instructions coming soon.
 
@@ -157,7 +155,7 @@ pytest
 
 ### Release Checklist
 
-- [ ] Create a tag with the new version in `prem-daemon` 
+- [ ] Create a tag with the new version in `prem-daemon`
 - [ ] Create a tag with the new version in `prem-app`
 - [ ] Manually set the new tag as latest in `prem-app`
 - [ ] Update the version in `prem-box` using the `bump.sh` command.
