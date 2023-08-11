@@ -15,6 +15,8 @@ services:
     environment:
       PREM_REGISTRY_URL: https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json
       SENTRY_DSN: https://75592545ad6b472e9ad7c8ff51740b73@o1068608.ingest.sentry.io/4505244431941632
+    ports:
+    - 54321:8000
   caddy:
     container_name: caddy
     image: caddy:2.6.4-alpine
