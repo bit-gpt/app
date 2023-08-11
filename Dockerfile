@@ -7,17 +7,14 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create the final image
-FROM caddy:alpine
+FROM caddy:alpine AS prem_app
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /app/dist /usr/share/caddy/html
 
-WORKDIR /patch
+EXPOSE 8000
 # Add the script to patch window with ENV vars
 # https://create-react-app.dev/docs/title-and-meta-tags#injecting-data-from-the-server-into-the-page
-COPY entrypoint.sh .
-RUN chmod +x /patch/entrypoint.sh
-
-EXPOSE 1420
-
-ENTRYPOINT ["/patch/entrypoint.sh"]
+COPY entrypoint.sh /prem-entrypoint.sh
+RUN chmod +x /prem-entrypoint.sh
+ENTRYPOINT ["/prem-entrypoint.sh"]
 CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
