@@ -6,7 +6,6 @@ node_modules
 Dockerfile
 docker-compose*.yml
 
-Caddyfile
 /scripts
 *.md
 .vscode

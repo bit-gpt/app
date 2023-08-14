@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import type { Option, Service, ServiceStatus } from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
-import type { CSSObjectWithLabel, ControlProps } from "react-select";
+import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
 import useSettingStore from "../store/setting";
 
@@ -30,19 +30,26 @@ export const runDockerContainer = async () => {
 };
 
 export const isBrowserEnv = () => {
-  return import.meta.env.VITE_DESTINATION === "browser";
+  return (
+    (window as any).VITE_DESTINATION === "browser" || import.meta.env.VITE_DESTINATION === "browser"
+  );
 };
 
 export const isDesktopEnv = () => {
-  return import.meta.env.VITE_DESTINATION === "desktop";
+  return (
+    (window as any).VITE_DESTINATION === "desktop" || import.meta.env.VITE_DESTINATION === "desktop"
+  );
 };
 
 export const isPackaged = () => {
-  return import.meta.env.VITE_IS_PACKAGED === "true";
+  return (window as any).VITE_IS_PACKAGED === "true" || import.meta.env.VITE_IS_PACKAGED === "true";
 };
 
 export const isBackendSet = () => {
-  return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
+  return (
+    ((window as any).VITE_BACKEND_URL !== undefined || import.meta.env.VITE_BACKEND_URL) &&
+    ((window as any).VITE_BACKEND_URL !== "" || import.meta.env.VITE_BACKEND_URL !== "")
+  );
 };
 
 export const serviceSearchStyle = {
@@ -165,7 +172,7 @@ export const generateUrl = (baseUrl: string, port: number, pathname: string) => 
 };
 
 export const isDeveloperMode = () => {
-  return import.meta.env.VITE_DEVELOPER_MODE === "1";
+  return (window as any).VITE_DEVELOPER_MODE === "1" || import.meta.env.VITE_DEVELOPER_MODE === "1";
 };
 
 export const AUDIO_TAB = "AUDIO_TAB";
