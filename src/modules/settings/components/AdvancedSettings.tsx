@@ -1,5 +1,6 @@
 import BackendUrl from "./BackendUrl";
 import Registries from "./Registries";
+import Domains from "./domain/Domains";
 
 const AdvancedSettings = () => {
   return (
@@ -9,6 +10,7 @@ const AdvancedSettings = () => {
       </h2>
       <BackendUrl />
       <Registries />
+      <Domains />
     </div>
   );
 };
