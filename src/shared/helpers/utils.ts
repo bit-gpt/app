@@ -3,6 +3,8 @@ import type { Option, Service, ServiceStatus } from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { CSSObjectWithLabel, ControlProps } from "react-select";
 
+import useSettingStore from "../store/setting";
+
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
 export const checkIsDockerRunning = async () => {
@@ -16,7 +18,7 @@ export const checkIsContainerRunning = async () => {
 };
 
 export const checkIsServerRunning = async () => {
-  const url = getBackendUrl();
+  const url = useSettingStore.getState().backendUrl;
   const response = await fetch(`${url}/v1/`, { method: "GET" });
   return Boolean(response.ok);
 };
@@ -41,17 +43,6 @@ export const isPackaged = () => {
 
 export const isBackendSet = () => {
   return import.meta.env.VITE_BACKEND_URL !== undefined && import.meta.env.VITE_BACKEND_URL !== "";
-};
-
-export const getBackendUrl = () => {
-  let backendURL = "http://localhost:54321";
-  if (isBackendSet()) {
-    backendURL = import.meta.env.VITE_BACKEND_URL;
-  }
-  if (isPackaged()) {
-    backendURL = `${window.location.protocol}//${window.location.host}/api/`;
-  }
-  return backendURL;
 };
 
 export const serviceSearchStyle = {

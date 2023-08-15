@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { generateUrl } from "shared/helpers/utils";
 import usePremTextAudioStore from "shared/store/prem-text-audio";
-import { getBackendUrlFromStore } from "shared/store/setting";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
+
+import useSettingStore from "../store/setting";
 
 import useService from "./useService";
 
@@ -43,7 +44,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
           prompt,
           timestamp: new Date().toISOString(),
           fileUrl: generateUrl(
-            getBackendUrlFromStore(),
+            useSettingStore.getState().backendUrl,
             service?.runningPort ?? 0,
             `files/${file}`,
           ),

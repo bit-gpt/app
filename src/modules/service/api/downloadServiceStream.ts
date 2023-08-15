@@ -1,5 +1,4 @@
-import { getBackendUrlFromStore } from "shared/store/setting";
-
+import useSettingStore from "../../../shared/store/setting";
 import type { DownloadMessage } from "../types";
 
 const eventSources: Record<string, EventSource> = {};
@@ -19,7 +18,7 @@ const downloadServiceStream = async (
   onMessage: (message: DownloadMessage) => void,
   onceCompleted: () => void,
 ): Promise<void> => {
-  const backendUrl = new URL(getBackendUrlFromStore());
+  const backendUrl = new URL(useSettingStore.getState().backendUrl);
   try {
     instantiateEventSource(backendUrl.toString(), serviceId);
     eventSources[serviceId].onmessage = (event) => {

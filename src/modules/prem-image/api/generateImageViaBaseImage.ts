@@ -1,11 +1,11 @@
 import axios from "axios";
 import { generateUrl } from "shared/helpers/utils";
-import { getBackendUrlFromStore } from "shared/store/setting";
 
+import useSettingStore from "../../../shared/store/setting";
 import type { ImageGeneration } from "../types";
 
 const generateImageViaBaseImage = async (port: number, image: File, data: ImageGeneration) => {
-  const backendUrl = generateUrl(getBackendUrlFromStore(), port, "v1/images/edits");
+  const backendUrl = generateUrl(useSettingStore.getState().backendUrl, port, "v1/images/edits");
 
   const formData = new FormData();
   formData.append("image", image);
