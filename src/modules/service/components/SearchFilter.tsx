@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import type { MultiValue } from "react-select";
 import Select from "react-select";
 import { serviceSearchStyle } from "shared/helpers/utils";
-import { getBackendUrlFromStore } from "shared/store/setting";
 
+import useSettingStore from "../../../shared/store/setting";
 import type { Option, SearchFilterProps } from "../types";
 
 import MultiValueRemove from "./MultiValueRemove";
@@ -89,7 +89,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
               onClick={() => handleSearch(app.id)}
             >
               <img
-                src={`${getBackendUrlFromStore()}${app.icon}`}
+                src={`${useSettingStore.getState().backendUrl}${app.icon}`}
                 alt={app.name}
                 className="mr-2 w-4 h-4 rounded"
               />

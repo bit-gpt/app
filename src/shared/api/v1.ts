@@ -1,10 +1,10 @@
 import axios from "axios";
 
-import { getBackendUrlFromStore } from "../store/setting";
+import useSettingStore from "../store/setting";
 
 const api = () => {
   return axios.create({
-    baseURL: getBackendUrlFromStore(),
+    baseURL: useSettingStore.getState().backendUrl,
     headers: {
       "Content-Type": "application/json",
     },

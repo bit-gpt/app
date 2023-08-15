@@ -5,11 +5,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { generateUrl } from "shared/helpers/utils";
-import { getBackendUrlFromStore } from "shared/store/setting";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
 import usePremChatStore from "../store/prem-chat";
+import useSettingStore from "../store/setting";
 
 import useService from "./useService";
 
@@ -84,7 +84,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     abortController.current = new AbortController();
 
     const backendUrl = generateUrl(
-      getBackendUrlFromStore(),
+      useSettingStore.getState().backendUrl,
       service?.runningPort ?? 0,
       "v1/chat/completions",
     );
