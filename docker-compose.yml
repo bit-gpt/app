@@ -3,9 +3,7 @@ services:
   prem_app:
     container_name: prem_app
     restart: on-failure
-    build:
-      context: .
-      target: prem_app
+    build: .
     environment:
       VITE_DESTINATION: browser
       VITE_IS_PACKAGED: 'true'

@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create the final image
-FROM caddy:alpine AS prem_app
+FROM caddy:alpine
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /app/dist /usr/share/caddy/html
 
