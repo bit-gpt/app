@@ -3,7 +3,7 @@ import memory from "assets/images/memory.svg";
 import storage from "assets/images/storage.svg";
 import useSystemStats from "shared/hooks/useSystemStats";
 
-const CPUResources = () => {
+const SystemResources = () => {
   const { data: response } = useSystemStats();
   return (
     <div className="settings-card">
@@ -63,4 +63,4 @@ const CPUResources = () => {
   );
 };
 
-export default CPUResources;
+export default SystemResources;
