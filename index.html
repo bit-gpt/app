@@ -5,6 +5,14 @@
     <link rel="icon" type="image/png" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prem AI</title>
+    <script>
+      try {
+        window.VITE_DESTINATION = __VITE_DESTINATION__;
+        window.VITE_DEVELOPER_MODE = __VITE_DEVELOPER_MODE__;
+        window.VITE_IS_PACKAGED = __VITE_IS_PACKAGED__;
+        window.VITE_BACKEND_URL = __VITE_BACKEND_URL__;
+      } catch (_) {}
+    </script>
   </head>
 
   <body class="scrollbar-none">
