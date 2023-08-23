@@ -11,7 +11,7 @@
 }
 
 .sidebar__search input {
-  @apply  text-grey-500 md:text-base text-[12px] outline-none h-[50px] max-md:h-[38px];
+  @apply text-grey-500 md:text-base text-[12px] outline-none h-[50px] max-md:h-[38px];
   background-color: rgba(77, 77, 79, 0.22);
 }
 
@@ -85,7 +85,7 @@
 }
 
 .right-sidebar__list li p {
-  @apply  text-base justify-between flex mb-6;
+  @apply text-base justify-between flex mb-6;
 }
 
 .right-sidebar__list li span:first-child {

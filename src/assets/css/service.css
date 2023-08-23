@@ -48,7 +48,7 @@
 }
 
 .services-detail--header .mask-heading span {
-  @apply text-base ;
+  @apply text-base;
 }
 
 @media (max-width: 767px) {
@@ -113,7 +113,7 @@ p.service-is__not-running {
 }
 
 .service-card p {
-  @apply text-sm leading-[30px] text-grey-300 ;
+  @apply text-sm leading-[30px] text-grey-300;
 }
 
 .service-card .btn-outline-circle {
