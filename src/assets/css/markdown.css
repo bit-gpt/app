@@ -1,5 +1,5 @@
 .markdown-body {
-  @apply !bg-transparent !text-brightgray !text-sm;
+  @apply !bg-transparent !text-grey-300 !text-sm;
 }
 
 .markdown-body :not(pre) > code[class*="language-"],

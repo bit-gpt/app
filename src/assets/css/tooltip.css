@@ -1,5 +1,5 @@
 .reset-tooltip {
-  @apply !text-brightgray;
+  @apply !text-grey-300;
 }
 .reset-tooltip,
 .reset-topltip__arrow {
@@ -11,5 +11,5 @@
 }
 
 .tooltip {
-  @apply !text-[10px] !text-brightgray rounded-md;
+  @apply !text-[10px] !text-grey-300 rounded-md;
 }

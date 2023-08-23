@@ -4,7 +4,7 @@ const TagsOutline = ({
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
-    <span className={`border text-brightgray ${className || ""}`} {...props}>
+    <span className={`border text-grey-300 ${className || ""}`} {...props}>
       {children}
     </span>
   );

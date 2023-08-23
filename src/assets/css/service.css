@@ -1,6 +1,6 @@
 .services-running::after {
   content: "";
-  @apply absolute inset-0 rounded-[12px] rotate-180 shadow-default pointer-events-none;
+  @apply absolute inset-0 rounded-[12px] rotate-180  pointer-events-none;
   background: linear-gradient(
     312.93deg,
     rgba(245, 142, 142, 0.46) -4.82%,
@@ -14,11 +14,11 @@
 }
 
 .service-detail {
-  @apply flex gap-4 maxLg:flex-wrap maxLg:gap-8;
+  @apply flex gap-4 max-lg:flex-wrap max-lg:gap-8;
 }
 
 .service-detail .card {
-  @apply rounded-md shadow-default maxLg:w-full maxMd:!bg-none maxMd:px-0 bg-gradient-default;
+  @apply rounded-md  max-lg:w-full max-md:!bg-none bg-gradient-default;
 }
 
 .services-header {
@@ -26,15 +26,15 @@
 }
 
 .services-header button {
-  @apply !text-sm maxMd:py-0 maxMd:!text-[10px] maxMd:h-6;
+  @apply !text-sm max-md:py-0 max-md:!text-[10px] max-md:h-6;
 }
 
 .services-header button.btn-primary {
-  @apply !rounded-[30px] md:!px-6 md:!h-[40px] maxMd:!h-[27px] md:!text-[13px];
+  @apply !rounded-[30px] md:!px-6 md:!h-[40px] max-md:!h-[27px] md:!text-[13px];
 }
 
 .service-detail h3 {
-  @apply maxMd:!text-base;
+  @apply max-md:!text-base;
 }
 
 .custom-service__markdown {
@@ -44,16 +44,16 @@
 }
 
 .services-detail--header .mask-heading {
-  @apply maxSm:basis-full maxSm:flex maxSm:gap-2 maxSm:items-baseline maxSm:flex-wrap;
+  @apply max-sm:basis-full max-sm:flex max-sm:gap-2 max-sm:items-baseline max-sm:flex-wrap;
 }
 
 .services-detail--header .mask-heading span {
-  @apply text-base font-proximaNova-regular;
+  @apply text-base ;
 }
 
-@screen maxMd {
+@media (max-width: 767px) {
   .services-detail--header .service-card__logo img {
-    @apply maxMd:h-12 maxMd:w-12;
+    @apply max-md:h-12 max-md:w-12;
   }
 
   .services-detail--header .service-card__logo {
@@ -80,7 +80,7 @@
 }
 
 p.service-is__not-running {
-  @apply text-brightgray mt-[14px];
+  @apply text-grey-300 mt-[14px];
 }
 
 .service-is__not-running .warning-icon path:first-child {
@@ -89,7 +89,7 @@ p.service-is__not-running {
 
 .service-card {
   box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
-  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[330px] md:w-[265px] w-full maxMd:max-w-[300px];
+  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[330px] md:w-[265px] w-full max-md:max-w-[300px];
 }
 
 .service-card::before,
@@ -109,23 +109,23 @@ p.service-is__not-running {
 
 .service-card h3 {
   letter-spacing: 0.035em;
-  @apply md:text-lg maxMd:text-sm text-base font-bold leading-[25px] text-brightgray;
+  @apply md:text-lg max-md:text-sm text-base font-bold leading-[25px] text-grey-300;
 }
 
 .service-card p {
-  @apply text-sm leading-[30px] text-brightgray font-proximaNova-regular;
+  @apply text-sm leading-[30px] text-grey-300 ;
 }
 
 .service-card .btn-outline-circle {
-  @apply border-[1.5px] dark:border-brightgray dark:text-brightgray mt-[55px] flex items-center;
+  @apply border-[1.5px] dark:border-grey-300 dark:text-grey-300 mt-[55px] flex items-center;
 }
 
 .service-card .btn-outline-circle:hover {
-  @apply border-tulip text-tulip;
+  @apply border-primary text-primary;
 }
 
 .service-card .btn-outline-circle:hover svg path {
-  @apply fill-tulip;
+  @apply fill-primary;
 }
 
 .service-card-warning path:first-child {
@@ -178,7 +178,7 @@ p.service-is__not-running {
 }
 
 .dropdown-menu li {
-  @apply text-cultured px-0 flex w-full cursor-pointer font-proximaNova-regular hover:text-lightsalmonpink;
+  @apply text-grey-200 px-0 flex w-full cursor-pointer  hover:text-primary-light;
 }
 
 .dropdown-menu li button {

@@ -60,7 +60,7 @@ const Service = () => {
       const filteredServices = services.filter((service) => service.interfaces.includes(app.id));
       return (
         <div key={app.id} className="mt-10">
-          <h3 className="text-brightgray font-bold md:text-xl maxMd:text-sm text-base flex md:mb-5 mb-[13px]">
+          <h3 className="text-grey-300 font-bold md:text-xl max-md:text-sm text-base flex md:mb-5 mb-[13px]">
             {app.name}
           </h3>
           <div className="flex gap-[22px] flex-wrap ">
@@ -97,7 +97,7 @@ const Service = () => {
   return (
     <AppContainer>
       <div className="mask-heading mb-5 md:-mx-6 xl:-mx-10">
-        <h2 className="md:!mt-10 maxMd:!mt-4">Dashboard</h2>
+        <h2 className="md:!mt-10 max-md:!mt-4">Dashboard</h2>
       </div>
       {apps.length > 0 && (
         <SearchFilter onFilterChange={setFilter} appId={appId as string} apps={apps} />

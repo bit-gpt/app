@@ -7,7 +7,7 @@
 }
 
 .btn-outline:hover {
-  @apply border-tulip text-white;
+  @apply border-primary text-white;
 }
 
 .btn-outline-circle {
@@ -21,7 +21,7 @@
 }
 
 button.btn-primary {
-  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
+  @apply bg-primary-light text-white p-[10px] h-[43px] text-base rounded-md;
 }
 
 :not(:disabled).btn-primary {

@@ -8,10 +8,10 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
   const { data: response } = useServiceStats(serviceId);
 
   return (
-    <div className="right-top-card card">
+    <div className="right-top-card card py-8 px-4">
       <ul
         className={clsx(
-          "grid lg:grid-cols-3 items-end gap-4 !ml-0 md:p-5",
+          "grid lg:grid-cols-3 items-end gap-4 !ml-0",
           status !== "running" && "status-not-running",
         )}
       >
@@ -66,7 +66,7 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
         </li>
       </ul>
       {status !== "running" && (
-        <p className="flex items-center pb-3 md:mx-4 maxMd:mt-4 gap-[7px] !text-[12px] service-is__not-running">
+        <p className="flex items-center pb-3 md:mx-4 max-md:mt-4 gap-[7px] !text-[12px] service-is__not-running">
           <WarningIcon />
           The service is not Running. Resources not available
         </p>

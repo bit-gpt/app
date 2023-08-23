@@ -29,9 +29,9 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
       <div className="max-w-[650px] mx-auto">
         <div className="max-w-[650px] mx-auto mt-20">
-          <div className="prem-audio-box bg-darkcharcoal rounded-tl">
-            <p className="mb-[18px] text-spanishgray">Input your text</p>
-            <div className="border-2 border-lavendergray rounded-lg flex justify-center items-center flex-col">
+          <div className="prem-audio-box bg-grey-700 rounded-tl">
+            <p className="mb-[18px] text-grey-400">Input your text</p>
+            <div className="border-2 border-grey-400 rounded-lg flex justify-center items-center flex-col">
               <textarea
                 className="w-full rounded-lg"
                 value={prompt}
@@ -41,7 +41,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
             </div>
             {currentHistory && (
               <div className="gradient-border mt-5 relative prem-audio-recording">
-                <p className="text-cultured text-sm whitespace-nowrap font-proximaNova-regular overflow-hidden text-ellipsis lg:max-w-[160px] maxSm:mt-[10px] maxLg:mx-1">
+                <p className="text-grey-200 text-sm whitespace-nowrap  overflow-hidden text-ellipsis lg:max-w-[160px] max-sm:mt-[10px] max-lg:mx-1">
                   {currentHistory.file}
                 </p>
                 <PremAudioPlayer url={currentHistory.fileUrl} />
@@ -55,7 +55,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
             className={clsx(
-              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
                 "opacity-50": isLoading,
               },
@@ -67,7 +67,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
           </OutlineCircleButton>
           <PrimaryButton
             className={clsx(
-              "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:w-1/2 maxSm:justify-center",
+              "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
                 "opacity-50": !prompt,
                 "animate-fill-effect": isLoading,

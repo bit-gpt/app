@@ -18,7 +18,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <section className="bg-darkjunglegreen">
+    <section className="bg-grey-900">
       {/* eslint-disable-next-line no-restricted-globals */}
       {location?.pathname === "/" && (
         <button
@@ -37,7 +37,7 @@ const AppContainer = ({ children }: PropsWithChildren) => {
         </button>
       )}
       <div className="min-h-screen flex w-full">
-        <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "maxMd:hidden")}>
+        <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "max-md:hidden")}>
           <DashboardSidebar />
         </div>
         <div className="main-container">{children}</div>

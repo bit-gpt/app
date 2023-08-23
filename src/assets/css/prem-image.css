@@ -17,7 +17,7 @@
 }
 
 .prem-image-sidebar {
-  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full maxMd:pr-3;
+  @apply overflow-x-hidden overflow-y-auto flex flex-col h-full max-md:pr-3;
 }
 
 .prem-image-sidebar ul {
@@ -42,7 +42,7 @@
 }
 
 .prem-image--right-sidebar {
-  @apply maxMd:h-full maxMd:fixed;
+  @apply max-md:h-full max-md:fixed;
 }
 
 .prem-img__box:hover {
@@ -50,7 +50,7 @@
 }
 
 .prem-img__box:hover:before {
-  @apply bg-tulip opacity-30;
+  @apply bg-primary opacity-30;
 }
 
 .prem-img__box:before {
@@ -73,11 +73,11 @@
 }
 
 .prem-img-promptbox textarea {
-  @apply py-2 px-4 text-sm text-ghostwhite custom-scroll resize-none;
+  @apply py-2 px-4 text-sm text-grey-100 custom-scroll resize-none;
 }
 
 .prem-img-promptbox span {
-  @apply text-sm text-spanishgray font-proximaNova-regular text-center break-words;
+  @apply text-sm text-grey-400  text-center break-words;
 }
 
 .gallery {
@@ -90,7 +90,7 @@
   @apply w-full h-full object-cover;
 }
 
-@screen maxMd {
+@media (max-width: 767px) {
   .gallery .prem-img__box {
     width: calc(50% - 13px);
   }

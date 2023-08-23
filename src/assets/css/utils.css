@@ -22,7 +22,7 @@
   @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
 }
 
-@screen maxMd {
+@media (max-width: 767px) {
   .bg-lines::before {
     @apply hidden;
   }

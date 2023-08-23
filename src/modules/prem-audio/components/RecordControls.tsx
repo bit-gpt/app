@@ -16,7 +16,7 @@ const RecordControls = ({
           className="px-4 flex items-center !py-2 !h-[38px] !text-sm"
           onClick={startRecording}
         >
-          <p className="pr-4 font-proximaNova-regular flex items-center gap-2">
+          <p className="pr-4  flex items-center gap-2">
             <div className="mt-[2px]">◉</div>
             Start Recording
           </p>
@@ -27,7 +27,7 @@ const RecordControls = ({
           className="px-4 flex items-center !py-2 !h-[38px] !text-sm"
           onClick={stopRecording}
         >
-          <p className="pr-4 font-proximaNova-regular">▣ Stop recording</p>
+          <p className="pr-4 ">▣ Stop recording</p>
         </PrimaryButton>
       )}
     </>

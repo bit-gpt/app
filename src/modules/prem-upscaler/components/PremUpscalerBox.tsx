@@ -42,22 +42,20 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
   return (
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
       <div className="max-w-[650px] mx-auto">
-        <div
-          className={clsx("prem-audio-box bg-darkcharcoal", { "pointer-events-none": isLoading })}
-        >
-          <p className="mb-[18px] text-spanishgray">Pick an image to increase resolution</p>
+        <div className={clsx("prem-audio-box bg-grey-700", { "pointer-events-none": isLoading })}>
+          <p className="mb-[18px] text-grey-400">Pick an image to increase resolution</p>
           <div
-            className="border-2 border-lavendergray rounded-lg h-[162px] flex justify-center items-center flex-col"
+            className="border-2 border-grey-400 rounded-lg h-[162px] flex justify-center items-center flex-col"
             {...getRootProps()}
           >
             <input type="file" {...getInputProps()} />
             <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
-              <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
+              <p className="pr-4 ">Upload a photo</p>
               <div className="pl-4 btn-primary--addon">
                 <img src={uploadIcon} alt="msg" width={14} height={14} />
               </div>
             </PrimaryButton>
-            <span className="text-spanishgray mt-[14px]">
+            <span className="text-grey-400 mt-[14px]">
               {isDragActive ? "Drop the files here ..." : "or drag a file here"}
             </span>
           </div>
@@ -67,7 +65,7 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
         <div className="mt-4 flex justify-end gap-3">
           <OutlineCircleButton
             className={clsx(
-              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm maxSm:w-1/2 maxSm:justify-center",
+              "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
                 "opacity-50 pointer-events-none": isLoading,
               },
@@ -79,7 +77,7 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
           </OutlineCircleButton>
           <PrimaryButton
             className={clsx(
-              "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:w-1/2 maxSm:justify-center maxSm:!h-10",
+              "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center max-sm:!h-10",
               {
                 "opacity-50": !file,
                 "animate-fill-effect": isLoading,

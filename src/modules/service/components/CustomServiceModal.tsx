@@ -76,7 +76,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
       }}
     >
       <div className="warning-modal__content gradient-border w-[550px]">
-        <h1 className="text-brightgray text-2xl my-4">Custom Service</h1>
+        <h1 className="text-grey-300 text-2xl my-4">Custom Service</h1>
         <div className="documentation-modal mb-4">
           <div className="documentation-markdown custom-service__markdown">
             <Editor
@@ -97,7 +97,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
         <div className="warning-modal__footer">
           <OutlineCircleButton
             onClick={onCancel}
-            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full maxMd:order-2"
+            className="!rounded-md items-center flex !border h-[43px] !mt-0 justify-center opacity-70 w-full max-md:order-2"
           >
             Cancel
           </OutlineCircleButton>

@@ -16,7 +16,7 @@ const RunningServiceState = ({ onOpenClick }: Pick<ServiceStateProps, "onOpenCli
   return (
     <>
       <button
-        className="border-[0.5px] border-brightgray text-white rounded-[3px] py-1 px-3 text-[10px] font-proximaNova-regular"
+        className="border-[0.5px] border-grey-300 text-white rounded-[3px] py-1 px-3 text-[10px] "
         onClick={(e) => e.preventDefault()}
       >
         Running

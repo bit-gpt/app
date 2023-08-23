@@ -36,10 +36,10 @@ const PremUpscalerLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   return (
     <>
-      <div className="md:pt-7 !bg-darkgunmetal pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
-        <div className="flex maxMd:flex-wrap md:gap-4">
+      <div className="md:pt-7 !bg-grey-800 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
+        <div className="flex max-md:flex-wrap md:gap-4">
           <button className="mx-2" onClick={onCloseClick}>
-            <img src={leftArrow} alt="left-arrow" className="maxMd:max-w-[15px]" />
+            <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
           </button>
           <img className="sidebar__logo" src={Logo} alt="logo" />
           <button
@@ -58,7 +58,7 @@ const PremUpscalerLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                 <li
                   onClick={() => responsiveMatches && setHamburgerMenu(true)}
                   key={item.id}
-                  className={clsx({ "md:bg-darkjunglegreen bg-[#1A1E23]": historyId === item.id })}
+                  className={clsx({ "md:bg-grey-900 bg-[#1A1E23]": historyId === item.id })}
                 >
                   <Link to={`/prem-upscaler/${serviceId}/${item.id}`}>
                     <span className="text-white">{item.name}</span>

@@ -50,7 +50,7 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
         >
           <LeftArrowIcon className="rotate-180" />
         </button>
-        <span>Close Sidebar</span>
+        <span className="text-grey-300">Close Sidebar</span>
       </div>
       <div className="-mx-4 opacity-30" />
       <ul className="mb-[18px] mt-[42px] right-sidebar__list overflow-y-auto scrollbar-none">
@@ -158,7 +158,7 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
         <li>
           <p className="!mb-[18px]">
             <span>Prompt Template</span>
-            <button className="text-spanishgray" onClick={resetPromptTemplate}>
+            <button className="text-grey-400" onClick={resetPromptTemplate}>
               Reset
             </button>
           </p>

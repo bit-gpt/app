@@ -30,8 +30,8 @@ const SystemCheck = ({
 
   return (
     <section className="system-check flex flex-wrap bg-lines relative">
-      <div className="bg-tulip w-full py-2 h-9 text-center maxSm:px-1 z-[11]">
-        <p className="text-brightgray text-sm">
+      <div className="bg-primary w-full py-2 h-9 text-center max-sm:px-1 z-[11]">
+        <p className="text-grey-300 text-sm">
           Don't have requirements? Try the &nbsp;
           <a
             href="https://app.prem.ninja/"
@@ -50,8 +50,8 @@ const SystemCheck = ({
           <img src={arrow} alt="arrow" />
         </button>
       </div>
-      <div className="relative z-[1] mx-auto maxMd:w-full system-check__container">
-        <div className="mx-auto md:max-w-[600px] maxMd:px-6 w-full rounded-xl">
+      <div className="relative z-[1] mx-auto max-md:w-full system-check__container">
+        <div className="mx-auto md:max-w-[600px] max-md:px-6 w-full rounded-xl">
           <div className="">
             <div className="md:max-w-[450px] mx-auto relative z-10">
               <img
@@ -60,8 +60,8 @@ const SystemCheck = ({
                 alt="computerLogo"
               />
               <div className="text-center mx-auto mt-5">
-                <h1 className="text-xl dark:text-brightgray">System Check</h1>
-                <p className="dark:text-brightgray text-sm font-proximaNova-regular my-4">
+                <h1 className="text-xl dark:text-grey-300">System Check</h1>
+                <p className="dark:text-grey-300 text-sm  my-4">
                   For Prem App to run smoothly you need:
                 </p>
               </div>
@@ -118,7 +118,7 @@ const SystemCheck = ({
             </div>
             <div className="grid sm:grid-cols-2 gap-2 items-center flex-wrap">
               <a
-                className="border border-white text-white !rounded-[6px] font-proximaNova-regular py-3 px-[22px] flex justify-center"
+                className="border border-white text-white !rounded-[6px]  py-3 px-[22px] flex justify-center"
                 href="https://www.docker.com/products/docker-desktop/"
                 target="_blank"
                 rel="noreferrer"

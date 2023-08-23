@@ -50,7 +50,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
 
   return (
     <div className="card px-[22px] py-8 mt-4">
-      <h3 className="text-brightgray font-bold text-xl mb-6">General</h3>
+      <h3 className="text-grey-300 font-bold text-xl mb-6">General</h3>
       <div className="right-general-card">
         <span className="opacity-70">Docs</span>
         <span>
@@ -83,9 +83,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
         </div>
       ))}
 
-      {modelInfo.length > 0 && (
-        <h3 className="text-brightgray font-bold text-xl my-6">Model Info</h3>
-      )}
+      {modelInfo.length > 0 && <h3 className="text-grey-300 font-bold text-xl my-6">Model Info</h3>}
 
       {modelInfo.map((info) => (
         <div className="right-general-card" key={info.key}>

@@ -54,12 +54,12 @@ const Registries = () => {
               return (
                 <div key={index} className="flex">
                   <input
-                    className="form-control maxMd:!py-2 maxMd:text-[10px] mb-4"
+                    className="form-control max-md:!py-2 max-md:text-[10px] mb-4"
                     type="text"
                     defaultValue={registry.url}
                     readOnly
                   />
-                  <button className="w-[50px] h-[45px] maxMd:hidden" type="button">
+                  <button className="w-[50px] h-[45px] max-md:hidden" type="button">
                     <MinusArrow />
                   </button>
                 </div>
@@ -67,13 +67,13 @@ const Registries = () => {
             })}
             <div className="flex">
               <input
-                className="form-control maxMd:!py-2 maxMd:text-[10px]"
+                className="form-control max-md:!py-2 max-md:text-[10px]"
                 type="url"
                 value={registryUrl}
                 onChange={(e) => setRegistryUrl(e.target.value)}
                 required
               />
-              <button className="w-[50px] h-[45px] maxMd:hidden" type="button">
+              <button className="w-[50px] h-[45px] max-md:hidden" type="button">
                 <PlusArrow />
               </button>
             </div>
@@ -82,7 +82,7 @@ const Registries = () => {
       </div>
       <div className="text-right mt-[44px] mr-[45px]">
         <PrimaryButton
-          className="!px-9 maxMd:text-[12px] left-0 right-0 bottom-0 maxMd:max-w-[322px] maxMd:mx-auto maxMd:py-1 maxMd:h-[36px]"
+          className="!px-9 max-md:text-[12px] left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
           type="submit"
           disabled={isSubmitting}
         >
