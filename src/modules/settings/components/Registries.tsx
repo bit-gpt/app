@@ -8,6 +8,7 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import Spinner from "shared/components/Spinner";
 
 import addRegistry from "../api/addRegistry";
+import deleteRegistry from "../api/deleteRegistry";
 import fetchRegistries from "../api/fetchRegistries";
 
 const Registries = () => {
@@ -15,11 +16,14 @@ const Registries = () => {
 
   const { isLoading, data: response, refetch } = useQuery(["registries"], fetchRegistries);
 
-  const { mutate, isLoading: isSubmitting } = useMutation(addRegistry);
+  const { mutate: mutateAddRegistry, isLoading: isLoadingAddRegistry } = useMutation(addRegistry);
+  const { mutate: mutateDeleteRegistry } = useMutation(deleteRegistry);
+
+  const registries = response?.data || [];
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    mutate(
+    mutateAddRegistry(
       { url: registryUrl },
       {
         onSuccess: () => {
@@ -34,7 +38,20 @@ const Registries = () => {
     );
   };
 
-  const registries = response?.data || [];
+  const handleDelete = (url: string) => {
+    mutateDeleteRegistry(
+      { url },
+      {
+        onSuccess: () => {
+          refetch();
+          toast.success("Registry deleted successfully");
+        },
+        onError: () => {
+          toast.error("Something went wrong while deleting registry");
+        },
+      },
+    );
+  };
 
   return (
     <form className="mt-[42px]" onSubmit={onSubmit}>
@@ -59,7 +76,11 @@ const Registries = () => {
                     defaultValue={registry.url}
                     readOnly
                   />
-                  <button className="w-[50px] h-[45px] max-md:hidden" type="button">
+                  <button
+                    className="w-[50px] h-[45px] max-md:hidden"
+                    type="button"
+                    onClick={() => handleDelete(registries[index].url)}
+                  >
                     <MinusArrow />
                   </button>
                 </div>
@@ -84,9 +105,9 @@ const Registries = () => {
         <PrimaryButton
           className="!px-9 max-md:text-[12px] left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
           type="submit"
-          disabled={isSubmitting}
+          disabled={isLoadingAddRegistry}
         >
-          {isSubmitting ? "Updating..." : "Add Registry"}
+          {isLoadingAddRegistry ? "Updating..." : "Add Registry"}
         </PrimaryButton>
       </div>
     </form>
