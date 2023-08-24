@@ -1,31 +1,29 @@
 .markdown-body {
-  @apply !bg-transparent !text-grey-300 !text-sm;
+    @apply bg-transparent text-grey-300 text-sm font-sans !important;
 }
 
-.markdown-body :not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-  @apply !bg-transparent;
+.markdown-body :not(pre) > code[class*="language-"], pre[class*="language-"] {
+    @apply bg-transparent !important;
 }
 
 .markdown-body pre {
-  background-color: rgb(30, 30, 30) !important;
+    background-color: rgb(30, 30, 30) !important;
 }
 
-.markdown-body ul,
-.markdown-body ol {
-  @apply list-[unset];
+.markdown-body ul, .markdown-body ol {
+    @apply list-[unset] !important;
 }
 
 .markdown-body h2 {
-  border-color: rgb(219 213 213 / 30%) !important;
-  @apply !mb-5 !pb-5;
+    border-color: rgb(219 213 213 / 30%) !important;
+    @apply mb-5 pb-5 !important;
 }
 
 .markdown-body a:hover {
-  @apply !no-underline border-b;
-  border-color: rgb(219 213 213 / 30%) !important;
+    @apply no-underline border-b !important;
+    border-color: rgb(219 213 213 / 30%) !important;
 }
 
 .markdown-body p {
-  @apply leading-6;
+    @apply leading-6 !important;
 }

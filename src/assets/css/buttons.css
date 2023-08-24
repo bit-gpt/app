@@ -11,8 +11,7 @@
 }
 
 .btn-outline-circle {
-  @apply rounded-full transition-colors;
-  font-family: "ProximaNova-bold", serif;
+  @apply rounded-full transition-colors font-bold;
   padding: 12px 20px;
 }
 

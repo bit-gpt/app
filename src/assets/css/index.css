@@ -20,10 +20,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Pretendard", serif;
-}
-
 /**/
 
 header {
