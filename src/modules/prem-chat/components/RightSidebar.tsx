@@ -164,7 +164,7 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
           </p>
           <p className="w-full">
             <textarea
-              className="w-full rounded p-1"
+              className="w-full rounded p-2 text-white"
               value={promptTemplate}
               onChange={(e) => setPromptTemplate(e.target.value)}
               rows={5}

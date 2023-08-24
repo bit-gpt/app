@@ -96,7 +96,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                 >
                   <Link to={`/prem-chat/${serviceId}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
-                    <span>{item.title}</span>
+                    <span className="text-white">{item.title}</span>
                   </Link>
                   <button onClick={() => onDeleteClick(item.id)}>
                     <img src={bin} alt="bin" />
@@ -112,7 +112,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             <li>
               <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>
                 <img src={binRed} alt="bin" className="mr-3 max-w-[20px]" />
-                <span>Clear Chat</span>
+                <span className="text-white">Clear Chat</span>
               </Link>
             </li>
           )}
@@ -123,9 +123,9 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                 alt="exportData"
                 width={20}
                 height={20}
-                className="mr-3 max-w-[20px]"
+                className="mr-3 max-w-5"
               />
-              <span className="text-grey-300">Export data</span>
+              <span className="text-white">Export data</span>
             </Link>
           </li>
           <li>
@@ -135,9 +135,9 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                 alt="importData"
                 width={20}
                 height={20}
-                className="mr-3 max-w-[20px]"
+                className="mr-3 max-w-5"
               />
-              <span className="text-grey-300">Import data</span>
+              <span className="text-white">Import data</span>
             </Link>
           </li>
         </ul>

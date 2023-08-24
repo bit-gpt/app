@@ -7,7 +7,7 @@
 }
 
 .sidebar li a {
-  @apply w-full flex dark:text-grey-200 text-base font-medium;
+  @apply w-full flex text-grey-200 text-base font-medium;
 }
 
 .sidebar__search input {
@@ -20,7 +20,7 @@
 }
 
 .sidebar-toggle__btn {
-  @apply text-base  dark:text-grey-200 mt-[-60px] ml-[25px] flex items-center;
+  @apply text-base  text-grey-200 mt-[-60px] ml-[25px] flex items-center;
 }
 
 .sidebar-toggle {

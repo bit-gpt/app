@@ -83,7 +83,7 @@ p.service-is__not-running {
 
 .service-card {
   box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
-  @apply p-7 dark:text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[330px] md:w-[265px] w-full max-md:max-w-[300px];
+  @apply p-7 text-white gap-6 flex items-center relative bg-transparent rounded-[10px] xl:w-[330px] md:w-[265px] w-full max-md:max-w-[300px];
 }
 
 .service-card::before,
@@ -111,7 +111,7 @@ p.service-is__not-running {
 }
 
 .service-card .btn-outline-circle {
-  @apply border-[1.5px] dark:border-grey-300 dark:text-grey-300 mt-[55px] flex items-center;
+  @apply border-[1.5px] border-grey-300 text-grey-300 mt-[55px] flex items-center;
 }
 
 .service-card .btn-outline-circle:hover {

@@ -60,13 +60,13 @@ const SystemCheck = ({
                 alt="computerLogo"
               />
               <div className="text-center mx-auto mt-5">
-                <h1 className="text-xl dark:text-grey-300">System Check</h1>
-                <p className="dark:text-grey-300 text-sm  my-4">
+                <h1 className="text-xl text-grey-300">System Check</h1>
+                <p className="text-grey-300 text-sm  my-4">
                   For Prem App to run smoothly you need:
                 </p>
               </div>
               <div className="system-check__requirements">
-                <h3 className="text-base dark:text-white">Requirements:</h3>
+                <h3 className="text-base text-white">Requirements:</h3>
                 <Dependency
                   isRunning={isDockerRunning}
                   status={isDockerRunning ? "Found" : "Not Found"}

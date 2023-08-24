@@ -9,6 +9,7 @@ const InputBox = forwardRef((props: InputBoxProps, ref: ForwardedRef<HTMLInputEl
   return (
     <div className="prem-chat-input flex items-center relative">
       <input
+        autoComplete="off"
         type="text"
         name="question"
         value={question}
