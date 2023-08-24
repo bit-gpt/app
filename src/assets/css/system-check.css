@@ -1,5 +1,5 @@
 .system-check {
-  @apply dark:bg-grey-900 min-h-screen;
+  @apply bg-grey-900 min-h-screen;
 }
 
 .system-check__requirements p,

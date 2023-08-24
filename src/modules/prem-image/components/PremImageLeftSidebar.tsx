@@ -51,9 +51,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                         })}
                       </div>
                     </div>
-                    <span className="text-[#58595E] text-end">
-                      {item.images.length}&nbsp;images
-                    </span>
+                    <span className="text-grey-600 text-end">{item.images.length}&nbsp;images</span>
                   </div>
                 </Link>
               </li>
