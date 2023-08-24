@@ -64,14 +64,14 @@
     "dev": "vite",
     "eslint": "eslint './src/**/*.{ts,tsx}'",
     "fmt": "yarn eslint --fix && yarn prettier --write",
-    "lint": "yarn eslint && yarn prettier --check",
     "infra:down": "bash ./scripts/down.sh",
     "infra:up": "bash ./scripts/up.sh",
+    "lint": "yarn eslint && yarn prettier --check",
     "prettier": "prettier --write src/",
     "prettier:check": "prettier --check src/",
     "preview": "vite preview",
     "tauri": "tauri"
   },
   "type": "module",
-  "version": "0.0.27"
+  "version": "0.0.28"
 }
