@@ -7,7 +7,7 @@ import type { Registries } from "../types";
 
 const deleteRegistry = async (data: Registries): Promise<AxiosResponse<Message>> => {
   const backendUrl = useSettingStore.getState().backendUrl;
-  return axios.delete(`${backendUrl}/v1/registries/`, { data });
+  return axios.delete(`${backendUrl}/v1/registries/?url=${data.url}`);
 };
 
 export default deleteRegistry;
