@@ -29,9 +29,9 @@ const PremRecordTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
   }, [file]);
 
   return (
-    <div className="prem-audio-box bg-darkcharcoal">
-      <p className="mb-[18px] text-spanishgray">Record an audio from your microphone</p>
-      <div className="border-2 border-lavendergray rounded-lg h-[162px] flex justify-center items-center flex-col">
+    <div className="prem-audio-box bg-grey-700">
+      <p className="mb-[18px] text-grey-400">Record an audio from your microphone</p>
+      <div className="border-2 border-grey-400 rounded-lg h-[162px] flex justify-center items-center flex-col">
         {error && <MicError error={error} />}
         {!error && (
           <RecordControls
@@ -43,9 +43,7 @@ const PremRecordTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
       </div>
       {!!url && (
         <div className="gradient-border relative mt-5 prem-audio-recording">
-          <p className="text-cultured text-sm whitespace-nowrap font-proximaNova-regular">
-            Prem.AI Speech File
-          </p>
+          <p className="text-grey-200 text-sm whitespace-nowrap ">Prem.AI Speech File</p>
           <PremAudioPlayer url={url} />
         </div>
       )}

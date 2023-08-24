@@ -19,7 +19,7 @@ const NotDownloadedServiceState = ({ serviceId, refetch }: ServiceStateProps) =>
   if (progresses[serviceId] >= 0) {
     return (
       <>
-        <p className="text-brightgray">{progresses[serviceId]}%</p>
+        <p className="text-grey-300">{progresses[serviceId]}%</p>
         <div className="flex justify-center">
           <Spinner className="h-5 w-5" />
         </div>

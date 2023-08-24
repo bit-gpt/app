@@ -1,5 +1,5 @@
 textarea {
-  @apply bg-darkcharcoal font-proximaNova-regular focus:outline-none py-2 px-4 text-sm text-ghostwhite rounded custom-scroll resize-none;
+  @apply bg-grey-700  focus:outline-none py-2 px-4 text-sm text-grey-100 rounded custom-scroll resize-none;
   border-radius: 0 4px 4px 4px;
 }
 
@@ -69,6 +69,6 @@ textarea {
 }
 
 .search-filter > input {
-  @apply rounded-sm w-full py-2 text-manatee px-12 focus:shadow-none focus:outline-none;
+  @apply rounded-sm w-full py-2 text-grey-500 px-12 focus:shadow-none focus:outline-none;
   background-color: rgba(77, 77, 79, 0.22);
 }

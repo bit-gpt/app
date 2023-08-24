@@ -11,18 +11,19 @@
 }
 
 .prem-audio-recording {
-  @apply flex items-center maxLg:flex-wrap lg:px-4 px-2 py-1;
+  @apply flex items-center max-lg:flex-wrap lg:px-4 px-2 py-1;
 }
 
 .plyr--audio .plyr__controls {
-  @apply !bg-transparent maxMd:flex-wrap maxMd:justify-start maxLg:!px-0;
+  @apply !bg-transparent max-md:flex-wrap max-md:justify-start max-lg:!px-0;
 }
 
-@screen minMaxMd {
+@media (min-width: 768px) and (max-width: 1023px) {
   .plyr__volume input[type="range"] {
-    @apply !max-w-[60px] !min-w-[40px];
+    @apply max-w-[60px] min-w-[40px] !important;
   }
 }
+
 .plyr__progress__buffer {
   @apply !bg-transparent;
 }
@@ -36,7 +37,7 @@
 }
 
 .plyr__controls .plyr__controls__item {
-  @apply text-xs text-spanishgray;
+  @apply text-xs text-grey-400;
 }
 
 .plyr__time + .plyr__time:before {

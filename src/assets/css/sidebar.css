@@ -3,24 +3,24 @@
 }
 
 .sidebar li {
-  @apply flex items-center py-[13px] px-2 hover:bg-darkjunglegreen rounded-md;
+  @apply flex items-center py-[13px] px-2 hover:bg-grey-900 rounded-md;
 }
 
 .sidebar li a {
-  @apply w-full flex dark:text-cultured text-base font-medium;
+  @apply w-full flex dark:text-grey-200 text-base font-medium;
 }
 
 .sidebar__search input {
-  @apply font-proximaNova-regular text-manatee md:text-base text-[12px] outline-none h-[50px] maxMd:h-[38px];
+  @apply text-grey-500 md:text-base text-[12px] outline-none h-[50px] max-md:h-[38px];
   background-color: rgba(77, 77, 79, 0.22);
 }
 
 .sidebar__search button {
-  @apply bg-darkliver w-[65px] h-[50px] maxMd:h-[38px] maxMd:w-[45px] rounded-md flex items-center justify-center;
+  @apply bg-grey-600 w-[65px] h-[50px] max-md:h-[38px] max-md:w-[45px] rounded-md flex items-center justify-center;
 }
 
 .sidebar-toggle__btn {
-  @apply text-base font-proximaNova-regular dark:text-cultured mt-[-60px] ml-[25px] flex items-center;
+  @apply text-base  dark:text-grey-200 mt-[-60px] ml-[25px] flex items-center;
 }
 
 .sidebar-toggle {
@@ -43,7 +43,7 @@
 }
 
 .sidebar-toggle .sidebar li span {
-  @apply maxMd:flex;
+  @apply max-md:flex;
 }
 
 .sidebar-toggle .sidebar li {
@@ -85,19 +85,19 @@
 }
 
 .right-sidebar__list li p {
-  @apply font-proximaNova-regular text-base justify-between flex mb-6;
+  @apply text-base justify-between flex mb-6;
 }
 
 .right-sidebar__list li span:first-child {
-  @apply text-cultured;
+  @apply text-grey-200;
 }
 
 .right-sidebar__list li span:last-child {
-  @apply text-spanishgray;
+  @apply text-grey-400;
 }
 
 .right-sidebar__list li input[type="number"] {
-  @apply focus:outline-none text-cultured rounded px-2 min-w-[96px] text-right max-w-[100px];
+  @apply focus:outline-none text-grey-200 rounded px-2 min-w-[96px] text-right max-w-[100px];
   background-color: #35383f !important;
 }
 
@@ -120,7 +120,7 @@
 }
 
 .sidebar-main .sidebar li {
-  @apply maxMd:bg-transparent font-semibold cursor-pointer p-0 maxMd:px-4 mb-2;
+  @apply max-md:bg-transparent font-semibold cursor-pointer p-0 max-md:px-4 mb-2;
 }
 
 .sidebar-main .sidebar li:hover svg:not(.svg-stroke) path {
@@ -132,7 +132,7 @@
 }
 
 .sidebar-last__row li:last-child:hover a svg.svg-stroke path {
-  @apply maxMd:!stroke-white;
+  @apply max-md:!stroke-white;
 }
 
 .sidebar-last__row li:last-child:hover a svg.svg-stroke path,
@@ -144,7 +144,7 @@
   @apply bg-[#28292D];
 }
 
-@screen maxMd {
+@media (max-width: 767px) {
   .sidebar-main .sidebar {
     background: linear-gradient(
       131.09deg,
@@ -158,11 +158,11 @@
 }
 
 .sidebar-main .sidebar li a {
-  @apply text-lg maxMd:text-base items-center md:justify-center py-3 rounded-md maxMd:gap-5;
+  @apply text-lg max-md:text-base items-center md:justify-center py-3 rounded-md max-md:gap-5;
 }
 
 .sidebar-main {
-  @apply fixed z-10 maxMd:w-full maxMd:top-0 maxMd:bottom-0 maxMd:left-0 maxMd:right-0;
+  @apply fixed z-10 max-md:w-full max-md:top-0 max-md:bottom-0 max-md:left-0 max-md:right-0;
 }
 
 .sidebar-main .sidebar-toggle__btn {

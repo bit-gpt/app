@@ -10,7 +10,7 @@
 }
 
 .Toastify__progress-bar--success {
-  @apply !bg-lightsalmonpink;
+  @apply !bg-primary-light;
 }
 
 .Toastify__progress-bar--error {
@@ -22,5 +22,5 @@
 }
 
 .Toastify__toast-icon path {
-  @apply !fill-lightsalmonpink;
+  @apply !fill-primary-light;
 }

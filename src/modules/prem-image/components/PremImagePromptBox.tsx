@@ -53,9 +53,9 @@ const PremImagePromptBox = ({
   };
 
   return (
-    <div className="md:mt-[50px] mb-10 mx-[50px] flex maxLg:flex-wrap gap-10 prem-img-promptbox">
+    <div className="md:mt-[50px] mb-10 mx-[50px] flex max-lg:flex-wrap gap-10 prem-img-promptbox">
       <div className="flex lg:w-1/2 w-full flex-col">
-        <span className="bg-darkcharcoal py-2 px-[14px] min-w-[129px] w-fit rounded-tl rounded-tr">
+        <span className="bg-grey-700 py-2 px-[14px] min-w-[129px] w-fit rounded-tl rounded-tr">
           Prompt
         </span>
         <textarea
@@ -76,7 +76,7 @@ const PremImagePromptBox = ({
         <div className="mt-5 w-max" {...getRootProps()}>
           <input type="file" {...getInputProps()} />
           <PrimaryButton className="pl-4 !pr-0 flex items-center !py-2 !h-[38px] !text-sm">
-            <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
+            <p className="pr-4 ">Upload a photo</p>
             <div className="px-4 btn-primary--addon">
               <img src={uploadIcon} alt="msg" width={14} height={14} />
             </div>
@@ -86,7 +86,7 @@ const PremImagePromptBox = ({
       </div>
       <div className="flex lg:w-1/2 w-full flex-col">
         <div className="flex">
-          <span className="bg-darkcharcoal py-2 px-[14px] w-fit rounded-tl rounded-tr">
+          <span className="bg-grey-700 py-2 px-[14px] w-fit rounded-tl rounded-tr">
             Negative Prompt
           </span>
           <span className="ml-auto">Optional</span>
@@ -96,7 +96,7 @@ const PremImagePromptBox = ({
           value={negativePrompt}
           onChange={(e) => setNegativePrompt(e.target.value)}
         ></textarea>
-        <div className="mt-5 flex flex-wrap maxMd:gap-2">
+        <div className="mt-5 flex flex-wrap max-md:gap-2">
           <PrimaryButton
             className={clsx("!px-8 !py-2 !h-[38px] !text-sm", {
               "opacity-50": !prompt,

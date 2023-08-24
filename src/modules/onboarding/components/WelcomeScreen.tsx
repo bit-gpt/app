@@ -5,7 +5,7 @@ import type { WelcomeScreenProps } from "../types";
 
 const WelcomeScreen = ({ close }: WelcomeScreenProps) => {
   return (
-    <section className="bg-darkjunglegreen bg-lines relative">
+    <section className="bg-grey-900 bg-lines relative">
       <div className="welcome-logo">
         <img src={Logo} alt="logo" />
       </div>

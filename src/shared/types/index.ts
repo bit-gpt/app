@@ -4,11 +4,6 @@ export type BotReplyProps = {
   reply: string;
 };
 
-export type SidebarProps = {
-  toggleStatus: boolean;
-  toggle: () => void;
-};
-
 export type SpinnerProps = {
   className?: string;
 };

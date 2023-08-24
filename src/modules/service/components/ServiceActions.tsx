@@ -142,7 +142,7 @@ const ServiceActions = ({
     return (
       <div className="flex">
         {progresses[serviceId] > 0 && (
-          <p className="text-brightgray mr-2">{progresses[serviceId]}%</p>
+          <p className="text-grey-300 mr-2">{progresses[serviceId]}%</p>
         )}
         <div className="flex justify-center">
           <Spinner className="md:h-7 md:w-7 h-5 w-5" />

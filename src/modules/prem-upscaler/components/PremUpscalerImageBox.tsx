@@ -24,7 +24,7 @@ const PremUpscalerImageBox = ({
           className="px-4 flex items-center !py-2 !h-[38px] !text-sm mb-[26px]"
           onClick={redirecToIndex}
         >
-          <p className="pr-4 font-proximaNova-regular">Upload a photo</p>
+          <p className="pr-4 ">Upload a photo</p>
           <div className="pl-4 btn-primary--addon">
             <img src={uploadIcon} alt="msg" width={14} height={14} />
           </div>
@@ -37,7 +37,7 @@ const PremUpscalerImageBox = ({
           <a href={history.file} download onClick={(e) => e.stopPropagation()}>
             <PrimaryButton
               className={clsx(
-                "!px-12 flex items-center !py-2 !h-[38px] !text-sm maxSm:justify-center maxSm:!h-10",
+                "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:justify-center max-sm:!h-10",
               )}
             >
               Download

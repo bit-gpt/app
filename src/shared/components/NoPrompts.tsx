@@ -6,7 +6,7 @@ type textProps = {
 
 const NoPrompts = ({ text }: textProps) => {
   return (
-    <p className="text-spanishgray text-sm mt-8 font-proximaNova-regular text-center">
+    <p className="text-grey-400 text-sm mt-8  text-center">
       <img src={NoPromptsIcon} alt="no prompts" className="mx-auto mb-3" />
       {text}
     </p>

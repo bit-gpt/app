@@ -7,12 +7,11 @@
 }
 
 .btn-outline:hover {
-  @apply border-tulip text-white;
+  @apply border-primary text-white;
 }
 
 .btn-outline-circle {
-  @apply rounded-full transition-colors;
-  font-family: "ProximaNova-bold", serif;
+  @apply rounded-full transition-colors font-bold;
   padding: 12px 20px;
 }
 
@@ -21,7 +20,7 @@
 }
 
 button.btn-primary {
-  @apply bg-americanpink text-white p-[10px] h-[43px] text-base rounded-md;
+  @apply bg-primary-light text-white p-[10px] h-[43px] text-base rounded-md;
 }
 
 :not(:disabled).btn-primary {

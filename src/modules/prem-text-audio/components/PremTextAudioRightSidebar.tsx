@@ -11,7 +11,7 @@ const PremTextAudioRightSidebar = ({ setRightSidebar }: RightSidebarProps) => {
         >
           <LeftArrowIcon className="rotate-180" />
         </button>
-        <span>Close Sidebar</span>
+        <span className="text-grey-300">Close Sidebar</span>
       </div>
       <div className="-mx-4 opacity-30" />
     </div>

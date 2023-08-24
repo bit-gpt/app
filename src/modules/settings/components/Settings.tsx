@@ -30,10 +30,10 @@ const Settings = () => {
           <img src={cross} alt="cross" width={26} height={26} className="mx-auto" />
         </button>
       )}
-      <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "maxMd:hidden")}>
+      <div className={clsx(hamburgerMenuOpen && matches ? "flex" : "max-md:hidden")}>
         {hamburgerMenuOpen && <DashboardSidebar />}
       </div>
-      <div className="maxMd:pb-12 maxMd:relative maxMd:h-full">
+      <div className="max-md:pb-12 max-md:relative max-md:h-full">
         <button onClick={hamburgerMenuToggle} className="md:hidden -mx-3 mt-5 w-10 h-10 z-[11]">
           <img src={hamburgerMenu} alt="msg" width={22} height={22} className="mx-auto" />
         </button>
@@ -43,7 +43,7 @@ const Settings = () => {
         <div className="lg:max-w-[80%] mx-auto settings">
           <SystemResources />
         </div>
-        <div className="lg:max-w-[80%] mx-auto settings maxMd:hidden">
+        <div className="lg:max-w-[80%] mx-auto settings max-md:hidden">
           <GPUResources />
         </div>
         <div className="lg:max-w-[80%] mx-auto settings">

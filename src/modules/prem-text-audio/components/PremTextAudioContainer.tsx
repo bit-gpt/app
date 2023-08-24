@@ -20,12 +20,12 @@ const PremTextAudioContainer = ({
     <section>
       <div className="md:flex md:h-screen w-full relative">
         <div
-          className={clsx("prem-chat-sidebar md:relative", { "maxMd:hidden": hamburgerMenuOpen })}
+          className={clsx("prem-chat-sidebar md:relative", { "max-md:hidden": hamburgerMenuOpen })}
         >
           <PremTextAudioLeftSidebar setHamburgerMenu={setHamburgerMenu} />
         </div>
         <div className="flex flex-1">
-          <div className="bg-lines bg-darkjunglegreen relative h-full w-full">
+          <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">
               <Header
                 hamburgerMenuOpen={hamburgerMenuOpen}
