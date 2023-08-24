@@ -54,7 +54,7 @@ const Registries = () => {
   };
 
   return (
-    <form className="mt-[42px]" onSubmit={onSubmit}>
+    <form className="mt-10" onSubmit={onSubmit}>
       <div className="flex">
         <label className="text-white mr-2 backend-url md:text-lg text-[11px] mt-2">
           Registries

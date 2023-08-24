@@ -22,7 +22,7 @@ const AddDomainModal = ({
   const Card = ({ img, text, id }: { img: string; text: string; id: string }) => (
     <button
       id={id}
-      className="flex flex-col align-center rounded-lg border-2 border-[#37373a] bg-charlestongreen w-1/3 maxSm:w-2/3 p-4"
+      className="flex flex-col align-center rounded-lg border-2 border-[#37373a] bg-charlestongreen w-1/3 max-sm:w-2/3 p-4"
       onClick={(ev) => {
         const button = (ev.target as Element).closest("button");
         if (button?.id === "domain-manual") {
@@ -40,13 +40,13 @@ const AddDomainModal = ({
     <Modal className="modal" isOpen={isOpen}>
       <div className="modal__content gradient-border w-4/5">
         <div className="flex justify-between item-center my-5">
-          <h2 className="text-lg maxMd:text-xl">{title}</h2>
+          <h2 className="text-lg max-md:text-xl">{title}</h2>
           <button onClick={() => setIsAddDomainModalOpen(false)}>
             <img src={Cross} alt="cross" className="h-6 w-6" />
           </button>
         </div>
         <div className="hr" />
-        <div className="flex gap-4 maxSm:flex-col maxSm:items-center">
+        <div className="flex gap-4 max-sm:flex-col max-sm:items-center">
           <Card id="go-daddy" img={GoDaddy} text="Go Daddy" />
           <Card id="amazon" img={Cloudflare} text="Cloudflare" />
           <Card id="aws" img={AWS} text="AWS Route 53" />
@@ -54,7 +54,7 @@ const AddDomainModal = ({
 
         <div className="my-6 flex justify-between items-center">
           <div className="border-t-2 border-light w-[47%]"></div>
-          <div className="text-brightgray text-opacity-40">OR</div>
+          <div className="text-grey-300 text-opacity-40">OR</div>
           <div className="border-t-2 border-light w-[47%]"></div>
         </div>
 
