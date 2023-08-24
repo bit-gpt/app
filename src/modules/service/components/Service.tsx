@@ -60,7 +60,7 @@ const Service = () => {
       const filteredServices = services.filter((service) => service.interfaces.includes(app.id));
       return (
         <div key={app.id} className="mt-10">
-          <h3 className="text-grey-300 font-bold md:text-xl max-md:text-sm text-base flex md:mb-5 mb-[13px]">
+          <h3 className="text-grey-300 font-bold text-sm md:text-xl flex md:mb-5 mb-[13px]">
             {app.name}
           </h3>
           <div className="flex gap-[22px] flex-wrap ">

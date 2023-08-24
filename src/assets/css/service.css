@@ -103,7 +103,7 @@ p.service-is__not-running {
 
 .service-card h3 {
   letter-spacing: 0.035em;
-  @apply md:text-lg max-md:text-sm text-base font-bold leading-[25px] text-grey-300;
+  @apply text-sm md:text-lg font-bold leading-[25px] text-grey-300;
 }
 
 .service-card p {

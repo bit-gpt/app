@@ -61,13 +61,11 @@ svg.warning-icon {
 }
 
 .right-general-card span {
-  @apply text-grey-300  md:text-base text-sm md:w-1/2 min-w-[45%];
-  word-wrap: break-word;
+  @apply text-grey-300  md:text-base text-sm md:w-1/2 min-w-[45%] break-words;
 }
 
 .right-general-card__list li {
-  word-wrap: break-word;
-  @apply text-grey-300  md:text-base text-sm;
+  @apply text-grey-300 text-sm md:text-base break-words;
 }
 
 .right-general-card__list {
@@ -127,7 +125,7 @@ svg.warning-icon {
 }
 
 .share-chat__btn {
-  @apply bg-grey-600 py-3 px-4 max-md:px-[11px] max-md:py-2 rounded-md md:text-lg text-sm max-md:text-[12px]  text-white;
+  @apply bg-grey-600 py-2 md:py-3 px-3 md:px-4 rounded-md md:text-lg text-sm max-md:text-[12px]  text-white;
 }
 
 .setting__btn {
