@@ -10,7 +10,7 @@ const Domains = () => {
 
   return (
     <>
-      <div className="flex items-baseline">
+      <div className="flex items-baseline mt-10">
         <label className="text-white mr-2 backend-url md:text-lg text-[11px] mt-2">Domains</label>
         <div className="text-left flex w-full">
           <button className="text-white" onClick={() => setIsAddDomainModalOpen(true)}>

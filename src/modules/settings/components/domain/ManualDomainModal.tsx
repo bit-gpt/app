@@ -28,11 +28,10 @@ const ManualDomainModal = ({
       await axios.post(
         "http://localhost:8080/dns",
         {
-          a_record: "aaa",
-          domain: "aaa",
-          email: "aaa",
-          node_name: "aaa",
-          sub_domain: "aaa",
+          ip: serverIP,
+          domain: domainName,
+          email: email,
+          node_name: nodeName,
         },
         {
           headers: {
@@ -69,39 +68,39 @@ const ManualDomainModal = ({
     <Modal className="modal" isOpen={isOpen}>
       <div className="modal__content gradient-border w-4/5">
         <div className="flex justify-between item-center my-5">
-          <h2 className="text-lg maxMd:text-xl mb-2 maxMd:mb-4">{title}</h2>
+          <h2 className="text-lg max-md:text-xl mb-2 max-md:mb-4">{title}</h2>
           <button onClick={() => setIsManualDomainModalOpen(false)}>
             <img src={Cross} alt="cross" className="h-6 w-6" />
           </button>
         </div>
         <div className="hr" />
         <form onSubmit={onSubmit}>
-          <div className="flex maxMd:flex-col gap-4 items-center mb-4">
+          <div className="flex max-md:flex-col gap-4 items-center mb-4">
             <input
-              className="form-control maxMd:!py-2 maxMd:text-[10px]"
+              className="form-control max-md:!py-2 max-md:text-[10px]"
               value={domainName}
               onChange={onDomainNameChange}
               placeholder="Enter your domain name"
             />
             <input
-              className="form-control maxMd:!py-2 maxMd:text-[10px]"
+              className="form-control max-md:!py-2 max-md:text-[10px]"
               value={serverIP}
               onChange={onServerIPChange}
               placeholder="Enter your server IP"
             />
           </div>
-          <div className="flex maxMd:flex-col gap-4 items-center mb-4">
+          <div className="flex max-md:flex-col gap-4 items-center mb-4">
             <input
-              className="form-control maxMd:!py-2 maxMd:text-[10px]"
+              className="form-control max-md:!py-2 max-md:text-[10px]"
               value={email}
               onChange={onEmailChange}
               placeholder="Enter your email"
             />
             <input
-              className="form-control maxMd:!py-2 maxMd:text-[10px]"
+              className="form-control max-md:!py-2 max-md:text-[10px]"
               value={nodeName}
               onChange={onNodeNameChange}
-              placeholder="Enter your email"
+              placeholder="Enter your node name"
             />
           </div>
           <div className="flex justify-end mt-6">
