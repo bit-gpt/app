@@ -14,6 +14,7 @@
 @import url("./system-check.css");
 @import url("./toast.css");
 @import url("./tooltip.css");
+@import url("./warning-modal.css");
 @import url("./utils.css");
 
 @tailwind base;

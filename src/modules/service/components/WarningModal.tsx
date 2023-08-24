@@ -18,14 +18,8 @@ const WarningModal = ({
   return (
     <Modal className="warning-modal" isOpen={isOpen} onRequestClose={onCancel}>
       <div className="warning-modal__content gradient-border w-[550px]">
-        <div className="flex max-md:flex-col max-md:item-center max-md:text-center md:items-start gap-5 mt-5 mb-7 max-md:flex-1 max-md:justify-center">
-          <div className="md:mb-5 max-sm:-mx-3">
-            <div className="max-md:mx-auto">
-              {icon || (
-                <img src={WarningModalIcon} alt="WarningModalIcon" width={128} height={128} />
-              )}
-            </div>
-          </div>
+        <div className="flex max-md:flex-col items-center max-md:text-center gap-5 mt-5 mb-7 max-md:flex-1 max-md:justify-center">
+          {icon || <img src={WarningModalIcon} alt="WarningModalIcon" width={128} height={128} />}
           <div>
             <h2 className="text-lg max-md:text-xl mb-2 max-md:mb-4">{title}</h2>
             <p className="!text-base max-md:!text-sm">{description}</p>
