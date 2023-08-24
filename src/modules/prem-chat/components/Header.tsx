@@ -43,7 +43,7 @@ const Header = ({ setRightSidebar, hamburgerMenuOpen, setHamburgerMenu, title }:
         isOpen={open}
         onCancel={closeModal}
         onOk={closeModal}
-        icon={<WarningIcon />}
+        icon={<WarningIcon className="w-32 h-32" />}
       />
     </>
   );
