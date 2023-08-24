@@ -39,7 +39,7 @@
 
 .custom-service__markdown {
   @apply md:backdrop-blur-[20px];
-  box-shadow: 0 3.9602210521698px 23.76132583618164px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.2);
   background: linear-gradient(134deg, rgba(47, 47, 47, 0.4) 0%, rgba(103, 100, 98, 0.11) 100%);
 }
 
@@ -51,22 +51,16 @@
   @apply text-base;
 }
 
-@media (max-width: 767px) {
-  .services-detail--header .service-card__logo img {
-    @apply max-md:h-12 max-md:w-12;
-  }
+.services-detail--header .service-card__logo {
+  @apply max-md:basis-full;
+}
 
-  .services-detail--header .service-card__logo {
-    @apply basis-full;
-  }
+.services-detail--header span:not(.mask-heading span) {
+  @apply max-md:text-[10px] max-md:py-0 max-md:px-3 max-md:h-6 max-md:flex max-md:items-center;
+}
 
-  .services-detail--header span:not(.mask-heading span) {
-    @apply text-[10px] py-0 px-3 h-6 flex items-center;
-  }
-
-  .services-detail-header {
-    @apply absolute top-[10px] right-0;
-  }
+.services-detail-header {
+  @apply max-md:absolute max-md:top-[10px] max-md:right-0;
 }
 
 @screen lg {
@@ -104,7 +98,7 @@ p.service-is__not-running {
 }
 
 .service-card__logo img {
-  @apply rounded-[11px] h-[54px] w-[54px] flex items-center justify-center;
+  @apply rounded-[11px] h-[54px] w-[54px] max-md:h-12 max-md:w-12 flex items-center justify-center;
 }
 
 .service-card h3 {

@@ -1,11 +1,8 @@
-import leftArrow from "assets/images/arrow.svg";
 import binRed from "assets/images/bin-red.svg";
 import bin from "assets/images/bin.svg";
-import cross from "assets/images/cross.svg";
 import edit from "assets/images/edit.svg";
 import exportData from "assets/images/export-data.svg";
 import importData from "assets/images/import-data.svg";
-import Logo from "assets/images/logo.svg";
 import msg from "assets/images/msg.svg";
 import searchIcon from "assets/images/search.svg";
 import clsx from "clsx";
@@ -18,6 +15,8 @@ import WarningIcon from "shared/components/WarningIcon";
 import usePremChatStore from "shared/store/prem-chat";
 import type { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
+
+import LeftSidebar from "../../../shared/components/LeftSidebar";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   // TODO: shallow will only check for reference equality, not deep equality
@@ -51,10 +50,6 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
     return item.title.toLowerCase().includes(search.toLowerCase());
   });
 
-  const onCloseClick = () => {
-    navigate("/");
-  };
-
   const closeModal = () => {
     setIsOpenWarningModal(false);
   };
@@ -70,19 +65,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   return (
     <>
-      <div className="md:pt-7 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
-        <div className="flex max-md:flex-wrap md:gap-4">
-          <button className="mx-2" onClick={onCloseClick}>
-            <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
-          </button>
-          <img className="sidebar__logo" src={Logo} alt="logo" />
-          <button
-            onClick={() => setHamburgerMenu(true)}
-            className="w-[30px] md:hidden z-[11] fixed right-[14px] top-[24px]"
-          >
-            <img src={cross} alt="cross" width={22} height={22} className="mx-auto" />
-          </button>
-        </div>
+      <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
         <div className="flex md:mt-8 mt-6 mb-6 sidebar__search relative">
           <img
             src={searchIcon}
@@ -109,7 +92,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                 <li
                   onClick={() => setHamburgerMenu(true)}
                   key={item.id}
-                  className={clsx({ "md:bg-grey-900 bg-[#1A1E23]": chatId === item.id })}
+                  className={clsx({ "bg-grey-900": chatId === item.id })}
                 >
                   <Link to={`/prem-chat/${serviceId}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
@@ -158,7 +141,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             </Link>
           </li>
         </ul>
-      </div>
+      </LeftSidebar>
       <WarningModal
         description="Import / Export is not available yet"
         title="Coming Soon"

@@ -20,7 +20,7 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .plyr__volume input[type="range"] {
-    @apply !max-w-[60px] !min-w-[40px];
+    @apply max-w-[60px] min-w-[40px] !important;
   }
 }
 

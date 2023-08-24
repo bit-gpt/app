@@ -19,11 +19,5 @@
   content: "";
   opacity: 0.1;
   background: url("../images/lines-bg.png") no-repeat 50% 100%;
-  @apply absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
-}
-
-@media (max-width: 767px) {
-  .bg-lines::before {
-    @apply hidden;
-  }
+  @apply max-md:hidden absolute top-0 right-0 left-0 w-full h-full bg-contain bottom-0;
 }
