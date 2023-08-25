@@ -133,8 +133,8 @@ fn main() {
                 .add_native_item(MenuItem::Hide)
                 .add_item(CustomMenuItem::new(
                     "quit",
-                    "Quit Prem App", // ⌘Q is automatically mapped to Quit for macOS
-                )),
+                    "Quit Prem App",
+                ).accelerator("CommandOrControl+Q")),
         ))
         .add_submenu(Submenu::new(
             "Edit",
