@@ -89,7 +89,6 @@ export const serviceSearchStyle = {
     borderRadius: 4,
     padding: "3px 8px",
     alignItems: "center",
-    fontFamily: "ProximaNova-Regular",
   }),
   multiValueLabel: (base: CSSObjectWithLabel) => ({
     ...base,
@@ -121,7 +120,6 @@ export const serviceSearchStyle = {
     backgroundColor: "#20232b",
     color: "#EDEDED",
     fontSize: 12,
-    fontFamily: "ProximaNova-Regular",
     "&:hover": {
       backgroundColor: "#28282D",
     },

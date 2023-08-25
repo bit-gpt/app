@@ -87,7 +87,6 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
               textareaClassName="scrollbar-custom"
               style={{
                 borderRadius: 11,
-                fontFamily: "ProximaNova-Regular",
                 fontSize: 14,
               }}
             />
