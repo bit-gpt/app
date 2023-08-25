@@ -1,25 +1,24 @@
 .documentation-markdown h1 {
-  @apply text-2xl font-bold mb-6;
-  font-family: "ProximaNova-bold", serif;
+  @apply text-3xl font-bold mb-6 !important;
 }
 
 .documentation-markdown h2 {
-  @apply text-base font-bold mb-6;
+  @apply text-xl font-bold mb-6 !important;
 }
 
 .documentation-markdown p {
-  @apply max-md:text-sm text-grey-300  mb-6;
+  @apply max-md:text-sm text-grey-300  mb-6 !important;
 }
 
 .documentation-markdown code {
-  @apply whitespace-normal  text-sm text-grey-300 mb-4 block;
+  @apply whitespace-normal  text-sm text-grey-300 mb-4 block !important;
 }
 
 .documentation-modal {
-  max-height: calc(100vh - 100px);
-  @apply overflow-y-auto overflow-x-hidden;
+  max-height: calc(100vh - 100px) !important;
+  @apply overflow-y-auto overflow-x-hidden !important;
 }
 
 .documentation-markdown {
-  @apply px-4;
+  @apply px-4 !important;
 }
