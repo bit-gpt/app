@@ -11,7 +11,6 @@ FROM caddy:alpine
 COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /app/dist /usr/share/caddy/html
 
-EXPOSE 8000
 # Add the script to patch window with ENV vars
 # https://create-react-app.dev/docs/title-and-meta-tags#injecting-data-from-the-server-into-the-page
 COPY entrypoint.sh /prem-entrypoint.sh
