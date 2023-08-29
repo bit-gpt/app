@@ -25,8 +25,23 @@ export const checkIsServerRunning = async () => {
 
 export const runDockerContainer = async () => {
   const containerRunning = await checkIsContainerRunning();
-  if (containerRunning) return;
+  if (containerRunning) {
+    return;
+  }
   await invoke("run_container");
+};
+
+export const checkSwarmModeRunning = async () => {
+  const check = await invoke("is_swarm_mode_running");
+  return Boolean(check);
+};
+
+export const runSwarmMode = async () => {
+  const isSwarmMode = await checkSwarmModeRunning();
+  if (isSwarmMode) {
+    return;
+  }
+  await invoke("run_swarm_mode");
 };
 
 export const isBrowserEnv = () => {

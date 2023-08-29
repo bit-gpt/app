@@ -99,6 +99,64 @@ fn is_docker_running() -> bool {
     return false;
 }
 
+fn is_python_installed() -> bool {
+    let output = Command::new("/usr/bin/python3")
+        .args(["--version"])
+        .output()
+        .map_err(|e| {
+            println!("Failed to execute docker info: {}", e);
+            e
+        });
+
+    println!("output: {:?}", output);
+
+    if !output.unwrap().stdout.is_empty() {
+        return true;
+    }
+    return false;
+}
+
+#[tauri::command]
+fn is_swarm_mode_running() -> bool {
+    return false;
+}
+
+#[tauri::command]
+fn run_swarm_mode() -> Result<bool, String> {
+    if is_python_installed() {
+        println!("Python is installed");
+
+        thread::spawn(|| {
+            println!("Hello from a thread!");
+
+            let output = Command::new("/usr/bin/python3")
+                .args(&["-m", "pip", "install", "git+https://github.com/bigscience-workshop/petals",])
+                .output()
+                .expect("Failed to execute command");
+    
+            println!("stdout: {}", output.stdout);
+            println!("stderr: {}", output.stderr);
+
+            let output = Command::new("/usr/bin/python3")
+                .args(&["-m", "petals.cli.run_server", "--public_name", "https://premai.io", "petals-team/StableBeluga2"])
+                .output()
+                .expect("Failed to execute command");
+            
+            println!("stdout: {}", output.stdout);
+            println!("stderr: {}", output.stderr);
+        });
+        
+    } else {
+        println!("Python is not installed, skipping...");
+    }
+    Ok(true)
+}
+
+#[tauri::command]
+fn stop_swarm_mode() {
+    println!("Killing background job");
+}
+
 #[tauri::command]
 fn is_container_running() -> Result<bool, String> {
     let output = Command::new("/usr/local/bin/docker")
@@ -169,6 +227,9 @@ fn main() {
             run_container,
             is_docker_running,
             is_container_running,
+            run_swarm_mode,
+            stop_swarm_mode,
+            is_swarm_mode_running
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
