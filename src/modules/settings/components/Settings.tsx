@@ -8,6 +8,7 @@ import { useLockedBody, useMediaQuery } from "usehooks-ts";
 
 import AdvancedSettings from "./AdvancedSettings";
 import GPUResources from "./GPUResources";
+import SwarmMode from "./SwarmMode";
 import SystemResources from "./SystemResources";
 
 const Settings = () => {
@@ -48,6 +49,9 @@ const Settings = () => {
         </div>
         <div className="lg:max-w-[80%] mx-auto settings">
           <AdvancedSettings />
+        </div>
+        <div className="lg:max-w-[80%] mx-auto settings">
+          <SwarmMode />
         </div>
       </div>
     </AppContainer>
