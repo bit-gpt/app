@@ -7,12 +7,20 @@
   @apply text-sm;
 }
 
-.system-check__requirements p:last-child,
-.system-check__requirements button {
-  @apply min-w-[120px];
-}
-
 .system-check__container {
   min-height: calc(100vh - 172px);
   @apply flex mb-[70px] items-center;
+}
+
+@keyframes rotateCheckIcon {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.system-check img.is-rotating {
+  animation: rotateCheckIcon 1.5s linear infinite;
 }

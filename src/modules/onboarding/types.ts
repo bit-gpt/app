@@ -5,7 +5,7 @@ export type WelcomeScreenProps = {
 };
 
 export type SystemCheckProps = {
-  handleCheckIsDockerRunning: () => void;
+  handleCheckIsDockerRunning: () => Promise<void>;
   isDockerRunning: boolean;
   isServerRunning: boolean;
   back: () => void;
