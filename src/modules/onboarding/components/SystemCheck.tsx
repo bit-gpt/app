@@ -3,12 +3,15 @@ import arrow from "assets/images/arrow.svg";
 import Logo from "assets/images/brand-logo.svg";
 import computerLogo from "assets/images/computer.svg";
 import regenerate from "assets/images/regenerate.svg";
+import clsx from "clsx";
+import { useState } from "react";
 import PrimaryButton from "shared/components/PrimaryButton";
 import { SYSTEM_MEMORY_LIMIT } from "shared/helpers/utils";
 import useSystemStats from "shared/hooks/useSystemStats";
 
 import type { SystemCheckProps } from "../types";
 
+import BackendUrl from "./BackendUrl";
 import Dependency from "./Dependency";
 
 const SystemCheck = ({
@@ -19,13 +22,17 @@ const SystemCheck = ({
   next,
 }: SystemCheckProps) => {
   const { data: response, isLoading, refetch } = useSystemStats();
-
+  const [isCheckingDocker, setIsCheckingDocker] = useState(false);
   const memoryLimit = response?.data?.memory_limit;
   const isMemorySufficient = memoryLimit! > SYSTEM_MEMORY_LIMIT;
 
   const onCheckAgainClick = () => {
-    handleCheckIsDockerRunning();
-    refetch();
+    (async () => {
+      setIsCheckingDocker(true);
+      await handleCheckIsDockerRunning();
+      await refetch();
+      setIsCheckingDocker(false);
+    })();
   };
 
   return (
@@ -52,8 +59,8 @@ const SystemCheck = ({
       </div>
       <div className="relative z-[1] mx-auto max-md:w-full system-check__container">
         <div className="mx-auto md:max-w-[600px] max-md:px-6 w-full rounded-xl">
-          <div className="">
-            <div className="md:max-w-[450px] mx-auto relative z-10">
+          <div>
+            <div className="mx-auto relative z-10">
               <img
                 className="mx-auto w-[85px] h-[60px] my-[30px]"
                 src={computerLogo}
@@ -99,6 +106,7 @@ const SystemCheck = ({
                     </div>
                   }
                 />
+                <BackendUrl isRunning={isServerRunning} name="Backend URL" />
               </div>
               <div className="text-center mt-6 mb-14">
                 <button
@@ -110,7 +118,9 @@ const SystemCheck = ({
                     height={18}
                     src={regenerate}
                     alt="regenerate-logo"
-                    className="mr-2"
+                    className={clsx("mr-2", {
+                      "is-rotating": isCheckingDocker,
+                    })}
                   />
                   <span className="border-b">Check Again</span>
                 </button>

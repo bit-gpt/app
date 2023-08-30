@@ -29,6 +29,8 @@ module.exports = {
         800: "#28292D",
         900: "#1D1E24",
       },
+      ok: "#2ED291",
+      warning: "#F9B96D",
     },
     extend: {
       fontFamily: {

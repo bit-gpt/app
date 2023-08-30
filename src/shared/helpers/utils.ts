@@ -18,9 +18,14 @@ export const checkIsContainerRunning = async () => {
 };
 
 export const checkIsServerRunning = async () => {
-  const url = useSettingStore.getState().backendUrl;
-  const response = await fetch(`${url}/v1/`, { method: "GET" });
-  return Boolean(response.ok);
+  try {
+    const url = useSettingStore.getState().backendUrl;
+    const response = await fetch(`${url}/v1/`, { method: "GET" });
+    return Boolean(response.ok);
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
 
 export const runDockerContainer = async () => {
