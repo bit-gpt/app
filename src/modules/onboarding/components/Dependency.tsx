@@ -15,7 +15,12 @@ const Dependency = ({
   return (
     <div className="flex justify-between mt-4">
       <p className="text-[#CFCFCF] text-base flex w-2/3">{name}</p>
-      {isRunning && <p className="text-ok text-base flex w-1/3">&#10003;&nbsp;{status}</p>}
+      {isRunning && (
+        <div className="flex w-1/3">
+          <span className="text-ok text-sm mr-2">&#10003;</span>
+          <p className="text-ok text-base">{status}</p>
+        </div>
+      )}
       {isLoading && (
         <p>
           <Spinner className="w-5 h-5" />
@@ -23,7 +28,7 @@ const Dependency = ({
       )}
       {!isRunning && !isLoading && (
         <>
-          <button className="text-warning flex gap-3 flex-1 justify-start" id={`${id}`}>
+          <button className="text-warning flex gap-2 flex-1 justify-start" id={`${id}`}>
             <img src={info} alt="info" />
             {status}
           </button>

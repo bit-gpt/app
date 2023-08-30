@@ -24,6 +24,9 @@ const BackendUrl = ({ isRunning, name }: BackendUrlProps) => {
     setIsEditing(true);
   };
 
+  // This is a hacky way to calculate the width of the input field, with a minimum of 10ch
+  const inputWidth = backendUrlState.length - 2 > 10 ? `${backendUrlState.length - 2}ch` : "10ch";
+
   return (
     <div className="flex justify-between items-baseline mt-3">
       <p className="text-[#CFCFCF] text-base flex w-2/3">{name}</p>
@@ -35,13 +38,14 @@ const BackendUrl = ({ isRunning, name }: BackendUrlProps) => {
         )}
         <input
           autoComplete="off"
+          autoCapitalize="off"
           type="text"
-          style={{ width: `${backendUrlState.length}ch` }}
-          className={clsx("text-sm py-1 px-2 outline-none", {
+          style={{ width: inputWidth }}
+          className={clsx("text-sm py-1 mr-2 pl-2 outline-none", {
             "text-warning": !isRunning,
             "text-ok": isRunning,
             "bg-[#4D4D4F58] rounded-lg": isEditing,
-            "bg-transparent": !isEditing,
+            "bg-transparent opacity-80": !isEditing,
           })}
           value={backendUrlState}
           disabled={!isEditing}
