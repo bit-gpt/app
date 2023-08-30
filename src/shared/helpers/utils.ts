@@ -3,7 +3,7 @@ import type { Option, Service, ServiceStatus } from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
-import useSettingStore from "../store/setting";
+import api from "../api/v1";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
@@ -19,9 +19,8 @@ export const checkIsContainerRunning = async () => {
 
 export const checkIsServerRunning = async () => {
   try {
-    const url = useSettingStore.getState().backendUrl;
-    const response = await fetch(`${url}/v1/`, { method: "GET" });
-    return Boolean(response.ok);
+    const response = await api().get(`v1`);
+    return response.data && response.status === 200;
   } catch (error) {
     console.error(error);
     return false;
@@ -32,6 +31,16 @@ export const runDockerContainer = async () => {
   const containerRunning = await checkIsContainerRunning();
   if (containerRunning) return;
   await invoke("run_container");
+};
+
+export const checkHasDnsRecord = async (): Promise<boolean> => {
+  try {
+    const existingDNS = await api().get(`dns/existing`);
+    return existingDNS.data && existingDNS.status === 200;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
 
 export const isBrowserEnv = () => {
@@ -50,10 +59,9 @@ export const isPackaged = () => {
   return (window as any).VITE_IS_PACKAGED === "true" || import.meta.env.VITE_IS_PACKAGED === "true";
 };
 
-export const isBackendSet = () => {
+export const isProxyEnabled = () => {
   return (
-    ((window as any).VITE_BACKEND_URL !== undefined || import.meta.env.VITE_BACKEND_URL) &&
-    ((window as any).VITE_BACKEND_URL !== "" || import.meta.env.VITE_BACKEND_URL !== "")
+    (window as any).VITE_PROXY_ENABLED === "true" || import.meta.env.VITE_PROXY_ENABLED === "true"
   );
 };
 

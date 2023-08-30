@@ -1,8 +1,9 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import Modal from "react-modal";
 
 import Cross from "../../../../assets/images/cross.svg";
+import api from "../../../../shared/api/v1";
 
 interface ManualDomainModalProps {
   isOpen: boolean;
@@ -23,22 +24,12 @@ const ManualDomainModal = ({
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const existingDNS = await axios.get("http://localhost:8080/dns/existing");
-      console.log("existingDNS", existingDNS.data);
-      await axios.post(
-        "http://localhost:8080/dns",
-        {
-          ip: serverIP,
-          domain: domainName,
-          email: email,
-          node_name: nodeName,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      await api().post("dns", {
+        ip: serverIP,
+        domain: domainName,
+        email: email,
+        node_name: nodeName,
+      });
     } catch (error) {
       if (error instanceof AxiosError && error.code === "ERR_NETWORK") {
         console.error("Cannot connect to dns service");

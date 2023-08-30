@@ -12,7 +12,7 @@ import checkHealth from "../api/checkHealth";
 const BackendUrl = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(checkHealth);
+  const { mutate: checkHealthRequest, isLoading } = useMutation(checkHealth);
 
   const backendUrlFromStore = useSettingStore((state) => state.backendUrl);
   const setBackendUrlToStore = useSettingStore((state) => state.setBackendUrl);
@@ -25,7 +25,7 @@ const BackendUrl = () => {
 
   const onUpdate = (e: FormEvent) => {
     e.preventDefault();
-    mutate(backendUrl, {
+    checkHealthRequest(undefined, {
       onSuccess: (response) => {
         if (response.data.status) {
           setBackendUrlToStore(backendUrl);

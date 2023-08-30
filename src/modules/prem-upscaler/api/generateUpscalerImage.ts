@@ -1,5 +1,5 @@
 import axios from "axios";
-import { generateUrl } from "shared/helpers/utils";
+import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
 import type { ImageGeneration } from "../types";
@@ -14,11 +14,13 @@ const generateUpscalerImage = async (port: number, data: ImageGeneration) => {
   formData.append("guidance_scale", `${data.guidance_scale}`);
   formData.append("num_inference_steps", `${data.num_inference_steps}`);
 
-  return axios.post(`${backendUrl}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+  const headers = { "Content-Type": "multipart/form-data" };
+  if (isProxyEnabled() && hasDnsRecord) {
+    Object.assign(headers, { Host: "premd.docker.localhost" });
+  }
+
+  return axios.post(`${backendUrl}`, formData, { headers });
 };
 
 export default generateUpscalerImage;

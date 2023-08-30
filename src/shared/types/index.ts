@@ -77,6 +77,8 @@ export type MarkdownProps = {
 export type SettingStore = {
   backendUrl: string;
   setBackendUrl: (backendUrl: string) => void;
+  hasDnsRecord: boolean;
+  setHasDnsRecord: (hasDnsRecord: boolean) => void;
   serviceDownloadsInProgress: Record<string, number>;
   setServiceDownloadProgress: (serviceId: string, percentage: number) => void;
   addServiceDownloadInProgress: (serviceId: string) => void;
