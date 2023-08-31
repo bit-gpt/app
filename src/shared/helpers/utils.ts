@@ -1,9 +1,11 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import axios from "axios";
 import type { Option, Service, ServiceStatus } from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
 import api from "../api/v1";
+import useSettingStore from "../store/setting";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
@@ -35,7 +37,14 @@ export const runDockerContainer = async () => {
 
 export const checkHasDnsRecord = async (): Promise<boolean> => {
   try {
-    const existingDNS = await api().get(`dns/existing`);
+    const existingDNS = await axios.get(`dns/existing`, {
+      baseURL: useSettingStore.getState().backendUrl,
+      headers: {
+        "Content-Type": "application/json",
+        Host: "premd.docker.localhost",
+      },
+    });
+    console.log("existingDNS", existingDNS);
     return existingDNS.data && existingDNS.status === 200;
   } catch (error) {
     console.error(error);

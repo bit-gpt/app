@@ -9,6 +9,9 @@ const api = () => {
   if (isProxyEnabled() && hasDnsRecord) {
     Object.assign(headers, { Host: "premd.docker.localhost" });
   }
+  console.log("headers", headers);
+  console.log("hasDnsRecord", hasDnsRecord);
+  console.log("isProxyEnabled", isProxyEnabled());
   return axios.create({
     baseURL: useSettingStore.getState().backendUrl,
     headers,
