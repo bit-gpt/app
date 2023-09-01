@@ -1,13 +1,13 @@
-import axios from "axios";
+import axios from "axios/index";
 
 import { isProxyEnabled } from "../helpers/utils";
 import useSettingStore from "../store/setting";
 
-const api = () => {
+const apiDnsd = () => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
   if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { "X-Host-Override": "premd" });
+    Object.assign(headers, { "X-Host-Override": "dnsd" });
   }
   return axios.create({
     baseURL: useSettingStore.getState().backendUrl,
@@ -15,4 +15,4 @@ const api = () => {
   });
 };
 
-export default api;
+export default apiDnsd;

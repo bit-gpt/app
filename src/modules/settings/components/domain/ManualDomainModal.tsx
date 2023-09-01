@@ -3,7 +3,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 
 import Cross from "../../../../assets/images/cross.svg";
-import api from "../../../../shared/api/v1";
+import apiDnsd from "../../../../shared/api/dnsd";
 
 interface ManualDomainModalProps {
   isOpen: boolean;
@@ -24,7 +24,7 @@ const ManualDomainModal = ({
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await api().post("dns", {
+      await apiDnsd().post("dns", {
         ip: serverIP,
         domain: domainName,
         email: email,
