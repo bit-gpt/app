@@ -41,10 +41,13 @@ export const checkSwarmModeRunning = async () => {
   return Boolean(check);
 };
 
+<<<<<<< HEAD
 export const stopSwarmMode = async () => {
   await invoke("stop_swarm_mode");
 };
 
+=======
+>>>>>>> 4f0c781a58faa3d0f13cc9ec0e375cc551323b0b
 export const runSwarmMode = async () => {
   const isSwarmMode = await checkSwarmModeRunning();
   if (isSwarmMode) {

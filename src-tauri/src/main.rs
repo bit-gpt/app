@@ -108,14 +108,21 @@ fn is_python_installed() -> bool {
             e
         });
 
+<<<<<<< HEAD
     if !output.unwrap().stdout.is_empty() {
         println!("🐍 Python is installed");
+=======
+    println!("output: {:?}", output);
+
+    if !output.unwrap().stdout.is_empty() {
+>>>>>>> 4f0c781a58faa3d0f13cc9ec0e375cc551323b0b
         return true;
     }
     return false;
 }
 
 #[tauri::command]
+<<<<<<< HEAD
 fn is_swarm_mode_running() -> bool {    
     let output_value = get_swarm_processes();
     
@@ -123,10 +130,15 @@ fn is_swarm_mode_running() -> bool {
         println!("🏃‍♀️ Processeses running: {}", output_value.replace("\n", " "));
         return true;
     }
+=======
+fn is_swarm_mode_running() -> bool {
+    // should check if the petals server is running
+>>>>>>> 4f0c781a58faa3d0f13cc9ec0e375cc551323b0b
     return false;
 }
 
 #[tauri::command]
+<<<<<<< HEAD
 fn run_swarm_mode(){
     println!("🚀 Starting the Swarm...");
 
@@ -168,10 +180,43 @@ fn get_swarm_processes() -> String {
     
     let output_value = output.unwrap().stdout;
     return output_value;
+=======
+fn run_swarm_mode() -> Result<bool, String> {
+    if is_python_installed() {
+        println!("Python is installed");
+
+        thread::spawn(|| {
+            println!("Hello from a thread!");
+
+            let output = Command::new("/usr/bin/python3")
+                .args(&["-m", "pip", "install", "git+https://github.com/bigscience-workshop/petals",])
+                .output()
+                .expect("Failed to execute command");
+    
+            println!("stdout: {}", output.stdout);
+            println!("stderr: {}", output.stderr);
+
+            let output = Command::new("/usr/bin/python3")
+                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2", "--initial_peers",  
+                        "/ip4/209.38.217.30/tcp/31337/p2p/QmecL18cmRaDdAcRmA7Ctj1gyAeUYG433WppA1UWTHTew6",  
+                        "/ip4/127.0.0.1/tcp/31337/p2p/QmecL18cmRaDdAcRmA7Ctj1gyAeUYG433WppA1UWTHTew6"])
+                .output()
+                .expect("Failed to execute command");
+            
+            println!("stdout: {}", output.stdout);
+            println!("stderr: {}", output.stderr);
+        });
+        
+    } else {
+        println!("Python is not installed, skipping...");
+    }
+    Ok(true)
+>>>>>>> 4f0c781a58faa3d0f13cc9ec0e375cc551323b0b
 }
 
 #[tauri::command]
 fn stop_swarm_mode() {
+<<<<<<< HEAD
     println!("🛑 Stopping the Swarm...");
     let processes = get_swarm_processes().replace("\n", " ");
     println!("🛑 Stopping Processes: {}", processes);
@@ -188,6 +233,10 @@ fn stop_swarm_mode() {
             });
     }
     println!("🛑 Stopped all the Swarm Processes."); 
+=======
+    // it should stop the process that runs the petals server
+    println!("Killing background job");
+>>>>>>> 4f0c781a58faa3d0f13cc9ec0e375cc551323b0b
 }
 
 #[tauri::command]
