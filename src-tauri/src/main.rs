@@ -118,47 +118,85 @@ fn is_python_installed() -> bool {
 
 #[tauri::command]
 fn is_swarm_mode_running() -> bool {
-    // should check if the petals server is running
+    let output = Command::new("/usr/bin/pgrep")
+        .args(&["-f", "petals.cli.run_server"])
+        .output()
+        .map_err(|e| {
+            println!("🙈 Failed to execute command: {}", e);
+            e
+        });
+    
+    let output_value = output.unwrap().stdout;
+    println!("output: {:?}", output_value);
+
+    if !output_value.is_empty() {
+        return true;
+    }
     return false;
 }
 
 #[tauri::command]
-fn run_swarm_mode() -> Result<bool, String> {
+fn run_swarm_mode(){
+    println!("🚀 Starting the Swarm...");
+
     if is_python_installed() {
-        println!("Python is installed");
-
         thread::spawn(|| {
-            println!("Hello from a thread!");
+            println!("🚀 Starting the Swarm...");
 
-            let output = Command::new("/usr/bin/python3")
+            let _ = Command::new("/usr/bin/python3")
                 .args(&["-m", "pip", "install", "git+https://github.com/bigscience-workshop/petals",])
                 .output()
-                .expect("Failed to execute command");
-    
-            println!("stdout: {}", output.stdout);
-            println!("stderr: {}", output.stderr);
+                .expect("🙈 Failed to execute command");
 
-            let output = Command::new("/usr/bin/python3")
-                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2", "--initial_peers",  
-                        "/ip4/209.38.217.30/tcp/31337/p2p/QmecL18cmRaDdAcRmA7Ctj1gyAeUYG433WppA1UWTHTew6",  
-                        "/ip4/127.0.0.1/tcp/31337/p2p/QmecL18cmRaDdAcRmA7Ctj1gyAeUYG433WppA1UWTHTew6"])
+            // Print stdout and stderr
+            // println!("🛠️ Installing the dependencies >>> {}", String::from_utf8_lossy(&output.stdout));
+            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+
+            let _ = Command::new("/usr/bin/python3")
+                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2"])
                 .output()
-                .expect("Failed to execute command");
-            
-            println!("stdout: {}", output.stdout);
-            println!("stderr: {}", output.stderr);
+                .expect("🙈 Failed to execute command");
+
+            // Print stdout and stderr
+            // println!("🚀 Running the Swarm >>> {}", String::from_utf8_lossy(&output.stdout));
+            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
         });
-        
     } else {
-        println!("Python is not installed, skipping...");
+        println!("🙈 Python is not installed");
     }
-    Ok(true)
+}
+
+fn get_swarm_processes() -> String {
+    let output = Command::new("/usr/bin/pgrep")
+        .args(&["-f", "petals.cli.run_server"])
+        .output()
+        .map_err(|e| {
+            println!("🙈 Failed to execute command: {}", e);
+            e
+        });
+    
+    let output_value = output.unwrap().stdout;
+    println!("output: {:?}", output_value);
+    return output_value;
 }
 
 #[tauri::command]
 fn stop_swarm_mode() {
-    // it should stop the process that runs the petals server
-    println!("Killing background job");
+    println!("🛑 Stopping the Swarm...");
+    let processes = get_swarm_processes().replace("\n", " ");
+    let processes = processes.split(" ").collect::<Vec<&str>>();
+
+    for process in processes {
+        println!("🛑 Stopping Process: {}", process);
+        let _ = Command::new("kill")
+            .args(&[process.to_string()])
+            .output()
+            .map_err(|e| {
+                println!("🙈 Failed to execute command: {}", e);
+                e
+            });
+    }
+    println!("🛑 Stopped all the Swarm Processes."); 
 }
 
 #[tauri::command]
