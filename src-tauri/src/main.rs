@@ -104,7 +104,7 @@ fn is_python_installed() -> bool {
         .args(["--version"])
         .output()
         .map_err(|e| {
-            println!("Failed to execute docker info: {}", e);
+            println!("Failed to execute python --version: {}", e);
             e
         });
 
@@ -118,6 +118,7 @@ fn is_python_installed() -> bool {
 
 #[tauri::command]
 fn is_swarm_mode_running() -> bool {
+    // should check if the petals server is running
     return false;
 }
 
@@ -138,7 +139,9 @@ fn run_swarm_mode() -> Result<bool, String> {
             println!("stderr: {}", output.stderr);
 
             let output = Command::new("/usr/bin/python3")
-                .args(&["-m", "petals.cli.run_server", "--public_name", "https://premai.io", "petals-team/StableBeluga2"])
+                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2", "--initial_peers",  
+                        "/ip4/209.38.217.30/tcp/31337/p2p/QmecL18cmRaDdAcRmA7Ctj1gyAeUYG433WppA1UWTHTew6",  
+                        "/ip4/127.0.0.1/tcp/31337/p2p/QmecL18cmRaDdAcRmA7Ctj1gyAeUYG433WppA1UWTHTew6"])
                 .output()
                 .expect("Failed to execute command");
             
@@ -154,6 +157,7 @@ fn run_swarm_mode() -> Result<bool, String> {
 
 #[tauri::command]
 fn stop_swarm_mode() {
+    // it should stop the process that runs the petals server
     println!("Killing background job");
 }
 
