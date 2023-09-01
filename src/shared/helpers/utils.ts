@@ -46,6 +46,23 @@ export const isServiceDocker = (service: Service): service is ServiceDocker => {
   return service && service.serviceType === "docker";
 };
 
+export const checkSwarmModeRunning = async () => {
+  const check = await invoke("is_swarm_mode_running");
+  return Boolean(check);
+};
+
+export const stopSwarmMode = async () => {
+  await invoke("stop_swarm_mode");
+};
+
+export const runSwarmMode = async () => {
+  const isSwarmMode = await checkSwarmModeRunning();
+  if (isSwarmMode) {
+    return;
+  }
+  await invoke("run_swarm_mode");
+};
+
 export const isPackaged = () => {
   return (window as any).VITE_IS_PACKAGED === "true" || import.meta.env.VITE_IS_PACKAGED === "true";
 };

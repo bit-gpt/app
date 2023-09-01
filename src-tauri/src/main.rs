@@ -8,10 +8,10 @@ mod utils;
 
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, thread};
 use tauri::{
-    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
-    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
+    AboutMetadata, api::process::Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
+    Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 use tokio::{process::Child, sync::Mutex};
 
@@ -87,6 +87,97 @@ struct ModelInfo {
     #[serde(rename = "weightsSize")]
     weights_size: Option<u32>,
     streaming: Option<bool>,
+}
+
+fn is_python_installed() -> bool {
+    let output = Command::new("/usr/bin/python3")
+        .args(["--version"])
+        .output()
+        .map_err(|e| {
+            println!("Failed to execute python --version: {}", e);
+            e
+        });
+
+    if !output.unwrap().stdout.is_empty() {
+        println!("🐍 Python is installed");
+        return true;
+    }
+    return false;
+}
+
+#[tauri::command]
+fn is_swarm_mode_running() -> bool {    
+    let output_value = get_swarm_processes();
+    
+    if !output_value.is_empty() {
+        println!("🏃‍♀️ Processeses running: {}", output_value.replace("\n", " "));
+        return true;
+    }
+    return false;
+}
+
+#[tauri::command]
+fn run_swarm_mode(){
+    println!("🚀 Starting the Swarm...");
+
+    if is_python_installed() {
+        thread::spawn(|| {
+            println!("🚀 Starting the Swarm...");
+
+            let _ = Command::new("/usr/bin/python3")
+                .args(&["-m", "pip", "install", "git+https://github.com/bigscience-workshop/petals",])
+                .output()
+                .expect("🙈 Failed to execute command");
+
+            // Print stdout and stderr
+            // println!("🛠️ Installing the dependencies >>> {}", String::from_utf8_lossy(&output.stdout));
+            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+
+            let _ = Command::new("/usr/bin/python3")
+                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2"])
+                .output()
+                .expect("🙈 Failed to execute command");
+
+            // Print stdout and stderr
+            // println!("🚀 Running the Swarm >>> {}", String::from_utf8_lossy(&output.stdout));
+            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+        });
+    } else {
+        println!("🙈 Python is not installed");
+    }
+}
+
+fn get_swarm_processes() -> String {
+    let output = Command::new("/usr/bin/pgrep")
+        .args(&["-f", "https://github.com/bigscience-workshop/petals|petals.cli.run_server|multiprocessing.resource_tracker|from multiprocessing.spawn"])
+        .output()
+        .map_err(|e| {
+            println!("🙈 Failed to execute command: {}", e);
+            e
+        });
+    
+    let output_value = output.unwrap().stdout;
+    return output_value;
+}
+
+#[tauri::command]
+fn stop_swarm_mode() {
+    println!("🛑 Stopping the Swarm...");
+    let processes = get_swarm_processes().replace("\n", " ");
+    println!("🛑 Stopping Processes: {}", processes);
+    let processes = processes.split(" ").collect::<Vec<&str>>();
+
+    for process in processes {
+        println!("🛑 Stopping Process: {}", process);
+        let _ = Command::new("kill")
+            .args(&[process.to_string()])
+            .output()
+            .map_err(|e| {
+                println!("🙈 Failed to execute command: {}", e);
+                e
+            });
+    }
+    println!("🛑 Stopped all the Swarm Processes."); 
 }
 
 fn main() {
@@ -181,6 +272,9 @@ fn main() {
             controller_binaries::get_service_stats,
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
+            run_swarm_mode,
+            stop_swarm_mode,
+            is_swarm_mode_running
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
