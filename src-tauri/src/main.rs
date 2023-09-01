@@ -108,28 +108,19 @@ fn is_python_installed() -> bool {
             e
         });
 
-    println!("output: {:?}", output);
-
     if !output.unwrap().stdout.is_empty() {
+        println!("🐍 Python is installed");
         return true;
     }
     return false;
 }
 
 #[tauri::command]
-fn is_swarm_mode_running() -> bool {
-    let output = Command::new("/usr/bin/pgrep")
-        .args(&["-f", "petals.cli.run_server"])
-        .output()
-        .map_err(|e| {
-            println!("🙈 Failed to execute command: {}", e);
-            e
-        });
+fn is_swarm_mode_running() -> bool {    
+    let output_value = get_swarm_processes();
     
-    let output_value = output.unwrap().stdout;
-    println!("output: {:?}", output_value);
-
     if !output_value.is_empty() {
+        println!("🏃‍♀️ Processeses running: {}", output_value.replace("\n", " "));
         return true;
     }
     return false;
@@ -168,7 +159,7 @@ fn run_swarm_mode(){
 
 fn get_swarm_processes() -> String {
     let output = Command::new("/usr/bin/pgrep")
-        .args(&["-f", "petals.cli.run_server"])
+        .args(&["-f", "https://github.com/bigscience-workshop/petals|petals.cli.run_server|multiprocessing.resource_tracker|from multiprocessing.spawn"])
         .output()
         .map_err(|e| {
             println!("🙈 Failed to execute command: {}", e);
@@ -176,7 +167,6 @@ fn get_swarm_processes() -> String {
         });
     
     let output_value = output.unwrap().stdout;
-    println!("output: {:?}", output_value);
     return output_value;
 }
 
@@ -184,6 +174,7 @@ fn get_swarm_processes() -> String {
 fn stop_swarm_mode() {
     println!("🛑 Stopping the Swarm...");
     let processes = get_swarm_processes().replace("\n", " ");
+    println!("🛑 Stopping Processes: {}", processes);
     let processes = processes.split(" ").collect::<Vec<&str>>();
 
     for process in processes {

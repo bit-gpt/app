@@ -8,7 +8,7 @@ const SwarmMode = () => {
     const intervalId = setInterval(async () => {
       const isRunning = await checkSwarmModeRunning();
       setSwarmMode(isRunning);
-    }, 5000);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
