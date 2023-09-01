@@ -1,4 +1,4 @@
-import axios from "axios/index";
+import axios from "axios";
 
 import { isProxyEnabled } from "../helpers/utils";
 import useSettingStore from "../store/setting";
