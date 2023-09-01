@@ -99,6 +99,97 @@ fn is_docker_running() -> bool {
     return false;
 }
 
+fn is_python_installed() -> bool {
+    let output = Command::new("/usr/bin/python3")
+        .args(["--version"])
+        .output()
+        .map_err(|e| {
+            println!("Failed to execute python --version: {}", e);
+            e
+        });
+
+    if !output.unwrap().stdout.is_empty() {
+        println!("🐍 Python is installed");
+        return true;
+    }
+    return false;
+}
+
+#[tauri::command]
+fn is_swarm_mode_running() -> bool {    
+    let output_value = get_swarm_processes();
+    
+    if !output_value.is_empty() {
+        println!("🏃‍♀️ Processeses running: {}", output_value.replace("\n", " "));
+        return true;
+    }
+    return false;
+}
+
+#[tauri::command]
+fn run_swarm_mode(){
+    println!("🚀 Starting the Swarm...");
+
+    if is_python_installed() {
+        thread::spawn(|| {
+            println!("🚀 Starting the Swarm...");
+
+            let _ = Command::new("/usr/bin/python3")
+                .args(&["-m", "pip", "install", "git+https://github.com/bigscience-workshop/petals",])
+                .output()
+                .expect("🙈 Failed to execute command");
+
+            // Print stdout and stderr
+            // println!("🛠️ Installing the dependencies >>> {}", String::from_utf8_lossy(&output.stdout));
+            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+
+            let _ = Command::new("/usr/bin/python3")
+                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2"])
+                .output()
+                .expect("🙈 Failed to execute command");
+
+            // Print stdout and stderr
+            // println!("🚀 Running the Swarm >>> {}", String::from_utf8_lossy(&output.stdout));
+            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
+        });
+    } else {
+        println!("🙈 Python is not installed");
+    }
+}
+
+fn get_swarm_processes() -> String {
+    let output = Command::new("/usr/bin/pgrep")
+        .args(&["-f", "https://github.com/bigscience-workshop/petals|petals.cli.run_server|multiprocessing.resource_tracker|from multiprocessing.spawn"])
+        .output()
+        .map_err(|e| {
+            println!("🙈 Failed to execute command: {}", e);
+            e
+        });
+    
+    let output_value = output.unwrap().stdout;
+    return output_value;
+}
+
+#[tauri::command]
+fn stop_swarm_mode() {
+    println!("🛑 Stopping the Swarm...");
+    let processes = get_swarm_processes().replace("\n", " ");
+    println!("🛑 Stopping Processes: {}", processes);
+    let processes = processes.split(" ").collect::<Vec<&str>>();
+
+    for process in processes {
+        println!("🛑 Stopping Process: {}", process);
+        let _ = Command::new("kill")
+            .args(&[process.to_string()])
+            .output()
+            .map_err(|e| {
+                println!("🙈 Failed to execute command: {}", e);
+                e
+            });
+    }
+    println!("🛑 Stopped all the Swarm Processes."); 
+}
+
 #[tauri::command]
 fn is_container_running() -> Result<bool, String> {
     let output = Command::new("/usr/local/bin/docker")
@@ -169,6 +260,9 @@ fn main() {
             run_container,
             is_docker_running,
             is_container_running,
+            run_swarm_mode,
+            stop_swarm_mode,
+            is_swarm_mode_running
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
