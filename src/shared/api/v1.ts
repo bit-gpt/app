@@ -7,7 +7,7 @@ const api = () => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
   if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { Host: "premd.docker.localhost" });
+    Object.assign(headers, { "X-Host-Override": "premd.docker.localhost" });
   }
   console.log("headers", headers);
   console.log("isIP", isIP);
