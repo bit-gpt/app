@@ -2,7 +2,7 @@ import AppRouter from "AppRouter";
 import Onboarding from "modules/onboarding/components/Onboarding";
 import { useEffect } from "react";
 import Modal from "react-modal";
-import { checkHasDnsRecord, isBrowserEnv } from "shared/helpers/utils";
+import { isIP, isBrowserEnv } from "shared/helpers/utils";
 
 import useSettingStore from "./shared/store/setting";
 
@@ -13,8 +13,9 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const has = await checkHasDnsRecord();
-      useSettingStore.getState().setHasDnsRecord(has);
+      const hostIsIP = isIP(window.location.host);
+      // If not IP, then we assume it's a domain name
+      useSettingStore.getState().setHasDnsRecord(!hostIsIP);
     })();
   }, []);
 

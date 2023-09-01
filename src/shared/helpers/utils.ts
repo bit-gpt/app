@@ -1,11 +1,9 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import axios from "axios";
 import type { Option, Service, ServiceStatus } from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
 import api from "../api/v1";
-import useSettingStore from "../store/setting";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
@@ -35,21 +33,23 @@ export const runDockerContainer = async () => {
   await invoke("run_container");
 };
 
-export const checkHasDnsRecord = async (): Promise<boolean> => {
-  try {
-    const existingDNS = await axios.get(`dns/existing`, {
-      baseURL: useSettingStore.getState().backendUrl,
-      headers: {
-        "Content-Type": "application/json",
-        Host: "premd.docker.localhost",
-      },
-    });
-    console.log("existingDNS", existingDNS);
-    return existingDNS.data && existingDNS.status === 200;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+export const isIP = (host: string): boolean => {
+  /**
+   * ^ start of string
+   *   (?!0)         Assume IP cannot start with 0
+   *   (?!.*\.$)     Make sure string does not end with a dot
+   *   (
+   *     (
+   *     1?\d?\d|   A single digit, two digits, or 100-199
+   *     25[0-5]|   The numbers 250-255
+   *     2[0-4]\d   The numbers 200-249
+   *     )
+   *   \.|$ the number must be followed by either a dot or end-of-string - to match the last number
+   *   ){4}         Expect exactly four of these
+   * $ end of string
+   */
+  const ipAddressPattern = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
+  return ipAddressPattern.test(host);
 };
 
 export const isBrowserEnv = () => {
