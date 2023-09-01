@@ -14,9 +14,9 @@ const generateTranscriptions = async (port: number, data: TranscriptionsGenerati
   formData.append("file", data.file);
   formData.append("model", data.model);
 
-  const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+  const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
-  if (isProxyEnabled() && hasDnsRecord) {
+  if (isProxyEnabled() && isIP) {
     Object.assign(headers, { Host: "premd.docker.localhost" });
   }
   return axios.post(`${backendUrl}`, formData, { headers });

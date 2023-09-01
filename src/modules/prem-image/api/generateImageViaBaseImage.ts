@@ -16,9 +16,9 @@ const generateImageViaBaseImage = async (port: number, image: File, data: ImageG
   formData.append("negative_prompt", `${data.negative_prompt || ""}`);
   formData.append("seed", `${data.seed}`);
 
-  const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+  const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
-  if (isProxyEnabled() && hasDnsRecord) {
+  if (isProxyEnabled() && isIP) {
     Object.assign(headers, { Host: "premd.docker.localhost" });
   }
 

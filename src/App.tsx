@@ -15,7 +15,7 @@ function App() {
     (async () => {
       const hostIsIP = isIP(window.location.host);
       // If not IP, then we assume it's a domain name
-      useSettingStore.getState().setHasDnsRecord(!hostIsIP);
+      useSettingStore.getState().setIsIP(hostIsIP);
     })();
   }, []);
 

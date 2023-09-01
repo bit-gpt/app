@@ -10,9 +10,9 @@ const generateImage = async (port: number, data: ImageGeneration) => {
     port,
     "v1/images/generations",
   );
-  const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+  const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  if (isProxyEnabled() && hasDnsRecord) {
+  if (isProxyEnabled() && isIP) {
     Object.assign(headers, { Host: "premd.docker.localhost" });
   }
   return axios.post(`${backendUrl}`, data, { headers });

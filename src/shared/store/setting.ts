@@ -26,8 +26,8 @@ const useSettingStore = create<SettingStore>()(
     persist(
       (set) => ({
         backendUrl: getBackendUrl(),
-        hasDnsRecord: false,
-        setHasDnsRecord: (hasDnsRecord) => set(() => ({ hasDnsRecord }), false, "setHasDnsRecord"),
+        isIP: false,
+        setIsIP: (isIP) => set(() => ({ isIP }), false, "setIsIP"),
         serviceDownloadsInProgress: {},
         setBackendUrl: (backendUrl) => set(() => ({ backendUrl }), false, "setBackendUrl"),
         addServiceDownloadInProgress: (serviceId: string) => {

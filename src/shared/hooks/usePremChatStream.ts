@@ -102,9 +102,9 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       "v1/chat/completions",
     );
 
-    const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+    const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
-    if (isProxyEnabled() && hasDnsRecord) {
+    if (isProxyEnabled() && isIP) {
       Object.assign(headers, { Host: "premd.docker.localhost" });
     }
 

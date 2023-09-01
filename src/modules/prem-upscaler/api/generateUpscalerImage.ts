@@ -14,9 +14,9 @@ const generateUpscalerImage = async (port: number, data: ImageGeneration) => {
   formData.append("guidance_scale", `${data.guidance_scale}`);
   formData.append("num_inference_steps", `${data.num_inference_steps}`);
 
-  const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+  const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
-  if (isProxyEnabled() && hasDnsRecord) {
+  if (isProxyEnabled() && isIP) {
     Object.assign(headers, { Host: "premd.docker.localhost" });
   }
 

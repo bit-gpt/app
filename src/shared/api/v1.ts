@@ -4,13 +4,13 @@ import { isProxyEnabled } from "../helpers/utils";
 import useSettingStore from "../store/setting";
 
 const api = () => {
-  const hasDnsRecord = useSettingStore.getState().hasDnsRecord;
+  const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  if (isProxyEnabled() && hasDnsRecord) {
+  if (isProxyEnabled() && isIP) {
     Object.assign(headers, { Host: "premd.docker.localhost" });
   }
   console.log("headers", headers);
-  console.log("hasDnsRecord", hasDnsRecord);
+  console.log("isIP", isIP);
   console.log("isProxyEnabled", isProxyEnabled());
   return axios.create({
     baseURL: useSettingStore.getState().backendUrl,
