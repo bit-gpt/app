@@ -1,5 +1,5 @@
 import storage from "shared/helpers/custom-storage";
-import { isPackaged } from "shared/helpers/utils";
+import { isIP, isPackaged, isProxyEnabled } from "shared/helpers/utils";
 import type { SettingStore } from "shared/types";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
@@ -17,6 +17,10 @@ export const getBackendUrl = () => {
   }
   if (isPackaged()) {
     backendURL = `${window.location.protocol}//${window.location.host}/`;
+  }
+  if (isProxyEnabled() && !isIP(backendURL)) {
+    const arr = backendURL.split("://");
+    backendURL = arr[0] + "://premd." + arr[1];
   }
   return backendURL;
 };

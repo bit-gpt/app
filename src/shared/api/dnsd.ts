@@ -6,17 +6,17 @@ import useSettingStore from "../store/setting";
 const apiDnsd = () => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  let baseURL = useSettingStore.getState().backendUrl;
+  let baseURL;
   if (isProxyEnabled()) {
     if (isIP) {
+      baseURL = useSettingStore.getState().backendUrl;
       Object.assign(headers, { "X-Host-Override": "dnsd" });
     } else {
-      const arr = baseURL.split("://");
-      baseURL = arr[0] + "://dnsd." + arr[1];
+      baseURL = `${window.location.protocol}//dnsd.${window.location.host}/`;
     }
   }
   return axios.create({
-    baseURL: useSettingStore.getState().backendUrl,
+    baseURL,
     headers,
   });
 };

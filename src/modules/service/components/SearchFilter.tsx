@@ -89,7 +89,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
               onClick={() => handleSearch(app.id)}
             >
               <img
-                src={`${useSettingStore.getState().backendUrl}${app.icon}`}
+                src={`${useSettingStore.getState().backendUrl.replace(/\/$/, "")}${app.icon}`}
                 alt={app.name}
                 className="mr-2 w-4 h-4 rounded"
               />

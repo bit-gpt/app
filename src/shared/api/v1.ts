@@ -6,17 +6,11 @@ import useSettingStore from "../store/setting";
 const api = () => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  let baseURL = useSettingStore.getState().backendUrl;
-  if (isProxyEnabled()) {
-    if (isIP) {
-      Object.assign(headers, { "X-Host-Override": "premd" });
-    } else {
-      const arr = baseURL.split("://");
-      baseURL = arr[0] + "://premd." + arr[1];
-    }
+  if (isProxyEnabled() && isIP) {
+    Object.assign(headers, { "X-Host-Override": "premd" });
   }
   return axios.create({
-    baseURL,
+    baseURL: useSettingStore.getState().backendUrl,
     headers,
   });
 };
