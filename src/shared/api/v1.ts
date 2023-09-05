@@ -9,8 +9,6 @@ const api = () => {
   if (isProxyEnabled() && isIP) {
     Object.assign(headers, { "X-Host-Override": "premd" });
   }
-  console.log("headers", headers);
-  console.log("useSettingStore.getState().backendUrl", useSettingStore.getState().backendUrl);
   return axios.create({
     baseURL: useSettingStore.getState().backendUrl,
     headers,
