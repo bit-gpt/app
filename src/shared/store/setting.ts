@@ -18,7 +18,7 @@ export const getBackendUrl = () => {
   if (isPackaged()) {
     backendURL = `${window.location.protocol}//${window.location.host}/`;
   }
-  if (isProxyEnabled() && !isIP(backendURL)) {
+  if (isProxyEnabled() && !isIP(window.location.host)) {
     const arr = backendURL.split("://");
     backendURL = arr[0] + "://premd." + arr[1];
   }
