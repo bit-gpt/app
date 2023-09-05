@@ -5,8 +5,8 @@ import type { MultiValue } from "react-select";
 import Select from "react-select";
 import { serviceSearchStyle } from "shared/helpers/utils";
 
-import useSettingStore from "../../../shared/store/setting";
-import type { Option, SearchFilterProps } from "../types";
+import api from "../../../shared/api/v1";
+import type { App, Option, SearchFilterProps } from "../types";
 
 import MultiValueRemove from "./MultiValueRemove";
 
@@ -49,6 +49,22 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
       .map((app) => ({ value: app.id, label: app.name }));
   }, [apps, search]);
 
+  const Image = (app: App) => {
+    const [imageSrc, setImageSrc] = useState("");
+    useEffect(() => {
+      (async () => {
+        const response = await api().get(app.icon.replace(/^\/+/, ""));
+        if (response.status === 200) {
+          const objectURL = URL.createObjectURL(response.data);
+          setImageSrc(objectURL);
+        } else {
+          console.error("Failed to fetch image");
+        }
+      })();
+    }, [app.icon]);
+    return imageSrc ? <img src={imageSrc} alt={app.name} className="mr-2 w-4 h-4 rounded" /> : null;
+  };
+
   if (search.size === 0) return null;
 
   return (
@@ -88,11 +104,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
               className="flex px-2 py-[6px] items-center text-sm"
               onClick={() => handleSearch(app.id)}
             >
-              <img
-                src={`${useSettingStore.getState().backendUrl.replace(/\/$/, "")}${app.icon}`}
-                alt={app.name}
-                className="mr-2 w-4 h-4 rounded"
-              />
+              <Image {...app} />
               <span>{app.name}</span>
             </button>
           </div>
