@@ -125,7 +125,7 @@ fn run_swarm_mode(){
             println!("🚀 Starting the Swarm...");
 
             let _ = Command::new("/usr/bin/python3")
-                .args(&["-m", "pip", "install", "git+https://github.com/bigscience-workshop/petals",])
+                .args(&["-m", "pip", "install", "petals==2.2.0",])
                 .output()
                 .expect("🙈 Failed to execute command");
 
