@@ -6,12 +6,38 @@ import Select from "react-select";
 import { serviceSearchStyle } from "shared/helpers/utils";
 
 import api from "../../../shared/api/v1";
-import type { App, Option, SearchFilterProps } from "../types";
+import type { Option, SearchFilterProps } from "../types";
 
 import MultiValueRemove from "./MultiValueRemove";
 
 const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   const [search, setSearch] = useState(new Map());
+  const [icons, setIcons] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const updatedIcons: Record<string, string> = {};
+        const requests = apps.map(async (app) => {
+          const response = await api().get(app.icon.replace(/^\/+/, ""));
+          if (response.status === 200) {
+            const parser = new DOMParser();
+            const svgDOM = parser.parseFromString(response.data, "image/svg+xml");
+            svgDOM.documentElement.setAttribute("width", "16");
+            svgDOM.documentElement.setAttribute("height", "16");
+            updatedIcons[app.id] = new XMLSerializer().serializeToString(svgDOM);
+          } else {
+            console.error("Failed to fetch image for app with ID:", app.id);
+          }
+        });
+        await Promise.all(requests);
+        setIcons(updatedIcons);
+      } catch (error) {
+        console.error("An error occurred while fetching or processing icons:", error);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const newSearch = new Map(apps.map((app) => [app.id, app.id === appId]));
@@ -48,22 +74,6 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
       .filter((app) => search.get(app.id) as boolean)
       .map((app) => ({ value: app.id, label: app.name }));
   }, [apps, search]);
-
-  const Image = (app: App) => {
-    const [imageSrc, setImageSrc] = useState("");
-    useEffect(() => {
-      (async () => {
-        const response = await api().get(app.icon.replace(/^\/+/, ""));
-        if (response.status === 200) {
-          const objectURL = URL.createObjectURL(response.data);
-          setImageSrc(objectURL);
-        } else {
-          console.error("Failed to fetch image");
-        }
-      })();
-    }, [app.icon]);
-    return imageSrc ? <img src={imageSrc} alt={app.name} className="mr-2 w-4 h-4 rounded" /> : null;
-  };
 
   if (search.size === 0) return null;
 
@@ -104,7 +114,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
               className="flex px-2 py-[6px] items-center text-sm"
               onClick={() => handleSearch(app.id)}
             >
-              <Image {...app} />
+              <div dangerouslySetInnerHTML={{ __html: icons?.[app.id] }} className="mr-2 rounded" />
               <span>{app.name}</span>
             </button>
           </div>
