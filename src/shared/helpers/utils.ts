@@ -34,6 +34,7 @@ export const runDockerContainer = async () => {
 };
 
 export const isIP = (host: string): boolean => {
+  if (host.includes("localhost")) return true;
   /**
    * ^ start of string
    *   (?!0)         Assume IP cannot start with 0
