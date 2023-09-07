@@ -47,22 +47,12 @@ const BackendUrl = () => {
   return (
     <form onSubmit={onUpdate}>
       <div className="flex items-center">
-        <label className="text-white mr-2 backend-url md:text-lg text-[11px]">Backend URL</label>
+        <label className="text-grey-300 mr-2 backend-url md:text-lg">Backend URL</label>
         <div className="flex w-full">
           <div className="text-right w-full">
-            <input
-              className="form-control max-md:!py-2 max-md:text-[10px]"
-              type="url"
-              value={backendUrl}
-              onChange={onChange}
-            />
+            <input className="form-control" type="url" value={backendUrl} onChange={onChange} />
           </div>
-          <button
-            id="reset"
-            className="w-[50px] h-[45px] max-md:hidden"
-            type="button"
-            onClick={onReset}
-          >
+          <button id="reset" className="w-8 ml-4" type="button" onClick={onReset}>
             <ResetIcon />
           </button>
           <Tooltip
@@ -76,11 +66,7 @@ const BackendUrl = () => {
         </div>
       </div>
       <div className="text-right mt-[29px] mr-[45px]">
-        <PrimaryButton
-          className="!px-9 max-md:text-[12px] left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
-          type="submit"
-          disabled={isLoading}
-        >
+        <PrimaryButton type="submit" disabled={isLoading}>
           {isLoading ? "Updating..." : "Update"}
         </PrimaryButton>
       </div>

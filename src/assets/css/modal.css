@@ -13,7 +13,7 @@
 }
 
 .modal__content {
-  @apply pb-6 pl-6 pr-6 mx-auto relative rounded-2xl z-[11] bg-grey-800 max-md:max-w-full text-grey-300 max-md:h-full max-md:flex max-md:flex-col max-md:justify-around;
+  @apply pl-6 pr-6 mx-auto relative rounded-2xl z-[11] bg-grey-800 max-md:max-w-full text-grey-300 max-md:h-full max-md:flex max-md:flex-col;
 }
 
 .modal__footer {

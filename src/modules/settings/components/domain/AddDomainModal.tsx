@@ -39,27 +39,27 @@ const AddDomainModal = ({
   return (
     <Modal className="modal" isOpen={isOpen}>
       <div className="modal__content gradient-border w-4/5">
-        <div className="flex justify-between item-center my-5">
+        <div className="flex justify-between items-center my-5">
           <h2 className="text-lg max-md:text-xl">{title}</h2>
           <button onClick={() => setIsAddDomainModalOpen(false)}>
             <img src={Cross} alt="cross" className="h-6 w-6" />
           </button>
         </div>
         <div className="hr" />
-        <div className="flex gap-4 max-sm:flex-col max-sm:items-center">
-          <Card id="go-daddy" img={GoDaddy} text="Go Daddy" />
-          <Card id="amazon" img={Cloudflare} text="Cloudflare" />
-          <Card id="aws" img={AWS} text="AWS Route 53" />
-        </div>
-
-        <div className="my-6 flex justify-between items-center">
-          <div className="border-t-2 border-light w-[47%]"></div>
-          <div className="text-grey-300 text-opacity-40">OR</div>
-          <div className="border-t-2 border-light w-[47%]"></div>
-        </div>
-
-        <div className="flex justify-center">
-          <Card id="domain-manual" img={DomainManual} text="Enter Domain" />
+        <div className="flex flex-col h-full pb-6 max-md:justify-around">
+          <div className="flex gap-4 max-sm:flex-col max-sm:items-center">
+            <Card id="go-daddy" img={GoDaddy} text="Go Daddy" />
+            <Card id="amazon" img={Cloudflare} text="Cloudflare" />
+            <Card id="aws" img={AWS} text="AWS Route 53" />
+          </div>
+          <div className="my-6 flex justify-between items-center">
+            <div className="border-t-2 border-light w-[47%]"></div>
+            <div className="text-grey-300 text-opacity-40">OR</div>
+            <div className="border-t-2 border-light w-[47%]"></div>
+          </div>
+          <div className="flex justify-center">
+            <Card id="domain-manual" img={DomainManual} text="Enter Domain" />
+          </div>
         </div>
       </div>
     </Modal>

@@ -20,7 +20,7 @@
 }
 
 button.btn-primary {
-  @apply bg-primary-light text-white p-[10px] h-[43px] text-base rounded-md;
+  @apply bg-primary-light text-white px-6 py-2.5 text-base rounded-md;
 }
 
 :not(:disabled).btn-primary {

@@ -10,15 +10,15 @@ const Domains = () => {
 
   return (
     <>
-      <div className="flex items-baseline mt-10">
-        <label className="text-white mr-2 backend-url md:text-lg text-[11px] mt-2">Domains</label>
+      <div className="flex items-baseline mt-10 mb-4">
+        <label className="text-grey-300 mr-2 backend-url md:text-lg mt-2">Domains</label>
         <div className="text-left flex w-full">
           <button className="text-white" onClick={() => setIsAddDomainModalOpen(true)}>
             <img src={Plus} alt="plus" />
           </button>
         </div>
       </div>
-      <div className="text-white">No Domains Connected Yet</div>
+      <div className="text-white opacity-70">No Domains Connected Yet</div>
       <AddDomainModal
         isOpen={isAddDomainModalOpen}
         setIsAddDomainModalOpen={setIsAddDomainModalOpen}

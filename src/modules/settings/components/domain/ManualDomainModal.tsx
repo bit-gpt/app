@@ -58,37 +58,37 @@ const ManualDomainModal = ({
   return (
     <Modal className="modal" isOpen={isOpen}>
       <div className="modal__content gradient-border w-4/5">
-        <div className="flex justify-between item-center my-5">
-          <h2 className="text-lg max-md:text-xl mb-2 max-md:mb-4">{title}</h2>
+        <div className="flex justify-between items-center my-5">
+          <h2 className="text-lg max-md:text-xl">{title}</h2>
           <button onClick={() => setIsManualDomainModalOpen(false)}>
             <img src={Cross} alt="cross" className="h-6 w-6" />
           </button>
         </div>
         <div className="hr" />
-        <form onSubmit={onSubmit}>
-          <div className="flex max-md:flex-col gap-4 items-center mb-4">
+        <form onSubmit={onSubmit} className="flex flex-col h-full pb-6 gap-8 md:gap-4">
+          <div className="flex max-md:flex-col gap-8 md:gap-4 items-center">
             <input
-              className="form-control max-md:!py-2 max-md:text-[10px]"
+              className="form-control"
               value={domainName}
               onChange={onDomainNameChange}
               placeholder="Enter your domain name"
             />
             <input
-              className="form-control max-md:!py-2 max-md:text-[10px]"
+              className="form-control"
               value={serverIP}
               onChange={onServerIPChange}
               placeholder="Enter your server IP"
             />
           </div>
-          <div className="flex max-md:flex-col gap-4 items-center mb-4">
+          <div className="flex max-md:flex-col gap-8 md:gap-4 items-center">
             <input
-              className="form-control max-md:!py-2 max-md:text-[10px]"
+              className="form-control"
               value={email}
               onChange={onEmailChange}
               placeholder="Enter your email"
             />
             <input
-              className="form-control max-md:!py-2 max-md:text-[10px]"
+              className="form-control"
               value={nodeName}
               onChange={onNodeNameChange}
               placeholder="Enter your node name"
