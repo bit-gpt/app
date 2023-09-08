@@ -57,7 +57,7 @@ svg.warning-icon {
 }
 
 .right-general-card {
-  @apply flex gap-7 mb-3;
+  @apply flex mb-3;
 }
 
 .right-general-card span {
@@ -69,7 +69,7 @@ svg.warning-icon {
 }
 
 .right-general-card__list {
-  width: calc(50% - 2rem);
+  width: calc(50%);
 }
 
 @media (max-width: 767px) {

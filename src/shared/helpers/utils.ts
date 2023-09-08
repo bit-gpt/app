@@ -166,11 +166,14 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
   return "stopped";
 };
 
-export const formatInfo = (value: ServiceInfoValue) => {
+export const formatInfo = (value: any): ServiceInfoValue => {
   if (value === null) {
     return "-";
   } else if (typeof value === "boolean") {
     return value ? "Yes" : "No";
+  }
+  if (typeof value === "object" && !Array.isArray(value) && value !== null) {
+    return Object.entries(value).flatMap(([k, v]) => `${k}=${v ?? "null"}`);
   }
   return value;
 };
