@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { useState } from "react";
 import Modal from "react-modal";
+import { toast } from "react-toastify";
 
 import Cross from "../../../../assets/images/cross.svg";
 import apiDnsd from "../../../../shared/api/dnsd";
@@ -30,6 +31,9 @@ const ManualDomainModal = ({
         email: email,
         node_name: nodeName,
       });
+      toast.success(
+        `Domain added successfully. You can now access Prem App at https://${domainName}`,
+      );
     } catch (error) {
       if (error instanceof AxiosError && error.code === "ERR_NETWORK") {
         console.error("Cannot connect to dns service");
