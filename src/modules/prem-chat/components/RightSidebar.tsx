@@ -5,7 +5,11 @@ import { shallow } from "zustand/shallow";
 
 import type { ChatRightSidebarProps } from "../types";
 
-const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebarProps) => {
+const RightSidebar = ({
+  setRightSidebar,
+  resetPromptTemplate,
+  resetChatServiceUrl,
+}: ChatRightSidebarProps) => {
   const {
     temperature,
     setTemperature,
@@ -21,6 +25,8 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
     setPresencePenalty,
     promptTemplate,
     setPromptTemplate,
+    setChatServiceUrl,
+    chatServiceUrl,
   } = usePremChatStore(
     (state) => ({
       temperature: state.temperature,
@@ -37,6 +43,8 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
       setPresencePenalty: state.setPresencePenalty,
       promptTemplate: state.promptTemplate,
       setPromptTemplate: state.setPromptTemplate,
+      setChatServiceUrl: state.setChatServiceUrl,
+      chatServiceUrl: state.chatServiceUrl,
     }),
     shallow,
   );
@@ -156,7 +164,7 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
         </li>
 
         <li>
-          <p className="!mb-[18px]">
+          <p>
             <span>Prompt Template</span>
             <button className="text-grey-400" onClick={resetPromptTemplate}>
               Reset
@@ -169,6 +177,23 @@ const RightSidebar = ({ setRightSidebar, resetPromptTemplate }: ChatRightSidebar
               onChange={(e) => setPromptTemplate(e.target.value)}
               rows={5}
             ></textarea>
+          </p>
+        </li>
+
+        <li>
+          <p className="!mb-[18px]">
+            <span>Chat Service URL</span>
+            <button className="text-grey-400" onClick={resetChatServiceUrl}>
+              Reset
+            </button>
+          </p>
+          <p className="w-full">
+            <textarea
+              className="w-full rounded p-2 text-white z-10"
+              value={chatServiceUrl}
+              onChange={(e) => setChatServiceUrl(e.target.value)}
+              rows={2}
+            />
           </p>
         </li>
       </ul>

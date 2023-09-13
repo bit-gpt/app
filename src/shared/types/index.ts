@@ -66,6 +66,8 @@ export type PremChatStore = {
   setPresencePenalty: (presence_penalty: number) => void;
   promptTemplate: string;
   setPromptTemplate: (promptTemplate: string) => void;
+  setChatServiceUrl: (chatServiceUrl: string) => void;
+  chatServiceUrl: string;
 };
 
 export type MarkdownProps = {

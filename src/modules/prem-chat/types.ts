@@ -34,6 +34,7 @@ export type PremChatResponse = {
   isError: boolean;
   onRegenerate: () => void;
   resetPromptTemplate: () => void;
+  resetChatServiceUrl: () => void;
   abort: () => void;
 };
 
@@ -56,4 +57,5 @@ export type PremChatContainerProps = {
 
 export interface ChatRightSidebarProps extends RightSidebarProps {
   resetPromptTemplate: () => void;
+  resetChatServiceUrl: () => void;
 }
