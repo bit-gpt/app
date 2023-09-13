@@ -31,6 +31,7 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
     isError,
     onRegenerate,
     resetPromptTemplate,
+    resetChatServiceUrl,
     abort,
   } = usePremChatStream(serviceId, chatId || null);
 
@@ -122,6 +123,7 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
             <RightSidebar
               setRightSidebar={setRightSidebar}
               resetPromptTemplate={resetPromptTemplate}
+              resetChatServiceUrl={resetChatServiceUrl}
             />
           )}
         </div>
