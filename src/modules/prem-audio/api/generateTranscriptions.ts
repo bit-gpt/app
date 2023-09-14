@@ -1,5 +1,5 @@
 import axios from "axios";
-import { generateUrl } from "shared/helpers/utils";
+import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
 import type { TranscriptionsGeneration } from "../types";
@@ -14,11 +14,12 @@ const generateTranscriptions = async (port: number, data: TranscriptionsGenerati
   formData.append("file", data.file);
   formData.append("model", data.model);
 
-  return axios.post(`${backendUrl}`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const isIP = useSettingStore.getState().isIP;
+  const headers = { "Content-Type": "multipart/form-data" };
+  if (isProxyEnabled() && isIP) {
+    Object.assign(headers, { Host: "premd.docker.localhost" });
+  }
+  return axios.post(`${backendUrl}`, formData, { headers });
 };
 
 export default generateTranscriptions;

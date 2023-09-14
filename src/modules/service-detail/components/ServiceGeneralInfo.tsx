@@ -33,7 +33,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
       .filter(([key, value]) => !skippableFields.includes(key))
       .map(([key, value]) => ({
         key: startCase(key),
-        value: formatInfo(value as ServiceInfoValue),
+        value: formatInfo(value),
       }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);

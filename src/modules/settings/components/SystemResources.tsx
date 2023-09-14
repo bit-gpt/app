@@ -7,7 +7,7 @@ const SystemResources = () => {
   const { data: response } = useSystemStats();
   return (
     <div className="settings-card">
-      <h3>Resources</h3>
+      <h2 className="text-white mb-4 text-lg">Resources</h2>
       <ul className="flex items-end max-lg:flex-wrap gap-6">
         <li>
           <div className="flex flex-wrap justify-between">

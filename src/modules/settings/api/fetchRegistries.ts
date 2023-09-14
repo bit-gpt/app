@@ -1,12 +1,10 @@
 import type { AxiosResponse } from "axios";
-import axios from "axios";
 
-import useSettingStore from "../../../shared/store/setting";
+import api from "../../../shared/api/v1";
 import type { Registries } from "../types";
 
 const fetchRegistries = async (): Promise<AxiosResponse<Registries[]>> => {
-  const backendUrl = useSettingStore.getState().backendUrl;
-  return axios.get(`${backendUrl}/v1/registries/`);
+  return api().get(`v1/registries/`);
 };
 
 export default fetchRegistries;
