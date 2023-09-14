@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::fs;
+use std::path::PathBuf;
 use std::thread;
 
 use hcl::de::from_str;
@@ -9,7 +10,7 @@ use hcl::ser::to_string;
 use hcl::Value;
 use reqwest::blocking::get;
 use serde::Deserialize;
-use tauri::api::process::CommandEvent;
+use tauri::api::process::{CommandChild, CommandEvent};
 use tauri::{
     api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -126,7 +127,7 @@ fn kill_container() {
         .expect("Failed to execute docker stop");
 }
 
-fn update_nomad_config(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
+fn update_nomad_config(app: &tauri::App) -> Result<(PathBuf), Box<dyn std::error::Error>> {
     let app_data_dir = app
         .path_resolver()
         .app_data_dir()
@@ -150,32 +151,7 @@ fn update_nomad_config(app: &tauri::App) -> Result<(), Box<dyn std::error::Error
         nomad_config_path.display().to_string(),
         &modified_hcl_content,
     )?;
-    Ok(())
-}
-
-#[tauri::command]
-fn run_nomad_sidecar(app: &tauri::App) {
-    update_nomad_config(&app).expect("failed to update Nomad config");
-
-    let _child = thread::spawn(move || {
-        let (mut rx, mut child) = Command::new_sidecar("bin/nomad agent -config=../nomad.hcl")
-            .expect("failed to create nomad binary command")
-            .spawn()
-            .expect("Failed to spawn sidecar");
-
-        // read events such as stdout
-        while let Some(event) = rx.blocking_recv() {
-            if let CommandEvent::Stdout(line) = event {
-                let window = app.get_window("main").unwrap();
-                window
-                    .emit("message", Some(format!("'{}'", line)))
-                    .expect("failed to emit event");
-                // write to stdin
-                child.write("message from Rust\n".as_bytes()).unwrap();
-            }
-        }
-    });
-    _child.join().expect("Thread panicked");
+    Ok(nomad_config_path)
 }
 
 fn main() {
@@ -261,7 +237,25 @@ fn main() {
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 
-    run_nomad_sidecar(&app);
+    let nomad_config_path = update_nomad_config(&app).expect("failed to update Nomad config");
+    let cmd = format!("nomad agent -config={}", nomad_config_path.display());
+    println!("cmd: {}", cmd);
+    let (mut rx, mut child) = Command::new_sidecar(cmd)
+        .expect("failed to create nomad binary command")
+        .spawn()
+        .expect("Failed to spawn sidecar");
+
+    // read events such as stdout
+    while let Some(event) = rx.blocking_recv() {
+        if let CommandEvent::Stdout(line) = event {
+            let window = app.get_window("main").unwrap();
+            window
+                .emit("message", Some(format!("'{}'", line)))
+                .expect("failed to emit event");
+            // write to stdin
+            child.write("message from Rust\n".as_bytes()).unwrap();
+        }
+    }
 
     app.run(|app_handle, e| match e {
         // Triggered when a window is trying to close
