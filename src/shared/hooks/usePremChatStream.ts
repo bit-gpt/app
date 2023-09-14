@@ -96,12 +96,6 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     abortController.current = new AbortController();
 
-    const backendUrl = generateUrl(
-      useSettingStore.getState().backendUrl,
-      service?.runningPort ?? 0,
-      "v1/chat/completions",
-    );
-
     const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
     if (isProxyEnabled() && isIP) {
