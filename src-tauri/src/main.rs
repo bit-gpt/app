@@ -1,11 +1,17 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::fs;
+use std::thread;
+
+use hcl::de::from_str;
+use hcl::ser::to_string;
+use hcl::Value;
 use reqwest::blocking::get;
 use serde::Deserialize;
-use std::{env, thread};
+use tauri::api::process::CommandEvent;
 use tauri::{
-    AboutMetadata, api::process::Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
+    api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 
@@ -120,6 +126,58 @@ fn kill_container() {
         .expect("Failed to execute docker stop");
 }
 
+fn update_nomad_config(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
+    let app_data_dir = app
+        .path_resolver()
+        .app_data_dir()
+        .expect("failed to resolve app data dir");
+
+    let nomad_config_path = app
+        .path_resolver()
+        .resolve_resource("../nomad.hcl")
+        .expect("failed to resolve nomad config");
+
+    let hcl_content = fs::read_to_string(nomad_config_path.clone())?;
+    let mut hcl_data: Value = from_str(&hcl_content)?;
+    // Use the hcl::Value methods to navigate and modify the data
+    if let Some(object) = hcl_data.as_object_mut() {
+        if let Some(data_dir) = object.get_mut("data_dir") {
+            *data_dir = Value::String(app_data_dir.display().to_string() + "/nomad");
+        }
+    }
+    let modified_hcl_content = to_string(&hcl_data)?;
+    fs::write(
+        nomad_config_path.display().to_string(),
+        &modified_hcl_content,
+    )?;
+    Ok(())
+}
+
+#[tauri::command]
+fn run_nomad_sidecar(app: &tauri::App) {
+    update_nomad_config(&app).expect("failed to update Nomad config");
+
+    let _child = thread::spawn(move || {
+        let (mut rx, mut child) = Command::new_sidecar("bin/nomad agent -config=../nomad.hcl")
+            .expect("failed to create nomad binary command")
+            .spawn()
+            .expect("Failed to spawn sidecar");
+
+        // read events such as stdout
+        while let Some(event) = rx.blocking_recv() {
+            if let CommandEvent::Stdout(line) = event {
+                let window = app.get_window("main").unwrap();
+                window
+                    .emit("message", Some(format!("'{}'", line)))
+                    .expect("failed to emit event");
+                // write to stdin
+                child.write("message from Rust\n".as_bytes()).unwrap();
+            }
+        }
+    });
+    _child.join().expect("Thread panicked");
+}
+
 fn main() {
     let menu = Menu::new()
         .add_submenu(Submenu::new(
@@ -131,10 +189,9 @@ fn main() {
                 ))
                 .add_native_item(MenuItem::Minimize)
                 .add_native_item(MenuItem::Hide)
-                .add_item(CustomMenuItem::new(
-                    "quit",
-                    "Quit Prem App",
-                ).accelerator("CommandOrControl+Q")),
+                .add_item(
+                    CustomMenuItem::new("quit", "Quit Prem App").accelerator("CommandOrControl+Q"),
+                ),
         ))
         .add_submenu(Submenu::new(
             "Edit",
@@ -164,7 +221,7 @@ fn main() {
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
     #[allow(unused_mut)]
-        let mut app = tauri::Builder::default()
+    let mut app = tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             run_container,
             is_docker_running,
@@ -203,6 +260,8 @@ fn main() {
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    run_nomad_sidecar(&app);
 
     app.run(|app_handle, e| match e {
         // Triggered when a window is trying to close

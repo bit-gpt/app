@@ -15,6 +15,14 @@
       "dialog": {
         "all": true
       },
+      "fs": {
+        "all": true,
+        "scope": [
+          "$APPDATA",
+          "$APPDATA/nomad",
+          "$RESOURCE/*"
+        ]
+      },
       "path": {
         "all": true
       },
@@ -22,11 +30,26 @@
         "exit": true
       },
       "shell": {
-        "all": true
+        "all": true,
+        "scope": [
+          {
+            "cmd": "nomad",
+            "name": "bin/nomad",
+            "sidecar": true,
+            "args": [
+              "agent",
+              "-config=../nomad.hcl"
+            ]
+          }
+        ],
+        "sidecar": true
       }
     },
     "bundle": {
       "active": true,
+      "externalBin": [
+        "bin/nomad"
+      ],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -35,7 +58,8 @@
         "icons/icon.ico"
       ],
       "identifier": "prem.tauri.dev",
-      "targets": "all"
+      "targets": "all",
+      "resources": ["../nomad.hcl"]
     },
     "security": {
       "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self'; img-src: 'self'; worker-src blob:;"
