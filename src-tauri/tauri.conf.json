@@ -19,8 +19,7 @@
         "all": true,
         "scope": [
           "$APPDATA",
-          "$APPDATA/nomad",
-          "$RESOURCE/*"
+          "$APPDATA/nomad"
         ]
       },
       "path": {
@@ -58,8 +57,7 @@
         "icons/icon.ico"
       ],
       "identifier": "prem.tauri.dev",
-      "targets": "all",
-      "resources": ["../nomad.hcl"]
+      "targets": "all"
     },
     "security": {
       "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self'; img-src: 'self'; worker-src blob:;"
