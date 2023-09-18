@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::fs;
+use std::path::PathBuf;
 use std::thread;
 
 use hcl::de::from_str;
@@ -9,7 +10,6 @@ use hcl::ser::to_string;
 use hcl::Value;
 use reqwest::blocking::get;
 use serde::Deserialize;
-use tauri::api::process::CommandEvent;
 use tauri::{
     api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -126,7 +126,7 @@ fn kill_container() {
         .expect("Failed to execute docker stop");
 }
 
-fn update_nomad_config(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
+fn update_nomad_config(app: &tauri::App) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let app_data_dir = app
         .path_resolver()
         .app_data_dir()
@@ -150,19 +150,23 @@ fn update_nomad_config(app: &tauri::App) -> Result<(), Box<dyn std::error::Error
         nomad_config_path.display().to_string(),
         &modified_hcl_content,
     )?;
-    Ok(())
+    Ok(nomad_config_path)
 }
 
 #[tauri::command]
 fn run_nomad_sidecar(app: &tauri::App) {
-    update_nomad_config(&app).expect("failed to update Nomad config");
-
+    let nomad_config_path = update_nomad_config(&app).expect("failed to update Nomad config");
     let _child = thread::spawn(move || {
-        let (mut rx, mut child) = Command::new_sidecar("bin/nomad agent -config=../nomad.hcl")
+        let (rx, child) = Command::new_sidecar("nomad")
             .expect("failed to create nomad binary command")
+            .args(vec![
+                "agent",
+                format!("-config={}", nomad_config_path.display()).as_str(),
+            ])
             .spawn()
             .expect("Failed to spawn sidecar");
 
+        /*
         // read events such as stdout
         while let Some(event) = rx.blocking_recv() {
             if let CommandEvent::Stdout(line) = event {
@@ -174,6 +178,7 @@ fn run_nomad_sidecar(app: &tauri::App) {
                 child.write("message from Rust\n".as_bytes()).unwrap();
             }
         }
+        */
     });
     _child.join().expect("Thread panicked");
 }
