@@ -10,7 +10,6 @@ use hcl::ser::to_string;
 use hcl::Value;
 use reqwest::blocking::get;
 use serde::Deserialize;
-use tauri::api::process::{CommandChild, CommandEvent};
 use tauri::{
     api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -127,7 +126,7 @@ fn kill_container() {
         .expect("Failed to execute docker stop");
 }
 
-fn update_nomad_config(app: &tauri::App) -> Result<(PathBuf), Box<dyn std::error::Error>> {
+fn update_nomad_config(app: &tauri::App) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let app_data_dir = app
         .path_resolver()
         .app_data_dir()
@@ -238,14 +237,17 @@ fn main() {
         .expect("error while running tauri application");
 
     let nomad_config_path = update_nomad_config(&app).expect("failed to update Nomad config");
-    let cmd = format!("nomad agent -config={}", nomad_config_path.display());
-    println!("cmd: {}", cmd);
-    let (mut rx, mut child) = Command::new_sidecar(cmd)
+    let (rx, child) = Command::new_sidecar("nomad")
         .expect("failed to create nomad binary command")
+        .args(vec![
+            "agent",
+            format!("-config={}", nomad_config_path.display()).as_str(),
+        ])
         .spawn()
         .expect("Failed to spawn sidecar");
 
     // read events such as stdout
+    /*
     while let Some(event) = rx.blocking_recv() {
         if let CommandEvent::Stdout(line) = event {
             let window = app.get_window("main").unwrap();
@@ -256,6 +258,7 @@ fn main() {
             child.write("message from Rust\n".as_bytes()).unwrap();
         }
     }
+    */
 
     app.run(|app_handle, e| match e {
         // Triggered when a window is trying to close
