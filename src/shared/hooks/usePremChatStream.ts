@@ -4,7 +4,7 @@ import type { PremChatResponse } from "modules/prem-chat/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { generateUrl } from "shared/helpers/utils";
+import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
@@ -36,6 +36,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     presence_penalty,
     promptTemplate,
     setPromptTemplate,
+    setChatServiceUrl,
+    chatServiceUrl,
   } = usePremChatStore(
     (state) => ({
       history: state.history,
@@ -49,11 +51,22 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
       presence_penalty: state.presence_penalty,
       promptTemplate: state.promptTemplate,
       setPromptTemplate: state.setPromptTemplate,
+      setChatServiceUrl: state.setChatServiceUrl,
+      chatServiceUrl: state.chatServiceUrl,
     }),
     shallow,
   );
+  const [backendUrlState, setBackendUrlState] = useState("");
 
   useEffect(() => {
+    const backendUrl = generateUrl(
+      useSettingStore.getState().backendUrl,
+      service?.runningPort ?? 0,
+      "v1/chat/completions",
+    );
+    setBackendUrlState(backendUrl);
+    setChatServiceUrl(backendUrl);
+
     if (!promptTemplate) {
       setPromptTemplate(service?.promptTemplate || "");
     }
@@ -83,19 +96,17 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     abortController.current = new AbortController();
 
-    const backendUrl = generateUrl(
-      useSettingStore.getState().backendUrl,
-      service?.runningPort ?? 0,
-      "v1/chat/completions",
-    );
+    const isIP = useSettingStore.getState().isIP;
+    const headers = { "Content-Type": "application/json" };
+    if (isProxyEnabled() && isIP) {
+      Object.assign(headers, { Host: "premd.docker.localhost" });
+    }
 
     try {
-      fetchEventSource(backendUrl, {
+      fetchEventSource(chatServiceUrl, {
         method: "POST",
         openWhenHidden: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           model: serviceId,
           messages: [...messages, newMessage],
@@ -193,6 +204,10 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setPromptTemplate(service?.promptTemplate || "");
   }, [service, setPromptTemplate]);
 
+  const resetChatServiceUrl = useCallback(() => {
+    setChatServiceUrl(backendUrlState);
+  }, [backendUrlState, setChatServiceUrl]);
+
   return {
     chatMessages,
     onSubmit,
@@ -202,6 +217,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     isError,
     onRegenerate,
     resetPromptTemplate,
+    resetChatServiceUrl,
     abort,
   };
 };

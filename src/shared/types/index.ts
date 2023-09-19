@@ -66,6 +66,8 @@ export type PremChatStore = {
   setPresencePenalty: (presence_penalty: number) => void;
   promptTemplate: string;
   setPromptTemplate: (promptTemplate: string) => void;
+  setChatServiceUrl: (chatServiceUrl: string) => void;
+  chatServiceUrl: string;
 };
 
 export type MarkdownProps = {
@@ -75,6 +77,8 @@ export type MarkdownProps = {
 export type SettingStore = {
   backendUrl: string;
   setBackendUrl: (backendUrl: string) => void;
+  isIP: boolean;
+  setIsIP: (isIP: boolean) => void;
   serviceDownloadsInProgress: Record<string, number>;
   setServiceDownloadProgress: (serviceId: string, percentage: number) => void;
   addServiceDownloadInProgress: (serviceId: string) => void;

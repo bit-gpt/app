@@ -43,6 +43,8 @@ const usePremChatStore = create<PremChatStore>()(
         setPresencePenalty: (presence_penalty) => set(() => ({ presence_penalty })),
         promptTemplate: "",
         setPromptTemplate: (promptTemplate) => set(() => ({ promptTemplate })),
+        setChatServiceUrl: (chatServiceUrl) => set(() => ({ chatServiceUrl })),
+        chatServiceUrl: "",
       }),
       {
         name: "prem-chat",

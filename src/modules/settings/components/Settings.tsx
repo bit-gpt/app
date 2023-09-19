@@ -44,7 +44,7 @@ const Settings = () => {
         <div className="lg:max-w-[80%] mx-auto settings">
           <SystemResources />
         </div>
-        <div className="lg:max-w-[80%] mx-auto settings max-md:hidden">
+        <div className="lg:max-w-[80%] mx-auto settings">
           <GPUResources />
         </div>
         <div className="lg:max-w-[80%] mx-auto settings">

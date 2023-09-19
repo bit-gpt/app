@@ -3,7 +3,7 @@ import type { Option, Service, ServiceStatus } from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
-import useSettingStore from "../store/setting";
+import api from "../api/v1";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
@@ -19,9 +19,8 @@ export const checkIsContainerRunning = async () => {
 
 export const checkIsServerRunning = async () => {
   try {
-    const url = useSettingStore.getState().backendUrl;
-    const response = await fetch(`${url}/v1/`, { method: "GET" });
-    return Boolean(response.ok);
+    const response = await api().get(`v1`);
+    return response.data && response.status === 200;
   } catch (error) {
     console.error(error);
     return false;
@@ -53,6 +52,26 @@ export const runSwarmMode = async () => {
   await invoke("run_swarm_mode");
 };
 
+export const isIP = (host: string): boolean => {
+  if (host.includes("localhost")) return true;
+  /**
+   * ^ start of string
+   *   (?!0)         Assume IP cannot start with 0
+   *   (?!.*\.$)     Make sure string does not end with a dot
+   *   (
+   *     (
+   *     1?\d?\d|   A single digit, two digits, or 100-199
+   *     25[0-5]|   The numbers 250-255
+   *     2[0-4]\d   The numbers 200-249
+   *     )
+   *   \.|$ the number must be followed by either a dot or end-of-string - to match the last number
+   *   ){4}         Expect exactly four of these
+   * $ end of string
+   */
+  const ipAddressPattern = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
+  return ipAddressPattern.test(host);
+};
+
 export const isBrowserEnv = () => {
   return (
     (window as any).VITE_DESTINATION === "browser" || import.meta.env.VITE_DESTINATION === "browser"
@@ -69,10 +88,9 @@ export const isPackaged = () => {
   return (window as any).VITE_IS_PACKAGED === "true" || import.meta.env.VITE_IS_PACKAGED === "true";
 };
 
-export const isBackendSet = () => {
+export const isProxyEnabled = () => {
   return (
-    ((window as any).VITE_BACKEND_URL !== undefined || import.meta.env.VITE_BACKEND_URL) &&
-    ((window as any).VITE_BACKEND_URL !== "" || import.meta.env.VITE_BACKEND_URL !== "")
+    (window as any).VITE_PROXY_ENABLED === "true" || import.meta.env.VITE_PROXY_ENABLED === "true"
   );
 };
 
@@ -167,11 +185,14 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
   return "stopped";
 };
 
-export const formatInfo = (value: ServiceInfoValue) => {
+export const formatInfo = (value: any): ServiceInfoValue => {
   if (value === null) {
     return "-";
   } else if (typeof value === "boolean") {
     return value ? "Yes" : "No";
+  }
+  if (typeof value === "object" && !Array.isArray(value) && value !== null) {
+    return Object.entries(value).flatMap(([k, v]) => `${k}=${v ?? "null"}`);
   }
   return value;
 };

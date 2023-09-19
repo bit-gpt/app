@@ -54,11 +54,9 @@ const Registries = () => {
   };
 
   return (
-    <form className="mt-[42px]" onSubmit={onSubmit}>
+    <form className="mt-10" onSubmit={onSubmit}>
       <div className="flex">
-        <label className="text-white mr-2 backend-url md:text-lg text-[11px] mt-2">
-          Registries
-        </label>
+        <label className="text-grey-300 mr-2 backend-url md:text-lg mt-2">Registries</label>
         <div className="flex w-full">
           <div className="text-right w-full">
             {isLoading && (
@@ -71,13 +69,13 @@ const Registries = () => {
               return (
                 <div key={index} className="flex">
                   <input
-                    className="form-control max-md:!py-2 max-md:text-[10px] mb-4"
+                    className="form-control mb-4"
                     type="text"
                     defaultValue={registry.url}
                     readOnly
                   />
                   <button
-                    className="w-[50px] h-[45px] max-md:hidden"
+                    className="w-8 ml-4"
                     type="button"
                     onClick={() => handleDelete(registries[index].url)}
                   >
@@ -88,13 +86,13 @@ const Registries = () => {
             })}
             <div className="flex">
               <input
-                className="form-control max-md:!py-2 max-md:text-[10px]"
+                className="form-control"
                 type="url"
                 value={registryUrl}
                 onChange={(e) => setRegistryUrl(e.target.value)}
                 required
               />
-              <button className="w-[50px] h-[45px] max-md:hidden" type="button">
+              <button className="w-8 ml-4" type="button">
                 <PlusArrow />
               </button>
             </div>
@@ -102,11 +100,7 @@ const Registries = () => {
         </div>
       </div>
       <div className="text-right mt-[44px] mr-[45px]">
-        <PrimaryButton
-          className="!px-9 max-md:text-[12px] left-0 right-0 bottom-0 max-md:max-w-[322px] max-md:mx-auto max-md:py-1 max-md:h-[36px]"
-          type="submit"
-          disabled={isLoadingAddRegistry}
-        >
+        <PrimaryButton type="submit" disabled={isLoadingAddRegistry}>
           {isLoadingAddRegistry ? "Updating..." : "Add Registry"}
         </PrimaryButton>
       </div>
