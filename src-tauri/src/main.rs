@@ -106,26 +106,27 @@ fn is_python_installed() -> bool {
 }
 
 #[tauri::command]
-fn is_swarm_mode_running() -> bool {    
+fn is_swarm_mode_running() -> bool {
     let output_value = get_swarm_processes();
-    
+
     if !output_value.is_empty() {
-        println!("🏃‍♀️ Processeses running: {}", output_value.replace("\n", " "));
+        println!(
+            "🏃‍♀️ Processeses running: {}",
+            output_value.replace("\n", " ")
+        );
         return true;
     }
     return false;
 }
 
 #[tauri::command]
-fn run_swarm_mode(){
-    println!("🚀 Starting the Swarm...");
-
+fn run_swarm_mode() {
     if is_python_installed() {
         thread::spawn(|| {
             println!("🚀 Starting the Swarm...");
 
             let _ = Command::new("/usr/bin/python3")
-                .args(&["-m", "pip", "install", "petals==2.2.0",])
+                .args(&["-m", "pip", "install", "petals==2.2.0"])
                 .output()
                 .expect("🙈 Failed to execute command");
 
@@ -134,7 +135,15 @@ fn run_swarm_mode(){
             // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
 
             let _ = Command::new("/usr/bin/python3")
-                .args(&["-m", "petals.cli.run_server", "--num_blocks", "10", "--public_name", "prem-app", "petals-team/StableBeluga2"])
+                .args(&[
+                    "-m",
+                    "petals.cli.run_server",
+                    "--num_blocks",
+                    "10",
+                    "--public_name",
+                    "prem-app",
+                    "petals-team/StableBeluga2",
+                ])
                 .output()
                 .expect("🙈 Failed to execute command");
 
@@ -155,7 +164,7 @@ fn get_swarm_processes() -> String {
             println!("🙈 Failed to execute command: {}", e);
             e
         });
-    
+
     let output_value = output.unwrap().stdout;
     return output_value;
 }
@@ -177,7 +186,7 @@ fn stop_swarm_mode() {
                 e
             });
     }
-    println!("🛑 Stopped all the Swarm Processes."); 
+    println!("🛑 Stopped all the Swarm Processes.");
 }
 
 fn main() {
