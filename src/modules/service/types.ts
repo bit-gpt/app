@@ -45,6 +45,7 @@ export type Service = {
   volumeName: string | null;
   volumePath: string | null;
   beta: boolean;
+  petals: boolean;
   comingSoon: boolean;
   promptTemplate: string;
 };
