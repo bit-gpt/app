@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { runSwarmMode, checkSwarmModeRunning, stopSwarmMode } from "shared/helpers/utils";
 
+import PrimaryButton from "../../../shared/components/PrimaryButton";
+
 const SwarmMode = () => {
   const [swarmMode, setSwarmMode] = useState(false);
 
@@ -10,40 +12,46 @@ const SwarmMode = () => {
       setSwarmMode(isRunning);
     }, 1000);
 
+    console.log("intervalId", intervalId);
+
     return () => {
       clearInterval(intervalId);
     };
   }, []);
 
-  const onStart = () => {
-    runSwarmMode();
-    setSwarmMode(true);
+  const onStart = async () => {
+    try {
+      await runSwarmMode();
+      setSwarmMode(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const onStop = () => {
-    stopSwarmMode();
-    setSwarmMode(false);
+  const onStop = async () => {
+    try {
+      await stopSwarmMode();
+      setSwarmMode(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-end justify-between mr-[45px]">
       {swarmMode ? (
         <>
-          <label className="text-white mr-2 backend-url md:text-lg text-[11px]">
+          <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
             Swarm Mode Enabled
           </label>
-          <button type="button" onClick={onStop}>
-            Stop
-          </button>
+          <PrimaryButton onClick={onStop}>Stop</PrimaryButton>
         </>
       ) : (
         <>
-          <label className="text-white mr-2 backend-url md:text-lg text-[11px]">
+          <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
             Swarm Mode Not Enabled
           </label>
-          <button type="button" onClick={onStart}>
-            Start
-          </button>
+          <PrimaryButton onClick={onStart}>Start</PrimaryButton>
         </>
       )}
     </div>
