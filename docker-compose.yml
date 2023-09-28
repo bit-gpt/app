@@ -14,7 +14,7 @@ services:
 
   premd:
     container_name: premd
-    image: ghcr.io/premai-io/premd:v0.0.23
+    image: ghcr.io/premai-io/premd:v0.0.24
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
