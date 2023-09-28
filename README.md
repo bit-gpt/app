@@ -55,10 +55,20 @@ And you will have the UI at `http://{localhost|server_ip}:8000`.
 
 ## Product Roadmap
 
+### Basic Cloud Primitives
+
+The idea is to offer a fully open-source and functional PaaS specifically designed for AI services management and deployment. For this reason, we are working on the Basic Cloud Primitives necessary to offer a full solution:
+
+- [x] [Domains and SSL Management](https://github.com/premAI-io/prem-gateway).
+- [ ] Basic Authentication
+- [ ] API Keys Management
+- [ ] Payments (Fiat, BTC, Crypto)
+- [ ] Multiple Orchestrators Support (k8s, docker swarm)
+
 The AI services expose an HTTP API interface, standardized for their interface type. For example, all models of type `Chat` expose the OpenAI API for easy of integration of existing tool and AI app ecosystem.
 Each service we support it's published on the [Prem Registry](https://registry.premai.io).
 
-> Anyone can prepare, package and publish an AI service on Prem. Instructions coming soon.
+> Anyone can implement, package and publish an AI service on Prem. You can check how [here](https://dev.premai.io/docs/registry).
 
 Let us know which Model / Feature you wanna see in Prem [here](https://feedback.prem.ninja)
 
@@ -68,12 +78,12 @@ Let us know which Model / Feature you wanna see in Prem [here](https://feedback.
 - [x] 📕 Embedding
 - [x] 🏛️ Vector Store
 - [x] 🎨 Diffuser
-- [ ] 💻 Coder
+- [x] 💻 Coder
 - [x] 🎵 Text to Audio
 - [x] 🎵 Audio to Text
+- [x] 🖼️ Upscaler
 - [ ] 📷 Vision
 - [ ] 📖 Summary
-- [x] 🖼️ Upscaler
 - [ ] 📹 Video
 
 ## Contributing
