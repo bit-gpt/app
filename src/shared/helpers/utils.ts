@@ -191,7 +191,7 @@ export const UPSCALER_ID = "upscaler";
 export const getServiceUrl = (invokeMethod: Service["invokeMethod"], pathname: string) => {
   let serviceUrl = "http://localhost:54321";
   if (isProxyEnabled()) {
-    if (invokeMethod.header) {
+    if (invokeMethod.header && isIP(window.location.host)) {
       serviceUrl = `${window.location.protocol}//${window.location.host}/`;
     } else {
       serviceUrl = invokeMethod.baseUrl;
