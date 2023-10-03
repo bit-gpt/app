@@ -1,5 +1,6 @@
 import Plus from "assets/images/plus.svg";
 import { useEffect, useState } from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 import apiDnsd from "../../../../shared/api/dnsd";
 
@@ -33,12 +34,11 @@ const Domains = () => {
       ) : (
         <>
           {domains.map((domain) => (
-            <div
-              key={domain}
-              className="flex items-center justify-between py-2 px-4 bg-grey-800 rounded-lg mb-2"
-            >
-              <div className="text-white">{domain}</div>
-            </div>
+            <CopyToClipboard key={domain} text={domain}>
+              <button className="flex items-center justify-between py-2 px-4 bg-grey-800 rounded-lg mb-2 w-2/3">
+                <div className="text-white">{domain}</div>
+              </button>
+            </CopyToClipboard>
           ))}
         </>
       )}
