@@ -1,13 +1,14 @@
 import axios from "axios";
-import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
+import { generateUrl, getServiceUrl, isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
+import type { Service } from "../../service/types";
 import type { TranscriptionsGeneration } from "../types";
 
-const generateTranscriptions = async (port: number, data: TranscriptionsGeneration) => {
+const generateTranscriptions = async (service: Service, data: TranscriptionsGeneration) => {
   const backendUrl = generateUrl(
-    useSettingStore.getState().backendUrl,
-    port,
+    getServiceUrl(service.id),
+    service.runningPort,
     "v1/audio/transcriptions",
   );
   const formData = new FormData();

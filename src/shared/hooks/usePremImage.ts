@@ -44,9 +44,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      file
-        ? generateImageViaBaseImage(service?.runningPort ?? 0, file, payload)
-        : generateImage(service?.runningPort ?? 0, payload),
+      file ? generateImageViaBaseImage(service!, file, payload) : generateImage(service!, payload),
     {
       onSuccess: (response) => {
         setFile(undefined);

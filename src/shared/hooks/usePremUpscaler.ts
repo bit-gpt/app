@@ -42,7 +42,7 @@ const usePremUpscaler = (serviceId: string, historyId: string | undefined): Prem
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateUpscalerImage(service?.runningPort ?? 0, {
+      generateUpscalerImage(service!, {
         image: file!,
         prompt,
         n,

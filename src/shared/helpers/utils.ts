@@ -195,6 +195,27 @@ export const generateUrl = (baseUrl: string, port: number, pathname: string) => 
   return url.toString();
 };
 
+export const getServiceUrl = (serviceId: Service["id"]) => {
+  let serviceUrl = "http://localhost:54321";
+  const isBackendSet = () => {
+    return (
+      ((window as any).VITE_BACKEND_URL !== undefined || import.meta.env.VITE_BACKEND_URL) &&
+      ((window as any).VITE_BACKEND_URL !== "" || import.meta.env.VITE_BACKEND_URL !== "")
+    );
+  };
+  if (isBackendSet()) {
+    serviceUrl = (window as any).VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL;
+  }
+  if (isPackaged()) {
+    serviceUrl = `${window.location.protocol}//${window.location.host}/`;
+  }
+  if (isProxyEnabled() && !isIP(window.location.host)) {
+    const arr = serviceUrl.split("://");
+    serviceUrl = arr[0] + `://${serviceId}.` + arr[1];
+  }
+  return serviceUrl;
+};
+
 export const isDeveloperMode = () => {
   return (window as any).VITE_DEVELOPER_MODE === "1" || import.meta.env.VITE_DEVELOPER_MODE === "1";
 };

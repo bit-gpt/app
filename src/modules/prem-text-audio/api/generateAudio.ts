@@ -1,13 +1,13 @@
 import axios from "axios";
-import { generateUrl } from "shared/helpers/utils";
+import { generateUrl, getServiceUrl } from "shared/helpers/utils";
 
-import useSettingStore from "../../../shared/store/setting";
+import type { Service } from "../../service/types";
 import type { AudioGenerationData } from "../types";
 
-const generateAudio = async (port: number, data: AudioGenerationData) => {
+const generateAudio = async (service: Service, data: AudioGenerationData) => {
   const backendUrl = generateUrl(
-    useSettingStore.getState().backendUrl,
-    port,
+    getServiceUrl(service.id),
+    service.runningPort,
     "v1/audio/generation",
   );
 

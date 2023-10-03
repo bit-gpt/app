@@ -31,7 +31,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateAudio(service?.runningPort ?? 0, {
+      generateAudio(service!, {
         prompt,
       }),
     {
