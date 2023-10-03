@@ -1,21 +1,17 @@
 import axios from "axios";
-import { generateUrl } from "shared/helpers/utils";
+import { isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
+import type { Service } from "../../service/types";
 import type { AudioGenerationData } from "../types";
 
-const generateAudio = async (port: number, data: AudioGenerationData) => {
-  const backendUrl = generateUrl(
-    useSettingStore.getState().backendUrl,
-    port,
-    "v1/audio/generation",
-  );
-
-  return axios.post(`${backendUrl}`, data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+const generateAudio = async (service: Service, data: AudioGenerationData) => {
+  const isIP = useSettingStore.getState().isIP;
+  const headers = { "Content-Type": "application/json" };
+  if (isProxyEnabled() && isIP) {
+    Object.assign(headers, service.invokeMethod.header);
+  }
+  return axios.post(`${service.invokeMethod.baseUrl}/v1/audio/generation`, data, { headers });
 };
 
 export default generateAudio;
