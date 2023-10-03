@@ -1,12 +1,12 @@
 import axios from "axios";
-import { generateUrl, getServiceUrl, isProxyEnabled } from "shared/helpers/utils";
+import { getServiceUrl, isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
 import type { Service } from "../../service/types";
 import type { ImageGeneration } from "../types";
 
 const generateImageViaBaseImage = async (service: Service, image: File, data: ImageGeneration) => {
-  const backendUrl = generateUrl(getServiceUrl(service.id), service.runningPort, "v1/images/edits");
+  const backendUrl = getServiceUrl(service.id, service.runningPort, "v1/images/edits");
 
   const formData = new FormData();
   formData.append("image", image);

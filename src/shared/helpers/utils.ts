@@ -188,14 +188,7 @@ export const AUDIO_TO_TEXT_ID = "audio-to-text";
 export const TEXT_TO_AUDIO_ID = "text-to-audio";
 export const UPSCALER_ID = "upscaler";
 
-export const generateUrl = (baseUrl: string, port: number, pathname: string) => {
-  const url = new URL(baseUrl);
-  url.port = `${port}`;
-  url.pathname = pathname;
-  return url.toString();
-};
-
-export const getServiceUrl = (serviceId: Service["id"]) => {
+export const getServiceUrl = (serviceId: Service["id"], port: number, pathname: string) => {
   let serviceUrl = "http://localhost:54321";
   const isBackendSet = () => {
     return (
@@ -213,7 +206,7 @@ export const getServiceUrl = (serviceId: Service["id"]) => {
     const arr = serviceUrl.split("://");
     serviceUrl = arr[0] + `://${serviceId}.` + arr[1];
   }
-  return serviceUrl;
+  return `${serviceUrl}:${port}/${pathname}`;
 };
 
 export const isDeveloperMode = () => {
