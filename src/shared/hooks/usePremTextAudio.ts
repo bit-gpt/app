@@ -8,8 +8,6 @@ import usePremTextAudioStore from "shared/store/prem-text-audio";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
-import { getServiceUrl } from "../helpers/utils";
-
 import useService from "./useService";
 
 const usePremTextAudio = (serviceId: string, historyId: string | undefined): PremTextAudioHook => {
@@ -42,7 +40,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
           file,
           prompt,
           timestamp: new Date().toISOString(),
-          fileUrl: getServiceUrl(service!.invokeMethod, `files/${file}`),
+          fileUrl: `${service!.invokeMethod.baseUrl}/files/${file}`,
         });
         navigate(`/prem-text-audio/${serviceId}/${id}`);
       },

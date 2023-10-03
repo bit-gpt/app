@@ -1,6 +1,6 @@
 import { isArray, startCase } from "lodash";
 import { useMemo } from "react";
-import { formatInfo, getServiceUrl } from "shared/helpers/utils";
+import { formatInfo } from "shared/helpers/utils";
 
 import type { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 
@@ -39,7 +39,7 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     if (!service.running) {
       return "";
     }
-    return getServiceUrl(service.invokeMethod, "docs");
+    return `${service.invokeMethod.baseUrl}/docs`;
   }, [service.invokeMethod, service.running]);
 
   return (

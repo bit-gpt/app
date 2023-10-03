@@ -4,7 +4,7 @@ import type { PremChatResponse } from "modules/prem-chat/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getServiceUrl, isProxyEnabled } from "shared/helpers/utils";
+import { isProxyEnabled } from "shared/helpers/utils";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
@@ -60,7 +60,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
 
   useEffect(() => {
     if (service) {
-      const backendUrl = getServiceUrl(service.invokeMethod, "v1/chat/completions");
+      const backendUrl = `${service.invokeMethod.baseUrl}/v1/chat/completions`;
       setBackendUrlState(backendUrl);
       setChatServiceUrl(backendUrl);
     }
