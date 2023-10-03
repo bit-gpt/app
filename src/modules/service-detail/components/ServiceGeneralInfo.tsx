@@ -1,6 +1,6 @@
 import { isArray, startCase } from "lodash";
 import { useMemo } from "react";
-import { formatInfo } from "shared/helpers/utils";
+import { formatInfo, getServiceUrl } from "shared/helpers/utils";
 import useSettingStore from "shared/store/setting";
 
 import type { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
@@ -42,11 +42,8 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     if (!service.running) {
       return "";
     }
-    const url = new URL(backendUrlFromStore);
-    url.port = `${service.runningPort}`;
-    url.pathname = "docs";
-    return url.toString();
-  }, [backendUrlFromStore, service]);
+    return getServiceUrl(service.id, service.runningPort, "docs");
+  }, [service.id, service.running, service.runningPort]);
 
   return (
     <div className="card px-[22px] py-8 mt-4">
