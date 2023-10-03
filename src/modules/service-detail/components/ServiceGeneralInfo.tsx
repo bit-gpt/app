@@ -16,8 +16,6 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     "modelInfo",
   ];
 
-  const backendUrlFromStore = useSettingStore((state) => state.backendUrl);
-
   const generalInfo = useMemo(() => {
     return Object.entries(service)
       .filter(([key, value]) => !skippableFields.includes(key))
