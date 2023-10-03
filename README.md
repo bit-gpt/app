@@ -60,7 +60,7 @@ And you will have the UI at `http://{localhost|server_ip}:8000`.
 The idea is to offer a fully open-source and functional PaaS specifically designed for AI services management and deployment. For this reason, we are working on the Basic Cloud Primitives necessary to offer a full solution:
 
 - [x] [Domains and SSL Management](https://github.com/premAI-io/prem-gateway).
-- [ ] Basic Authentication
+- [x] Basic Authentication
 - [ ] API Keys Management
 - [ ] Payments (Fiat, BTC, Crypto)
 - [ ] Multiple Orchestrators Support (k8s, docker swarm)
