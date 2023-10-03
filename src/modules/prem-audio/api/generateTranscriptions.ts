@@ -6,7 +6,7 @@ import type { Service } from "../../service/types";
 import type { TranscriptionsGeneration } from "../types";
 
 const generateTranscriptions = async (service: Service, data: TranscriptionsGeneration) => {
-  const backendUrl = getServiceUrl(service.id, service.runningPort, "v1/audio/transcriptions");
+  const backendUrl = getServiceUrl(service.invokeMethod, "v1/audio/transcriptions");
   const formData = new FormData();
   formData.append("file", data.file);
   formData.append("model", data.model);
@@ -14,9 +14,9 @@ const generateTranscriptions = async (service: Service, data: TranscriptionsGene
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
   if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { Host: "premd.docker.localhost" });
+    Object.assign(headers, service.invokeMethod.header);
   }
-  return axios.post(`${backendUrl}`, formData, { headers });
+  return axios.post(backendUrl, formData, { headers });
 };
 
 export default generateTranscriptions;

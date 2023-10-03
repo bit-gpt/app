@@ -6,7 +6,7 @@ import type { Service } from "../../service/types";
 import type { ImageGeneration } from "../types";
 
 const generateUpscalerImage = async (service: Service, data: ImageGeneration) => {
-  const backendUrl = getServiceUrl(service.id, service.runningPort, "v1/images/upscale");
+  const backendUrl = getServiceUrl(service.invokeMethod, "v1/images/upscale");
   const formData = new FormData();
   formData.append("image", data.image);
   formData.append("prompt", data.prompt);
@@ -18,10 +18,10 @@ const generateUpscalerImage = async (service: Service, data: ImageGeneration) =>
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
   if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { Host: "premd.docker.localhost" });
+    Object.assign(headers, service.invokeMethod.header);
   }
 
-  return axios.post(`${backendUrl}`, formData, { headers });
+  return axios.post(backendUrl, formData, { headers });
 };
 
 export default generateUpscalerImage;

@@ -42,8 +42,8 @@ const ServiceGeneralInfo = ({ service }: ServiceGeneralInfoProps) => {
     if (!service.running) {
       return "";
     }
-    return getServiceUrl(service.id, service.runningPort, "docs");
-  }, [service.id, service.running, service.runningPort]);
+    return getServiceUrl(service.invokeMethod, "docs");
+  }, [service.invokeMethod, service.running]);
 
   return (
     <div className="card px-[22px] py-8 mt-4">

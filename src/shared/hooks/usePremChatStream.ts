@@ -60,7 +60,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
 
   useEffect(() => {
     if (service) {
-      const backendUrl = getServiceUrl(service.id, service.runningPort, "v1/chat/completions");
+      const backendUrl = getServiceUrl(service.invokeMethod, "v1/chat/completions");
       setBackendUrlState(backendUrl);
       setChatServiceUrl(backendUrl);
     }
@@ -96,7 +96,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
     if (isProxyEnabled() && isIP) {
-      Object.assign(headers, { Host: "premd.docker.localhost" });
+      Object.assign(headers, service?.invokeMethod.header);
     }
 
     try {

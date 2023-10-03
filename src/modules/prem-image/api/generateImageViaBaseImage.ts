@@ -6,7 +6,7 @@ import type { Service } from "../../service/types";
 import type { ImageGeneration } from "../types";
 
 const generateImageViaBaseImage = async (service: Service, image: File, data: ImageGeneration) => {
-  const backendUrl = getServiceUrl(service.id, service.runningPort, "v1/images/edits");
+  const backendUrl = getServiceUrl(service.invokeMethod, "v1/images/edits");
 
   const formData = new FormData();
   formData.append("image", image);
@@ -20,10 +20,10 @@ const generateImageViaBaseImage = async (service: Service, image: File, data: Im
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
   if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { Host: "premd.docker.localhost" });
+    Object.assign(headers, service.invokeMethod.header);
   }
 
-  return axios.post(`${backendUrl}`, formData, { headers });
+  return axios.post(backendUrl, formData, { headers });
 };
 
 export default generateImageViaBaseImage;

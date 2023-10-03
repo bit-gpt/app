@@ -188,25 +188,16 @@ export const AUDIO_TO_TEXT_ID = "audio-to-text";
 export const TEXT_TO_AUDIO_ID = "text-to-audio";
 export const UPSCALER_ID = "upscaler";
 
-export const getServiceUrl = (serviceId: Service["id"], port: number, pathname: string) => {
+export const getServiceUrl = (invokeMethod: Service["invokeMethod"], pathname: string) => {
   let serviceUrl = "http://localhost:54321";
-  const isBackendSet = () => {
-    return (
-      ((window as any).VITE_BACKEND_URL !== undefined || import.meta.env.VITE_BACKEND_URL) &&
-      ((window as any).VITE_BACKEND_URL !== "" || import.meta.env.VITE_BACKEND_URL !== "")
-    );
-  };
-  if (isBackendSet()) {
-    serviceUrl = (window as any).VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL;
+  if (isProxyEnabled()) {
+    if (invokeMethod.header) {
+      serviceUrl = `${window.location.protocol}//${window.location.host}/`;
+    } else {
+      serviceUrl = invokeMethod.baseUrl;
+    }
   }
-  if (isPackaged()) {
-    serviceUrl = `${window.location.protocol}//${window.location.host}/`;
-  }
-  if (isProxyEnabled() && !isIP(window.location.host)) {
-    const arr = serviceUrl.split("://");
-    serviceUrl = arr[0] + `://${serviceId}.` + arr[1];
-  }
-  return `${serviceUrl}:${port}/${pathname}`;
+  return `${serviceUrl}/${pathname}`;
 };
 
 export const isDeveloperMode = () => {
