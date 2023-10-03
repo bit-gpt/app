@@ -1,7 +1,6 @@
 import { isArray, startCase } from "lodash";
 import { useMemo } from "react";
 import { formatInfo, getServiceUrl } from "shared/helpers/utils";
-import useSettingStore from "shared/store/setting";
 
 import type { ServiceGeneralInfoProps, ServiceInfoValue } from "../types";
 
