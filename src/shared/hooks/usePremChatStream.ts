@@ -60,9 +60,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
 
   useEffect(() => {
     if (service) {
-      const backendUrl = `${service.invokeMethod.baseUrl}/v1/chat/completions`;
-      console.log("service.invokeMethod.baseUrl", service.invokeMethod.baseUrl);
-      console.log("backendUrl", backendUrl);
+      const backendUrl = service.invokeMethod.baseUrl;
       setBackendUrlState(backendUrl);
       setChatServiceUrl(backendUrl);
     }
