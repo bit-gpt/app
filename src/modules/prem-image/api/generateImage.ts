@@ -9,9 +9,8 @@ const generateImage = async (service: Service, data: ImageGeneration) => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
   if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
-    Object.assign(headers, {
-      [service.invokeMethod.header.split(":")[0]]: service.invokeMethod.header.split(":")[1],
-    });
+    const [key, value] = service.invokeMethod.header.split(":");
+    Object.assign(headers, { [key]: value });
   }
   return axios.post(`${service.invokeMethod.baseUrl}/v1/images/generation`, data, { headers });
 };

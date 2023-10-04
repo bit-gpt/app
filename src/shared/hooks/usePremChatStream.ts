@@ -61,6 +61,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   useEffect(() => {
     if (service) {
       const backendUrl = `${service.invokeMethod.baseUrl}/v1/chat/completions`;
+      console.log("service.invokeMethod.baseUrl", service.invokeMethod.baseUrl);
+      console.log("backendUrl", backendUrl);
       setBackendUrlState(backendUrl);
       setChatServiceUrl(backendUrl);
     }
@@ -96,11 +98,11 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
     if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
-      Object.assign(headers, {
-        [service.invokeMethod.header.split(":")[0]]: service.invokeMethod.header.split(":")[1],
-      });
+      const [key, value] = service.invokeMethod.header.split(":");
+      Object.assign(headers, { [key]: value });
     }
 
+    console.log("chatServiceUrl", chatServiceUrl);
     try {
       fetchEventSource(chatServiceUrl, {
         method: "POST",
