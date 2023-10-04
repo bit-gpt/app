@@ -95,8 +95,10 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
 
     const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
-    if (isProxyEnabled() && isIP) {
-      Object.assign(headers, service?.invokeMethod.header);
+    if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
+      Object.assign(headers, {
+        [service.invokeMethod.header.split(":")[0]]: service.invokeMethod.header.split(":")[1],
+      });
     }
 
     try {

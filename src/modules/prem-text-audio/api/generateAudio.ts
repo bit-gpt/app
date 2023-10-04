@@ -8,8 +8,10 @@ import type { AudioGenerationData } from "../types";
 const generateAudio = async (service: Service, data: AudioGenerationData) => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  if (isProxyEnabled() && isIP) {
-    Object.assign(headers, service.invokeMethod.header);
+  if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
+    Object.assign(headers, {
+      [service.invokeMethod.header.split(":")[0]]: service.invokeMethod.header.split(":")[1],
+    });
   }
   return axios.post(`${service.invokeMethod.baseUrl}/v1/audio/generation`, data, { headers });
 };
