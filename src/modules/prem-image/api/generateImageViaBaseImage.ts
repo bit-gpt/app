@@ -17,8 +17,10 @@ const generateImageViaBaseImage = async (service: Service, image: File, data: Im
 
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
-  if (isProxyEnabled() && isIP) {
-    Object.assign(headers, service.invokeMethod.header);
+  if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
+    Object.assign(headers, {
+      [service.invokeMethod.header.split(":")[0]]: service.invokeMethod.header.split(":")[1],
+    });
   }
   return axios.post(`${service.invokeMethod.baseUrl}/v1/images/edits`, formData, { headers });
 };
