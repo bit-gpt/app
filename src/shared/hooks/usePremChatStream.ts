@@ -4,12 +4,10 @@ import type { PremChatResponse } from "modules/prem-chat/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { isProxyEnabled } from "shared/helpers/utils";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
 import usePremChatStore from "../store/prem-chat";
-import useSettingStore from "../store/setting";
 
 import useService from "./useService";
 
@@ -56,16 +54,11 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     }),
     shallow,
   );
-  const [backendUrlState, setBackendUrlState] = useState("");
 
   useEffect(() => {
-    if (service) {
-      const backendUrl = `${window.location.protocol}//${service.invokeMethod.baseUrl}`;
-      setBackendUrlState(backendUrl);
-      setChatServiceUrl(backendUrl);
-    }
+    setChatServiceUrl(service?.baseUrl ?? "");
     if (!promptTemplate) {
-      setPromptTemplate(service?.promptTemplate || "");
+      setPromptTemplate(service?.promptTemplate ?? "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
@@ -93,14 +86,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
     setLoading(true);
     abortController.current = new AbortController();
 
-    const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
-    if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
-      const [key, value] = service.invokeMethod.header.split(":");
-      Object.assign(headers, { [key]: value });
-    }
 
-    console.log("chatServiceUrl", chatServiceUrl);
     try {
       fetchEventSource(chatServiceUrl, {
         method: "POST",
@@ -204,8 +191,8 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   }, [service, setPromptTemplate]);
 
   const resetChatServiceUrl = useCallback(() => {
-    setChatServiceUrl(backendUrlState);
-  }, [backendUrlState, setChatServiceUrl]);
+    setChatServiceUrl(service?.baseUrl ?? "");
+  }, [service?.baseUrl, setChatServiceUrl]);
 
   return {
     chatMessages,
