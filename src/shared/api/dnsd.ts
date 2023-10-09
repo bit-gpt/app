@@ -9,8 +9,7 @@ const apiDnsd = () => {
   let baseURL;
   if (isProxyEnabled()) {
     if (isIP) {
-      baseURL = useSettingStore.getState().backendUrl;
-      Object.assign(headers, { "X-Host-Override": "dnsd" });
+      baseURL = `${useSettingStore.getState().backendUrl}dnsd/`;
     } else {
       baseURL = `${window.location.protocol}//dnsd.${window.location.host}/`;
     }

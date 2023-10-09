@@ -40,7 +40,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
           file,
           prompt,
           timestamp: new Date().toISOString(),
-          fileUrl: `${service!.invokeMethod.baseUrl}/files/${file}`,
+          fileUrl: `${service!.baseUrl}/files/${file}`,
         });
         navigate(`/prem-text-audio/${serviceId}/${id}`);
       },
