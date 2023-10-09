@@ -1,12 +1,11 @@
 import axios from "axios";
-import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
+import { isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
+import type { Service } from "../../service/types";
 import type { ImageGeneration } from "../types";
 
-const generateImageViaBaseImage = async (port: number, image: File, data: ImageGeneration) => {
-  const backendUrl = generateUrl(useSettingStore.getState().backendUrl, port, "v1/images/edits");
-
+const generateImageViaBaseImage = async (service: Service, image: File, data: ImageGeneration) => {
   const formData = new FormData();
   formData.append("image", image);
   formData.append("prompt", data.prompt);
@@ -18,11 +17,11 @@ const generateImageViaBaseImage = async (port: number, image: File, data: ImageG
 
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "multipart/form-data" };
-  if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { Host: "premd.docker.localhost" });
+  if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
+    const [key, value] = service.invokeMethod.header.split(":");
+    Object.assign(headers, { [key]: value });
   }
-
-  return axios.post(`${backendUrl}`, formData, { headers });
+  return axios.post(`${service.invokeMethod.baseUrl}/v1/images/edits`, formData, { headers });
 };
 
 export default generateImageViaBaseImage;

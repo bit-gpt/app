@@ -29,7 +29,7 @@ const usePremAudio = (serviceId: string, historyId: string | undefined): PremAud
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateTranscriptions(service?.runningPort ?? 0, {
+      generateTranscriptions(service!, {
         file: file!,
         model,
       }),

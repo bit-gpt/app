@@ -4,12 +4,9 @@ import type { PremTextAudioHook } from "modules/prem-text-audio/types";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { generateUrl } from "shared/helpers/utils";
 import usePremTextAudioStore from "shared/store/prem-text-audio";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
-
-import useSettingStore from "../store/setting";
 
 import useService from "./useService";
 
@@ -31,7 +28,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
 
   const { isLoading, isError, mutate } = useMutation(
     () =>
-      generateAudio(service?.runningPort ?? 0, {
+      generateAudio(service!, {
         prompt,
       }),
     {
@@ -43,11 +40,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
           file,
           prompt,
           timestamp: new Date().toISOString(),
-          fileUrl: generateUrl(
-            useSettingStore.getState().backendUrl,
-            service?.runningPort ?? 0,
-            `files/${file}`,
-          ),
+          fileUrl: `${service!.invokeMethod.baseUrl}/files/${file}`,
         });
         navigate(`/prem-text-audio/${serviceId}/${id}`);
       },

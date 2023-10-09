@@ -1,21 +1,18 @@
 import axios from "axios";
-import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
+import { isProxyEnabled } from "shared/helpers/utils";
 
 import useSettingStore from "../../../shared/store/setting";
+import type { Service } from "../../service/types";
 import type { ImageGeneration } from "../types";
 
-const generateImage = async (port: number, data: ImageGeneration) => {
-  const backendUrl = generateUrl(
-    useSettingStore.getState().backendUrl,
-    port,
-    "v1/images/generations",
-  );
+const generateImage = async (service: Service, data: ImageGeneration) => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  if (isProxyEnabled() && isIP) {
-    Object.assign(headers, { Host: "premd.docker.localhost" });
+  if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
+    const [key, value] = service.invokeMethod.header.split(":");
+    Object.assign(headers, { [key]: value });
   }
-  return axios.post(`${backendUrl}`, data, { headers });
+  return axios.post(`${service.invokeMethod.baseUrl}/v1/images/generation`, data, { headers });
 };
 
 export default generateImage;

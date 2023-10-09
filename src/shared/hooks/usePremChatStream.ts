@@ -4,7 +4,7 @@ import type { PremChatResponse } from "modules/prem-chat/types";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { generateUrl, isProxyEnabled } from "shared/helpers/utils";
+import { isProxyEnabled } from "shared/helpers/utils";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
@@ -59,14 +59,11 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   const [backendUrlState, setBackendUrlState] = useState("");
 
   useEffect(() => {
-    const backendUrl = generateUrl(
-      useSettingStore.getState().backendUrl,
-      service?.runningPort ?? 0,
-      "v1/chat/completions",
-    );
-    setBackendUrlState(backendUrl);
-    setChatServiceUrl(backendUrl);
-
+    if (service) {
+      const backendUrl = `${window.location.protocol}//${service.invokeMethod.baseUrl}`;
+      setBackendUrlState(backendUrl);
+      setChatServiceUrl(backendUrl);
+    }
     if (!promptTemplate) {
       setPromptTemplate(service?.promptTemplate || "");
     }
@@ -98,10 +95,12 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
 
     const isIP = useSettingStore.getState().isIP;
     const headers = { "Content-Type": "application/json" };
-    if (isProxyEnabled() && isIP) {
-      Object.assign(headers, { Host: "premd.docker.localhost" });
+    if (isProxyEnabled() && isIP && service?.invokeMethod.header) {
+      const [key, value] = service.invokeMethod.header.split(":");
+      Object.assign(headers, { [key]: value });
     }
 
+    console.log("chatServiceUrl", chatServiceUrl);
     try {
       fetchEventSource(chatServiceUrl, {
         method: "POST",
