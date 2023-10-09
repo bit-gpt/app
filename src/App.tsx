@@ -9,13 +9,14 @@ import useSettingStore from "./shared/store/setting";
 Modal.setAppElement("#root");
 
 function App() {
-  console.log("BASE URL TEST-------");
   const isBrowser = isBrowserEnv();
 
   useEffect(() => {
     (async () => {
       const hostIsIP = isIP(window.location.host);
       // If not IP, then we assume it's a domain name
+      console.log("window.location.host", window.location.host);
+      console.log("hostIsIP", hostIsIP);
       useSettingStore.getState().setIsIP(hostIsIP);
     })();
   }, []);
