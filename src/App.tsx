@@ -9,6 +9,7 @@ import useSettingStore from "./shared/store/setting";
 Modal.setAppElement("#root");
 
 function App() {
+  console.log("BASE URL TEST-------");
   const isBrowser = isBrowserEnv();
 
   useEffect(() => {
