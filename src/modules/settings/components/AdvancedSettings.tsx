@@ -8,7 +8,7 @@ const AdvancedSettings = () => {
       <h2 className="text-white mb-4 text-lg">Advanced</h2>
       <BackendUrl />
       <Registries />
-      <Domains />
+      {"__TAURI__" in window ? null : <Domains />}
     </div>
   );
 };
