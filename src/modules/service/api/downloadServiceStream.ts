@@ -18,9 +18,15 @@ const downloadServiceStream = async (
   onMessage: (message: DownloadMessage) => void,
   onceCompleted: () => void,
 ): Promise<void> => {
-  const backendUrl = new URL(useSettingStore.getState().backendUrl);
   try {
-    instantiateEventSource(backendUrl.toString(), serviceId);
+    const isIP = useSettingStore.getState().isIP;
+    let baseUrl;
+    if (isIP) {
+      baseUrl = `${useSettingStore.getState().backendUrl}premd/`;
+    } else {
+      baseUrl = `${window.location.protocol}//premd.${window.location.host}/`;
+    }
+    instantiateEventSource(baseUrl, serviceId);
     eventSources[serviceId].onmessage = (event) => {
       if (!event.data) return;
       const parsedData = JSON.parse(event.data);
