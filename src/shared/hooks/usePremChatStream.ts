@@ -56,7 +56,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   );
 
   useEffect(() => {
-    setChatServiceUrl(service?.baseUrl ?? "");
+    setChatServiceUrl(`${service?.baseUrl}/v1/chat/completions`);
     if (!promptTemplate) {
       setPromptTemplate(service?.promptTemplate ?? "");
     }
