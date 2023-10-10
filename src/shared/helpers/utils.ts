@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api/tauri";
 import type {
   Option,
   Service,
@@ -9,6 +10,28 @@ import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
+
+export const swarmSupported = async () => {
+  const check = await invoke("is_swarm_supported");
+  return Boolean(check);
+};
+
+export const checkSwarmModeRunning = async () => {
+  const check = await invoke("is_swarm_mode_running");
+  return Boolean(check);
+};
+
+export const stopSwarmMode = async () => {
+  await invoke("stop_swarm_mode");
+};
+
+export const runSwarmMode = async () => {
+  const isSwarmMode = await checkSwarmModeRunning();
+  if (isSwarmMode) {
+    return;
+  }
+  await invoke("run_swarm_mode");
+};
 
 export const isIP = (host: string): boolean => {
   if (host.includes("localhost")) return true;
