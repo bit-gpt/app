@@ -108,7 +108,7 @@ fn is_python_installed() -> bool {
 #[tauri::command]
 fn is_swarm_supported() -> bool {
     match env::consts::OS {
-        "maocos" => true,
+        "macos" => true,
         _ => false
     }
 }
@@ -128,9 +128,9 @@ fn is_swarm_mode_running() -> bool {
 }
 
 #[tauri::command]
-fn run_swarm_mode() {
+fn run_swarm_mode(num_blocks: i32) {
     if is_python_installed() {
-        thread::spawn(|| {
+        thread::spawn(move || {
             println!("🚀 Starting the Swarm...");
 
             let _ = Command::new("/usr/bin/python3")
@@ -147,7 +147,7 @@ fn run_swarm_mode() {
                     "-m",
                     "petals.cli.run_server",
                     "--num_blocks",
-                    "3",
+                    &num_blocks.to_string(),
                     "--public_name",
                     "prem-app",
                     "petals-team/StableBeluga2",
