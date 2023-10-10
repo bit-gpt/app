@@ -11,6 +11,7 @@ import PrimaryButton from "../../../shared/components/PrimaryButton";
 const SwarmMode = () => {
   const [swarmMode, setSwarmMode] = useState(false);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
+  const [numBlocks, setNumBlocks] = useState(3);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -30,12 +31,15 @@ const SwarmMode = () => {
   }, []);
 
   const onStart = async () => {
+    console.log("Before");
     try {
-      await runSwarmMode();
+      await runSwarmMode(numBlocks);
+      console.log("After");
       setSwarmMode(true);
     } catch (error) {
       console.error(error);
     }
+    console.log("Run");
   };
 
   const onStop = async () => {
@@ -62,6 +66,17 @@ const SwarmMode = () => {
             <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
               Swarm Mode Not Enabled
             </label>
+            <input
+              className="form-control"
+              type="number"
+              id="numeric-value"
+              name="numeric-value"
+              value={numBlocks}
+              onChange={(e) => {
+                console.log("Running with num_blocks", numBlocks);
+                setNumBlocks(Number(e.target.value));
+              }}
+            />
             <PrimaryButton onClick={onStart}>Start</PrimaryButton>
           </>
         )}
