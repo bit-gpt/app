@@ -12,6 +12,7 @@ const SwarmMode = () => {
   const [swarmMode, setSwarmMode] = useState(false);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
   const [numBlocks, setNumBlocks] = useState(3);
+  const [model, setModel] = useState("petals-team/StableBeluga2");
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -32,7 +33,7 @@ const SwarmMode = () => {
 
   const onStart = async () => {
     try {
-      await runSwarmMode(numBlocks);
+      await runSwarmMode(numBlocks, model);
       setSwarmMode(true);
     } catch (error) {
       console.error(error);
@@ -47,6 +48,12 @@ const SwarmMode = () => {
       console.error(error);
     }
   };
+
+  const modelOptions = [
+    "petals-team/StableBeluga2",
+    "tiiuae/falcon-180B-chat",
+    "meta-llama/Llama-2-70b-chat-hf",
+  ];
 
   return (
     isSwarmSupported && (
@@ -64,16 +71,29 @@ const SwarmMode = () => {
               Swarm Mode Not Enabled
             </label>
             <input
-              className="form-control"
+              className="form-control mr-1"
               type="number"
-              id="numeric-value"
-              name="numeric-value"
+              min="1"
+              max="10"
               value={numBlocks}
               onChange={(e) => {
-                console.log("Running with num_blocks", numBlocks);
                 setNumBlocks(Number(e.target.value));
               }}
             />
+            <div className="text-black form-control">
+              <select
+                value={model}
+                onChange={(e) => {
+                  setModel(e.target.value);
+                }}
+              >
+                {modelOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
             <PrimaryButton onClick={onStart}>Start</PrimaryButton>
           </>
         )}

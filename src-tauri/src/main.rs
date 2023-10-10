@@ -128,7 +128,7 @@ fn is_swarm_mode_running() -> bool {
 }
 
 #[tauri::command]
-fn run_swarm_mode(num_blocks: i32) {
+fn run_swarm_mode(num_blocks: i32, model: String) {
     if is_python_installed() {
         thread::spawn(move || {
             println!("🚀 Starting the Swarm...");
@@ -150,7 +150,7 @@ fn run_swarm_mode(num_blocks: i32) {
                     &num_blocks.to_string(),
                     "--public_name",
                     "prem-app",
-                    "petals-team/StableBeluga2",
+                    &model,
                 ])
                 .output()
                 .expect("🙈 Failed to execute command");
