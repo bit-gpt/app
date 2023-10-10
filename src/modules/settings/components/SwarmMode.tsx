@@ -31,15 +31,12 @@ const SwarmMode = () => {
   }, []);
 
   const onStart = async () => {
-    console.log("Before");
     try {
       await runSwarmMode(numBlocks);
-      console.log("After");
       setSwarmMode(true);
     } catch (error) {
       console.error(error);
     }
-    console.log("Run");
   };
 
   const onStop = async () => {
