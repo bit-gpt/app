@@ -49,12 +49,12 @@ export const stopSwarmMode = async () => {
   await invoke("stop_swarm_mode");
 };
 
-export const runSwarmMode = async (numBlocks: number) => {
+export const runSwarmMode = async (numBlocks: number, model: string) => {
   const isSwarmMode = await checkSwarmModeRunning();
   if (isSwarmMode) {
     return;
   }
-  await invoke("run_swarm_mode", { numBlocks });
+  await invoke("run_swarm_mode", { numBlocks, model });
 };
 
 export const isIP = (host: string): boolean => {
