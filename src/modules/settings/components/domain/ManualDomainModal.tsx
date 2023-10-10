@@ -18,19 +18,11 @@ const ManualDomainModal = ({
   setIsManualDomainModalOpen,
 }: ManualDomainModalProps) => {
   const [domainName, setDomainName] = useState("");
-  const [serverIP, setServerIP] = useState("");
-  const [email, setEmail] = useState("");
-  const [nodeName, setNodeName] = useState("");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await apiDnsd().post("dns", {
-        ip: serverIP,
-        domain: domainName,
-        email: email,
-        node_name: nodeName,
-      });
+      await apiDnsd().post("dns", { domain: domainName });
       toast.success(
         `Domain added successfully. You can now access Prem App at https://${domainName}`,
       );
@@ -45,18 +37,6 @@ const ManualDomainModal = ({
 
   const onDomainNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDomainName(e.target.value);
-  };
-
-  const onServerIPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setServerIP(e.target.value);
-  };
-
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const onNodeNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNodeName(e.target.value);
   };
 
   return (
@@ -76,26 +56,6 @@ const ManualDomainModal = ({
               value={domainName}
               onChange={onDomainNameChange}
               placeholder="Enter your domain name"
-            />
-            <input
-              className="form-control"
-              value={serverIP}
-              onChange={onServerIPChange}
-              placeholder="Enter your server IP"
-            />
-          </div>
-          <div className="flex max-md:flex-col gap-8 md:gap-4 items-center">
-            <input
-              className="form-control"
-              value={email}
-              onChange={onEmailChange}
-              placeholder="Enter your email"
-            />
-            <input
-              className="form-control"
-              value={nodeName}
-              onChange={onNodeNameChange}
-              placeholder="Enter your node name"
             />
           </div>
           <div className="flex justify-end mt-6">
