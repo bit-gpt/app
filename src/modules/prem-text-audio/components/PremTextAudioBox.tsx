@@ -8,10 +8,15 @@ import usePremTextAudio from "shared/hooks/usePremTextAudio";
 
 import type { PremTextAudioContainerProps } from "../types";
 
-const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContainerProps>) => {
+const PremTextAudioBox = ({
+  serviceId,
+  serviceType,
+  historyId,
+}: Partial<PremTextAudioContainerProps>) => {
   const navigate = useNavigate();
   const { isLoading, onSubmit, prompt, setPrompt, currentHistory } = usePremTextAudio(
     serviceId!,
+    serviceType!,
     historyId,
   );
 
@@ -22,7 +27,7 @@ const PremTextAudioBox = ({ serviceId, historyId }: Partial<PremTextAudioContain
 
   const onClear = () => {
     setPrompt("");
-    navigate(`/prem-text-audio/${serviceId}`);
+    navigate(`/prem-text-audio/${serviceId}/${serviceType}`);
   };
 
   return (

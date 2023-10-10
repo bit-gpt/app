@@ -5,7 +5,6 @@ services:
     restart: always
     build: .
     environment:
-      VITE_DESTINATION: browser
       VITE_IS_PACKAGED: 'false'
       VITE_BACKEND_URL: http://localhost:8000
       VITE_DEVELOPER_MODE: 0

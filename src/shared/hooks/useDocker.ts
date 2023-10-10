@@ -1,12 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  checkIsDockerRunning,
-  runDockerContainer,
-  isBrowserEnv,
-  checkIsContainerRunning,
-  checkIsServerRunning,
-} from "../helpers/utils";
+import { isBrowserEnv, checkIsServerRunning } from "../helpers/utils";
 
 const useDocker = () => {
   const isBrowser = isBrowserEnv();
@@ -15,19 +9,23 @@ const useDocker = () => {
   const [isServerRunning, setIsServerRunning] = useState<boolean>(false);
 
   const handleCheckIsDockerRunning = useCallback(async () => {
+    /*
     const dockerRunning = await checkIsDockerRunning();
     if (!dockerRunning) {
       setIsDockerRunning(false);
       return;
     }
+    */
     setIsDockerRunning(true);
 
+    /*
     const containerRunning = await checkIsContainerRunning();
     if (!containerRunning) {
       setIsContainerRunning(false);
       await runDockerContainer();
       return;
     }
+    */
     setIsContainerRunning(true);
 
     const serverRunning = await checkIsServerRunning();

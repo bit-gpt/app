@@ -9,16 +9,18 @@ import Spinner from "shared/components/Spinner";
 import {
   AUDIO_TO_TEXT_ID,
   CHAT_ID,
+  CODER_ID,
   DIFFUSER_ID,
+  isServiceBinary,
   TEXT_TO_AUDIO_ID,
   UPSCALER_ID,
 } from "shared/helpers/utils";
-import useStartService from "shared/hooks/useStartService";
+import useDownloadServiceStream from "shared/hooks/useDownloadServiceStream";
+import useRestartService from "shared/hooks/useRestartService";
 import useStopService from "shared/hooks/useStopService";
 import { useLockedBody, useOnClickOutside } from "usehooks-ts";
 
-import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
-import useRestartService from "../../../shared/hooks/useRestartService";
+import useSettingStore from "../../../shared/store/setting";
 import type { ServiceActionsProps } from "../types";
 
 import DocumentationModal from "./DocumentationModal";
@@ -29,7 +31,7 @@ import WarningServiceState from "./WarningServiceState";
 
 const ServiceActions = ({
   status,
-  serviceId,
+  service,
   refetch,
   children,
   isDetailView = false,
@@ -43,14 +45,14 @@ const ServiceActions = ({
   const [modalIsOpen, setIsOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-  const { progresses, download } = useDownloadServiceStream();
-  const { mutateAsync: startServiceAsync, isLoading: isStartServiceLoading } = useStartService();
+  const { mutate: download } = useDownloadServiceStream();
+  const progresses = useSettingStore((state) => state.serviceDownloadsInProgress);
+  const { mutate: stopService, isLoading: isStopServiceLoading } = useStopService();
   const {
-    mutate: stopService,
-    mutateAsync: stopServiceAsync,
-    isLoading: isStopServiceLoading,
-  } = useStopService();
-  const { mutate: restartService, isLoading: isRestartServiceLoading } = useRestartService();
+    mutate: restartService,
+    mutateAsync: restartServiceAsync,
+    isLoading: isRestartServiceLoading,
+  } = useRestartService();
   const dropdownRef = useRef(null);
   useOnClickOutside(dropdownRef, () => setDropdownOpen(false));
 
@@ -58,45 +60,53 @@ const ServiceActions = ({
     const isPlayground = interfaces.some((app) => app.playground);
     if (isPlayground) {
       if (interfaces.some((app) => app.id === CHAT_ID)) {
-        navigate(`/prem-chat/${serviceId}`);
+        navigate(`/prem-chat/${service.id}/${service.serviceType}`);
       } else if (interfaces.some((app) => app.id === DIFFUSER_ID)) {
-        navigate(`/prem-image/${serviceId}`);
+        navigate(`/prem-image/${service.id}/${service.serviceType}`);
       } else if (interfaces.some((app) => app.id === AUDIO_TO_TEXT_ID)) {
-        navigate(`/prem-audio/${serviceId}`);
+        navigate(`/prem-audio/${service.id}/${service.serviceType}`);
       } else if (interfaces.some((app) => app.id === TEXT_TO_AUDIO_ID)) {
-        navigate(`/prem-text-audio/${serviceId}`);
+        navigate(`/prem-text-audio/${service.id}/${service.serviceType}`);
       } else if (interfaces.some((app) => app.id === UPSCALER_ID)) {
-        navigate(`/prem-upscaler/${serviceId}`);
+        navigate(`/prem-upscaler/${service.id}/${service.serviceType}`);
+      } else if (interfaces.some((app) => app.id === CODER_ID)) {
+        navigate(`/prem-coder/${service.id}/${service.serviceType}`);
       }
       return;
     }
     setIsOpen(true);
-  }, [interfaces, navigate, serviceId]);
+  }, [interfaces, navigate, service.id]);
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    stopService(serviceId, {
-      onSuccess: () => {
-        refetch();
-        toast.success("Service stopped successfully");
+    stopService(
+      { serviceId: service.id, serviceType: service.serviceType },
+      {
+        onSuccess: () => {
+          refetch();
+          toast.success("Service stopped successfully");
+        },
+        onError: () => {
+          toast.error("Failed to stop service");
+        },
       },
-      onError: () => {
-        toast.error("Failed to stop service");
-      },
-    });
+    );
   };
 
   const onRestart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    restartService(serviceId, {
-      onSuccess: () => {
-        refetch();
-        toast.success("Service restarted successfully");
+    restartService(
+      { serviceId: service.id, serviceType: service.serviceType },
+      {
+        onSuccess: () => {
+          refetch();
+          toast.success("Service restarted successfully");
+        },
+        onError: () => {
+          toast.error("Failed to restart service");
+        },
       },
-      onError: () => {
-        toast.error("Failed to restart service");
-      },
-    });
+    );
   };
 
   const onDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -107,10 +117,15 @@ const ServiceActions = ({
 
   const onUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    download(serviceId, async () => {
-      await stopServiceAsync(serviceId);
-      await startServiceAsync(serviceId);
-      refetch();
+    download({
+      serviceId: service.id,
+      huggingFaceId: isServiceBinary(service) ? service?.huggingFaceId : undefined,
+      modelFiles: isServiceBinary(service) ? service?.modelFiles : undefined,
+      serviceType: service.serviceType,
+      afterSuccess: async () => {
+        refetch();
+        await restartServiceAsync({ serviceId: service.id, serviceType: service.serviceType });
+      },
     });
   };
 
@@ -134,15 +149,14 @@ const ServiceActions = ({
   }
 
   if (
-    progresses[serviceId] >= 0 ||
-    isStartServiceLoading ||
+    progresses[service.id]?.progress !== undefined ||
     isStopServiceLoading ||
     isRestartServiceLoading
   ) {
     return (
       <div className="flex">
-        {progresses[serviceId] > 0 && (
-          <p className="text-grey-300 mr-2">{progresses[serviceId]}%</p>
+        {progresses[service.id]?.progress !== undefined && (
+          <p className="text-grey-300 mr-2">{progresses[service.id]?.progress}%</p>
         )}
         <div className="flex justify-center">
           <Spinner className="md:h-7 md:w-7 h-5 w-5" />
@@ -158,10 +172,10 @@ const ServiceActions = ({
         {status === "running" && <RunningServiceState onOpenClick={onOpenClick} />}
         {status === "stopped" && (
           <StoppedServiceState
+            service={service}
             openDeleteModal={openDeleteModal}
             setOpenDeleteModal={setOpenDeleteModal}
             setBodyLocked={setBodyLocked}
-            serviceId={serviceId}
             refetch={refetch}
             isDetailView={isDetailView}
             onOpenClick={onOpenClick}
@@ -169,7 +183,11 @@ const ServiceActions = ({
         )}
 
         {status === "not_downloaded" && (
-          <NotDownloadedServiceState serviceId={serviceId} refetch={refetch} />
+          <NotDownloadedServiceState
+            service={service}
+            refetch={refetch}
+            progress={progresses[service.id]?.progress}
+          />
         )}
 
         {isInAccessible && <WarningServiceState status={status} memoryRequirements={memoryInGib} />}

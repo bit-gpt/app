@@ -1,34 +1,20 @@
 import type { PropsWithChildren } from "react";
 
-export type CheckeBoxProps = {
-  label: string;
-  checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-export type DropdownProps = {
-  open: boolean;
-  close: () => void;
-  apps: App[];
-  search: Map<string, boolean>;
-  onChange: (appId: string, status: boolean) => void;
-};
-
 export type ModelInfo = {
-  inferenceTime: string;
-  maxLength: number;
+  inferenceTime?: string;
+  maxLength?: number;
   memoryRequirements: number;
-  tokenLimit: number;
-  weightsName: string;
-  weightsSize: number;
-  streaming: boolean;
+  tokenLimit?: number;
+  weightsName?: string;
+  weightsSize?: number;
+  streaming?: boolean;
 };
 
-export type Service = {
+export type ServiceBase = {
+  beta: boolean;
+  comingSoon: boolean;
   defaultPort: number;
   description: string;
-  dockerImage: string;
-  dockerImageSize: number;
   documentation: string;
   downloaded: boolean;
   enoughMemory: boolean;
@@ -39,16 +25,35 @@ export type Service = {
   modelInfo: ModelInfo;
   name: string;
   needsUpdate: boolean;
+  promptTemplate?: string;
   running: boolean;
-  runningPort: number;
+  runningPort?: number;
   supported: boolean;
-  volumeName: string | null;
-  volumePath: string | null;
-  beta: boolean;
-  comingSoon: boolean;
-  promptTemplate: string;
-  baseUrl: string;
+  serviceType: "docker" | "binary" | "process";
+  version?: string;
 };
+
+export type ServiceDocker = ServiceBase & {
+  serviceType: "docker";
+  dockerImage: string;
+  dockerImageSize: number;
+  volumeName?: string;
+  volumePath?: string;
+};
+
+export type ServiceBinary = ServiceBase & {
+  serviceType: "binary";
+  weightsUrl: string;
+  serveCommand: string;
+  huggingFaceId: string;
+  modelFiles: string[];
+};
+
+export type ServiceProcess = ServiceBase & {
+  serviceType: "process";
+};
+
+export type Service = ServiceDocker | ServiceBinary | ServiceProcess;
 
 export type SearchFilterProps = {
   apps: App[];
@@ -87,8 +92,9 @@ export type DownloadMessage = {
 };
 
 export type ServiceStateProps = {
-  serviceId: string;
+  service: Service;
   refetch: () => void;
+  progress?: number;
   isDetailView?: boolean;
   onOpenClick?: () => void;
 };
@@ -110,7 +116,7 @@ export type ServiceCardProps = {
 
 export type ServiceActionsProps = PropsWithChildren<{
   status: ServiceStatus;
-  serviceId: string;
+  service: Service;
   refetch: () => void;
   isDetailView?: boolean;
   interfaces: App[];

@@ -9,10 +9,18 @@ import usePremUpscaler from "shared/hooks/usePremUpscaler";
 
 import type { PremUpscalerContainerProps } from "../types";
 
-const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainerProps>) => {
+const PremUpscalerBox = ({
+  serviceId,
+  serviceType,
+  historyId,
+}: Partial<PremUpscalerContainerProps>) => {
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, file, setFile } = usePremUpscaler(serviceId!, historyId);
+  const { isLoading, onSubmit, file, setFile } = usePremUpscaler(
+    serviceId!,
+    serviceType!,
+    historyId,
+  );
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       setFile(acceptedFiles[0]);
@@ -36,7 +44,7 @@ const PremUpscalerBox = ({ serviceId, historyId }: Partial<PremUpscalerContainer
 
   const onClear = () => {
     setFile(null);
-    navigate(`/prem-upscaler/${serviceId}`);
+    navigate(`/prem-upscaler/${serviceId}/${serviceType}`);
   };
 
   return (

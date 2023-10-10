@@ -13,7 +13,12 @@ import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
 import RightSidebar from "./RightSidebar";
 
-const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainerProps) => {
+const PremChatContainer = ({
+  chatId,
+  serviceId,
+  serviceType,
+  serviceName,
+}: PremChatContainerProps) => {
   const model = serviceId;
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
@@ -33,7 +38,7 @@ const PremChatContainer = ({ chatId, serviceId, serviceName }: PremChatContainer
     resetPromptTemplate,
     resetChatServiceUrl,
     abort,
-  } = usePremChatStream(serviceId, chatId || null);
+  } = usePremChatStream(serviceId, serviceType, chatId || null);
 
   useEffect(() => {
     if (chatMessageListRef.current) {

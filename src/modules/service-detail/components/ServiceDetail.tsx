@@ -1,15 +1,16 @@
 import { useQueryClient } from "@tanstack/react-query";
 import arrow from "assets/images/arrow.svg";
 import ServiceActions from "modules/service/components/ServiceActions";
-import type { Service } from "modules/service/types";
 import { useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AppContainer from "shared/components/AppContainer";
 import { getServiceStatus } from "shared/helpers/utils";
+import useGetService from "shared/hooks/useGetService";
+import { SERVICES_KEY } from "shared/hooks/useGetServices";
 import useInterfaces from "shared/hooks/useInterfaces";
 import UseScrollToTop from "shared/hooks/useScrollToTop";
-import useService from "shared/hooks/useService";
-import { SERVICES_KEY } from "shared/hooks/useServices";
+
+import type { Service } from "../../service/types";
 
 import ServiceDescription from "./ServiceDescription";
 import ServiceDocumentation from "./ServiceDocumentation";
@@ -20,13 +21,14 @@ import ServiceResourceBars from "./ServiceResourceBars";
 
 const ServiceDetail = () => {
   const queryClient = useQueryClient();
-  const { serviceId } = useParams();
+  const { serviceId, serviceType } = useParams<{
+    serviceId: string;
+    serviceType: Service["serviceType"];
+  }>();
   const navigate = useNavigate();
-  const { data: response, isLoading, refetch } = useService(serviceId!);
-  const service = response?.data || ({} as Service);
+  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!);
 
-  const { data: appResponse } = useInterfaces();
-  const interfaces = appResponse?.data || [];
+  const { data: interfaces } = useInterfaces();
 
   const refetchServices = useCallback(() => {
     refetch();
@@ -37,9 +39,9 @@ const ServiceDetail = () => {
     navigate("/");
   };
 
-  const status = getServiceStatus(service);
+  if (isLoading || !service) return <ServiceLoading />;
 
-  if (isLoading) return <ServiceLoading />;
+  const status = getServiceStatus(service);
 
   return (
     <AppContainer>
@@ -62,11 +64,11 @@ const ServiceDetail = () => {
         </div>
         <div className="services-detail-header">
           <ServiceActions
-            serviceId={serviceId!}
+            service={service}
             status={status}
             refetch={refetchServices}
             isDetailView={true}
-            interfaces={interfaces.filter((app) => service.interfaces?.includes(app.id))}
+            interfaces={interfaces?.filter((app) => service.interfaces?.includes(app.id)) ?? []}
             needsUpdate={service.needsUpdate}
             memoryRequirements={service.modelInfo?.memoryRequirements}
           />

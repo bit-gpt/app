@@ -2,36 +2,37 @@ import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppContainer from "shared/components/AppContainer";
-import { isDeveloperMode } from "shared/helpers/utils";
+import { isDeveloperMode, isServiceBinary } from "shared/helpers/utils";
 import useInterfaces from "shared/hooks/useInterfaces";
-import useServices from "shared/hooks/useServices";
 
 import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
+import useGetServices from "../../../shared/hooks/useGetServices";
 import useSettingStore from "../../../shared/store/setting";
+import type { Service as IService } from "../types";
 
 import CustomServiceCard from "./CustomServiceCard";
 import SearchFilter from "./SearchFilter";
 import ServiceCard from "./ServiceCard";
 
+// TODO: appId is not a url param anymore
 const Service = () => {
   const { appId } = useParams();
 
-  const { data: response, isLoading: isServicesLoading, refetch: refetchServices } = useServices();
-  const { data: appResponse } = useInterfaces();
-  const serviceDownloadsInProgress = useSettingStore((state) => state.serviceDownloadsInProgress);
-  const removeServiceDownloadInProgress = useSettingStore(
-    (state) => state.removeServiceDownloadInProgress,
-  );
-  const { download, progresses } = useDownloadServiceStream();
+  const {
+    data: services,
+    isLoading: isServicesLoading,
+    refetch: refetchServices,
+  } = useGetServices();
+  const { data: apps } = useInterfaces();
+  const progresses = useSettingStore((state) => state.serviceDownloadsInProgress);
+  const { mutate: download } = useDownloadServiceStream();
 
   const [filter, setFilter] = useState(new Map<string, boolean>());
-
-  const apps = useMemo(() => appResponse?.data || [], [appResponse?.data]);
 
   const filteredApps = useMemo(() => {
     if (filter.size === 0) return apps;
     if (![...filter.values()].includes(true)) return apps;
-    return apps.filter((app) => filter.get(app.id) as boolean);
+    return apps?.filter((app) => filter.get(app.id) as boolean);
   }, [apps, filter]);
 
   const isDevMode = isDeveloperMode();
@@ -39,25 +40,29 @@ const Service = () => {
   // Continue service download if in progress
   useEffect(() => {
     (async () => {
-      for (const serviceId in serviceDownloadsInProgress) {
-        await download(serviceId, async () => {
-          removeServiceDownloadInProgress(serviceId);
-          await refetchServices();
-        });
+      for (const serviceId in progresses) {
+        const service = services?.filter((s) => s.id === serviceId)[0];
+        if (service) {
+          download({
+            serviceId,
+            huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
+            modelFiles: isServiceBinary(service) ? service.modelFiles : undefined,
+            serviceType: service.serviceType ?? "",
+            afterSuccess: async () => {
+              useSettingStore.getState().removeServiceDownloadInProgress(serviceId);
+              await refetchServices();
+            },
+          });
+        }
       }
     })();
-  }, [
-    download,
-    refetchServices,
-    removeServiceDownloadInProgress,
-    serviceDownloadsInProgress,
-    serviceDownloadsInProgress.length,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Object.keys(progresses).length]);
 
   const ServicesComponents = useMemo(() => {
-    const services = response?.data || [];
-    return filteredApps.map((app) => {
-      const filteredServices = services.filter((service) => service.interfaces.includes(app.id));
+    return filteredApps?.map((app) => {
+      const filteredServices =
+        services?.filter((service) => service?.interfaces?.includes(app.id)) ?? [];
       return (
         <div key={app.id} className="mt-10">
           <h3 className="text-grey-300 font-bold text-sm md:text-xl flex md:mb-5 mb-[13px]">
@@ -86,12 +91,11 @@ const Service = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    filteredApps.length,
+    filteredApps?.length,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(progresses),
     isDevMode,
     isServicesLoading,
-    response?.data,
   ]);
 
   return (
@@ -99,7 +103,7 @@ const Service = () => {
       <div className="mask-heading mb-5 md:-mx-6 xl:-mx-10">
         <h2 className="md:!mt-10 max-md:!mt-4">Dashboard</h2>
       </div>
-      {apps.length > 0 && (
+      {apps && apps.length > 0 && (
         <SearchFilter onFilterChange={setFilter} appId={appId as string} apps={apps} />
       )}
       {ServicesComponents}

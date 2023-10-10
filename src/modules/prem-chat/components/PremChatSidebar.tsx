@@ -17,6 +17,7 @@ import type { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
 import LeftSidebar from "../../../shared/components/LeftSidebar";
+import type { Service } from "../../service/types";
 
 const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   // TODO: shallow will only check for reference equality, not deep equality
@@ -31,14 +32,18 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   const [search, setSearch] = useState("");
 
-  const { chatId, serviceId } = useParams();
+  const { chatId, serviceId, serviceType } = useParams<{
+    chatId: string;
+    serviceId: string;
+    serviceType: Service["serviceType"];
+  }>();
   const navigate = useNavigate();
   const [openWarningModal, setIsOpenWarningModal] = useState(false);
 
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
     if (chatId === id) {
-      navigate(`/prem-chat/${serviceId}`);
+      navigate(`/prem-chat/${serviceId}/${serviceType}`);
     }
   };
 
@@ -60,7 +65,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   const createNewChatClick = () => {
     setHamburgerMenu(true);
-    navigate(`/prem-chat/${serviceId}`);
+    navigate(`/prem-chat/${serviceId}/${serviceType}`);
   };
 
   return (
