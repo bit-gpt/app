@@ -35,6 +35,11 @@ export const runDockerContainer = async () => {
   await invoke("run_container");
 };
 
+export const swarmSupported = async () => {
+  const check = await invoke("is_swarm_supported");
+  return Boolean(check);
+};
+
 export const checkSwarmModeRunning = async () => {
   const check = await invoke("is_swarm_mode_running");
   return Boolean(check);

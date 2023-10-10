@@ -116,6 +116,14 @@ fn is_python_installed() -> bool {
 }
 
 #[tauri::command]
+fn is_swarm_supported() -> bool {
+    match env::consts::OS {
+        "maocos" => true,
+        _ => false
+    }
+}
+
+#[tauri::command]
 fn is_swarm_mode_running() -> bool {
     let output_value = get_swarm_processes();
 
@@ -149,7 +157,7 @@ fn run_swarm_mode() {
                     "-m",
                     "petals.cli.run_server",
                     "--num_blocks",
-                    "10",
+                    "3",
                     "--public_name",
                     "prem-app",
                     "petals-team/StableBeluga2",
@@ -268,6 +276,7 @@ fn main() {
             run_container,
             is_docker_running,
             is_container_running,
+            is_swarm_supported,
             run_swarm_mode,
             stop_swarm_mode,
             is_swarm_mode_running
