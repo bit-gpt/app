@@ -56,6 +56,7 @@ const SwarmMode = () => {
       try {
         const options = await petalsModels();
         setModelOptions(options);
+        setModel(options[0]);
       } catch (error) {
         console.error(error);
         setModelOptions([]);
