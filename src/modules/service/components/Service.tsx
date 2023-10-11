@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppContainer from "shared/components/AppContainer";
-import { isDeveloperMode, isServiceBinary } from "shared/helpers/utils";
+import { isBrowserEnv, isDeveloperMode, isPackaged, isServiceBinary } from "shared/helpers/utils";
 import useInterfaces from "shared/hooks/useInterfaces";
 
 import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
@@ -36,25 +36,27 @@ const Service = () => {
 
   const isDevMode = isDeveloperMode();
 
-  // Continue service download if in progress
+  // Resume docker service download if in progress
   useEffect(() => {
-    (async () => {
-      for (const serviceId in progresses) {
-        const service = services?.filter((s) => s.id === serviceId)[0];
-        if (service) {
-          download({
-            serviceId,
-            huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
-            modelFiles: isServiceBinary(service) ? service.modelFiles : undefined,
-            serviceType: service.serviceType ?? "",
-            afterSuccess: async () => {
-              useSettingStore.getState().removeServiceDownloadInProgress(serviceId);
-              await refetchServices();
-            },
-          });
+    if (isPackaged() && isBrowserEnv()) {
+      (async () => {
+        for (const serviceId in progresses) {
+          const service = services?.filter((s) => s.id === serviceId)[0];
+          if (service) {
+            download({
+              serviceId,
+              huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
+              modelFiles: isServiceBinary(service) ? service.modelFiles : undefined,
+              serviceType: service.serviceType ?? "",
+              afterSuccess: async () => {
+                useSettingStore.getState().removeServiceDownloadInProgress(serviceId);
+                await refetchServices();
+              },
+            });
+          }
         }
-      }
-    })();
+      })();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Object.keys(progresses).length]);
 

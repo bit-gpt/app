@@ -7,7 +7,7 @@ import type { Service } from "../../modules/service/types";
 export const SERVICES_KEY = "getServices";
 
 const useGetServices = () => {
-  const controller = new ServiceController();
+  const controller = ServiceController.getInstance();
   // Here we check the env to determine if we should use the binary or docker service
   // and fetch the services accordingly
   // TODO: Is it ok?

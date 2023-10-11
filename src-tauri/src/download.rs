@@ -93,22 +93,23 @@ impl<R: Runtime> Downloader<R> {
             _ = tokio::fs::File::create(&lockfile_path).await;
         }
 
-        println!("Downloading file: {}", path.as_ref());
-
         // create the path to the file
         let dirs;
         if let Some(last_slash) = path.as_ref().rfind('/') {
             dirs = &path.as_ref()[..last_slash];
             if let Err(e) = tokio::fs::create_dir_all(dirs).await {
+                println!("Error creating directory: {:?}", e);
                 if e.kind() != std::io::ErrorKind::AlreadyExists {
                     eprintln!("Error creating directory: {:?}", e);
                 }
             } else {
-                println!("Directory created successfully or already exists.");
+                println!("Directory created successfully");
             }
         } else {
             println!("No '/' found in the input string.");
         }
+
+        println!("Downloading file: {}", path.as_ref());
 
         let res = reqwest::get(url.as_ref())
             .await

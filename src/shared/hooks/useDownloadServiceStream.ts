@@ -4,8 +4,7 @@ import type { DownloadArgs } from "../../controller/serviceController";
 import ServiceController from "../../controller/serviceController";
 
 const useDownloadServiceStream = () => {
-  const controller = new ServiceController();
-
+  const controller = ServiceController.getInstance();
   return useMutation(
     ({
       serviceId,

@@ -11,7 +11,7 @@ const useGetService = (
   serviceType: Service["serviceType"],
   refetchInterval = true,
 ) => {
-  const controller = new ServiceController();
+  const controller = ServiceController.getInstance();
   return useQuery([SERVICE_KEY, serviceId], () => controller.getService(serviceId, serviceType), {
     refetchInterval: refetchInterval ? SERVICE_CHECK_REFETCH_INTERVAL : false,
   });

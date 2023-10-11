@@ -30,10 +30,19 @@ interface IServiceController {
 class ServiceController implements IServiceController {
   private dockerController: DockerController;
   private binariesController: BinariesController;
+  private static instance: ServiceController;
   constructor() {
     this.binariesController = new BinariesController();
     this.dockerController = new DockerController();
   }
+
+  public static getInstance(): ServiceController {
+    if (!ServiceController.instance) {
+      ServiceController.instance = new ServiceController();
+    }
+    return ServiceController.instance;
+  }
+
   async start(serviceId: string, serviceType: Service["serviceType"]): Promise<void> {
     // If serviceType is not provided, we assume it's docker
     serviceType = serviceType ? serviceType : "docker";

@@ -20,7 +20,7 @@ function PremChat() {
   useEffect(() => {
     (async () => {
       if (service && !service?.running) {
-        const controller = new ServiceController();
+        const controller = ServiceController.getInstance();
         await controller.start(serviceId!, service.serviceType);
       }
     })();
