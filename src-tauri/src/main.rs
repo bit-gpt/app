@@ -6,6 +6,7 @@ mod download;
 mod errors;
 mod utils;
 
+use reqwest::get;
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, thread};
@@ -89,6 +90,12 @@ struct ModelInfo {
     streaming: Option<bool>,
 }
 
+#[derive(Deserialize)]
+struct ModelInfo {
+    name: String,
+    state: String,
+}
+
 fn is_python_installed() -> bool {
     let output = Command::new("/usr/bin/python3")
         .args(["--version"])
@@ -112,6 +119,36 @@ fn is_swarm_supported() -> bool {
         _ => false
     }
 }
+
+#[tauri::command]
+async fn get_petals_models() -> Result<Vec<String>, String> {
+    let url = "https://health.petals.dev/api/v1/state";
+    let response = get(url).await.map_err(|err| err.to_string())?;
+
+    if response.status().is_success() {
+        let json_data: serde_json::Value = response.json().await.map_err(|err| err.to_string())?;
+
+        let models: Vec<String> = json_data["model_reports"]
+            .as_array()
+            .unwrap_or(&vec![])
+            .iter()
+            .filter_map(|model_report| {
+                let model_info: Result<ModelInfo, _> =
+                    serde_json::from_value(model_report.clone());
+                match model_info {
+                    Ok(model_info) if model_info.state == "healthy" => Some(model_info.name),
+                    _ => None,
+                }
+            })
+            .collect();
+
+        Ok(models)
+    } else {
+        Err("Request failed".to_string())
+    }
+}
+
+
 
 #[tauri::command]
 fn is_swarm_mode_running() -> bool {
@@ -290,6 +327,7 @@ fn main() {
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
             is_swarm_supported,
+            get_petals_models,
             run_swarm_mode,
             stop_swarm_mode,
             is_swarm_mode_running

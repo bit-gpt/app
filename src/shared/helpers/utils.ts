@@ -11,26 +11,10 @@ import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
-export const swarmSupported = async () => {
-  const check = await invoke("is_swarm_supported");
-  return Boolean(check);
-};
-
-export const checkSwarmModeRunning = async () => {
-  const check = await invoke("is_swarm_mode_running");
-  return Boolean(check);
-};
-
-export const stopSwarmMode = async () => {
-  await invoke("stop_swarm_mode");
-};
-
-export const runSwarmMode = async (numBlocks: number, model: string) => {
-  const isSwarmMode = await checkSwarmModeRunning();
-  if (isSwarmMode) {
-    return;
-  }
-  await invoke("run_swarm_mode", { numBlocks, model });
+export const petalsModels = async (): Promise<string[]> => {
+  const models = await invoke("get_petals_models");
+  console.log(models);
+  return models as string[];
 };
 
 export const isIP = (host: string): boolean => {
@@ -69,6 +53,11 @@ export const isServiceDocker = (service: Service): service is ServiceDocker => {
   return service && service.serviceType === "docker";
 };
 
+export const swarmSupported = async () => {
+  const check = await invoke("is_swarm_supported");
+  return Boolean(check);
+};
+
 export const checkSwarmModeRunning = async () => {
   const check = await invoke("is_swarm_mode_running");
   return Boolean(check);
@@ -78,12 +67,12 @@ export const stopSwarmMode = async () => {
   await invoke("stop_swarm_mode");
 };
 
-export const runSwarmMode = async () => {
+export const runSwarmMode = async (numBlocks: number, model: string) => {
   const isSwarmMode = await checkSwarmModeRunning();
   if (isSwarmMode) {
     return;
   }
-  await invoke("run_swarm_mode");
+  await invoke("run_swarm_mode", { numBlocks, model });
 };
 
 export const isPackaged = () => {

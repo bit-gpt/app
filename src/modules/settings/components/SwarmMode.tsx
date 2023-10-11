@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   swarmSupported,
   runSwarmMode,
   checkSwarmModeRunning,
   stopSwarmMode,
+  petalsModels,
 } from "shared/helpers/utils";
 
 import PrimaryButton from "../../../shared/components/PrimaryButton";
@@ -12,7 +13,8 @@ const SwarmMode = () => {
   const [swarmMode, setSwarmMode] = useState(false);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
   const [numBlocks, setNumBlocks] = useState(3);
-  const [model, setModel] = useState("petals-team/StableBeluga2");
+  const [modelOptions, setModelOptions] = useState<string[]>([]);
+  const [model, setModel] = useState<string>("");
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -49,11 +51,19 @@ const SwarmMode = () => {
     }
   };
 
-  const modelOptions = [
-    "petals-team/StableBeluga2",
-    "tiiuae/falcon-180B-chat",
-    "meta-llama/Llama-2-70b-chat-hf",
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const options = await petalsModels();
+        setModelOptions(options);
+      } catch (error) {
+        console.error(error);
+        setModelOptions([]);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     isSwarmSupported && (
@@ -80,7 +90,7 @@ const SwarmMode = () => {
                 setNumBlocks(Number(e.target.value));
               }}
             />
-            <div className="text-black form-control">
+            <div className="select-control">
               <select
                 value={model}
                 onChange={(e) => {
