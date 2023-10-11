@@ -75,7 +75,7 @@ const ServiceActions = ({
       return;
     }
     setIsOpen(true);
-  }, [interfaces, navigate, service.id]);
+  }, [interfaces, navigate, service.id, service.serviceType]);
 
   const onStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

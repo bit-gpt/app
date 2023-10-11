@@ -26,7 +26,7 @@ const ServiceDetail = () => {
     serviceType: Service["serviceType"];
   }>();
   const navigate = useNavigate();
-  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!);
+  const { data: service, isLoading, isFetching, refetch } = useGetService(serviceId!, serviceType!);
 
   const { data: interfaces } = useInterfaces();
 
@@ -39,7 +39,8 @@ const ServiceDetail = () => {
     navigate("/");
   };
 
-  if (isLoading || !service) return <ServiceLoading />;
+  if (isFetching || isLoading || !service || Object.keys(service ?? {}).length === 0)
+    return <ServiceLoading />;
 
   const status = getServiceStatus(service);
 

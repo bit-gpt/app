@@ -175,7 +175,11 @@ pub async fn get_services(state: tauri::State<'_, SharedState>) -> Result<Vec<Se
     tabby_codellama_7b.enough_system_memory = Some(true);
     let mut registry = registry.clone();
     registry.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
-    return Ok(registry.values().cloned().collect());
+    return Ok(registry
+        .values()
+        .filter(|service| service.version.is_some() && service.version.clone().unwrap() == "1")
+        .cloned()
+        .collect());
 }
 
 #[tauri::command(async)]

@@ -8,7 +8,6 @@ import useInterfaces from "shared/hooks/useInterfaces";
 import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
 import useGetServices from "../../../shared/hooks/useGetServices";
 import useSettingStore from "../../../shared/store/setting";
-import type { Service as IService } from "../types";
 
 import CustomServiceCard from "./CustomServiceCard";
 import SearchFilter from "./SearchFilter";
