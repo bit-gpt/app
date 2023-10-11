@@ -2,6 +2,7 @@ use std::{fs::File, io::Write};
 
 use crate::errors::{Context, Result};
 
+use crate::reqwest_resume;
 use futures::StreamExt;
 use serde::Serialize;
 use tauri::{Runtime, Window};
@@ -111,7 +112,7 @@ impl<R: Runtime> Downloader<R> {
 
         println!("Downloading file: {}", path.as_ref());
 
-        let res = reqwest::get(url.as_ref())
+        let res = reqwest_resume::get(reqwest::Url::parse(url.as_ref()).unwrap())
             .await
             .with_context(|| format!("GET request failed: {}", url.as_ref()))?;
 

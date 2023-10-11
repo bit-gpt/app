@@ -4,6 +4,7 @@
 mod controller_binaries;
 mod download;
 mod errors;
+mod reqwest_resume;
 mod utils;
 
 use serde::{Deserialize, Serialize};
