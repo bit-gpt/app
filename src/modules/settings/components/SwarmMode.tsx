@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useState, useEffect } from "react";
 import {
   swarmSupported,
@@ -66,50 +67,48 @@ const SwarmMode = () => {
     fetchData();
   }, []);
 
-  return (
-    isSwarmSupported && (
-      <div className="flex items-end justify-between mr-[45px]">
-        {swarmMode ? (
-          <>
-            <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
-              Swarm Mode Enabled
-            </label>
-            <PrimaryButton onClick={onStop}>Stop</PrimaryButton>
-          </>
-        ) : (
-          <>
-            <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
-              Swarm Mode Not Enabled
-            </label>
-            <input
-              className="form-control mr-1"
-              type="number"
-              min="1"
-              value={numBlocks}
+  return isSwarmSupported ? (
+    <div className="flex items-end justify-between mr-[45px]">
+      {swarmMode ? (
+        <>
+          <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
+            Swarm Mode Enabled
+          </label>
+          <PrimaryButton onClick={onStop}>Stop</PrimaryButton>
+        </>
+      ) : (
+        <>
+          <label className="text-grey-300 mr-2 backend-url md:text-lg text-[11px]">
+            Swarm Mode Not Enabled
+          </label>
+          <input
+            className="form-control mr-1"
+            type="number"
+            min="1"
+            value={numBlocks}
+            onChange={(e) => {
+              setNumBlocks(Number(e.target.value));
+            }}
+          />
+          <div className="select-control">
+            <select
+              value={model}
               onChange={(e) => {
-                setNumBlocks(Number(e.target.value));
+                setModel(e.target.value);
               }}
-            />
-            <div className="select-control">
-              <select
-                value={model}
-                onChange={(e) => {
-                  setModel(e.target.value);
-                }}
-              >
-                {modelOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <PrimaryButton onClick={onStart}>Start</PrimaryButton>
-          </>
-        )}
-      </div>
-    )
-  );
+            >
+              {modelOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+          <PrimaryButton onClick={onStart}>Start</PrimaryButton>
+        </>
+      )}
+    </div>
+  ) : null;
 };
 
 export default SwarmMode;
