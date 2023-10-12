@@ -85,7 +85,6 @@ const SwarmMode = () => {
               className="form-control mr-1"
               type="number"
               min="1"
-              max="10"
               value={numBlocks}
               onChange={(e) => {
                 setNumBlocks(Number(e.target.value));
