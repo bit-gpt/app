@@ -14,6 +14,7 @@ const SwarmMode = () => {
   const [swarmMode, setSwarmMode] = useState(false);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
   const [numBlocks, setNumBlocks] = useState(3);
+  const [publicName, setPublicName] = useState<string>("prem-app");
   const [modelOptions, setModelOptions] = useState<string[]>([]);
   const [model, setModel] = useState<string>("");
 
@@ -36,7 +37,7 @@ const SwarmMode = () => {
 
   const onStart = async () => {
     try {
-      await runSwarmMode(numBlocks, model);
+      await runSwarmMode(numBlocks, model, publicName);
       setSwarmMode(true);
     } catch (error) {
       console.error(error);
@@ -88,6 +89,14 @@ const SwarmMode = () => {
             value={numBlocks}
             onChange={(e) => {
               setNumBlocks(Number(e.target.value));
+            }}
+          />
+          <input
+            className="form-control mr-1"
+            defaultValue="prem-app"
+            value={publicName}
+            onChange={(e) => {
+              setPublicName(e.target.value);
             }}
           />
           <div className="select-control">
