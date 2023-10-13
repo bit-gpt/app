@@ -164,19 +164,8 @@ fn is_swarm_mode_running() -> bool {
     return false;
 }
 
-fn get_username() -> String {
-    let output = Command::new("whoami").output();
-
-    match output {
-        Ok(output) => {
-            output.stdout.trim().to_string()
-        },
-        Err(_) => "prem-app".to_string(),
-    }
-}
-
 #[tauri::command]
-fn run_swarm_mode(num_blocks: i32, model: String) {
+fn run_swarm_mode(num_blocks: i32, model: String, public_name: String) {
     if is_python_installed() {
         thread::spawn(move || {
             println!("🚀 Starting the Swarm...");
@@ -190,7 +179,6 @@ fn run_swarm_mode(num_blocks: i32, model: String) {
             // println!("🛠️ Installing the dependencies >>> {}", String::from_utf8_lossy(&output.stdout));
             // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
 
-            let username = get_username();
             let _ = Command::new("/usr/bin/python3")
                 .args(&[
                     "-m",
@@ -198,7 +186,7 @@ fn run_swarm_mode(num_blocks: i32, model: String) {
                     "--num_blocks",
                     &num_blocks.to_string(),
                     "--public_name",
-                    &username,
+                    &public_name,
                     &model,
                 ])
                 .output()

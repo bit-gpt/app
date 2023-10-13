@@ -67,12 +67,12 @@ export const stopSwarmMode = async () => {
   await invoke("stop_swarm_mode");
 };
 
-export const runSwarmMode = async (numBlocks: number, model: string) => {
+export const runSwarmMode = async (numBlocks: number, model: string, publicName: string) => {
   const isSwarmMode = await checkSwarmModeRunning();
   if (isSwarmMode) {
     return;
   }
-  await invoke("run_swarm_mode", { numBlocks, model });
+  await invoke("run_swarm_mode", { numBlocks, model, publicName });
 };
 
 export const isPackaged = () => {
