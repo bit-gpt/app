@@ -1,3 +1,4 @@
+import { isProxyEnabled } from "../../../shared/helpers/utils";
 import useSettingStore from "../../../shared/store/setting";
 import type { DownloadMessage } from "../types";
 
@@ -20,11 +21,13 @@ const downloadServiceStream = async (
 ): Promise<void> => {
   try {
     const isIP = useSettingStore.getState().isIP;
-    let baseUrl;
-    if (isIP) {
-      baseUrl = `${useSettingStore.getState().backendUrl}premd/`;
-    } else {
-      baseUrl = `${window.location.protocol}//premd.${window.location.host}/`;
+    let baseUrl = useSettingStore.getState().backendUrl;
+    if (isProxyEnabled()) {
+      if (isIP) {
+        baseUrl = `${useSettingStore.getState().backendUrl}premd/`;
+      } else {
+        baseUrl = `${window.location.protocol}//premd.${window.location.host}/`;
+      }
     }
     instantiateEventSource(baseUrl, serviceId);
     eventSources[serviceId].onmessage = (event) => {

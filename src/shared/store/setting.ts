@@ -5,7 +5,7 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 export const getBackendUrl = () => {
-  let backendURL = "http://localhost:54321";
+  let backendURL = "http://localhost:54321/";
   const isBackendSet = () => {
     return (
       ((window as any).VITE_BACKEND_URL !== undefined || import.meta.env.VITE_BACKEND_URL) &&
