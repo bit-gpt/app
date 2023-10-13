@@ -9,7 +9,6 @@ import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
 import type { Service } from "../../modules/service/types";
-import useSettingStore from "../store/setting";
 
 import useGetService from "./useGetService";
 

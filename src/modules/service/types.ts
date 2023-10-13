@@ -11,6 +11,7 @@ export type ModelInfo = {
 };
 
 export type ServiceBase = {
+  baseUrl: string;
   beta: boolean;
   comingSoon: boolean;
   defaultPort: number;
