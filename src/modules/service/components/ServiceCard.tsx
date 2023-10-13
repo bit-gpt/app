@@ -28,7 +28,9 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
 
   const isGreyCard = ["not_supported", "not_enough_system_memory", "coming_soon"].includes(status);
   const redirectLink =
-    status === "coming_soon" ? "/" : `/services/${serviceId}/${service.serviceType}/detail`;
+    status === "coming_soon"
+      ? "/"
+      : `/services/${serviceId}/${service.serviceType ?? "docker"}/detail`;
 
   return (
     <Link className={clsx(className, isGreyCard && "disabled--card")} to={redirectLink}>
