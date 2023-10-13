@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppContainer from "shared/components/AppContainer";
-import { isBrowserEnv, isDeveloperMode, isPackaged, isServiceBinary } from "shared/helpers/utils";
+import { isDeveloperMode, isServiceBinary } from "shared/helpers/utils";
 import useInterfaces from "shared/hooks/useInterfaces";
 
 import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
@@ -36,13 +36,13 @@ const Service = () => {
 
   const isDevMode = isDeveloperMode();
 
-  // Resume docker service download if in progress
+  // Resume service download if in progress
   useEffect(() => {
-    if (isPackaged() && isBrowserEnv()) {
-      (async () => {
+    (async () => {
+      if (!isServicesLoading) {
         for (const serviceId in progresses) {
           const service = services?.filter((s) => s.id === serviceId)[0];
-          if (service) {
+          if (service && Object.keys(service ?? {}).length) {
             download({
               serviceId,
               huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
@@ -55,10 +55,10 @@ const Service = () => {
             });
           }
         }
-      })();
-    }
+      }
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Object.keys(progresses).length]);
+  }, [Object.keys(progresses).length, isServicesLoading]);
 
   const ServicesComponents = useMemo(() => {
     return filteredApps?.map((app) => {

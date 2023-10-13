@@ -4,7 +4,6 @@
 mod controller_binaries;
 mod download;
 mod errors;
-mod reqwest_resume;
 mod utils;
 
 use serde::{Deserialize, Serialize};
@@ -18,7 +17,8 @@ use tokio::{process::Child, sync::Mutex};
 #[derive(Debug, Default)]
 pub struct SharedState {
     running_services: Mutex<HashMap<String, Child>>,
-    registry: Mutex<HashMap<String, Service>>,
+    // Properties from public service registry and additional service state
+    services: Mutex<HashMap<String, Service>>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

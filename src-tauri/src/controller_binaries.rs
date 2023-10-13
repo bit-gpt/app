@@ -1,7 +1,6 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::os::unix::prelude::PermissionsExt;
 use std::path::PathBuf;
 
 use crate::download::Downloader;
@@ -31,10 +30,6 @@ pub async fn download_service<R: Runtime>(
         Err("`service_dir` path contains non utf-8 sequence".to_string())?
     };
 
-    // Create service directory if it doesn't exist
-    std::fs::create_dir_all(service_dir)
-        .with_context(|| format!("Failed create directory `{service_dir}`"))?;
-
     Downloader::new(
         hugging_face_id,
         model_files,
@@ -45,9 +40,9 @@ pub async fn download_service<R: Runtime>(
     .download_ggml_files()
     .await?;
 
-    let mut registry_lock = state.registry.lock().await;
-    if let Some(registry) = registry_lock.get_mut(service_id) {
-        registry.downloaded = Some(true);
+    let mut registry_lock = state.services.lock().await;
+    if let Some(service) = registry_lock.get_mut(service_id) {
+        service.downloaded = Some(true);
     }
     Ok(())
 }
@@ -85,7 +80,7 @@ pub async fn start_service(
     }
     drop(services); // Drop the lock before we proceed
 
-    let registry_lock = state.registry.lock().await;
+    let registry_lock = state.services.lock().await;
     let serve_command = registry_lock
         .get(&service_id)
         .with_context(|| format!("service_id ({service_id}) doesn't exist in registry"))?
@@ -114,9 +109,9 @@ pub async fn start_service(
     let mut services = state.running_services.lock().await;
     services.insert(service_id.clone(), child);
     // Update status to "running"
-    let mut registry_lock = state.registry.lock().await;
-    if let Some(registry) = registry_lock.get_mut(&service_id) {
-        registry.running = Some(true);
+    let mut registry_lock = state.services.lock().await;
+    if let Some(service) = registry_lock.get_mut(&service_id) {
+        service.running = Some(true);
     }
     Ok(())
 }
@@ -127,9 +122,9 @@ pub async fn stop_service(service_id: String, state: tauri::State<'_, SharedStat
     if let Some(mut child) = services.remove(&service_id) {
         child.kill().await.map_err(|e| e.to_string())?;
     }
-    let mut registry_lock = state.registry.lock().await;
-    if let Some(registry) = registry_lock.get_mut(&service_id) {
-        registry.running = Some(false);
+    let mut registry_lock = state.services.lock().await;
+    if let Some(service) = registry_lock.get_mut(&service_id) {
+        service.running = Some(false);
     }
     Ok(())
 }
@@ -167,15 +162,15 @@ pub async fn get_logs_for_service(service_id: String) -> Result<String> {
 
 #[tauri::command(async)]
 pub async fn get_services(state: tauri::State<'_, SharedState>) -> Result<Vec<Service>> {
-    let registry = state.registry.lock().await;
+    let services = state.services.lock().await;
     // TODO: Hack to update tabby_codellama_7B service
-    let mut tabby_codellama_7b = registry["tabby-codellama-7B"].clone();
+    let mut tabby_codellama_7b = services["tabby-codellama-7B"].clone();
     tabby_codellama_7b.supported = Some(true);
     tabby_codellama_7b.enough_memory = Some(true);
     tabby_codellama_7b.enough_system_memory = Some(true);
-    let mut registry = registry.clone();
-    registry.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
-    return Ok(registry
+    let mut services = services.clone();
+    services.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
+    return Ok(services
         .values()
         .filter(|service| service.version.is_some() && service.version.clone().unwrap() == "1")
         .cloned()
@@ -187,26 +182,19 @@ pub async fn get_service_by_id(
     service_id: String,
     state: tauri::State<'_, SharedState>,
 ) -> Result<Service> {
-    let registry = state.registry.lock().await;
+    let services = state.services.lock().await;
     // TODO: Hack to update tabby_codellama_7B service
-    let mut tabby_codellama_7b = registry["tabby-codellama-7B"].clone();
+    let mut tabby_codellama_7b = services["tabby-codellama-7B"].clone();
     tabby_codellama_7b.supported = Some(true);
     tabby_codellama_7b.enough_memory = Some(true);
     tabby_codellama_7b.enough_system_memory = Some(true);
-    let mut registry = registry.clone();
-    registry.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
-    return Ok(registry[&service_id].clone());
+    let mut services = services.clone();
+    services.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
+    return Ok(services[&service_id].clone());
 }
 
 #[tauri::command(async)]
 pub async fn get_running_services(state: tauri::State<'_, SharedState>) -> Result<Vec<String>> {
     let services = state.running_services.lock().await;
     return Ok(services.keys().cloned().collect());
-}
-
-fn set_execute_permission(path: &std::path::Path) -> std::io::Result<()> {
-    let metadata = std::fs::metadata(&path)?;
-    let mut permissions = metadata.permissions();
-    permissions.set_mode(0o755); // rwxr-xr-x
-    std::fs::set_permissions(&path, permissions)
 }

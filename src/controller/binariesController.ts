@@ -67,7 +67,7 @@ class BinariesController extends AbstractServiceController {
 
   async getService(serviceId: string): Promise<ServiceBinary | undefined> {
     try {
-      return await invoke("get_service_by_id", { serviceId });
+      return await invoke<ServiceBinary>("get_service_by_id", { serviceId });
     } catch (e) {
       console.log(e);
     }
@@ -75,7 +75,7 @@ class BinariesController extends AbstractServiceController {
 
   async getServices(): Promise<ServiceBinary[] | undefined> {
     try {
-      return await invoke("get_services");
+      return await invoke<ServiceBinary[]>("get_services");
     } catch (e) {
       console.log(e);
     }
