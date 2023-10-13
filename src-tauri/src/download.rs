@@ -76,9 +76,6 @@ impl<R: Runtime> Downloader<R> {
     }
 
     async fn download_file(&self, url: impl AsRef<str>, path: impl AsRef<str>) -> Result<()> {
-        // Check if the file is already downloading.
-        //let mut services = state.running_services.lock().await;
-
         let mut size_on_disk: u64 = 0;
 
         // Check if there is a file on disk already.
