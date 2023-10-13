@@ -6,7 +6,7 @@ import useSettingStore from "../store/setting";
 const api = () => {
   const isIP = useSettingStore.getState().isIP;
   const headers = { "Content-Type": "application/json" };
-  let baseURL;
+  let baseURL = useSettingStore.getState().backendUrl;
   if (isProxyEnabled()) {
     if (isIP) {
       baseURL = `${useSettingStore.getState().backendUrl}premd/`;
