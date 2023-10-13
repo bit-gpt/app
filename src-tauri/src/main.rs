@@ -96,30 +96,6 @@ struct ModelInfo {
     state: String,
 }
 
-fn is_python_installed() -> bool {
-    let output = Command::new("/usr/bin/python3")
-        .args(["--version"])
-        .output()
-        .map_err(|e| {
-            println!("Failed to execute python --version: {}", e);
-            e
-        });
-
-    if !output.unwrap().stdout.is_empty() {
-        println!("🐍 Python is installed");
-        return true;
-    }
-    return false;
-}
-
-#[tauri::command]
-fn is_swarm_supported() -> bool {
-    match env::consts::OS {
-        "macos" => true,
-        _ => false
-    }
-}
-
 #[tauri::command]
 async fn get_petals_models() -> Result<Vec<String>, String> {
     let url = "https://health.petals.dev/api/v1/state";
@@ -166,39 +142,19 @@ fn is_swarm_mode_running() -> bool {
 
 #[tauri::command]
 fn run_swarm_mode(num_blocks: i32, model: String, public_name: String) {
-    if is_python_installed() {
-        thread::spawn(move || {
-            println!("🚀 Starting the Swarm...");
-
-            let _ = Command::new("/usr/bin/python3")
-                .args(&["-m", "pip", "install", "petals==2.2.0"])
-                .output()
-                .expect("🙈 Failed to execute command");
-
-            // Print stdout and stderr
-            // println!("🛠️ Installing the dependencies >>> {}", String::from_utf8_lossy(&output.stdout));
-            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
-
-            let _ = Command::new("/usr/bin/python3")
-                .args(&[
-                    "-m",
-                    "petals.cli.run_server",
-                    "--num_blocks",
-                    &num_blocks.to_string(),
-                    "--public_name",
-                    &public_name,
-                    &model,
-                ])
-                .output()
-                .expect("🙈 Failed to execute command");
-
-            // Print stdout and stderr
-            // println!("🚀 Running the Swarm >>> {}", String::from_utf8_lossy(&output.stdout));
-            // eprintln!("{}", String::from_utf8_lossy(&output.stderr));
-        });
-    } else {
-        println!("🙈 Python is not installed");
-    }
+    println!("🚀 Starting the Swarm...");
+    let _ = Command::new_sidecar("petals")
+        .expect("🙈 Failed to create `run_petals` binary command")
+        .args(&[
+            "--num_blocks",
+            &num_blocks.to_string(),
+            "--public_name",
+            &public_name,
+            "--model",
+            &model,
+        ])    
+        .spawn()
+        .expect("🙈 Failed to execute command");
 }
 
 fn get_swarm_processes() -> String {

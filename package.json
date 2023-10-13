@@ -68,10 +68,12 @@
     "infra:down": "bash ./scripts/down.sh",
     "infra:up": "bash ./scripts/up.sh",
     "lint": "yarn eslint && yarn prettier --check",
+    "prebuild": "yarn build_petals",
     "prettier": "prettier --write src/",
     "prettier:check": "prettier --check src/",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "build_petals": "./src-tauri/petals/build_petals_sidecar.sh"
   },
   "type": "module",
   "version": "0.1.1"

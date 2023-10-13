@@ -27,7 +27,7 @@
     version = "1.0"
 
   [dependencies.tauri]
-    features = ["updater", "system-tray", "process-exit", "dialog-all", "path-all", "shell-all"]
+    features = ["shell-sidecar", "updater", "system-tray", "process-exit", "dialog-all", "path-all", "process-command-api", "shell-all"]
     version = "1.5"
 
   [dependencies.tokio]
