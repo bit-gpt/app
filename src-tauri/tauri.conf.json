@@ -27,7 +27,7 @@
           {
             "name": "bin/python/petals",
             "sidecar": true,
-            "ags": [
+            "args": [
               "--num_blocks",
               "--public_name",
               "--model"

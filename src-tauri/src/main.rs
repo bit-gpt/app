@@ -152,7 +152,7 @@ fn run_swarm_mode(num_blocks: i32, model: String, public_name: String) {
             &public_name,
             "--model",
             &model,
-        ])    
+        ])
         .spawn()
         .expect("🙈 Failed to execute command");
 }

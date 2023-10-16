@@ -4,7 +4,6 @@
 TAURI_PATH="$(pwd)/src-tauri"
 PYTHON_SCRIPT_PATH="${TAURI_PATH}/petals/run_petals.py"
 REQUIREMENTS_FILE_PATH="${TAURI_PATH}/petals/requirements.txt"
-BUILD_SIDE_SCRIPT_PATH="${TAURI_PATH}/petals/build_petals_sidecar.sh"
 DIST_PATH="${TAURI_PATH}/bin/python"
 
 # Create a Python virtual environment
@@ -18,7 +17,6 @@ pip install -r $REQUIREMENTS_FILE_PATH
 
 # Package the Python script
 pyinstaller --onefile $PYTHON_SCRIPT_PATH --distpath $DIST_PATH --clean -n petals-x86_64-apple-darwin
-pyinstaller --onefile $PYTHON_SCRIPT_PATH --distpath $DIST_PATH --clean -n petals-aarch64-apple-darwin
 
 # Deactivate the virtual environment
 deactivate
