@@ -101,6 +101,7 @@ Let us know which Model / Feature you wanna see in Prem [here](https://feedback.
 
 ```bash
 npm i
+yarn build_petals
 npm run tauri dev
 ```
 
