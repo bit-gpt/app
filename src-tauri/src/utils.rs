@@ -6,7 +6,7 @@ pub async fn add_services_from_registry(
     url: &str,
     state: &State<'_, SharedState>,
 ) -> Result<(), reqwest::Error> {
-    let mut registry = state.registry.lock().await;
+    let mut registry = state.services.lock().await;
     let response = get(url).await.expect("Failed to fetch registry");
     let service_ids = registry.keys().cloned().collect::<Vec<String>>();
     let services = response.json::<Vec<Service>>().await.unwrap();
