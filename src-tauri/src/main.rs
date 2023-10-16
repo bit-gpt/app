@@ -136,31 +136,44 @@ fn main() {
             controller_binaries::get_service_by_id,
         ])
         .menu(menu)
-        .on_menu_event(|event| match event.menu_item_id() {
-            "quit" => {
-                let _ = controller_binaries::stop_all_services(event.window().state());
-                event.window().close().unwrap();
+        .on_menu_event(|event| {
+            match event.menu_item_id() {
+                "quit" => {
+                    controller_binaries::stop_all_services(event.window().state());
+                }
+                // only stop services on quit?
+                "close" => {}
+                _ => return,
             }
-            "close" => {
-                event.window().close().unwrap();
-            }
-            _ => {}
+            event
+                .window()
+                .close()
+                .expect("failed to correctly close the window");
         })
         .system_tray(system_tray)
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "hide" => {
-                    let window = app.get_window("main").unwrap();
-                    window.hide().unwrap();
+                    // if get window fails I am not sure if we should consider that an error?
+                    _ = app
+                        .get_window("main")
+                        .map(|w| w.hide())
+                        .transpose()
+                        .map_err(|e| log::error!("failed to hide window, {}", e));
                 }
                 "quit" => {
-                    let _ = controller_binaries::stop_all_services(app.state());
+                    // this is now a sync function hence it's fine
+                    // ensure all async functions are awaited so that they are executed
+                    controller_binaries::stop_all_services(app.state());
                     app.exit(0);
                 }
                 "show" => {
-                    let window = app.get_window("main").unwrap();
-                    window.set_focus().unwrap();
-                    window.show().unwrap();
+                    // if get window fails I am not sure if we should consider that an error?
+                    _ = app
+                        .get_window("main")
+                        .map(|w| w.show().and_then(|_| w.set_focus()))
+                        .transpose()
+                        .map_err(|e| log::error!("failed to show window, {}", e));
                 }
                 _ => {}
             },
