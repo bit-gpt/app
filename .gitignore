@@ -7,10 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+build
 node_modules
 dist
 dist-ssr
 *.local
+src-tauri/bin/
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +25,4 @@ dist-ssr
 *.sln
 *.sw?
 .env
+*.spec
