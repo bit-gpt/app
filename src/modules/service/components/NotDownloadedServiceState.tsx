@@ -12,8 +12,10 @@ const NotDownloadedServiceState = ({ service, refetch, progress }: ServiceStateP
     e.preventDefault();
     download?.({
       serviceId: service.id,
-      huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
-      modelFiles: isServiceBinary(service) ? service.modelFiles : undefined,
+      // TODO: determine the correct binary url based on the current platform
+      binaryUrl: isServiceBinary(service) ? service.binariesUrl["aarch64-apple-darwin"] : undefined,
+      weightsDirectoryUrl: isServiceBinary(service) ? service.weightsDirectoryUrl : undefined,
+      weightsFiles: isServiceBinary(service) ? service.weightsFiles : undefined,
       serviceType: service.serviceType,
       afterSuccess: () => {
         useSettingStore.getState().removeServiceDownloadInProgress(service.id);

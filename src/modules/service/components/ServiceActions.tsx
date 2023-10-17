@@ -119,8 +119,9 @@ const ServiceActions = ({
     e.preventDefault();
     download({
       serviceId: service.id,
-      huggingFaceId: isServiceBinary(service) ? service?.huggingFaceId : undefined,
-      modelFiles: isServiceBinary(service) ? service?.modelFiles : undefined,
+      binaryUrl: isServiceBinary(service) ? service.binariesUrl["aarch64-apple-darwin"] : undefined,
+      weightsDirectoryUrl: isServiceBinary(service) ? service.weightsDirectoryUrl : undefined,
+      weightsFiles: isServiceBinary(service) ? service.weightsFiles : undefined,
       serviceType: service.serviceType,
       afterSuccess: async () => {
         refetch();

@@ -5,8 +5,9 @@ import DockerController from "./dockerController";
 
 export type DownloadArgs = {
   serviceId: string;
-  huggingFaceId?: string;
-  modelFiles?: string[];
+  binaryUrl?: string;
+  weightsDirectoryUrl?: string;
+  weightsFiles?: string[];
   afterSuccess?: () => void;
 };
 
@@ -17,8 +18,8 @@ interface IServiceController {
   delete(serviceId: string, serviceType: string): Promise<void>;
   download({
     serviceId,
-    huggingFaceId,
-    modelFiles,
+    weightsDirectoryUrl,
+    weightsFiles,
     serviceType,
     afterSuccess,
   }: DownloadArgs & { serviceType: string }): Promise<void>;
@@ -85,8 +86,9 @@ class ServiceController implements IServiceController {
 
   async download({
     serviceId,
-    huggingFaceId,
-    modelFiles,
+    binaryUrl,
+    weightsDirectoryUrl,
+    weightsFiles,
     serviceType,
     afterSuccess,
   }: DownloadArgs & { serviceType: string }): Promise<void> {
@@ -97,8 +99,9 @@ class ServiceController implements IServiceController {
     } else if (serviceType === "binary") {
       await this.binariesController.download({
         serviceId,
-        huggingFaceId,
-        modelFiles,
+        binaryUrl,
+        weightsDirectoryUrl,
+        weightsFiles,
         afterSuccess,
       });
     }

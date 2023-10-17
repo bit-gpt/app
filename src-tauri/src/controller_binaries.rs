@@ -12,8 +12,9 @@ use tokio::{fs, process::Command};
 
 #[tauri::command(async)]
 pub async fn download_service<R: Runtime>(
-    hugging_face_id: &str,
-    model_files: Vec<String>,
+    binary_url: String,
+    weights_directory_url: String,
+    weights_files: Vec<String>,
     service_id: &str,
     app_handle: tauri::AppHandle,
     state: tauri::State<'_, SharedState>,
@@ -23,7 +24,7 @@ pub async fn download_service<R: Runtime>(
         .path_resolver()
         .app_data_dir()
         .expect("failed to resolve app data dir")
-        .join("binaries")
+        .join("models")
         .join(&service_id);
 
     let Some(service_dir) = service_dir.to_str() else {
@@ -31,13 +32,14 @@ pub async fn download_service<R: Runtime>(
     };
 
     Downloader::new(
-        hugging_face_id,
-        model_files,
+        binary_url,
+        weights_directory_url,
+        weights_files,
         service_id,
         service_dir,
         window,
     )
-    .download_ggml_files()
+    .download_files()
     .await?;
 
     let mut registry_lock = state.services.lock().await;

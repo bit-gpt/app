@@ -5,7 +5,13 @@ abstract class AbstractServiceController {
   abstract restart(serviceId: string): void;
   abstract stop(serviceId: string): void;
   abstract delete(serviceId: string): void;
-  abstract download({ serviceId, huggingFaceId, modelFiles, afterSuccess }: DownloadArgs): void;
+  abstract download({
+    serviceId,
+    binaryUrl,
+    weightsDirectoryUrl,
+    weightsFiles,
+    afterSuccess,
+  }: DownloadArgs): void;
   abstract getService(serviceId: string): void;
   abstract getServices(): void;
   abstract getLogs(serviceId: string): void;
