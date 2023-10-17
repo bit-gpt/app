@@ -8,12 +8,20 @@ const useDownloadServiceStream = () => {
   return useMutation(
     ({
       serviceId,
-      huggingFaceId,
-      modelFiles,
+      binariesUrl,
+      weightsDirectoryUrl,
+      weightsFiles,
       serviceType,
       afterSuccess,
     }: DownloadArgs & { serviceType: string }) =>
-      controller.download({ serviceId, huggingFaceId, modelFiles, serviceType, afterSuccess }),
+      controller.download({
+        serviceId,
+        binariesUrl,
+        weightsDirectoryUrl,
+        weightsFiles,
+        serviceType,
+        afterSuccess,
+      }),
   );
 };
 
