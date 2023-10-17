@@ -12,8 +12,9 @@ const NotDownloadedServiceState = ({ service, refetch, progress }: ServiceStateP
     e.preventDefault();
     download?.({
       serviceId: service.id,
-      huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
-      modelFiles: isServiceBinary(service) ? service.modelFiles : undefined,
+      binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
+      weightsDirectoryUrl: isServiceBinary(service) ? service.weightsDirectoryUrl : undefined,
+      weightsFiles: isServiceBinary(service) ? service.weightsFiles : undefined,
       serviceType: service.serviceType,
       afterSuccess: () => {
         useSettingStore.getState().removeServiceDownloadInProgress(service.id);

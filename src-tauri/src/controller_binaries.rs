@@ -1,6 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::collections::HashMap;
 use std::path::PathBuf;
 
 use crate::download::Downloader;
@@ -12,8 +13,9 @@ use tokio::{fs, process::Command};
 
 #[tauri::command(async)]
 pub async fn download_service<R: Runtime>(
-    hugging_face_id: &str,
-    model_files: Vec<String>,
+    binaries_url: HashMap<String, Option<String>>,
+    weights_directory_url: String,
+    weights_files: Vec<String>,
     service_id: &str,
     app_handle: tauri::AppHandle,
     state: tauri::State<'_, SharedState>,
@@ -23,7 +25,7 @@ pub async fn download_service<R: Runtime>(
         .path_resolver()
         .app_data_dir()
         .expect("failed to resolve app data dir")
-        .join("binaries")
+        .join("models")
         .join(&service_id);
 
     let Some(service_dir) = service_dir.to_str() else {
@@ -31,13 +33,14 @@ pub async fn download_service<R: Runtime>(
     };
 
     Downloader::new(
-        hugging_face_id,
-        model_files,
+        binaries_url,
+        weights_directory_url,
+        weights_files,
         service_id,
         service_dir,
         window,
     )
-    .download_ggml_files()
+    .download_files()
     .await?;
 
     let mut registry_lock = state.services.lock().await;

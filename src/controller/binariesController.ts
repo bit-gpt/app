@@ -47,18 +47,25 @@ class BinariesController extends AbstractServiceController {
 
   async download({
     serviceId,
-    huggingFaceId,
-    modelFiles,
+    binariesUrl,
+    weightsDirectoryUrl,
+    weightsFiles,
     afterSuccess,
   }: {
     serviceId: string;
-    huggingFaceId?: string;
-    modelFiles?: string[];
+    binariesUrl?: Record<string, string | null>;
+    weightsDirectoryUrl?: string;
+    weightsFiles?: string[];
     afterSuccess?: () => void;
   }): Promise<void> {
     console.log(`Downloading service ${serviceId}`);
     try {
-      await invoke("download_service", { serviceId, huggingFaceId, modelFiles });
+      await invoke("download_service", {
+        binariesUrl,
+        weightsDirectoryUrl,
+        weightsFiles,
+        serviceId,
+      });
       afterSuccess?.();
     } catch (e) {
       console.log(e);

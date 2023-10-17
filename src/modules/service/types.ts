@@ -44,17 +44,18 @@ export type ServiceDocker = ServiceBase & {
 
 export type ServiceBinary = ServiceBase & {
   serviceType: "binary";
-  weightsUrl: string;
   serveCommand: string;
-  huggingFaceId: string;
   modelFiles: string[];
+  weightsDirectoryUrl: string;
+  weightsFiles: string[];
+  binariesUrl: {
+    "aarch64-apple-darwin"?: string;
+    "x86_64-apple-darwin"?: string;
+    "universal-apple-darwin"?: string;
+  };
 };
 
-export type ServiceProcess = ServiceBase & {
-  serviceType: "process";
-};
-
-export type Service = ServiceDocker | ServiceBinary | ServiceProcess;
+export type Service = ServiceDocker | ServiceBinary;
 
 export type SearchFilterProps = {
   apps: App[];

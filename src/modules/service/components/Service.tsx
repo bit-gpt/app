@@ -45,8 +45,11 @@ const Service = () => {
           if (service && Object.keys(service ?? {}).length) {
             download({
               serviceId,
-              huggingFaceId: isServiceBinary(service) ? service.huggingFaceId : undefined,
-              modelFiles: isServiceBinary(service) ? service.modelFiles : undefined,
+              binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
+              weightsDirectoryUrl: isServiceBinary(service)
+                ? service.weightsDirectoryUrl
+                : undefined,
+              weightsFiles: isServiceBinary(service) ? service.weightsFiles : undefined,
               serviceType: service.serviceType ?? "",
               afterSuccess: async () => {
                 useSettingStore.getState().removeServiceDownloadInProgress(serviceId);

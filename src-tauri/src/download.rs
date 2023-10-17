@@ -1,35 +1,19 @@
 use crate::errors::{Context, Result};
+use std::collections::HashMap;
 
+use crate::utils;
 use futures::StreamExt;
 use serde::Serialize;
 use tauri::{Runtime, Window};
-use tokio::fs::OpenOptions;
+use tokio::fs::{File, OpenOptions};
 use tokio::io::AsyncWriteExt;
 
-pub enum Registry {
-    HuggingFace,
-    // add other registries
-    // OtherRegistry
-}
-impl Registry {
-    fn build_download_url(&self, hugging_face_id: &str, file: &str) -> String {
-        match self {
-            Registry::HuggingFace => format!(
-                "https://huggingface.co/{}/resolve/main/{}",
-                hugging_face_id, file
-            ),
-            // add other registry path support
-            // Registry::OtherRegistry => format!("other-registry-url")
-        }
-    }
-}
-
 pub struct Downloader<R: Runtime> {
-    hugging_face_id: String,
-    model_files: Vec<String>,
+    binaries_url: HashMap<String, Option<String>>,
+    weights_directory_url: String,
+    weights_files: Vec<String>,
     service_id: String,
     service_dir: String,
-    registry: Registry,
     window: Window<R>,
 }
 
@@ -43,47 +27,51 @@ struct ProgressPayload {
 
 impl<R: Runtime> Downloader<R> {
     pub fn new(
-        hugging_face_id: impl AsRef<str>,
-        model_files: Vec<String>,
+        binaries_url: HashMap<String, Option<String>>,
+        weights_directory_url: impl AsRef<str>,
+        weights_files: Vec<String>,
         service_id: impl AsRef<str>,
         service_dir: impl AsRef<str>,
         window: Window<R>,
     ) -> Self {
         Self {
-            hugging_face_id: hugging_face_id.as_ref().to_string(),
-            model_files: model_files.to_vec(),
+            binaries_url,
+            weights_directory_url: weights_directory_url.as_ref().to_string(),
+            weights_files: weights_files.to_vec(),
             service_id: service_id.as_ref().to_string(),
             service_dir: service_dir.as_ref().to_string(),
-            registry: Registry::HuggingFace,
             window,
         }
     }
 
-    pub async fn download_ggml_files(&self) -> Result<()> {
-        self.download_files(&self.model_files).await
+    pub async fn download_files(&self) -> Result<()> {
+        self.download_binary().await?;
+        self.download_weights_files().await
     }
 
-    async fn download_files(&self, files: &[impl AsRef<str>]) -> Result<()> {
-        futures::future::join_all(files.into_iter().map(|filename| {
-            let url = self
-                .registry
-                .build_download_url(&self.hugging_face_id, filename.as_ref());
-            self.download_file(url, format!("{}/{}", self.service_dir, filename.as_ref()))
+    async fn download_weights_files(&self) -> Result<()> {
+        futures::future::join_all(self.weights_files.clone().into_iter().map(|filename| {
+            let url = format!("{}{}", &self.weights_directory_url, filename);
+            self.download_weight_file(url, format!("{}/{}", &self.service_dir, filename))
         }))
         .await
         .into_iter()
         .collect()
     }
 
-    async fn download_file(&self, url: impl AsRef<str>, path: impl AsRef<str>) -> Result<()> {
+    async fn download_weight_file(
+        &self,
+        url: impl AsRef<str>,
+        output_path: impl AsRef<str>,
+    ) -> Result<()> {
         let mut size_on_disk: u64 = 0;
 
         // Check if there is a file on disk already.
-        if tokio::fs::metadata(path.as_ref()).await.is_ok() {
+        if tokio::fs::metadata(output_path.as_ref()).await.is_ok() {
             // If so, check file length to know where to restart the download from.
-            size_on_disk = tokio::fs::metadata(path.as_ref())
+            size_on_disk = tokio::fs::metadata(output_path.as_ref())
                 .await
-                .with_context(|| format!("Failed to get metadata for {}", path.as_ref()))?
+                .with_context(|| format!("Failed to get metadata for {}", output_path.as_ref()))?
                 .len();
         }
 
@@ -96,7 +84,13 @@ impl<R: Runtime> Downloader<R> {
             )
             .send()
             .await
-            .map_err(|_| format!("Failed to GET from {} to {}", url.as_ref(), path.as_ref()))
+            .map_err(|_| {
+                format!(
+                    "Failed to GET from {} to {}",
+                    url.as_ref(),
+                    output_path.as_ref()
+                )
+            })
             .unwrap();
 
         // Check the status for errors.
@@ -115,8 +109,8 @@ impl<R: Runtime> Downloader<R> {
         }
 
         // Prepare the destination directories
-        if let Some(last_slash) = path.as_ref().rfind('/') {
-            let dirs = &path.as_ref()[..last_slash];
+        if let Some(last_slash) = output_path.as_ref().rfind('/') {
+            let dirs = &output_path.as_ref()[..last_slash];
             if let Err(e) = tokio::fs::create_dir_all(dirs).await {
                 println!("Error creating directory: {:?}", e);
             } else {
@@ -131,9 +125,9 @@ impl<R: Runtime> Downloader<R> {
             .create(true)
             .write(true)
             .append(true)
-            .open(path.as_ref())
+            .open(output_path.as_ref())
             .await
-            .with_context(|| format!("Failed to create file at: {}", path.as_ref()))?;
+            .with_context(|| format!("Failed to create file at: {}", output_path.as_ref()))?;
 
         // Download the file chunk by chunk.
         let mut downloaded_size = size_on_disk;
@@ -150,14 +144,14 @@ impl<R: Runtime> Downloader<R> {
 
             downloaded_size += chunk_size;
             // Write the chunk to disk.
-            file.write_all_buf(&mut chunk)
-                .await
-                .with_context(|| format!("Failed to write to destination {}", path.as_ref()))?;
+            file.write_all_buf(&mut chunk).await.with_context(|| {
+                format!("Failed to write to destination {}", output_path.as_ref())
+            })?;
 
             // Emit progress to JS
             println!(
                 "{} - bytes downloaded: {}, out of: {}",
-                path.as_ref(),
+                output_path.as_ref(),
                 downloaded_size,
                 total_file_size,
             );
@@ -165,7 +159,7 @@ impl<R: Runtime> Downloader<R> {
                 .emit(
                     "progress_bar_download_update",
                     ProgressPayload {
-                        path: path.as_ref().to_string(),
+                        path: output_path.as_ref().to_string(),
                         service_id: self.service_id.clone(),
                         downloaded: downloaded_size,
                         total: total_file_size,
@@ -173,6 +167,71 @@ impl<R: Runtime> Downloader<R> {
                 )
                 .with_context(|| "Failed to emit event")?;
         }
+        Ok(())
+    }
+
+    pub async fn download_binary(&self) -> Result<()> {
+        let mut binary_url = "".to_string();
+        if utils::is_aarch64() {
+            binary_url = self
+                .binaries_url
+                .get("aarch64-apple-darwin")
+                .unwrap()
+                .clone()
+                .unwrap()
+        } else if utils::is_x86_64() {
+            binary_url = self
+                .binaries_url
+                .get("x86_64-apple-darwin")
+                .unwrap()
+                .clone()
+                .unwrap()
+        } else {
+            Err("Unsupported architecture").unwrap()
+        }
+        let response = reqwest::get(&binary_url)
+            .await
+            .expect("Failed to download binary");
+
+        let binary_name = binary_url.split('/').last().unwrap();
+        let output_path = format!("{}/{}", self.service_dir, binary_name);
+
+        // Prepare the destination directories
+        if let Some(last_slash) = output_path.rfind('/') {
+            let dirs = &output_path[..last_slash];
+            if let Err(e) = tokio::fs::create_dir_all(dirs).await {
+                println!("Error creating directory: {:?}", e);
+            } else {
+                println!("Directory created successfully or already exists");
+            }
+        } else {
+            println!("No '/' found in the input string.");
+        }
+
+        if !response.status().is_success() {
+            Err(format!(
+                "GET Request: ({}): ({})",
+                response.status(),
+                binary_url
+            ))?
+        }
+
+        let mut file = File::create(&output_path.as_str()).await.unwrap();
+        file.write(&response.bytes().await.unwrap())
+            .await
+            .with_context(|| format!("Failed to write to {}", output_path))?;
+        self.set_permission(output_path).await?;
+        Ok(())
+    }
+
+    async fn set_permission(&self, binary_path: impl AsRef<str>) -> Result<()> {
+        use std::os::unix::fs::PermissionsExt;
+        let mut permissions = std::fs::metadata(binary_path.as_ref())
+            .with_context(|| format!("Failed to get metadata for {}", binary_path.as_ref()))?
+            .permissions();
+        permissions.set_mode(0o755);
+        std::fs::set_permissions(binary_path.as_ref(), permissions)
+            .with_context(|| format!("Failed to set permissions for {}", binary_path.as_ref()))?;
         Ok(())
     }
 }
