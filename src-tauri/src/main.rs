@@ -52,12 +52,12 @@ pub struct Service {
     #[serde(rename = "serviceType")]
     service_type: Option<String>, //"binary" | "process",
     version: Option<String>,
-    #[serde(rename = "huggingFaceId")]
-    hugging_face_id: Option<String>,
-    #[serde(rename = "modelFiles")]
-    model_files: Option<Vec<String>>,
-    #[serde(rename = "weightsUrl")]
-    weights_url: Option<String>,
+    #[serde(rename = "weightsDirectoryUrl")]
+    weights_directory_url: Option<String>,
+    #[serde(rename = "weightsFiles")]
+    weights_files: Option<Vec<String>>,
+    #[serde(rename = "binariesUrl")]
+    binaries_url: Option<HashMap<String, Option<String>>>,
     #[serde(rename = "serveCommand")]
     serve_command: Option<String>,
 }
