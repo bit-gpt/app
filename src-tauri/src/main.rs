@@ -108,8 +108,8 @@ fn is_docker_running() -> bool {
 
 #[tauri::command]
 fn is_swarm_supported() -> bool {
-    match env::consts::OS {
-        "macos" => true,
+    match (env::consts::OS, env::consts::ARCH) {
+        ("macos", "aarch64") => true,
         _ => false
     }
 }
