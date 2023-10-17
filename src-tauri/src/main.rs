@@ -97,6 +97,18 @@ struct ModelInfo {
 }
 
 #[tauri::command]
+fn get_username() -> String {
+    let output = Command::new("whoami").output();
+
+    match output {
+        Ok(output) => {
+            output.stdout.trim().to_string()
+        },
+        Err(_) => "prem-app".to_string(),
+    }
+}
+
+#[tauri::command]
 async fn get_petals_models() -> Result<Vec<String>, String> {
     let url = "https://health.petals.dev/api/v1/state";
     let response = get(url).await.map_err(|err| err.to_string())?;
@@ -283,6 +295,7 @@ fn main() {
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
             is_swarm_supported,
+            get_username,
             get_petals_models,
             run_swarm_mode,
             stop_swarm_mode,

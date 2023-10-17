@@ -58,6 +58,10 @@ export const swarmSupported = async () => {
   return Boolean(check);
 };
 
+export const userName = async () => {
+  return await invoke("get_username");
+};
+
 export const checkSwarmModeRunning = async () => {
   const check = await invoke("is_swarm_mode_running");
   return Boolean(check);
