@@ -1,11 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import DeleteIcon from "shared/components/DeleteIcon";
 import PrimaryButton from "shared/components/PrimaryButton";
 import Spinner from "shared/components/Spinner";
 import useStartService from "shared/hooks/useStartService";
 
-import deleteService from "../api/deleteService";
+import useDeleteService from "../../../shared/hooks/useDeleteService";
 import type { ServiceStateProps } from "../types";
 
 import WarningModal from "./WarningModal";
@@ -17,44 +16,47 @@ type DeleteModalProps = {
 };
 
 const StoppedServiceState = ({
-  serviceId,
+  service,
   refetch,
   onOpenClick,
   openDeleteModal,
   setOpenDeleteModal,
 }: ServiceStateProps & DeleteModalProps) => {
-  const { mutate: deleteMutate, isLoading: deleteLoading } = useMutation((id: string) =>
-    deleteService(id),
-  );
-
+  const { mutate: deleteMutate, isLoading: deleteLoading } = useDeleteService();
   const { mutate: startMutate, isLoading: startLoading } = useStartService();
 
   const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    startMutate(serviceId, {
-      onSuccess: () => {
-        refetch();
-        onOpenClick?.();
-        toast.success("Service started successfully");
+    startMutate(
+      { serviceId: service.id, serviceType: service.serviceType },
+      {
+        onSuccess: () => {
+          refetch();
+          onOpenClick?.();
+          toast.success("Service started successfully");
+        },
+        onError: () => {
+          toast.error("Failed to start service");
+        },
       },
-      onError: () => {
-        toast.error("Failed to start service");
-      },
-    });
+    );
   };
 
   const deleteServiceHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setOpenDeleteModal(false);
-    deleteMutate(serviceId, {
-      onSuccess: () => {
-        refetch();
-        toast.success("Service deleted successfully");
+    deleteMutate(
+      { serviceId: service.id, serviceType: service.serviceType },
+      {
+        onSuccess: () => {
+          refetch();
+          toast.success("Service deleted successfully");
+        },
+        onError: () => {
+          toast.error("Failed to delete service");
+        },
       },
-      onError: () => {
-        toast.error("Failed to delete service");
-      },
-    });
+    );
   };
 
   const onCancelClick = (e: React.MouseEvent<HTMLButtonElement>) => {

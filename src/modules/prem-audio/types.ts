@@ -1,5 +1,7 @@
 import type { PremAudioHistory } from "shared/types";
 
+import type { Service } from "../service/types";
+
 export type TranscriptionsGeneration = {
   file: File;
   model: string;
@@ -19,6 +21,7 @@ export type PremAudioContainerProps = {
   serviceName: string;
   historyId?: string;
   serviceId: string;
+  serviceType: Service["serviceType"];
 };
 
 export type PremAudioRecordTabsProps = {

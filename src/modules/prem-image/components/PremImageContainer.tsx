@@ -17,7 +17,12 @@ import PremImageRightSidebar from "./PremImageRightSidebar";
 
 import "yet-another-react-lightbox/styles.css";
 
-const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageContainerProps) => {
+const PremImageContainer = ({
+  serviceName,
+  historyId,
+  serviceId,
+  serviceType,
+}: PremImageContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
@@ -37,11 +42,11 @@ const PremImageContainer = ({ serviceName, historyId, serviceId }: PremImageCont
     setNegativePrompt,
     file,
     setFile,
-  } = usePremImage(serviceId, historyId);
+  } = usePremImage(serviceId, serviceType, historyId);
 
   const onDeleteClick = () => {
     deleteHistory(historyId as string);
-    navigate(`/prem-image/${serviceId}`);
+    navigate(`/prem-image/${serviceId}/${serviceType}`);
   };
 
   const handleClickOnImg = (index: number) => {

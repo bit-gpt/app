@@ -79,9 +79,8 @@ export type SettingStore = {
   setBackendUrl: (backendUrl: string) => void;
   isIP: boolean;
   setIsIP: (isIP: boolean) => void;
-  serviceDownloadsInProgress: Record<string, number>;
-  setServiceDownloadProgress: (serviceId: string, percentage: number) => void;
-  addServiceDownloadInProgress: (serviceId: string) => void;
+  serviceDownloadsInProgress: Record<string, Record<string, any>>;
+  setServiceDownloadProgress: (serviceId: string, serviceType: string, progress: number) => void;
   removeServiceDownloadInProgress: (serviceId: string) => void;
 };
 

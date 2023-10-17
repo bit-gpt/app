@@ -1,123 +1,82 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use reqwest::blocking::get;
-use serde::Deserialize;
-use std::{env, thread};
+mod controller_binaries;
+mod download;
+mod errors;
+mod utils;
+
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use tauri::{
-    AboutMetadata, api::process::Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
-    Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
+    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
+    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
+use tokio::{process::Child, sync::Mutex};
 
-#[derive(Deserialize, Debug)]
-struct App {
-    version: String,
-    image: String,
-    digest: String,
+#[derive(Debug, Default)]
+pub struct SharedState {
+    running_services: Mutex<HashMap<String, Child>>,
+    // Properties from public service registry and additional service state
+    services: Mutex<HashMap<String, Service>>,
 }
 
-#[derive(Deserialize, Debug)]
-struct Prem {
-    daemon: App,
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct Service {
+    beta: Option<bool>,
+    #[serde(rename = "comingSoon")]
+    coming_soon: Option<bool>,
+    #[serde(rename = "defaultPort")]
+    default_port: Option<u32>,
+    description: Option<String>,
+    documentation: Option<String>,
+    downloaded: Option<bool>,
+    #[serde(rename = "enoughMemory")]
+    enough_memory: Option<bool>,
+    #[serde(rename = "enoughSystemMemory")]
+    enough_system_memory: Option<bool>,
+    icon: Option<String>,
+    id: Option<String>,
+    interfaces: Vec<String>,
+    #[serde(rename = "modelInfo")]
+    model_info: ModelInfo,
+    name: Option<String>,
+    #[serde(rename = "needsUpdate")]
+    needs_update: Option<bool>,
+    #[serde(rename = "promptTemplate")]
+    prompt_template: Option<String>,
+    running: Option<bool>,
+    #[serde(rename = "runningPort")]
+    running_port: Option<u32>,
+    supported: Option<bool>,
+    #[serde(rename = "serviceType")]
+    service_type: Option<String>, //"binary" | "process",
+    version: Option<String>,
+    #[serde(rename = "huggingFaceId")]
+    hugging_face_id: Option<String>,
+    #[serde(rename = "modelFiles")]
+    model_files: Option<Vec<String>>,
+    #[serde(rename = "weightsUrl")]
+    weights_url: Option<String>,
+    #[serde(rename = "serveCommand")]
+    serve_command: Option<String>,
 }
 
-#[derive(Deserialize, Debug)]
-struct Config {
-    prem: Prem,
-}
-
-#[tauri::command]
-fn run_container() {
-    // check if docker is running
-    let docker_check = is_docker_running();
-    if !docker_check {
-        println!("Docker is not running");
-        return;
-    }
-
-    //pull versions.json from GitHub repository prem-box
-    let url = "https://raw.githubusercontent.com/premAI-io/prem-box/main/versions.json";
-    let response = get(url).expect("Request failed");
-    let config: Config = response.json().expect("Failed to parse JSON");
-
-    let image = format!(
-        "{}:{}@{}",
-        config.prem.daemon.image, config.prem.daemon.version, config.prem.daemon.digest
-    );
-
-    println!("Prem Daemon {}", image);
-
-    // run in a separate thread the docker pull
-    let _child = thread::spawn(move || {
-        let status = Command::new("/usr/local/bin/docker")
-            .args(&[
-                "run",
-                "-d",
-                "-v",
-                "/var/run/docker.sock:/var/run/docker.sock",
-                "-p",
-                "54321:8000",
-                "--name",
-                "premd",
-                "-e",
-                "PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json",
-                "--rm",
-                image.as_str(),
-            ])
-            .status();
-
-        match status {
-            Ok(exit_status) => {
-                if exit_status.success() {
-                    println!("Docker container started successfully!");
-                } else {
-                    println!("Docker command failed with exit status: {:?}", exit_status);
-                }
-            }
-            Err(error) => {
-                println!("Failed to execute docker command: {:?}", error);
-            }
-        }
-    });
-
-    _child.join().expect("Thread panicked");
-}
-
-#[tauri::command]
-fn is_docker_running() -> bool {
-    let output = Command::new("/usr/bin/pgrep")
-        .args(["Docker"])
-        .output()
-        .map_err(|e| {
-            println!("Failed to execute docker info: {}", e);
-            e
-        });
-
-    if !output.unwrap().stdout.is_empty() {
-        return true;
-    }
-    return false;
-}
-
-#[tauri::command]
-fn is_container_running() -> Result<bool, String> {
-    let output = Command::new("/usr/local/bin/docker")
-        .args(&["ps", "-q", "-f", "name=premd"])
-        .output()
-        .map_err(|e| format!("Failed to execute command: {}", e))?;
-
-    Ok(!output.stdout.is_empty())
-}
-
-fn kill_container() {
-    // stop services
-    let url = "http://localhost:54321/v1/stop-all-services/";
-    get(url).expect("Request failed");
-    // stop docker
-    let _child = Command::new("/usr/local/bin/docker")
-        .args(&["kill", "premd"])
-        .output()
-        .expect("Failed to execute docker stop");
+#[derive(Debug, Deserialize, Serialize, Clone)]
+struct ModelInfo {
+    #[serde(rename = "inferenceTime")]
+    inference_time: Option<String>,
+    #[serde(rename = "maxLength")]
+    max_length: Option<u32>,
+    #[serde(rename = "memoryRequirements")]
+    memory_requirements: Option<u32>,
+    #[serde(rename = "tokenLimit")]
+    token_limit: Option<u32>,
+    #[serde(rename = "weightsName")]
+    weights_name: Option<String>,
+    #[serde(rename = "weightsSize")]
+    weights_size: Option<u32>,
+    streaming: Option<bool>,
 }
 
 fn main() {
@@ -131,10 +90,9 @@ fn main() {
                 ))
                 .add_native_item(MenuItem::Minimize)
                 .add_native_item(MenuItem::Hide)
-                .add_item(CustomMenuItem::new(
-                    "quit",
-                    "Quit Prem App",
-                ).accelerator("CommandOrControl+Q")),
+                .add_item(
+                    CustomMenuItem::new("quit", "Quit Prem App").accelerator("CommandOrControl+Q"),
+                ),
         ))
         .add_submenu(Submenu::new(
             "Edit",
@@ -163,17 +121,24 @@ fn main() {
 
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
+    let state = SharedState::default();
     #[allow(unused_mut)]
-        let mut app = tauri::Builder::default()
+    let mut app = tauri::Builder::default()
+        .manage(state)
         .invoke_handler(tauri::generate_handler![
-            run_container,
-            is_docker_running,
-            is_container_running,
+            controller_binaries::start_service,
+            controller_binaries::stop_service,
+            controller_binaries::delete_service,
+            controller_binaries::download_service,
+            controller_binaries::get_running_services,
+            controller_binaries::get_logs_for_service,
+            controller_binaries::get_services,
+            controller_binaries::get_service_by_id,
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
             "quit" => {
-                kill_container();
+                let _ = controller_binaries::stop_all_services(event.window().state());
                 event.window().close().unwrap();
             }
             "close" => {
@@ -189,7 +154,7 @@ fn main() {
                     window.hide().unwrap();
                 }
                 "quit" => {
-                    kill_container();
+                    let _ = controller_binaries::stop_all_services(app.state());
                     app.exit(0);
                 }
                 "show" => {
@@ -200,6 +165,17 @@ fn main() {
                 _ => {}
             },
             _ => {}
+        })
+        .setup(|app| {
+            tauri::async_runtime::block_on(async move {
+                utils::add_services_from_registry(
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
+                    &app.state::<SharedState>(),
+                )
+                .await
+                .expect("Failed to add services");
+            });
+            Ok(())
         })
         .build(tauri::generate_context!())
         .expect("error while running tauri application");

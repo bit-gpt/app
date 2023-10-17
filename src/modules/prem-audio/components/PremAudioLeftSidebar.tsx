@@ -11,7 +11,7 @@ import { shallow } from "zustand/shallow";
 
 const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const { serviceId, historyId } = useParams();
+  const { serviceId, serviceType, historyId } = useParams();
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history, deleteHistory } = usePremAudioStore(
     (state) => ({
@@ -24,7 +24,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
     if (historyId === id) {
-      navigate(`/prem-audio/${serviceId}`);
+      navigate(`/prem-audio/${serviceId}/${serviceType}`);
     }
   };
 

@@ -1,8 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import stopService from "modules/service/api/stopService";
+
+import ServiceController from "../../controller/serviceController";
 
 const useStopService = () => {
-  return useMutation((id: string) => stopService(id));
+  const controller = ServiceController.getInstance();
+  return useMutation(({ serviceId, serviceType }: { serviceId: string; serviceType: string }) =>
+    controller.stop(serviceId, serviceType),
+  );
 };
 
 export default useStopService;

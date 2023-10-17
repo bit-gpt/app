@@ -1,5 +1,7 @@
 import type { PremImageHistory } from "shared/types";
 
+import type { Service } from "../service/types";
+
 export type ImageGeneration = {
   prompt: string;
   n?: number;
@@ -36,4 +38,5 @@ export type PremImageContainerProps = {
   serviceName: string;
   historyId?: string;
   serviceId: string;
+  serviceType: Service["serviceType"];
 };

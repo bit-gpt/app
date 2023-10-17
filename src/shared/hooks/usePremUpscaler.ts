@@ -8,14 +8,19 @@ import usePremUpscalerStore from "shared/store/prem-upscaler";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
-import useService from "./useService";
+import type { Service } from "../../modules/service/types";
 
-const usePremUpscaler = (serviceId: string, historyId: string | undefined): PremUpscalerHook => {
+import useGetService from "./useGetService";
+
+const usePremUpscaler = (
+  serviceId: string,
+  serviceType: Service["serviceType"],
+  historyId: string | undefined,
+): PremUpscalerHook => {
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
-  const { data: response } = useService(serviceId, false);
-  const service = response?.data;
+  const { data: service } = useGetService(serviceId, serviceType, false);
 
   const {
     addHistory,
@@ -59,7 +64,7 @@ const usePremUpscaler = (serviceId: string, historyId: string | undefined): Prem
           name: file?.name || "File.jpg",
           timestamp: new Date().toISOString(),
         });
-        navigate(`/prem-upscaler/${serviceId}/${id}`);
+        navigate(`/prem-upscaler/${serviceId}/${serviceType}/${id}`);
       },
       onError: () => {
         toast.error("Something went wrong while generating the upscaler image");
