@@ -97,6 +97,14 @@ struct ModelInfo {
 }
 
 #[tauri::command]
+fn is_swarm_supported() -> bool {
+    match (env::consts::OS, env::consts::ARCH) {
+        ("macos", "aarch64") => true,
+        _ => false
+    }
+}
+
+#[tauri::command]
 fn get_username() -> String {
     let output = Command::new("whoami").output();
 
