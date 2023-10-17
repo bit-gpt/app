@@ -7,7 +7,7 @@ abstract class AbstractServiceController {
   abstract delete(serviceId: string): void;
   abstract download({
     serviceId,
-    binaryUrl,
+    binariesUrl,
     weightsDirectoryUrl,
     weightsFiles,
     afterSuccess,

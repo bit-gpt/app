@@ -1,6 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::collections::HashMap;
 use std::path::PathBuf;
 
 use crate::download::Downloader;
@@ -12,7 +13,7 @@ use tokio::{fs, process::Command};
 
 #[tauri::command(async)]
 pub async fn download_service<R: Runtime>(
-    binary_url: String,
+    binaries_url: HashMap<String, Option<String>>,
     weights_directory_url: String,
     weights_files: Vec<String>,
     service_id: &str,
@@ -32,7 +33,7 @@ pub async fn download_service<R: Runtime>(
     };
 
     Downloader::new(
-        binary_url,
+        binaries_url,
         weights_directory_url,
         weights_files,
         service_id,

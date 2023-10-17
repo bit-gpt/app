@@ -1,5 +1,7 @@
 use crate::errors::{Context, Result};
+use std::collections::HashMap;
 
+use crate::utils;
 use futures::StreamExt;
 use serde::Serialize;
 use tauri::{Runtime, Window};
@@ -7,7 +9,7 @@ use tokio::fs::{File, OpenOptions};
 use tokio::io::AsyncWriteExt;
 
 pub struct Downloader<R: Runtime> {
-    binary_url: String,
+    binaries_url: HashMap<String, Option<String>>,
     weights_directory_url: String,
     weights_files: Vec<String>,
     service_id: String,
@@ -25,7 +27,7 @@ struct ProgressPayload {
 
 impl<R: Runtime> Downloader<R> {
     pub fn new(
-        binary_url: impl AsRef<str>,
+        binaries_url: HashMap<String, Option<String>>,
         weights_directory_url: impl AsRef<str>,
         weights_files: Vec<String>,
         service_id: impl AsRef<str>,
@@ -33,7 +35,7 @@ impl<R: Runtime> Downloader<R> {
         window: Window<R>,
     ) -> Self {
         Self {
-            binary_url: binary_url.as_ref().to_string(),
+            binaries_url,
             weights_directory_url: weights_directory_url.as_ref().to_string(),
             weights_files: weights_files.to_vec(),
             service_id: service_id.as_ref().to_string(),
@@ -169,11 +171,29 @@ impl<R: Runtime> Downloader<R> {
     }
 
     pub async fn download_binary(&self) -> Result<()> {
-        let response = reqwest::get(&self.binary_url)
+        let mut binary_url = "".to_string();
+        if utils::is_aarch64() {
+            binary_url = self
+                .binaries_url
+                .get("aarch64-apple-darwin")
+                .unwrap()
+                .clone()
+                .unwrap()
+        } else if utils::is_x86_64() {
+            binary_url = self
+                .binaries_url
+                .get("x86_64-apple-darwin")
+                .unwrap()
+                .clone()
+                .unwrap()
+        } else {
+            Err("Unsupported architecture").unwrap()
+        }
+        let response = reqwest::get(&binary_url)
             .await
             .expect("Failed to download binary");
 
-        let binary_name = self.binary_url.split('/').last().unwrap();
+        let binary_name = binary_url.split('/').last().unwrap();
         let output_path = format!("{}/{}", self.service_dir, binary_name);
 
         // Prepare the destination directories
@@ -192,7 +212,7 @@ impl<R: Runtime> Downloader<R> {
             Err(format!(
                 "GET Request: ({}): ({})",
                 response.status(),
-                self.binary_url
+                binary_url
             ))?
         }
 

@@ -5,7 +5,7 @@ import DockerController from "./dockerController";
 
 export type DownloadArgs = {
   serviceId: string;
-  binaryUrl?: string;
+  binariesUrl?: Record<string, string | null>;
   weightsDirectoryUrl?: string;
   weightsFiles?: string[];
   afterSuccess?: () => void;
@@ -86,7 +86,7 @@ class ServiceController implements IServiceController {
 
   async download({
     serviceId,
-    binaryUrl,
+    binariesUrl,
     weightsDirectoryUrl,
     weightsFiles,
     serviceType,
@@ -99,7 +99,7 @@ class ServiceController implements IServiceController {
     } else if (serviceType === "binary") {
       await this.binariesController.download({
         serviceId,
-        binaryUrl,
+        binariesUrl,
         weightsDirectoryUrl,
         weightsFiles,
         afterSuccess,

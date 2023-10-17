@@ -18,3 +18,11 @@ pub async fn add_services_from_registry(
     }
     Ok(())
 }
+
+pub fn is_aarch64() -> bool {
+    cfg!(target_arch = "aarch64")
+}
+
+pub fn is_x86_64() -> bool {
+    cfg!(target_arch = "x86_64")
+}

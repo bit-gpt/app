@@ -119,7 +119,7 @@ const ServiceActions = ({
     e.preventDefault();
     download({
       serviceId: service.id,
-      binaryUrl: isServiceBinary(service) ? service.binariesUrl["aarch64-apple-darwin"] : undefined,
+      binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
       weightsDirectoryUrl: isServiceBinary(service) ? service.weightsDirectoryUrl : undefined,
       weightsFiles: isServiceBinary(service) ? service.weightsFiles : undefined,
       serviceType: service.serviceType,
