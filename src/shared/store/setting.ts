@@ -29,20 +29,11 @@ const useSettingStore = create<SettingStore>()(
   devtools(
     persist(
       (set) => ({
-        backendUrl: getBackendUrl(),
+        backendUrl: "",
         isIP: false,
         setIsIP: (isIP) => set(() => ({ isIP }), false, "setIsIP"),
         serviceDownloadsInProgress: {},
         setBackendUrl: (backendUrl) => set(() => ({ backendUrl }), false, "setBackendUrl"),
-        addServiceDownloadInProgress: (serviceId: string) => {
-          set(
-            (state) => ({
-              serviceDownloadsInProgress: { ...state.serviceDownloadsInProgress, [serviceId]: 0 },
-            }),
-            false,
-            "addServiceDownloadInProgress",
-          );
-        },
         removeServiceDownloadInProgress: (serviceId: string) => {
           set(
             (state) => {
@@ -53,12 +44,12 @@ const useSettingStore = create<SettingStore>()(
             "removeServiceDownloadInProgress",
           );
         },
-        setServiceDownloadProgress: (serviceId: string, percentage: number) => {
+        setServiceDownloadProgress: (serviceId: string, serviceType: string, progress: number) => {
           set(
             (state) => ({
               serviceDownloadsInProgress: {
                 ...state.serviceDownloadsInProgress,
-                [serviceId]: percentage,
+                [serviceId]: { progress, serviceType },
               },
             }),
             false,

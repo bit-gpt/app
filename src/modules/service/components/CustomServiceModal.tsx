@@ -10,6 +10,7 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import addService from "../api/addService";
 import type { CustomServiceModalProps, Service } from "../types";
 
+// TODO: should we have two different modals for docker and binary?
 const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => {
   const [code, setCode] = useState(
     `{
@@ -28,7 +29,13 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
       "envVariables": [
         "string"
       ],
-      "promptTemplate": "string"
+      "promptTemplate": "string",
+      "serviceType": "string",
+      "version": "string",
+      "weightsUrl": "string";
+      "serveCommand": "string";
+      "huggingFaceId": "string";
+      "modelFiles": "string[]";
     }`,
   );
 

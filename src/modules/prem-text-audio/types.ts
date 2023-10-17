@@ -1,5 +1,7 @@
 import type { PremTextAudioHistory } from "shared/types";
 
+import type { Service } from "../service/types";
+
 export type AudioGenerationData = {
   prompt: string;
 };
@@ -8,6 +10,7 @@ export type PremTextAudioContainerProps = {
   serviceName: string;
   historyId?: string;
   serviceId: string;
+  serviceType: Service["serviceType"];
 };
 
 export type PremTextAudioHook = {

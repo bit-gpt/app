@@ -9,16 +9,21 @@ import usePremImageStore from "shared/store/prem-image";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
-import useService from "./useService";
+import type { Service } from "../../modules/service/types";
 
-const usePremImage = (serviceId: string, historyId: string | undefined): PremImageResponse => {
+import useGetService from "./useGetService";
+
+const usePremImage = (
+  serviceId: string,
+  serviceType: Service["serviceType"],
+  historyId: string | undefined,
+): PremImageResponse => {
   const [prompt, setPrompt] = useState("");
   const [negativePrompt, setNegativePrompt] = useState("");
   const [file, setFile] = useState<File | undefined>(undefined);
   const navigate = useNavigate();
 
-  const { data: response } = useService(serviceId, false);
-  const service = response?.data;
+  const { data: service } = useGetService(serviceId, serviceType, false);
 
   const { n, size, response_format, addHistory, history, deleteHistory, seed } = usePremImageStore(
     (state) => ({
@@ -57,7 +62,7 @@ const usePremImage = (serviceId: string, historyId: string | undefined): PremIma
           ),
           timestamp: new Date().toISOString(),
         });
-        navigate(`/prem-image/${serviceId}/${id}`);
+        navigate(`/prem-image/${serviceId}/${serviceType}/${id}`);
       },
       onError: () => {
         toast.error("Something went wrong while generating the image");

@@ -12,7 +12,7 @@ import LeftSidebar from "../../../shared/components/LeftSidebar";
 
 const PremUpscalerLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const { serviceId, historyId } = useParams();
+  const { serviceId, serviceType, historyId } = useParams();
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history, deleteHistory } = usePremUpscalerStore(
     (state) => ({
@@ -25,7 +25,7 @@ const PremUpscalerLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
     if (historyId === id) {
-      navigate(`/prem-upscaler/${serviceId}`);
+      navigate(`/prem-upscaler/${serviceId}/${serviceType}`);
     }
   };
 

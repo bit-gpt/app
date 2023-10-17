@@ -7,6 +7,14 @@
 
 [dependencies]
   serde_json = "1.0"
+  dirs = "5.0.1"
+  futures = { version = "0.3.28", default-features = false }
+  thiserror = "1.0.49"
+  bytes = "1.5.0"
+
+  [dependencies.tokio]
+    features = ["process"]
+    version = "1.32.0"
 
   [dependencies.reqwest]
     features = ["json", "blocking"]

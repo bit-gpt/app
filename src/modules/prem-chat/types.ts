@@ -1,5 +1,7 @@
 import type { RightSidebarProps } from "shared/types";
 
+import type { Service } from "../service/types";
+
 export type Message = {
   role: string;
   content: string;
@@ -52,6 +54,7 @@ export type RegenerateButtonProps = {
 export type PremChatContainerProps = {
   chatId: string | undefined;
   serviceId: string;
+  serviceType: Service["serviceType"];
   serviceName: string;
 };
 
