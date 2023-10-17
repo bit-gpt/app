@@ -120,7 +120,6 @@ npm run dev
 ### Environment Variables
 
 - `VITE_BACKEND_URL` : destination of the premd
-- `VITE_DESTINATION` : `browser` | `desktop`
 - `IS_PACKAGED` : `true` | `false` used for server packaging.
 - `VITE_DEVELOPER_MODE`: 0 | 1
 

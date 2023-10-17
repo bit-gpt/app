@@ -14,12 +14,13 @@ import PremUpscalerRightSidebar from "./PremUpscalerRightSidebar";
 const PremUpscalerContainer = ({
   serviceName,
   serviceId,
+  serviceType,
   historyId,
 }: PremUpscalerContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
-  const { currentHistory } = usePremUpscaler(serviceId!, historyId);
+  const { currentHistory } = usePremUpscaler(serviceId!, serviceType!, historyId);
 
   return (
     <section>
@@ -42,7 +43,11 @@ const PremUpscalerContainer = ({
                 rightSidebar={rightSidebar}
               />
               {currentHistory && (
-                <PremUpscalerImageBox serviceId={serviceId} history={currentHistory} />
+                <PremUpscalerImageBox
+                  serviceId={serviceId}
+                  history={currentHistory}
+                  serviceType={serviceType}
+                />
               )}
               {!currentHistory && <PremUpscalerBox serviceId={serviceId} historyId={historyId} />}
             </div>

@@ -11,7 +11,7 @@ import LeftSidebar from "../../../shared/components/LeftSidebar";
 
 const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const { serviceId, historyId } = useParams();
+  const { serviceId, serviceType, historyId } = useParams();
   const { history, deleteHistory } = usePremTextAudioStore(
     (state) => ({
       history: state.history,
@@ -23,7 +23,7 @@ const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
     if (historyId === id) {
-      navigate(`/prem-text-audio/${serviceId}`);
+      navigate(`/prem-text-audio/${serviceId}/${serviceType}`);
     }
   };
 
