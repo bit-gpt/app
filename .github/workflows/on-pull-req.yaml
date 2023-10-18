@@ -11,3 +11,91 @@ jobs:
     - run: npm install
     - run: npm run prettier:check
     - run: npm run build
+  build-sidecar-macos-intel:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with: {python-version: 3.11}
+    - run: ./scripts/build_petals_sidecar.sh x86_64 x86_64
+    - uses: actions/upload-artifact@v3
+      with: {path: dist/*}
+  build-sidecar-macos-arm:
+    runs-on: macos-latest-xlarge
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with: {python-version: 3.11}
+    - run: ./scripts/build_petals_sidecar.sh arm64 aarch64
+    - uses: actions/upload-artifact@v3
+      with: {path: dist/*}
+  publish-tauri:
+    needs: [build-macos-intel, build-macos-arm]
+    permissions: write-all
+    strategy:
+      fail-fast: false
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Rust setup
+      uses: dtolnay/rust-toolchain@stable
+    - name: Install missing Rust target for universal Mac build
+      if: startsWith(matrix.platform, 'macos')
+      run: rustup target add aarch64-apple-darwin
+    - uses: swatinem/rust-cache@v2
+      with:
+        workspaces: "./src-tauri -> target"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "lts/*"
+        cache: npm
+    - run: npm install
+    - uses: actions/download-artifact@v3
+      with: {path: dist}
+    - name: metadata
+      id: metadata
+      run: |
+        echo "debug:"
+        ls dist/*
+        echo "debug: fix sidecar permissions"
+        chmod +x dist/*
+        echo "tag=test" >> $GITHUB_OUTPUT
+        echo "version=0.0.0-test" >> $GITHUB_OUTPUT
+    - name: Update with latest main branch
+      run: |
+        git config --local user.email "$(git log --format='%ae' HEAD^!)"
+        git config --local user.name "$(git log --format='%an' HEAD^!)"
+        git config pull.rebase true
+        git stash
+        git fetch origin main
+        git pull origin main
+        git stash pop || true
+    - uses: actions/setup-go@v4
+      with: {go-version: ^1.20.1}
+      id: go
+    - name: Install dasel
+      run: 'go install github.com/tomwright/dasel/cmd/dasel@latest'
+    - name: Increment version
+      run: |
+        dasel put string -f package.json ".version" "${{ steps.metadata.outputs.version }}"
+        dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ steps.metadata.outputs.version }}"
+        dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ steps.metadata.outputs.version }}"
+    - name: Build the app
+      uses: tauri-apps/tauri-action@dev
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+        ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      with:
+        tagName: ${{ steps.metadata.outputs.tag }}
+        releaseName: "PremAI App ${{ steps.metadata.outputs.tag }}"
+        releaseBody: "See the assets to download and install this version."
+        releaseDraft: true
+        includeDebug: true
+        updaterJsonKeepUniversal: true
+        args: '--target universal-apple-darwin'
