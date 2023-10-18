@@ -50,7 +50,7 @@ pub struct Service {
     running_port: Option<u32>,
     supported: Option<bool>,
     #[serde(rename = "serviceType")]
-    service_type: Option<String>, //"binary" | "process",
+    service_type: Option<String>,
     version: Option<String>,
     #[serde(rename = "weightsDirectoryUrl")]
     weights_directory_url: Option<String>,
@@ -168,12 +168,25 @@ fn main() {
         })
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
-                utils::add_services_from_registry(
+                utils::fetch_services_manifests(
                     "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
                     &app.state::<SharedState>(),
                 )
                 .await
-                .expect("Failed to add services");
+                .expect("Failed to fetch and save services manifests");
+
+                // Save services manifests to disk
+                let state_filepath = app
+                    .path_resolver()
+                    .app_data_dir()
+                    .expect("failed to resolve app data dir")
+                    .join("state.json");
+                utils::set_all_state_to_file(
+                    &app.state::<SharedState>(),
+                    &state_filepath.as_path().display().to_string(),
+                )
+                .await
+                .expect("Failed to save state to file")
             });
             Ok(())
         })
