@@ -168,7 +168,6 @@ fn main() {
         })
         .setup(|app| {
             // If there is no state file, fetch and save services manifests
-            // Check if state file exists
             let state_filepath = app
                 .path_resolver()
                 .app_data_dir()
@@ -182,7 +181,8 @@ fn main() {
                         .expect("Failed to read state from file");
                     let services: HashMap<String, Service> = serde_json::from_str(&json_string)
                         .expect("Failed to parse state from file");
-                    let mut services_guard = app.state::<SharedState>().services.lock().await;
+                    let state = app.state::<SharedState>();
+                    let mut services_guard = state.services.lock().await;
                     for (service_id, service) in services {
                         services_guard.insert(service_id, service);
                     }
