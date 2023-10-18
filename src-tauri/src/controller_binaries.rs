@@ -8,6 +8,7 @@ use crate::download::Downloader;
 use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
 
+use crate::utils::set_state_to_file;
 use tauri::{Runtime, Window};
 use tokio::{fs, process::Command};
 
@@ -43,9 +44,22 @@ pub async fn download_service<R: Runtime>(
     .download_files()
     .await?;
 
+    let state_filepath = app_handle
+        .path_resolver()
+        .app_data_dir()
+        .expect("failed to resolve app data dir")
+        .join("state.json");
+
     let mut registry_lock = state.services.lock().await;
     if let Some(service) = registry_lock.get_mut(service_id) {
         service.downloaded = Some(true);
+        set_state_to_file(
+            state_filepath.display().to_string(),
+            service_id,
+            "downloaded",
+            "true",
+        )
+        .await?;
     }
     Ok(())
 }
