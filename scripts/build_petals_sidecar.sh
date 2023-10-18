@@ -16,7 +16,7 @@ source prem/bin/activate
 pip install -r $REQUIREMENTS_FILE_PATH
 
 # # Package the Python script
-pyinstaller --onefile $PYTHON_SCRIPT_PATH --distpath $DIST_PATH --clean -n petals-aarch64-apple-darwin
+pyinstaller --onefile $PYTHON_SCRIPT_PATH --distpath $DIST_PATH --clean --target-architecture aarch64 -n petals-universal-apple-darwin
 
 # Deactivate the virtual environment
 deactivate
