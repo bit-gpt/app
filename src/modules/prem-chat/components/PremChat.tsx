@@ -15,13 +15,14 @@ function PremChat() {
     serviceType: Service["serviceType"];
   }>();
 
-  const { data: service, isLoading } = useGetService(serviceId!, serviceType!, false);
+  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!, false);
 
   useEffect(() => {
     (async () => {
       if (service && !service?.running) {
         const controller = ServiceController.getInstance();
         await controller.start(serviceId!, service.serviceType);
+        await refetch();
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -23,23 +23,19 @@ const StoppedServiceState = ({
   setOpenDeleteModal,
 }: ServiceStateProps & DeleteModalProps) => {
   const { mutate: deleteMutate, isLoading: deleteLoading } = useDeleteService();
-  const { mutate: startMutate, isLoading: startLoading } = useStartService();
+  const { mutateAsync: startMutateAsync, isLoading: startLoading } = useStartService();
 
-  const onStart = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onStart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    startMutate(
-      { serviceId: service.id, serviceType: service.serviceType },
-      {
-        onSuccess: () => {
-          refetch();
-          onOpenClick?.();
-          toast.success("Service started successfully");
-        },
-        onError: () => {
-          toast.error("Failed to start service");
-        },
-      },
-    );
+    try {
+      // TODO: we don't await otherwise startMutateAsync never returns
+      startMutateAsync({ serviceId: service.id, serviceType: service.serviceType });
+      refetch();
+      onOpenClick?.();
+      toast.success("Service started successfully");
+    } catch (error) {
+      toast.error("Failed to start service");
+    }
   };
 
   const deleteServiceHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
