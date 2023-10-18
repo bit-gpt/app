@@ -92,3 +92,23 @@ pub fn is_aarch64() -> bool {
 pub fn is_x86_64() -> bool {
     cfg!(target_arch = "x86_64")
 }
+
+pub fn get_binary_url(binaries_url: &HashMap<String, Option<String>>) -> String {
+    let mut binary_url = "".to_string();
+    if is_aarch64() {
+        binary_url = binaries_url
+            .get("aarch64-apple-darwin")
+            .unwrap()
+            .clone()
+            .unwrap()
+    } else if is_x86_64() {
+        binary_url = binaries_url
+            .get("x86_64-apple-darwin")
+            .unwrap()
+            .clone()
+            .unwrap()
+    } else {
+        Err("Unsupported architecture").unwrap()
+    }
+    binary_url
+}
