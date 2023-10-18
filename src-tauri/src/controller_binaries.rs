@@ -187,6 +187,13 @@ pub async fn get_services(state: tauri::State<'_, SharedState>) -> Result<Vec<Se
     tabby_codellama_7b.enough_system_memory = Some(true);
     let mut services = services.clone();
     services.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
+    //
+    let mut tabby_starcoder_1b = services["tabby-starcoder-1b"].clone();
+    tabby_starcoder_1b.supported = Some(true);
+    tabby_starcoder_1b.enough_memory = Some(true);
+    tabby_starcoder_1b.enough_system_memory = Some(true);
+    let mut services = services.clone();
+    services.insert("tabby-starcoder-1b".to_string(), tabby_starcoder_1b);
     return Ok(services
         .values()
         .filter(|service| service.version.is_some() && service.version.clone().unwrap() == "1")
@@ -207,6 +214,13 @@ pub async fn get_service_by_id(
     tabby_codellama_7b.enough_system_memory = Some(true);
     let mut services = services.clone();
     services.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
+    //
+    let mut tabby_starcoder_1b = services["tabby-starcoder-1b"].clone();
+    tabby_starcoder_1b.supported = Some(true);
+    tabby_starcoder_1b.enough_memory = Some(true);
+    tabby_starcoder_1b.enough_system_memory = Some(true);
+    let mut services = services.clone();
+    services.insert("tabby-starcoder-1b".to_string(), tabby_starcoder_1b);
     return Ok(services[&service_id].clone());
 }
 
