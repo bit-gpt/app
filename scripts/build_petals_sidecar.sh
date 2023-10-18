@@ -1,24 +1,28 @@
 #!/bin/bash
+set -e
 
-# Set the paths to the Python script, requirements file, and bash script
-TAURI_PATH="$(pwd)/src-tauri"
+# required inputs
+TAURI_PATH="$(dirname "$(dirname "$0")")/src-tauri"
 PYTHON_SCRIPT_PATH="${TAURI_PATH}/petals/run_petals.py"
 REQUIREMENTS_FILE_PATH="${TAURI_PATH}/petals/requirements.txt"
 DIST_PATH="${TAURI_PATH}/bin/python"
+ARCH=${1:-arm64}
+ARCH_NAME=${2:-aarch64}
 
-# Create a Python virtual environment
-python3 -m venv prem
-
-# Activate the virtual environment
-source prem/bin/activate
-
-# Install the necessary packages
+# Create & activate virtual env
+test -f venv-prem/bin/activate || python3 -m venv venv-prem
+source venv-prem/bin/activate
 pip install -r $REQUIREMENTS_FILE_PATH
 
-# # Package the Python script
-pyinstaller --onefile $PYTHON_SCRIPT_PATH --distpath $DIST_PATH --clean --target-architecture aarch64 -n petals-universal-apple-darwin
+# Package Python script
+pyinstaller \
+  --onefile \
+  --clean \
+  --distpath="$DIST_PATH" \
+  --target-arch=$ARCH \
+  --name=petals-${ARCH_NAME}-apple-darwin \
+  "$PYTHON_SCRIPT_PATH"
 
-# Deactivate the virtual environment
+# Remove virtual env
 deactivate
-
-rm -r "$(pwd)/prem"
+rm -r venv-prem
