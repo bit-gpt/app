@@ -12,7 +12,7 @@ use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
-use tokio::{process::Child, sync::Mutex};
+use tokio::{fs, process::Child, sync::Mutex};
 
 #[derive(Debug, Default)]
 pub struct SharedState {
@@ -167,27 +167,44 @@ fn main() {
             _ => {}
         })
         .setup(|app| {
-            tauri::async_runtime::block_on(async move {
-                utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
-                    &app.state::<SharedState>(),
-                )
-                .await
-                .expect("Failed to fetch and save services manifests");
+            // If there is no state file, fetch and save services manifests
+            // Check if state file exists
+            let state_filepath = app
+                .path_resolver()
+                .app_data_dir()
+                .expect("failed to resolve app data dir")
+                .join("state.json");
+            if state_filepath.exists() {
+                // If so, load state from file
+                tauri::async_runtime::block_on(async move {
+                    let json_string = fs::read_to_string(state_filepath)
+                        .await
+                        .expect("Failed to read state from file");
+                    let services: HashMap<String, Service> = serde_json::from_str(&json_string)
+                        .expect("Failed to parse state from file");
+                    let mut services_guard = app.state::<SharedState>().services.lock().await;
+                    for (service_id, service) in services {
+                        services_guard.insert(service_id, service);
+                    }
+                });
+            } else {
+                tauri::async_runtime::block_on(async move {
+                    utils::fetch_services_manifests(
+                        "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
+                        &app.state::<SharedState>(),
+                    )
+                        .await
+                        .expect("Failed to fetch and save services manifests");
 
-                // Save services manifests to disk
-                let state_filepath = app
-                    .path_resolver()
-                    .app_data_dir()
-                    .expect("failed to resolve app data dir")
-                    .join("state.json");
-                utils::set_all_state_to_file(
-                    &app.state::<SharedState>(),
-                    &state_filepath.as_path().display().to_string(),
-                )
-                .await
-                .expect("Failed to save state to file")
-            });
+                    // Save services manifests to disk
+                    utils::set_all_state_to_file(
+                        &app.state::<SharedState>(),
+                        &state_filepath.as_path().display().to_string(),
+                    )
+                        .await
+                        .expect("Failed to save state to file")
+                });
+            }
             Ok(())
         })
         .build(tauri::generate_context!())
