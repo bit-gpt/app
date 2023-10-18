@@ -37,6 +37,9 @@ const Service = () => {
   const isDevMode = isDeveloperMode();
 
   // Resume service download if in progress
+  // TODO: This cause multiple concurrent download
+  // Service needs isDownloading state
+  /*
   useEffect(() => {
     (async () => {
       if (!isServicesLoading) {
@@ -62,6 +65,7 @@ const Service = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Object.keys(progresses).length, isServicesLoading]);
+  */
 
   const ServicesComponents = useMemo(() => {
     return filteredApps?.map((app) => {

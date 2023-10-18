@@ -74,14 +74,9 @@ pub async fn start_service(
         .path_resolver()
         .app_data_dir()
         .expect("failed to resolve app data dir")
-        .join("binaries")
+        .join("models")
         .join(&service_id);
-    let binary_path = PathBuf::from(&service_dir).join(&service_id);
     let log_path = PathBuf::from(&service_dir).join(format!("{}.log", service_id));
-
-    if !binary_path.exists() {
-        Err(format!("invalid binary for `{service_id}`"))?
-    }
 
     // Use synchronous std::fs::File for log file creation
     let log_file = std::fs::OpenOptions::new()
@@ -107,13 +102,18 @@ pub async fn start_service(
             format!("service_id ({service_id}) doesn't contain a valid serve_command")
         })?
         .as_str();
+    println!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
+    let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
+    if !binary_path.exists() {
+        Err(format!("invalid binary for `{service_id}`"))?
+    }
 
     let child = Command::new(&binary_path)
         .args(vec![
-            serve_command_vec[0],
-            format!("{}={}", serve_command_vec[1], serve_command_vec[2]).as_str(),
-            format!("{}={}", serve_command_vec[3], serve_command_vec[4]).as_str(),
+            serve_command_vec[1],
+            format!("{}={}", serve_command_vec[2], service_dir.display()).as_str(),
+            format!("{}={}", serve_command_vec[4], serve_command_vec[5]).as_str(),
         ])
         .stdout(std::process::Stdio::from(
             log_file

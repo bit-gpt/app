@@ -5,7 +5,8 @@ use crate::utils;
 use futures::StreamExt;
 use serde::Serialize;
 use tauri::{Runtime, Window};
-use tokio::fs::{File, OpenOptions};
+use tokio::fs;
+use tokio::fs::OpenOptions;
 use tokio::io::AsyncWriteExt;
 
 pub struct Downloader<R: Runtime> {
@@ -45,31 +46,36 @@ impl<R: Runtime> Downloader<R> {
     }
 
     pub async fn download_files(&self) -> Result<()> {
-        self.download_binary().await?;
+        // Download binary
+        let binary_url = utils::get_binary_url(&self.binaries_url);
+        let binary_name = binary_url.split('/').last().unwrap();
+        let output_path = format!("{}/{}", self.service_dir, binary_name);
+        self.download_file(&binary_url, &output_path).await?;
+        self.set_execute_permission(&output_path).await?;
+        // Download weights
         self.download_weights_files().await
     }
 
     async fn download_weights_files(&self) -> Result<()> {
         futures::future::join_all(self.weights_files.clone().into_iter().map(|filename| {
             let url = format!("{}{}", &self.weights_directory_url, filename);
-            self.download_weight_file(url, format!("{}/{}", &self.service_dir, filename))
+            self.download_file(url, format!("{}/{}", &self.service_dir, filename))
         }))
         .await
         .into_iter()
         .collect()
     }
 
-    async fn download_weight_file(
+    async fn download_file(
         &self,
         url: impl AsRef<str>,
         output_path: impl AsRef<str>,
     ) -> Result<()> {
         let mut size_on_disk: u64 = 0;
-
         // Check if there is a file on disk already.
-        if tokio::fs::metadata(output_path.as_ref()).await.is_ok() {
+        if fs::metadata(output_path.as_ref()).await.is_ok() {
             // If so, check file length to know where to restart the download from.
-            size_on_disk = tokio::fs::metadata(output_path.as_ref())
+            size_on_disk = fs::metadata(output_path.as_ref())
                 .await
                 .with_context(|| format!("Failed to get metadata for {}", output_path.as_ref()))?
                 .len();
@@ -90,7 +96,14 @@ impl<R: Runtime> Downloader<R> {
             .unwrap();
 
         // If there is nothing else to download for this file, we can return.
-        let total_file_size = res_head_request.content_length().unwrap_or_default() + size_on_disk;
+        let total_file_size = res_head_request
+            .headers()
+            .get("content-length")
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .parse::<u64>()
+            .unwrap();
         if total_file_size == size_on_disk {
             println!("File already downloaded: {}", output_path.as_ref());
             return Ok(());
@@ -190,61 +203,7 @@ impl<R: Runtime> Downloader<R> {
         Ok(())
     }
 
-    pub async fn download_binary(&self) -> Result<()> {
-        let mut binary_url = "".to_string();
-        if utils::is_aarch64() {
-            binary_url = self
-                .binaries_url
-                .get("aarch64-apple-darwin")
-                .unwrap()
-                .clone()
-                .unwrap()
-        } else if utils::is_x86_64() {
-            binary_url = self
-                .binaries_url
-                .get("x86_64-apple-darwin")
-                .unwrap()
-                .clone()
-                .unwrap()
-        } else {
-            Err("Unsupported architecture").unwrap()
-        }
-        let response = reqwest::get(&binary_url)
-            .await
-            .expect("Failed to download binary");
-
-        let binary_name = binary_url.split('/').last().unwrap();
-        let output_path = format!("{}/{}", self.service_dir, binary_name);
-
-        // Prepare the destination directories
-        if let Some(last_slash) = output_path.rfind('/') {
-            let dirs = &output_path[..last_slash];
-            if let Err(e) = tokio::fs::create_dir_all(dirs).await {
-                println!("Error creating directory: {:?}", e);
-            } else {
-                println!("Directory created successfully or already exists");
-            }
-        } else {
-            println!("No '/' found in the input string.");
-        }
-
-        if !response.status().is_success() {
-            Err(format!(
-                "GET Request: ({}): ({})",
-                response.status(),
-                binary_url
-            ))?
-        }
-
-        let mut file = File::create(&output_path.as_str()).await.unwrap();
-        file.write(&response.bytes().await.unwrap())
-            .await
-            .with_context(|| format!("Failed to write to {}", output_path))?;
-        self.set_permission(output_path).await?;
-        Ok(())
-    }
-
-    async fn set_permission(&self, binary_path: impl AsRef<str>) -> Result<()> {
+    async fn set_execute_permission(&self, binary_path: impl AsRef<str>) -> Result<()> {
         use std::os::unix::fs::PermissionsExt;
         let mut permissions = std::fs::metadata(binary_path.as_ref())
             .with_context(|| format!("Failed to get metadata for {}", binary_path.as_ref()))?
