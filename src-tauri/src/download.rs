@@ -75,7 +75,33 @@ impl<R: Runtime> Downloader<R> {
                 .len();
         }
 
+        // Make Head request to get file size
+        let res_head_request = reqwest::Client::new()
+            .head(url.as_ref())
+            .send()
+            .await
+            .map_err(|_| {
+                format!(
+                    "Failed to HEAD from {} to {}",
+                    url.as_ref(),
+                    output_path.as_ref()
+                )
+            })
+            .unwrap();
+
+        // If there is nothing else to download for this file, we can return.
+        let total_file_size = res_head_request.content_length().unwrap_or_default() + size_on_disk;
+        if total_file_size == size_on_disk {
+            println!("File already downloaded: {}", output_path.as_ref());
+            return Ok(());
+        }
+
         // Make GET request with range header
+        println!("Downloading: {}", url.as_ref());
+        println!(
+            "{}",
+            "bytes=".to_owned() + &size_on_disk.to_string()[..] + "-"
+        );
         let res = reqwest::Client::new()
             .get(url.as_ref())
             .header(
@@ -100,12 +126,6 @@ impl<R: Runtime> Downloader<R> {
                 res.status(),
                 url.as_ref()
             ))?
-        }
-
-        // If there is nothing else to download for this file, we can return.
-        let total_file_size = res.content_length().unwrap_or_default() + size_on_disk;
-        if total_file_size == size_on_disk {
-            return Ok(());
         }
 
         // Prepare the destination directories
