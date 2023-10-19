@@ -8,19 +8,7 @@ import type {
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
-import api from "../api/v1";
-
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
-
-export const checkIsServerRunning = async () => {
-  try {
-    const response = await api().get(`v1`);
-    return response.data && response.status === 200;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
 
 export const isIP = (host: string): boolean => {
   if (host.includes("localhost")) return true;
@@ -170,10 +158,6 @@ export const formatInfo = (value: any): ServiceInfoValue => {
   }
   return value;
 };
-
-export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
-
-export const SYSTEM_MEMORY_LIMIT = 8;
 
 export const CHAT_ID = "chat";
 export const DIFFUSER_ID = "diffuser";
