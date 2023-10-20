@@ -1,5 +1,4 @@
 import { invoke } from "@tauri-apps/api/tauri";
-import * as console from "console";
 
 import type { ServiceBinary } from "../modules/service/types";
 
