@@ -12,10 +12,10 @@ export type DownloadArgs = {
 };
 
 interface IServiceController {
-  start(serviceId: string, serviceType: string): Promise<void>;
-  stop(serviceId: string, serviceType: string): Promise<void>;
-  restart(serviceId: string, serviceType: string): Promise<void>;
-  delete(serviceId: string, serviceType: string): Promise<void>;
+  start(serviceId: string, serviceType: Service["serviceType"]): Promise<void>;
+  stop(serviceId: string, serviceType: Service["serviceType"]): Promise<void>;
+  restart(serviceId: string, serviceType: Service["serviceType"]): Promise<void>;
+  delete(serviceId: string, serviceType: Service["serviceType"]): Promise<void>;
   download({
     serviceId,
     weightsDirectoryUrl,
@@ -23,9 +23,12 @@ interface IServiceController {
     serviceType,
     afterSuccess,
   }: DownloadArgs & { serviceType: string }): Promise<void>;
-  getService(serviceId: string, serviceType: string): Promise<Service>;
-  getServices(serviceType: string): Promise<Service[]>;
-  getLogs(serviceId: string, serviceType: string): Promise<void>;
+  getService(serviceId: string, serviceType: Service["serviceType"]): Promise<Service>;
+  getServices(serviceType: Service["serviceType"]): Promise<Service[]>;
+  getLogs(serviceId: string, serviceType: Service["serviceType"]): Promise<string>;
+  getServiceStats(serviceId: string, serviceType: Service["serviceType"]): Promise<any>;
+  getSystemStats(serviceType: Service["serviceType"]): Promise<any>;
+  getGPUStats(serviceType: Service["serviceType"]): Promise<any>;
 }
 
 class ServiceController implements IServiceController {
@@ -130,13 +133,48 @@ class ServiceController implements IServiceController {
     }
   }
 
-  async getLogs(serviceId: string, serviceType: string): Promise<void> {
+  async getLogs(serviceId: string, serviceType: Service["serviceType"]): Promise<string> {
     // If serviceType is not provided, we assume it's docker
     serviceType = serviceType ? serviceType : "docker";
     if (serviceType === "docker") {
-      await this.dockerController.getLogs(serviceId);
+      return await this.dockerController.getLogs(serviceId);
     } else if (serviceType === "binary") {
-      await this.binariesController.getLogs(serviceId);
+      return await this.binariesController.getLogs(serviceId);
+    } else {
+      return "";
+    }
+  }
+
+  async getServiceStats(
+    serviceId: string,
+    serviceType: Service["serviceType"],
+  ): Promise<Record<string, string>> {
+    // If serviceType is not provided, we assume it's docker
+    serviceType = serviceType ? serviceType : "docker";
+    if (serviceType === "docker") {
+      return await this.dockerController.getServiceStats(serviceId);
+    } else if (serviceType === "binary") {
+      return await this.binariesController.getServiceStats(serviceId);
+    } else {
+      return {};
+    }
+  }
+
+  async getSystemStats(serviceType: Service["serviceType"]): Promise<any> {
+    // We check the env (browser or desktop) to determine serviceType
+    if (serviceType === "docker") {
+      return await this.dockerController.getSystemStats();
+    } else if (serviceType === "binary") {
+      return await this.binariesController.getSystemStats();
+    }
+  }
+
+  async getGPUStats(serviceType: Service["serviceType"]): Promise<any> {
+    // We check the env (browser or desktop) to determine serviceType
+    if (serviceType === "docker") {
+      return await this.dockerController.getGPUStats();
+    } else if (serviceType === "binary") {
+      return await this.binariesController.getGPUStats();
     }
   }
 }
