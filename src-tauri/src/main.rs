@@ -58,8 +58,11 @@ pub struct Service {
     // Dynamic state
     downloaded: Option<bool>,
     downloading: Option<bool>,
+    #[serde(rename = "enoughMemory")]
     enough_memory: Option<bool>,
+    #[serde(rename = "enoughSystemMemory")]
     enough_system_memory: Option<bool>,
+    #[serde(rename = "enoughStorage")]
     enough_storage: Option<bool>,
     running: Option<bool>,
     supported: Option<bool>,

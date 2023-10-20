@@ -1,12 +1,12 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::collections::HashMap;
-use std::path::PathBuf;
-
 use crate::download::Downloader;
 use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
+use std::collections::HashMap;
+use std::path::PathBuf;
+use sys_info::mem_info;
 
 use futures::future;
 use tauri::{AppHandle, Runtime, State, Window};
@@ -293,14 +293,18 @@ pub async fn is_service_downloading(
     return Ok(downloading_services.contains(&service_id.to_string()));
 }
 
-pub async fn has_enough_free_memory() -> Result<bool> {
-    // TODO: Not implemented yet
-    Ok(true)
+pub async fn has_enough_free_memory(service: &Service) -> Result<bool> {
+    let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
+    let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
+    let has_enough_memory = mem_info.free >= memory_requirements as u64;
+    Ok(has_enough_memory)
 }
 
-pub async fn has_enough_total_memory() -> Result<bool> {
-    // TODO: Not implemented yet
-    Ok(true)
+pub async fn has_enough_total_memory(service: &Service) -> Result<bool> {
+    let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
+    let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
+    let has_enough_memory = mem_info.total >= memory_requirements as u64;
+    Ok(has_enough_memory)
 }
 
 pub async fn has_enough_storage() -> Result<bool> {
@@ -321,8 +325,8 @@ pub async fn update_service_with_dynamic_state(
     let is_service_downloaded = is_service_downloaded(service, &app_handle).await?;
     let is_service_downloading =
         is_service_downloading(&service.id.as_ref().unwrap(), &state).await?;
-    let has_enough_free_memory = has_enough_free_memory().await?;
-    let has_enough_total_memory = has_enough_total_memory().await?;
+    let has_enough_free_memory = has_enough_free_memory(service).await?;
+    let has_enough_total_memory = has_enough_total_memory(service).await?;
     let has_enough_storage = has_enough_storage().await?;
     let is_supported = is_supported().await?;
     let is_service_running = is_service_running(&service.id.as_ref().unwrap(), &state).await?;
