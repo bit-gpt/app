@@ -4,7 +4,7 @@ import storage from "assets/images/storage.svg";
 import useSystemStats from "shared/hooks/useSystemStats";
 
 const SystemResources = () => {
-  const { data: response } = useSystemStats();
+  const { data } = useSystemStats();
   return (
     <div className="settings-card">
       <h2 className="text-white mb-4 text-lg">Resources</h2>
@@ -16,13 +16,13 @@ const SystemResources = () => {
               Memory&nbsp;
             </span>
             <span>
-              {response?.data?.memory_usage} / {response?.data?.memory_limit} GiB
+              {data?.memory_usage} / {data?.memory_limit} GiB
             </span>
           </div>
           <div className="progress">
             <div
               className="progress-container"
-              style={{ width: `${response?.data?.memory_percentage}%` }}
+              style={{ width: `${data?.memory_percentage}%` }}
             ></div>
           </div>
         </li>
@@ -32,13 +32,10 @@ const SystemResources = () => {
               <img src={cpu} alt="cpu" className="w-4 h-4" />
               CPU&nbsp;
             </span>
-            <span>{response?.data?.cpu_percentage}%</span>
+            <span>{data?.cpu_percentage}%</span>
           </div>
           <div className="progress">
-            <div
-              className="progress-container"
-              style={{ width: `${response?.data?.cpu_percentage}%` }}
-            ></div>
+            <div className="progress-container" style={{ width: `${data?.cpu_percentage}%` }}></div>
           </div>
         </li>
         <li>
@@ -48,13 +45,13 @@ const SystemResources = () => {
               Storage&nbsp;
             </span>
             <span>
-              {response?.data?.storage_usage} / {response?.data?.storage_limit} GiB
+              {data?.storage_usage} / {data?.storage_limit} GiB
             </span>
           </div>
           <div className="progress">
             <div
               className="progress-container"
-              style={{ width: `${response?.data?.storage_percentage}%` }}
+              style={{ width: `${data?.storage_percentage}%` }}
             ></div>
           </div>
         </li>

@@ -151,9 +151,9 @@ pub async fn delete_service(service_id: String, app_handle: AppHandle) -> Result
         .path_resolver()
         .app_data_dir()
         .expect("failed to resolve app data dir")
-        .join("binaries")
+        .join("models")
         .join(&service_id);
-    fs::remove_dir(dir).await.map_err(|e| e.to_string())?;
+    fs::remove_dir_all(dir).await.map_err(|e| e.to_string())?;
     Ok(())
 }
 
