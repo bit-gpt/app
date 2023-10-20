@@ -22,24 +22,16 @@
         "exit": true
       },
       "shell": {
+        "all": true,
+        "execute": true,
         "sidecar": true,
-        "scope": [
-          {
-            "name": "bin/python/petals",
-            "sidecar": true,
-            "args": [
-              "--num_blocks",
-              "--public_name",
-              "--model"
-            ]
-          }
-        ]
+        "open": true
       }
     },
     "bundle": {
       "active": true,
-      "externalBin": [
-        "bin/python/petals"
+      "resources": [
+        "petals/*"
       ],
       "icon": [
         "icons/32x32.png",

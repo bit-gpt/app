@@ -5,7 +5,7 @@ set -e
 TAURI_PATH="$(dirname "$(dirname "$0")")/src-tauri"
 PYTHON_SCRIPT_PATH="${TAURI_PATH}/petals/run_petals.py"
 REQUIREMENTS_FILE_PATH="${TAURI_PATH}/petals/requirements.txt"
-DIST_PATH="${TAURI_PATH}/bin/python"
+DIST_PATH="${TAURI_PATH}/python"
 ARCH=${1:-arm64}
 ARCH_NAME=${2:-aarch64}
 

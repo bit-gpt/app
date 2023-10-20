@@ -4,7 +4,7 @@
 use reqwest::blocking::get;
 use reqwest::get as reqwest_get;
 use serde::Deserialize;
-use std::{env, thread, str};
+use std::{env, thread, str, collections::HashMap};
 use tauri::{
     api::process::Command, AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -108,8 +108,8 @@ fn is_docker_running() -> bool {
 
 #[tauri::command]
 fn is_swarm_supported() -> bool {
-    match (env::consts::OS, env::consts::ARCH) {
-        ("macos", "aarch64") => true,
+    match env::consts::OS {
+        "macos" => true,
         _ => false
     }
 }
@@ -170,22 +170,61 @@ fn is_swarm_mode_running() -> bool {
     return false;
 }
 
+fn create_environment(handle: tauri::AppHandle) -> String {
+    // Get the application data directory
+    let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
+    let app_data_dir = app_data_dir
+        .join(".config/prem");
+    let app_data_dir = app_data_dir
+        .to_str()
+        .expect("🙈 Failed to convert app data dir path to str");
+
+    // Get create env path
+    let binding = handle.path_resolver()
+        .resolve_resource("petals")
+        .expect("🙈 Failed to find `create_env.sh`");
+    let petals_path = binding
+        .to_str()
+        .expect("🙈 Failed to convert petals path to str");
+
+    // Set env variables
+    let mut env = HashMap::new();
+    env.insert("PREM_APPDIR".to_string(), app_data_dir.to_string());
+    env.insert("PREM_PYTHON".to_string(), "prem-env".to_string());
+    env.insert("REQUIREMENTS".to_string(), format!("{petals_path}/requirements.txt"));
+
+    // Run the bash script
+    let output = Command::new("sh")
+        .args([format!("{petals_path}/create_env.sh")])
+        .envs(env)
+        .output()
+        .expect("🙈 Failed to create env");
+    format!("{app_data_dir}/envs/prem-env/bin/python3").to_string()
+}
+
+
 #[tauri::command]
-fn run_swarm_mode(num_blocks: i32, model: String, public_name: String) {
-    println!("🚀 Starting the Swarm...");
-    let _ = Command::new_sidecar("petals")
-        .expect("🙈 Failed to create `run_petals` binary command")
+fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String){
+    let python = create_environment(handle);
+    println!("🚀 Starting the Swarm with python={}...", python);
+    let cmd = Command::new(python)
         .args(&[
+            "-m",
+            "petals.cli.run_server",
             "--num_blocks",
             &num_blocks.to_string(),
             "--public_name",
             &public_name,
             "--model",
             &model,
-        ])
+        ]);
+    println!("{:?}", cmd);
+    let output = cmd 
         .spawn()
         .expect("🙈 Failed to execute command");
+    println!("{:?}", output);
 }
+
 
 fn get_swarm_processes() -> String {
     let output = Command::new("/usr/bin/pgrep")
