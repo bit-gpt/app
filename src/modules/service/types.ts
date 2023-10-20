@@ -11,15 +11,13 @@ export type ModelInfo = {
 };
 
 export type ServiceBase = {
+  // static registry manifest
   baseUrl: string;
   beta: boolean;
   comingSoon: boolean;
   defaultPort: number;
   description: string;
   documentation: string;
-  downloaded: boolean;
-  enoughMemory: boolean;
-  enoughSystemMemory: boolean;
   icon: string;
   id: string;
   interfaces: string[];
@@ -27,11 +25,16 @@ export type ServiceBase = {
   name: string;
   needsUpdate: boolean;
   promptTemplate?: string;
-  running: boolean;
   runningPort?: number;
-  supported: boolean;
   serviceType: "docker" | "binary" | "process";
   version?: string;
+  // Dynamic state
+  downloaded: boolean;
+  downloading: boolean;
+  enoughMemory: boolean;
+  enoughSystemMemory: boolean;
+  running: boolean;
+  supported: boolean;
 };
 
 export type ServiceDocker = ServiceBase & {

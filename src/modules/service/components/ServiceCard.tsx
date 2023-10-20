@@ -15,7 +15,6 @@ import ServiceActions from "./ServiceActions";
 const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const queryClient = useQueryClient();
 
-  console.log("service", service);
   const serviceId = service.id;
   const status = getServiceStatus(service);
   const title = service.name;
