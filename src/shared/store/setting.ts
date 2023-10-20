@@ -33,6 +33,7 @@ const useSettingStore = create<SettingStore>()(
         isIP: false,
         setIsIP: (isIP) => set(() => ({ isIP }), false, "setIsIP"),
         serviceDownloadsInProgress: {},
+        downloadingServices: [],
         setBackendUrl: (backendUrl) => set(() => ({ backendUrl }), false, "setBackendUrl"),
         removeServiceDownloadInProgress: (serviceId: string) => {
           set(
@@ -54,6 +55,33 @@ const useSettingStore = create<SettingStore>()(
             }),
             false,
             "setServiceDownloadProgress",
+          );
+        },
+        addServiceAsDownloading: (serviceId: string) => {
+          set(
+            (state) => ({
+              downloadingServices: [...state.downloadingServices, serviceId],
+            }),
+            false,
+            "addServiceAsDownloading",
+          );
+        },
+        removeServiceAsDownloading: (serviceId: string) => {
+          set(
+            (state) => ({
+              downloadingServices: state.downloadingServices.filter((id) => id !== serviceId),
+            }),
+            false,
+            "removeServiceAsDownloading",
+          );
+        },
+        removeAllServiceAsDownloading: () => {
+          set(
+            () => ({
+              downloadingServices: [],
+            }),
+            false,
+            "removeAllServiceAsDownloading",
           );
         },
       }),
