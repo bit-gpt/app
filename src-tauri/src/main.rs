@@ -140,6 +140,9 @@ fn main() {
             controller_binaries::get_logs_for_service,
             controller_binaries::get_services,
             controller_binaries::get_service_by_id,
+            controller_binaries::get_system_stats,
+            controller_binaries::get_service_stats,
+            controller_binaries::get_gpu_stats,
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {

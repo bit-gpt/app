@@ -92,8 +92,38 @@ class DockerController extends AbstractServiceController {
     }
   }
 
-  async getLogs(serviceId: string): Promise<void> {
+  async getLogs(serviceId: string): Promise<string> {
     throw new Error("Method not implemented.");
+  }
+
+  async getServiceStats(serviceId: string): Promise<Record<string, string>> {
+    try {
+      const response = await api().get(`v1/stats/${serviceId}`);
+      return response.data;
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
+  }
+
+  async getSystemStats(): Promise<Record<string, string>> {
+    try {
+      const response = await api().get("v1/stats-all");
+      return response.data;
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
+  }
+
+  async getGPUStats(): Promise<Record<string, string>> {
+    try {
+      const response = await api().get("v1/gpu-stats-all");
+      return response.data;
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
   }
 }
 

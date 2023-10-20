@@ -4,8 +4,8 @@ import useServiceStats from "shared/hooks/useServiceStats";
 
 import type { ServiceResourceBarsProps } from "../types";
 
-const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) => {
-  const { data: response } = useServiceStats(serviceId);
+const ServiceResourceBars = ({ serviceId, status, serviceType }: ServiceResourceBarsProps) => {
+  const { data } = useServiceStats(serviceId, serviceType);
 
   return (
     <div className="right-top-card card py-8 px-4">
@@ -19,15 +19,13 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>Memory</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.memory_percentage === undefined && (
-                <span className="lg:hidden">-</span>
-              )}
-              {response?.data?.memory_usage} GiB
+              {data?.memory_percentage === undefined && <span className="lg:hidden">-</span>}
+              {data?.memory_usage} GiB
             </p>
             <div className="progress">
               <div
                 className="progress-container"
-                style={{ width: `${response?.data?.memory_percentage}%` }}
+                style={{ width: `${data?.memory_percentage}%` }}
               ></div>
             </div>
           </div>
@@ -36,13 +34,13 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>CPU</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.cpu_percentage === undefined && <span className="lg:hidden">-</span>}
-              {response?.data?.cpu_percentage}%
+              {data?.cpu_percentage === undefined && <span className="lg:hidden">-</span>}
+              {data?.cpu_percentage}%
             </p>
             <div className="progress">
               <div
                 className="progress-container"
-                style={{ width: `${response?.data?.cpu_percentage}%` }}
+                style={{ width: `${data?.cpu_percentage}%` }}
               ></div>
             </div>
           </div>
@@ -51,15 +49,13 @@ const ServiceResourceBars = ({ serviceId, status }: ServiceResourceBarsProps) =>
           <p>Image Size</p>
           <div className="flex gap-[6px] items-center">
             <p className="!mb-0 whitespace-nowrap">
-              {response?.data?.storage_percentage === undefined && (
-                <span className="lg:hidden">-</span>
-              )}
-              {response?.data?.storage_usage} GiB
+              {data?.storage_percentage === undefined && <span className="lg:hidden">-</span>}
+              {data?.storage_usage} GiB
             </p>
             <div className="progress">
               <div
                 className="progress-container"
-                style={{ width: `${response?.data?.storage_percentage}%` }}
+                style={{ width: `${data?.storage_percentage}%` }}
               ></div>
             </div>
           </div>

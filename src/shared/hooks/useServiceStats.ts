@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import getServiceStats from "modules/service/api/getServiceStats";
 
-const useServiceStats = (serviceId: string) => {
-  return useQuery(["getServiceStats", serviceId], () => getServiceStats(serviceId), {
-    staleTime: 0,
-  });
+import ServiceController from "../../controller/serviceController";
+import type { Service } from "../../modules/service/types";
+
+const useServiceStats = (serviceId: string, serviceType: Service["serviceType"]) => {
+  const controller = ServiceController.getInstance();
+  return useQuery(["getServiceStats", serviceId], () =>
+    controller.getServiceStats(serviceId, serviceType),
+  );
 };
 
 export default useServiceStats;

@@ -22,6 +22,7 @@ export type ServiceGeneralInfoProps = {
 
 export type ServiceResourceBarsProps = {
   serviceId: string;
+  serviceType: Service["serviceType"];
   status: ServiceStatus;
 };
 
