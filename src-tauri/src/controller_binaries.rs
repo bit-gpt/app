@@ -8,6 +8,7 @@ use crate::download::Downloader;
 use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
 
+use futures::future;
 use tauri::{AppHandle, Runtime, State, Window};
 use tokio::{fs, process::Command};
 
@@ -169,67 +170,45 @@ pub async fn get_logs_for_service(service_id: String) -> Result<String> {
     Ok(logs)
 }
 
-/*
-#[tauri::command(async)]
+#[tauri::command]
 pub async fn get_services(
     state: State<'_, SharedState>,
     app_handle: AppHandle,
 ) -> Result<Vec<Service>> {
-    println!("get_services");
-    let services_guard = state.services.lock().await;
-    // Update all services with their dynamic state
-    let mut services = services_guard
-        .values()
-        .cloned()
-        .map(|mut service| async move {
-            update_service_with_dynamic_state(&mut service, &state, &app_handle).await
-        })
-        .collect::<Result<Vec<Service>>>()?;
-    // Filter out services that don't have version "1"
-    services.retain(|service| service.version.is_some() && service.version.clone().unwrap() == "1");
-    Ok(services)
-}
-*/
-
-#[tauri::command(async)]
-pub async fn get_services(
-    state: State<'_, SharedState>,
-    app_handle: AppHandle,
-) -> Result<Vec<Service>> {
-    println!("get_services");
-    let services_guard = state.services.lock().await;
+    let mut services = Vec::new();
     let mut update_futures = Vec::new();
+    let services_guard = state.services.lock().await;
 
-    for service in services_guard.values().cloned() {
-        let mut service_clone = service.clone();
-        update_futures.push(update_service_with_dynamic_state(
-            &mut service_clone,
-            &state,
-            &app_handle,
-        ));
-    }
-
-    let update_results = tokio::join!(async {
-        let mut services: Vec<Service> = Vec::new();
-        for update_result in update_futures {
-            match update_result.await.await {
-                Ok(service) => {
-                    // Filter out services that don't have version "1"
-                    if service.version.is_some() && service.version.clone().unwrap() == "1" {
-                        services.push(service);
-                    }
-                }
-                Err(err) => {
-                    // Handle the error as needed
-                    eprintln!("Update service error: {:?}", err);
-                }
+    for service in services_guard.values() {
+        // Filter out services that don't have version "1"
+        if let Some(version) = &service.version {
+            if version == "1" {
+                let state_ref = &state;
+                let app_handle_ref = &app_handle;
+                let mut service_clone = service.clone();
+                let update_future = async move {
+                    update_service_with_dynamic_state(&mut service_clone, state_ref, app_handle_ref)
+                        .await
+                };
+                update_futures.push(update_future);
             }
         }
-        services
-    })
-    .0;
+    }
 
-    Ok(update_results)
+    let results = future::join_all(update_futures).await;
+
+    for result in results {
+        match result {
+            Ok(service) => {
+                services.push(service);
+            }
+            Err(err) => {
+                eprintln!("Update service error: {:?}", err);
+            }
+        }
+    }
+
+    Ok(services)
 }
 
 #[tauri::command(async)]
