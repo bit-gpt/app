@@ -88,11 +88,14 @@ pub async fn start_service(
     let registry_lock = state.services.lock().await;
     let serve_command = registry_lock
         .get(&service_id)
-        .with_context(|| format!("service_id ({service_id}) doesn't exist in registry"))?
+        .with_context(|| format!("service_id {} doesn't exist in registry", service_id))?
         .serve_command
         .as_ref()
         .with_context(|| {
-            format!("service_id ({service_id}) doesn't contain a valid serve_command")
+            format!(
+                "service_id {} doesn't contain a valid serve_command",
+                service_id
+            )
         })?
         .as_str();
     println!("serve_command: {}", serve_command);
@@ -155,8 +158,10 @@ pub async fn delete_service(service_id: String, app_handle: AppHandle) -> Result
 }
 
 #[tauri::command(async)]
-pub async fn get_logs_for_service(service_id: String) -> Result<String> {
-    let log_path = dirs::data_dir()
+pub async fn get_logs_for_service(service_id: String, app_handle: AppHandle) -> Result<String> {
+    let log_path = app_handle
+        .path_resolver()
+        .app_data_dir()
         .with_context(|| "failed to get app data dir")?
         .join(format!("{}.log", service_id));
     let logs = tokio::fs::read_to_string(log_path)

@@ -39,13 +39,12 @@ const Service = () => {
   // Resume service download if in progress
   // TODO: This cause multiple concurrent download
   // Service needs isDownloading state
-  /*
   useEffect(() => {
     (async () => {
       if (!isServicesLoading) {
         for (const serviceId in progresses) {
           const service = services?.filter((s) => s.id === serviceId)[0];
-          if (service && Object.keys(service ?? {}).length) {
+          if (service && !service.downloading && Object.keys(service ?? {}).length) {
             download({
               serviceId,
               binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
@@ -65,7 +64,6 @@ const Service = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Object.keys(progresses).length, isServicesLoading]);
-  */
 
   const ServicesComponents = useMemo(() => {
     return filteredApps?.map((app) => {
