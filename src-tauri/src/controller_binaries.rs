@@ -116,13 +116,8 @@ pub async fn start_service(
         .stderr(std::process::Stdio::from(log_file))
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
-    let mut services = state.running_services.lock().await;
-    services.insert(service_id.clone(), child);
-    // Update status to "running"
-    let mut registry_lock = state.services.lock().await;
-    if let Some(service) = registry_lock.get_mut(&service_id) {
-        service.running = Some(true);
-    }
+    let mut running_services_guard = state.running_services.lock().await;
+    running_services_guard.insert(service_id, child);
     Ok(())
 }
 

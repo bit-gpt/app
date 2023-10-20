@@ -28,8 +28,7 @@ const StoppedServiceState = ({
   const onStart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      // TODO: we don't await otherwise startMutateAsync never returns
-      startMutateAsync({ serviceId: service.id, serviceType: service.serviceType });
+      await startMutateAsync({ serviceId: service.id, serviceType: service.serviceType });
       refetch();
       onOpenClick?.();
       toast.success("Service started successfully");
