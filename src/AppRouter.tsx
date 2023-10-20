@@ -32,7 +32,7 @@ const AppRouter = () => {
             path="/prem-upscaler/:serviceId/:serviceType/:historyId?"
             element={<PremUpscaler />}
           />
-          <Route path="/prem-coder/:serviceType/:serviceId" element={<PremCoder />} />
+          <Route path="/prem-coder/:serviceId/:serviceType" element={<PremCoder />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

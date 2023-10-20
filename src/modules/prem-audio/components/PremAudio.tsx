@@ -13,7 +13,7 @@ const PremAudio = () => {
     serviceType: Service["serviceType"];
   }>();
 
-  const { data: service, isLoading } = useGetService(serviceId!, serviceType!, false);
+  const { data: service, isLoading } = useGetService(serviceId!, serviceType!);
 
   if (isLoading) {
     return <PlayGroundSpinner />;

@@ -47,7 +47,7 @@ impl<R: Runtime> Downloader<R> {
 
     pub async fn download_files(&self) -> Result<()> {
         // Download binary
-        let binary_url = utils::get_binary_url(&self.binaries_url);
+        let binary_url = utils::get_binary_url(&self.binaries_url).unwrap();
         let binary_name = binary_url.split('/').last().unwrap();
         let output_path = format!("{}/{}", self.service_dir, binary_name);
         self.download_file(&binary_url, &output_path).await?;

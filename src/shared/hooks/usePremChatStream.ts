@@ -23,7 +23,7 @@ const usePremChatStream = (
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const [pending, setPending] = useState<string | null>();
-  const { data: service } = useGetService(serviceId, serviceType, false);
+  const { data: service } = useGetService(serviceId, serviceType);
   const abortController = useRef<AbortController>();
 
   const {
