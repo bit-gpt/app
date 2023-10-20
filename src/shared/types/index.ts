@@ -82,6 +82,10 @@ export type SettingStore = {
   serviceDownloadsInProgress: Record<string, Record<string, any>>;
   setServiceDownloadProgress: (serviceId: string, serviceType: string, progress: number) => void;
   removeServiceDownloadInProgress: (serviceId: string) => void;
+  downloadingServices: string[];
+  addServiceAsDownloading: (serviceId: string) => void;
+  removeServiceAsDownloading: (serviceId: string) => void;
+  removeAllServiceAsDownloading: () => void;
 };
 
 export type HeaderProps = {

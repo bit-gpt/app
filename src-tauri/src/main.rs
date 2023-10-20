@@ -16,7 +16,6 @@ use tokio::{process::Child, sync::Mutex};
 
 #[derive(Debug, Default)]
 pub struct SharedState {
-    downloading_services: Mutex<Vec<String>>,
     running_services: Mutex<HashMap<String, Child>>,
     // Properties from public service registry and additional service state
     services: Mutex<HashMap<String, Service>>,
@@ -57,7 +56,6 @@ pub struct Service {
     serve_command: Option<String>,
     // Dynamic state
     downloaded: Option<bool>,
-    downloading: Option<bool>,
     #[serde(rename = "enoughMemory")]
     enough_memory: Option<bool>,
     #[serde(rename = "enoughSystemMemory")]

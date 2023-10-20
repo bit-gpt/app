@@ -19,7 +19,6 @@ pub async fn download_service<R: Runtime>(
     weights_files: Vec<String>,
     service_id: &str,
     app_handle: AppHandle,
-    state: State<'_, SharedState>,
     window: Window<R>,
 ) -> Result<()> {
     let service_dir = app_handle
@@ -33,11 +32,6 @@ pub async fn download_service<R: Runtime>(
         Err("`service_dir` path contains non utf-8 sequence".to_string())?
     };
 
-    // push service_id to downloading_services
-    let mut downloading_services = state.downloading_services.lock().await;
-    downloading_services.push(service_id.to_string());
-    drop(downloading_services);
-
     Downloader::new(
         binaries_url,
         weights_directory_url,
@@ -48,12 +42,6 @@ pub async fn download_service<R: Runtime>(
     )
     .download_files()
     .await?;
-
-    // remove service_id from downloading_services
-    let mut downloading_services = state.downloading_services.lock().await;
-    downloading_services.retain(|x| x != service_id);
-    drop(downloading_services);
-
     Ok(())
 }
 
@@ -285,14 +273,6 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
     return Ok(downloaded);
 }
 
-pub async fn is_service_downloading(
-    service_id: &str,
-    state: &State<'_, SharedState>,
-) -> Result<bool> {
-    let downloading_services = state.downloading_services.lock().await;
-    return Ok(downloading_services.contains(&service_id.to_string()));
-}
-
 pub async fn has_enough_free_memory(service: &Service) -> Result<bool> {
     let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
     let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
@@ -323,15 +303,12 @@ pub async fn update_service_with_dynamic_state(
     app_handle: &AppHandle,
 ) -> Result<Service> {
     let is_service_downloaded = is_service_downloaded(service, &app_handle).await?;
-    let is_service_downloading =
-        is_service_downloading(&service.id.as_ref().unwrap(), &state).await?;
     let has_enough_free_memory = has_enough_free_memory(service).await?;
     let has_enough_total_memory = has_enough_total_memory(service).await?;
     let has_enough_storage = has_enough_storage().await?;
     let is_supported = is_supported().await?;
     let is_service_running = is_service_running(&service.id.as_ref().unwrap(), &state).await?;
     service.downloaded = Some(is_service_downloaded);
-    service.downloading = Some(is_service_downloading);
     service.enough_memory = Some(has_enough_free_memory);
     service.enough_system_memory = Some(has_enough_total_memory);
     service.enough_storage = Some(has_enough_storage);

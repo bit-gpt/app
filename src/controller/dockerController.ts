@@ -55,6 +55,7 @@ class DockerController extends AbstractServiceController {
         console.log("ERROR serviceId:", serviceId);
         console.error(error);
         useSettingStore.getState().removeServiceDownloadInProgress(serviceId);
+        useSettingStore.getState().removeServiceAsDownloading(serviceId);
       },
       (message) => {
         console.log(`${serviceId}: ${message.status} - ${message.percentage}`);
@@ -67,6 +68,7 @@ class DockerController extends AbstractServiceController {
       () => {
         console.log(`${serviceId} download completed`);
         useSettingStore.getState().removeServiceDownloadInProgress(serviceId);
+        useSettingStore.getState().removeServiceAsDownloading(serviceId);
         afterSuccess?.();
       },
     );

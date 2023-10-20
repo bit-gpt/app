@@ -18,6 +18,7 @@ function App() {
       // If not IP, then we assume it's a domain name
       useSettingStore.getState().setIsIP(hostIsIP);
       useSettingStore.getState().setBackendUrl(getBackendUrl());
+      useSettingStore.getState().removeAllServiceAsDownloading();
 
       // Download progress
       if (isDesktopEnv()) {
