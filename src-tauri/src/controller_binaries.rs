@@ -1,15 +1,15 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::collections::HashMap;
-use std::path::PathBuf;
-
 use crate::download::Downloader;
 use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
+use std::collections::HashMap;
+use std::path::PathBuf;
+use sys_info::mem_info;
 
-use crate::utils::set_state_to_file;
-use tauri::{Runtime, Window};
+use futures::future;
+use tauri::{AppHandle, Runtime, State, Window};
 use tokio::{fs, process::Command};
 
 #[tauri::command(async)]
@@ -18,8 +18,8 @@ pub async fn download_service<R: Runtime>(
     weights_directory_url: String,
     weights_files: Vec<String>,
     service_id: &str,
-    app_handle: tauri::AppHandle,
-    state: tauri::State<'_, SharedState>,
+    app_handle: AppHandle,
+    state: State<'_, SharedState>,
     window: Window<R>,
 ) -> Result<()> {
     let service_dir = app_handle
@@ -33,6 +33,11 @@ pub async fn download_service<R: Runtime>(
         Err("`service_dir` path contains non utf-8 sequence".to_string())?
     };
 
+    // push service_id to downloading_services
+    let mut downloading_services = state.downloading_services.lock().await;
+    downloading_services.push(service_id.to_string());
+    drop(downloading_services);
+
     Downloader::new(
         binaries_url,
         weights_directory_url,
@@ -44,31 +49,19 @@ pub async fn download_service<R: Runtime>(
     .download_files()
     .await?;
 
-    let state_filepath = app_handle
-        .path_resolver()
-        .app_data_dir()
-        .expect("failed to resolve app data dir")
-        .join("state.json");
+    // remove service_id from downloading_services
+    let mut downloading_services = state.downloading_services.lock().await;
+    downloading_services.retain(|x| x != service_id);
+    drop(downloading_services);
 
-    let mut registry_lock = state.services.lock().await;
-    if let Some(service) = registry_lock.get_mut(service_id) {
-        service.downloaded = Some(true);
-        set_state_to_file(
-            state_filepath.display().to_string(),
-            service_id,
-            "downloaded",
-            "true",
-        )
-        .await?;
-    }
     Ok(())
 }
 
 #[tauri::command(async)]
 pub async fn start_service(
     service_id: String,
-    state: tauri::State<'_, SharedState>,
-    app_handle: tauri::AppHandle,
+    state: State<'_, SharedState>,
+    app_handle: AppHandle,
 ) -> Result<()> {
     let service_dir = app_handle
         .path_resolver()
@@ -123,18 +116,13 @@ pub async fn start_service(
         .stderr(std::process::Stdio::from(log_file))
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
-    let mut services = state.running_services.lock().await;
-    services.insert(service_id.clone(), child);
-    // Update status to "running"
-    let mut registry_lock = state.services.lock().await;
-    if let Some(service) = registry_lock.get_mut(&service_id) {
-        service.running = Some(true);
-    }
+    let mut running_services_guard = state.running_services.lock().await;
+    running_services_guard.insert(service_id, child);
     Ok(())
 }
 
 #[tauri::command(async)]
-pub async fn stop_service(service_id: String, state: tauri::State<'_, SharedState>) -> Result<()> {
+pub async fn stop_service(service_id: String, state: State<'_, SharedState>) -> Result<()> {
     let mut services = state.running_services.lock().await;
     if let Some(mut child) = services.remove(&service_id) {
         child.kill().await.map_err(|e| e.to_string())?;
@@ -146,7 +134,7 @@ pub async fn stop_service(service_id: String, state: tauri::State<'_, SharedStat
     Ok(())
 }
 
-pub async fn stop_all_services(state: tauri::State<'_, SharedState>) -> Result<()> {
+pub async fn stop_all_services(state: State<'_, SharedState>) -> Result<()> {
     let services = state.running_services.lock().await;
     for service_id in services.keys() {
         stop_service(service_id.clone(), state.clone()).await?;
@@ -155,7 +143,7 @@ pub async fn stop_all_services(state: tauri::State<'_, SharedState>) -> Result<(
 }
 
 #[tauri::command(async)]
-pub async fn delete_service(service_id: String, app_handle: tauri::AppHandle) -> Result<()> {
+pub async fn delete_service(service_id: String, app_handle: AppHandle) -> Result<()> {
     let dir = app_handle
         .path_resolver()
         .app_data_dir()
@@ -177,55 +165,172 @@ pub async fn get_logs_for_service(service_id: String) -> Result<String> {
     Ok(logs)
 }
 
-#[tauri::command(async)]
-pub async fn get_services(state: tauri::State<'_, SharedState>) -> Result<Vec<Service>> {
-    let services = state.services.lock().await;
-    // TODO: Hack to update tabby_codellama_7B service
-    let mut tabby_codellama_7b = services["tabby-codellama-7B"].clone();
-    tabby_codellama_7b.supported = Some(true);
-    tabby_codellama_7b.enough_memory = Some(true);
-    tabby_codellama_7b.enough_system_memory = Some(true);
-    let mut services = services.clone();
-    services.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
-    //
-    let mut tabby_starcoder_1b = services["tabby-starcoder-1b"].clone();
-    tabby_starcoder_1b.supported = Some(true);
-    tabby_starcoder_1b.enough_memory = Some(true);
-    tabby_starcoder_1b.enough_system_memory = Some(true);
-    let mut services = services.clone();
-    services.insert("tabby-starcoder-1b".to_string(), tabby_starcoder_1b);
-    return Ok(services
-        .values()
-        .filter(|service| service.version.is_some() && service.version.clone().unwrap() == "1")
-        .cloned()
-        .collect());
+#[tauri::command]
+pub async fn get_services(
+    state: State<'_, SharedState>,
+    app_handle: AppHandle,
+) -> Result<Vec<Service>> {
+    let mut services = Vec::new();
+    let mut update_futures = Vec::new();
+    let services_guard = state.services.lock().await;
+
+    for service in services_guard.values() {
+        // Filter out services that don't have version "1"
+        if let Some(version) = &service.version {
+            if version == "1" {
+                let state_ref = &state;
+                let app_handle_ref = &app_handle;
+                let mut service_clone = service.clone();
+                let update_future = async move {
+                    update_service_with_dynamic_state(&mut service_clone, state_ref, app_handle_ref)
+                        .await
+                };
+                update_futures.push(update_future);
+            }
+        }
+    }
+
+    let results = future::join_all(update_futures).await;
+
+    for result in results {
+        match result {
+            Ok(service) => {
+                services.push(service);
+            }
+            Err(err) => {
+                eprintln!("Update service error: {:?}", err);
+            }
+        }
+    }
+
+    Ok(services)
 }
 
 #[tauri::command(async)]
 pub async fn get_service_by_id(
     service_id: String,
-    state: tauri::State<'_, SharedState>,
+    state: State<'_, SharedState>,
+    app_handle: AppHandle,
 ) -> Result<Service> {
     let services = state.services.lock().await;
-    // TODO: Hack to update tabby_codellama_7B service
-    let mut tabby_codellama_7b = services["tabby-codellama-7B"].clone();
-    tabby_codellama_7b.supported = Some(true);
-    tabby_codellama_7b.enough_memory = Some(true);
-    tabby_codellama_7b.enough_system_memory = Some(true);
-    let mut services = services.clone();
-    services.insert("tabby-codellama-7B".to_string(), tabby_codellama_7b);
-    //
-    let mut tabby_starcoder_1b = services["tabby-starcoder-1b"].clone();
-    tabby_starcoder_1b.supported = Some(true);
-    tabby_starcoder_1b.enough_memory = Some(true);
-    tabby_starcoder_1b.enough_system_memory = Some(true);
-    let mut services = services.clone();
-    services.insert("tabby-starcoder-1b".to_string(), tabby_starcoder_1b);
-    return Ok(services[&service_id].clone());
+    let mut service = services[&service_id].clone();
+    update_service_with_dynamic_state(&mut service, &state, &app_handle).await?;
+    Ok(service)
 }
 
+// Dynamic service state
 #[tauri::command(async)]
-pub async fn get_running_services(state: tauri::State<'_, SharedState>) -> Result<Vec<String>> {
+pub async fn get_running_services(state: State<'_, SharedState>) -> Result<Vec<String>> {
     let services = state.running_services.lock().await;
     return Ok(services.keys().cloned().collect());
+}
+
+pub async fn is_service_running(service_id: &str, state: &State<'_, SharedState>) -> Result<bool> {
+    let running_services = state.running_services.lock().await;
+    return Ok(running_services.contains_key(service_id));
+}
+
+pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) -> Result<bool> {
+    let service_dir = app_handle
+        .path_resolver()
+        .app_data_dir()
+        .expect("failed to resolve app data dir")
+        .join("models")
+        .join(&service.id.as_ref().unwrap());
+    let mut downloaded = true;
+    for file in &service.weights_files.clone().unwrap() {
+        let file_path = service_dir.join(file);
+        if !file_path.exists() {
+            downloaded = false;
+            break;
+        } else {
+            // compare size of file with remote file size using HEAD requests
+            let file_size_on_disk = file_path.metadata().unwrap().len();
+            let client = reqwest::Client::new();
+            let weights_dir_url = service.weights_directory_url.as_ref().unwrap();
+            // Remove trailing slash from weights_directory_url if it exists
+            let weights_dir_url = if weights_dir_url.ends_with("/") {
+                &weights_dir_url[..weights_dir_url.len() - 1]
+            } else {
+                weights_dir_url
+            };
+            let url = &format!("{}/{}", weights_dir_url, file);
+            let response = client
+                .head(url)
+                .send()
+                .await
+                .map_err(|_| format!("Failed HEAD request: {}", url))
+                .unwrap();
+            if response.status().is_success() {
+                if let Some(remote_file_size) = response.headers().get("Content-Length") {
+                    let parsed_size = remote_file_size.to_str().unwrap().parse::<u64>().unwrap();
+                    // println!("Content-Length: {:?}", parsed_size);
+                    if file_size_on_disk != parsed_size {
+                        downloaded = false;
+                        break;
+                    }
+                } else {
+                    println!("Content-Length header not found.");
+                }
+            } else {
+                println!("Request failed with status code: {}", response.status());
+            }
+        }
+    }
+    return Ok(downloaded);
+}
+
+pub async fn is_service_downloading(
+    service_id: &str,
+    state: &State<'_, SharedState>,
+) -> Result<bool> {
+    let downloading_services = state.downloading_services.lock().await;
+    return Ok(downloading_services.contains(&service_id.to_string()));
+}
+
+pub async fn has_enough_free_memory(service: &Service) -> Result<bool> {
+    let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
+    let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
+    let has_enough_memory = mem_info.free >= memory_requirements as u64;
+    Ok(has_enough_memory)
+}
+
+pub async fn has_enough_total_memory(service: &Service) -> Result<bool> {
+    let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
+    let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
+    let has_enough_memory = mem_info.total >= memory_requirements as u64;
+    Ok(has_enough_memory)
+}
+
+pub async fn has_enough_storage() -> Result<bool> {
+    // TODO: Not implemented yet
+    Ok(true)
+}
+
+pub async fn is_supported() -> Result<bool> {
+    // TODO: Not implemented yet
+    Ok(true)
+}
+
+pub async fn update_service_with_dynamic_state(
+    service: &mut Service,
+    state: &State<'_, SharedState>,
+    app_handle: &AppHandle,
+) -> Result<Service> {
+    let is_service_downloaded = is_service_downloaded(service, &app_handle).await?;
+    let is_service_downloading =
+        is_service_downloading(&service.id.as_ref().unwrap(), &state).await?;
+    let has_enough_free_memory = has_enough_free_memory(service).await?;
+    let has_enough_total_memory = has_enough_total_memory(service).await?;
+    let has_enough_storage = has_enough_storage().await?;
+    let is_supported = is_supported().await?;
+    let is_service_running = is_service_running(&service.id.as_ref().unwrap(), &state).await?;
+    service.downloaded = Some(is_service_downloaded);
+    service.downloading = Some(is_service_downloading);
+    service.enough_memory = Some(has_enough_free_memory);
+    service.enough_system_memory = Some(has_enough_total_memory);
+    service.enough_storage = Some(has_enough_storage);
+    service.supported = Some(is_supported);
+    service.running = Some(is_service_running);
+    Ok(service.clone())
 }
