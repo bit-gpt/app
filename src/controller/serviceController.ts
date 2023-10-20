@@ -160,21 +160,25 @@ class ServiceController implements IServiceController {
     }
   }
 
-  async getSystemStats(serviceType: Service["serviceType"]): Promise<any> {
+  async getSystemStats(serviceType: Service["serviceType"]): Promise<Record<string, string>> {
     // We check the env (browser or desktop) to determine serviceType
     if (serviceType === "docker") {
       return await this.dockerController.getSystemStats();
     } else if (serviceType === "binary") {
       return await this.binariesController.getSystemStats();
+    } else {
+      return {};
     }
   }
 
-  async getGPUStats(serviceType: Service["serviceType"]): Promise<any> {
+  async getGPUStats(serviceType: Service["serviceType"]): Promise<Record<string, string>> {
     // We check the env (browser or desktop) to determine serviceType
     if (serviceType === "docker") {
       return await this.dockerController.getGPUStats();
     } else if (serviceType === "binary") {
       return await this.binariesController.getGPUStats();
+    } else {
+      return {};
     }
   }
 }
