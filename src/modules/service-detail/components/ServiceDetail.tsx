@@ -78,7 +78,11 @@ const ServiceDetail = () => {
       <div className="service-detail">
         <ServiceDocumentation description={service.documentation} />
         <div className="lg:w-[40%] w-full">
-          <ServiceResourceBars serviceId={service.id} status={status} />
+          <ServiceResourceBars
+            serviceId={service.id}
+            serviceType={service.serviceType}
+            status={status}
+          />
           <ServiceGeneralInfo service={service} />
           <ServiceDescription description={service.description} />
         </div>

@@ -339,3 +339,18 @@ pub async fn update_service_with_dynamic_state(
     service.running = Some(is_service_running);
     Ok(service.clone())
 }
+
+#[tauri::command(async)]
+pub async fn get_system_stats() -> Result<HashMap<String, String>> {
+    Ok(HashMap::new())
+}
+
+#[tauri::command(async)]
+pub async fn get_service_stats(service_id: String) -> Result<HashMap<String, String>> {
+    Ok(HashMap::new())
+}
+
+#[tauri::command(async)]
+pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
+    Ok(HashMap::new())
+}

@@ -1,8 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import getSystemStats from "modules/service/api/getSystemStats";
+
+import ServiceController from "../../controller/serviceController";
+import type { Service } from "../../modules/service/types";
+import { isDesktopEnv } from "../helpers/utils";
 
 const useSystemStats = () => {
-  return useQuery(["getSystemStats"], getSystemStats);
+  const controller = ServiceController.getInstance();
+  // Here we check the env to determine if we should use the binary or docker service
+  // and fetch the services accordingly
+  // TODO: Is it ok?
+  let serviceType: Service["serviceType"];
+  if (isDesktopEnv()) {
+    serviceType = "binary";
+  } else {
+    serviceType = "docker";
+  }
+  return useQuery(["getSystemStats"], () => controller.getSystemStats(serviceType));
 };
-
 export default useSystemStats;

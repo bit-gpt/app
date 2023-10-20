@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import * as console from "console";
 
 import type { ServiceBinary } from "../modules/service/types";
 
@@ -88,11 +89,39 @@ class BinariesController extends AbstractServiceController {
     }
   }
 
-  async getLogs(serviceId: string): Promise<void> {
+  async getLogs(serviceId: string): Promise<string> {
     try {
-      await invoke("get_logs_for_service", { serviceId });
+      return await invoke<string>("get_logs_for_service", { serviceId });
     } catch (e) {
       console.log(e);
+      return "";
+    }
+  }
+
+  async getGPUStats(): Promise<Record<string, string>> {
+    try {
+      return await invoke<Record<string, string>>("get_gpu_stats");
+    } catch (e) {
+      console.log(e);
+      return {};
+    }
+  }
+
+  async getServiceStats(serviceId: string): Promise<Record<string, string>> {
+    try {
+      return await invoke<Record<string, string>>("get_service_stats", { serviceId });
+    } catch (e) {
+      console.log(e);
+      return {};
+    }
+  }
+
+  async getSystemStats(): Promise<Record<string, string>> {
+    try {
+      return await invoke<Record<string, string>>("get_system_stats");
+    } catch (e) {
+      console.log(e);
+      return {};
     }
   }
 }
