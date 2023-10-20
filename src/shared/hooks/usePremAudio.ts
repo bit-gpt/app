@@ -20,7 +20,7 @@ const usePremAudio = (
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
-  const { data: service } = useGetService(serviceId, serviceType, false);
+  const { data: service } = useGetService(serviceId, serviceType);
 
   const { addHistory, history, deleteHistory, model } = usePremAudioStore(
     (state) => ({

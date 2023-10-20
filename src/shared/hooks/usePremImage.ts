@@ -23,7 +23,7 @@ const usePremImage = (
   const [file, setFile] = useState<File | undefined>(undefined);
   const navigate = useNavigate();
 
-  const { data: service } = useGetService(serviceId, serviceType, false);
+  const { data: service } = useGetService(serviceId, serviceType);
 
   const { n, size, response_format, addHistory, history, deleteHistory, seed } = usePremImageStore(
     (state) => ({

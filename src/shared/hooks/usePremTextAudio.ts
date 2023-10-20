@@ -20,7 +20,7 @@ const usePremTextAudio = (
   const [prompt, setPrompt] = useState<string>("");
   const navigate = useNavigate();
 
-  const { data: service } = useGetService(serviceId, serviceType, false);
+  const { data: service } = useGetService(serviceId, serviceType);
 
   const { addHistory, history, deleteHistory } = usePremTextAudioStore(
     (state) => ({

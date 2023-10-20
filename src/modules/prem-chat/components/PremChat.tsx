@@ -15,7 +15,7 @@ function PremChat() {
     serviceType: Service["serviceType"];
   }>();
 
-  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!, false);
+  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!);
 
   useEffect(() => {
     (async () => {
