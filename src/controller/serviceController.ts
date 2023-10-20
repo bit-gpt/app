@@ -1,4 +1,5 @@
 import type { Service } from "../modules/service/types";
+import useSettingStore from "../shared/store/setting";
 
 import BinariesController from "./binariesController";
 import DockerController from "./dockerController";
@@ -95,10 +96,12 @@ class ServiceController implements IServiceController {
     serviceType,
     afterSuccess,
   }: DownloadArgs & { serviceType: string }): Promise<void> {
+    useSettingStore.getState().addServiceAsDownloading(serviceId);
     // If serviceType is not provided, we assume it's docker
     serviceType = serviceType ? serviceType : "docker";
     if (serviceType === "docker") {
       await this.dockerController.download({ serviceId, afterSuccess });
+      useSettingStore.getState().removeServiceAsDownloading(serviceId);
     } else if (serviceType === "binary") {
       await this.binariesController.download({
         serviceId,
@@ -107,6 +110,7 @@ class ServiceController implements IServiceController {
         weightsFiles,
         afterSuccess,
       });
+      useSettingStore.getState().removeServiceAsDownloading(serviceId);
     }
   }
 

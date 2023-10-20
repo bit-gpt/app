@@ -25,7 +25,7 @@ const Service = () => {
   const { data: apps } = useInterfaces();
   const progresses = useSettingStore((state) => state.serviceDownloadsInProgress);
   const { mutate: download } = useDownloadServiceStream();
-
+  const downloadingServices = useSettingStore.getState().downloadingServices;
   const [filter, setFilter] = useState(new Map<string, boolean>());
 
   const filteredApps = useMemo(() => {
@@ -37,14 +37,14 @@ const Service = () => {
   const isDevMode = isDeveloperMode();
 
   // Resume service download if in progress
-  // TODO: This cause multiple concurrent download
-  // Service needs isDownloading state
   useEffect(() => {
     (async () => {
       if (!isServicesLoading) {
         for (const serviceId in progresses) {
           const service = services?.filter((s) => s.id === serviceId)[0];
-          if (service && !service.downloading && Object.keys(service ?? {}).length) {
+          console.log(`Resume download for ${serviceId}`);
+          const isDownloading = downloadingServices.includes(serviceId);
+          if (service && !isDownloading && Object.keys(service ?? {}).length) {
             download({
               serviceId,
               binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
@@ -63,7 +63,7 @@ const Service = () => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Object.keys(progresses).length, isServicesLoading]);
+  }, [Object.keys(progresses).length, isServicesLoading, downloadingServices.length]);
 
   const ServicesComponents = useMemo(() => {
     return filteredApps?.map((app) => {

@@ -30,7 +30,6 @@ export type ServiceBase = {
   version?: string;
   // Dynamic state
   downloaded: boolean;
-  downloading: boolean;
   enoughMemory: boolean;
   enoughSystemMemory: boolean;
   running: boolean;
