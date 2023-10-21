@@ -75,6 +75,7 @@ export type MarkdownProps = {
 };
 
 export type SettingStore = {
+  _hasHydrated: boolean;
   backendUrl: string;
   setBackendUrl: (backendUrl: string) => void;
   isIP: boolean;

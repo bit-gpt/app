@@ -29,6 +29,7 @@ const useSettingStore = create<SettingStore>()(
   devtools(
     persist(
       (set) => ({
+        _hasHydrated: false,
         backendUrl: "",
         isIP: false,
         setIsIP: (isIP) => set(() => ({ isIP }), false, "setIsIP"),
@@ -88,6 +89,9 @@ const useSettingStore = create<SettingStore>()(
       {
         name: "setting",
         storage: createJSONStorage(() => storage),
+        onRehydrateStorage: () => () => {
+          useSettingStore.setState({ _hasHydrated: true });
+        },
       },
     ),
     { name: "store", store: "setting" },
