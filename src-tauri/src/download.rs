@@ -54,16 +54,24 @@ impl<R: Runtime> Downloader<R> {
             .with_context(|| "Invalid/Empty binary-url")?;
         let binary_path = format!("{}/{}", self.service_dir, binary_name);
         let mut handlers = vec![];
-        for filename in self.weights_files.iter().chain([&binary_path]) {
-            let url = format!("{}{}", &self.weights_directory_url, filename);
-            let output_path = format!("{}/{}", &self.service_dir, filename);
+        for (url, output_path) in self
+            .weights_files
+            .iter()
+            .map(|filename| {
+                (
+                    format!("{}{}", &self.weights_directory_url, filename),
+                    format!("{}/{}", &self.service_dir, filename),
+                )
+            })
+            .chain([(binary_url, binary_path.clone())])
+        {
             let Ok((size_on_disk, total_file_size)) =
                 self.get_size_on_disk(&output_path, &url).await
             else {
                 continue;
             };
             if total_file_size == size_on_disk {
-                println!("File already downloaded: {}", output_path);
+                log::warn!("File already downloaded: {}", output_path);
             } else {
                 // report the total_file_size
                 self.window
@@ -129,8 +137,8 @@ impl<R: Runtime> Downloader<R> {
         size_on_disk: u64,
     ) -> Result<()> {
         // Make GET request with range header
-        println!("Downloading: {}", url.as_ref());
-        println!("bytes={}-", size_on_disk);
+        log::info!("Downloading: {}", url.as_ref());
+        log::info!("bytes={}-", size_on_disk);
         let res = reqwest::Client::new()
             .get(url.as_ref())
             .header(
@@ -160,12 +168,12 @@ impl<R: Runtime> Downloader<R> {
         if let Some(last_slash) = output_path.as_ref().rfind('/') {
             let dirs = &output_path.as_ref()[..last_slash];
             if let Err(e) = tokio::fs::create_dir_all(dirs).await {
-                println!("Error creating directory: {:?}", e);
+                log::error!("Error creating directory: {:?}", e);
             } else {
-                println!("Directory created successfully or already exists");
+                log::info!("Directory created successfully or already exists");
             }
         } else {
-            println!("No '/' found in the input string.");
+            log::info!("No '/' found in the input string.");
         }
 
         // Create the file.
@@ -199,7 +207,7 @@ impl<R: Runtime> Downloader<R> {
             if p > percent {
                 percent = p;
                 // Emit progress to JS
-                println!(
+                log::info!(
                     "downloaded {}%: ({}):  {} bytes / {} bytes",
                     percent,
                     output_path.as_ref(),

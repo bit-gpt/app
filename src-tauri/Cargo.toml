@@ -10,6 +10,9 @@
   futures = { version = "0.3.28", default-features = false }
   thiserror = "1.0.49"
   sys-info = "0.9.1"
+  log = "0.4.20"
+  pretty_env_logger = "0.5.0"
+  chrono = "0.4.31"
 
   [dependencies.tokio]
     features = ["process"]
