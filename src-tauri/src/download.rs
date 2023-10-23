@@ -46,24 +46,29 @@ impl<R: Runtime> Downloader<R> {
     }
 
     pub async fn download_files(&self) -> Result<()> {
-        // Download binary
+        // Create a vector of (download_url, output_path) tuples
+        let mut files_to_download: Vec<(&String, &String)> = vec![];
+        // Add binary to download
         let binary_url = utils::get_binary_url(&self.binaries_url).unwrap();
         let binary_name = binary_url.split('/').last().unwrap();
-        let output_path = format!("{}/{}", self.service_dir, binary_name);
-        self.download_file(&binary_url, &output_path).await?;
-        self.set_execute_permission(&output_path).await?;
-        // Download weights
-        self.download_weights_files().await
-    }
+        let binary_output_path = format!("{}/{}", self.service_dir, binary_name);
+        files_to_download.push((&binary_url, &binary_output_path));
+        // Add weights to download
+        for filename in self.weights_files.clone() {
+            let weights_url = format!("{}{}", &self.weights_directory_url, filename);
+            let weights_output_path = format!("{}/{}", &self.service_dir, filename);
+            files_to_download.push((&weights_url, &weights_output_path));
+        }
+        // Download files
+        futures::future::join_all(
+            files_to_download
+                .into_iter()
+                .map(|(url, output_path)| self.download_file(url, output_path)),
+        )
+        .await;
 
-    async fn download_weights_files(&self) -> Result<()> {
-        futures::future::join_all(self.weights_files.clone().into_iter().map(|filename| {
-            let url = format!("{}{}", &self.weights_directory_url, filename);
-            self.download_file(url, format!("{}/{}", &self.service_dir, filename))
-        }))
-        .await
-        .into_iter()
-        .collect()
+        // Set execute permission to binary
+        self.set_execute_permission(&binary_output_path).await
     }
 
     async fn download_file(
@@ -108,6 +113,18 @@ impl<R: Runtime> Downloader<R> {
             println!("File already downloaded: {}", output_path.as_ref());
             return Ok(());
         }
+
+        self.window
+            .emit(
+                "progress_bar_download_update",
+                ProgressPayload {
+                    path: output_path.as_ref().to_string(),
+                    service_id: self.service_id.clone(),
+                    downloaded: 0,
+                    total: total_file_size,
+                },
+            )
+            .with_context(|| "Failed to emit event")?;
 
         // Make GET request with range header
         println!("Downloading: {}", url.as_ref());
