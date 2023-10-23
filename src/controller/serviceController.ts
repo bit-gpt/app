@@ -96,13 +96,14 @@ class ServiceController implements IServiceController {
     serviceType,
     afterSuccess,
   }: DownloadArgs & { serviceType: string }): Promise<void> {
-    useSettingStore.getState().addServiceAsDownloading(serviceId);
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
+      useSettingStore.getState().addServiceAsDownloading(serviceId);
       await this.dockerController.download({ serviceId, afterSuccess });
       useSettingStore.getState().removeServiceAsDownloading(serviceId);
     } else if (serviceType === "binary") {
+      useSettingStore.getState().addServiceAsDownloading(serviceId);
       await this.binariesController.download({
         serviceId,
         binariesUrl,
