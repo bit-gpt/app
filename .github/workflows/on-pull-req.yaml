@@ -11,26 +11,7 @@ jobs:
     - run: npm install
     - run: npm run prettier:check
     - run: npm run build
-  build-sidecar-macos-intel:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with: {python-version: 3.11}
-    - run: ./scripts/build_petals_sidecar.sh x86_64 x86_64
-    - uses: actions/upload-artifact@v3
-      with: {path: dist/*}
-  build-sidecar-macos-arm:
-    runs-on: macos-latest-xlarge
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v4
-      with: {python-version: 3.11}
-    - run: ./scripts/build_petals_sidecar.sh arm64 aarch64
-    - uses: actions/upload-artifact@v3
-      with: {path: dist/*}
   publish-tauri:
-    needs: [build-macos-intel, build-macos-arm]
     permissions: write-all
     strategy:
       fail-fast: false
