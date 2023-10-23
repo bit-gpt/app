@@ -11,7 +11,7 @@ use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, thread, str};
 use tauri::{
-    AboutMetadata, api::process::Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
+    AboutMetadata, api::process::Command as Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 use tokio::{process::Child, sync::Mutex};
@@ -184,7 +184,7 @@ fn create_environment(handle: tauri::AppHandle) -> String {
     env.insert("REQUIREMENTS".to_string(), format!("{petals_path}/requirements.txt"));
 
     // Run the bash script
-    let output = Command::new("sh")
+    let _ = Command::new("sh")
         .args([format!("{petals_path}/create_env.sh")])
         .envs(env)
         .output()
@@ -195,9 +195,10 @@ fn create_environment(handle: tauri::AppHandle) -> String {
 
 #[tauri::command]
 fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String){
-    let python = create_environment(handle);
-    println!("🚀 Starting the Swarm with python={}...", python);
-    let cmd = Command::new(python)
+    let python: String = create_environment(handle);
+    println!("🚀 Starting the Swarm...");
+
+    let _ = Command::new(&python)
         .args(&[
             "-m",
             "petals.cli.run_server",
@@ -205,14 +206,10 @@ fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, publ
             &num_blocks.to_string(),
             "--public_name",
             &public_name,
-            "--model",
             &model,
-        ]);
-    println!("{:?}", cmd);
-    let output = cmd 
+        ])
         .spawn()
-        .expect("🙈 Failed to execute command");
-    println!("{:?}", output);
+        .expect("🙈 Failed to run swarm");
 }
 
 fn get_swarm_processes() -> String {
