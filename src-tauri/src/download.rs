@@ -46,15 +46,15 @@ impl<R: Runtime> Downloader<R> {
     }
 
     pub async fn download_files(&self) -> Result<()> {
-        let binary_url = utils::get_binary_url(&self.binaries_url).unwrap();
-        let binary_name = binary_url.split('/').last().unwrap();
+        let binary_url = utils::get_binary_url(&self.binaries_url)
+            .with_context(|| "Failed to get the binary url.")?;
+        let binary_name = binary_url
+            .split('/')
+            .last()
+            .with_context(|| "Invalid/Empty binary-url")?;
         let binary_path = format!("{}/{}", self.service_dir, binary_name);
         let mut handlers = vec![];
-        for filename in self
-            .weights_files
-            .iter()
-            .chain(std::iter::once(&binary_path))
-        {
+        for filename in self.weights_files.iter().chain([&binary_path]) {
             let url = format!("{}{}", &self.weights_directory_url, filename);
             let output_path = format!("{}/{}", &self.service_dir, filename);
             let Ok((size_on_disk, total_file_size)) =
