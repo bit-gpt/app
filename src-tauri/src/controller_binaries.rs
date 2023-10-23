@@ -125,12 +125,13 @@ pub async fn stop_service(service_id: String, state: State<'_, SharedState>) -> 
     Ok(())
 }
 
-pub async fn stop_all_services(state: State<'_, SharedState>) -> Result<()> {
-    let services = state.running_services.lock().await;
-    for service_id in services.keys() {
-        stop_service(service_id.clone(), state.clone()).await?;
-    }
-    Ok(())
+pub fn stop_all_services(state: tauri::State<'_, SharedState>) {
+    tauri::async_runtime::block_on(async move {
+        let services = state.running_services.lock().await;
+        for service_id in services.keys() {
+            _ = stop_service(service_id.clone(), state.clone()).await;
+        }
+    })
 }
 
 #[tauri::command(async)]

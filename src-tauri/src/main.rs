@@ -163,7 +163,7 @@ fn main() {
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
             "quit" => {
-                let _ = controller_binaries::stop_all_services(event.window().state());
+                controller_binaries::stop_all_services(event.window().state());
                 event.window().close().unwrap();
             }
             "close" => {
@@ -179,7 +179,7 @@ fn main() {
                     window.hide().unwrap();
                 }
                 "quit" => {
-                    let _ = controller_binaries::stop_all_services(app.state());
+                    controller_binaries::stop_all_services(app.state());
                     app.exit(0);
                 }
                 "show" => {
