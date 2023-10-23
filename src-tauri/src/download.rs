@@ -46,22 +46,15 @@ impl<R: Runtime> Downloader<R> {
     }
 
     pub async fn download_files(&self) -> Result<()> {
-        // Download binary
         let binary_url = utils::get_binary_url(&self.binaries_url).unwrap();
         let binary_name = binary_url.split('/').last().unwrap();
-        let output_path = format!("{}/{}", self.service_dir, binary_name);
-        let (size_on_disk, total_file_size) =
-            self.get_size_on_disk(&output_path, &binary_url).await?;
-        self.download_file(&binary_url, &output_path, total_file_size, size_on_disk)
-            .await?;
-        self.set_execute_permission(&output_path).await?;
-        // Download weights
-        self.download_weights_files().await
-    }
-
-    async fn download_weights_files(&self) -> Result<()> {
+        let binary_path = format!("{}/{}", self.service_dir, binary_name);
         let mut handlers = vec![];
-        for filename in &self.weights_files {
+        for filename in self
+            .weights_files
+            .iter()
+            .chain(std::iter::once(&binary_path))
+        {
             let url = format!("{}{}", &self.weights_directory_url, filename);
             let output_path = format!("{}/{}", &self.service_dir, filename);
             let Ok((size_on_disk, total_file_size)) =
@@ -87,10 +80,9 @@ impl<R: Runtime> Downloader<R> {
                 handlers.push(self.download_file(url, output_path, total_file_size, size_on_disk))
             }
         }
-        futures::future::join_all(handlers)
-            .await
-            .into_iter()
-            .collect()
+        let res = futures::future::join_all(handlers).await;
+        self.set_execute_permission(&binary_path).await?;
+        res.into_iter().collect()
     }
 
     async fn get_size_on_disk(
