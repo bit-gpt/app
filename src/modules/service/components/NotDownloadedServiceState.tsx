@@ -10,7 +10,7 @@ const NotDownloadedServiceState = ({ service, refetch, progress }: ServiceStateP
   const { mutate: download } = useDownloadServiceStream();
   const onDownload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    download?.({
+    download({
       serviceId: service.id,
       binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
       weightsDirectoryUrl: isServiceBinary(service) ? service.weightsDirectoryUrl : undefined,

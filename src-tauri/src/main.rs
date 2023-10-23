@@ -84,6 +84,24 @@ struct ModelInfo {
 }
 
 fn main() {
+    // initialize logger
+    pretty_env_logger::formatted_timed_builder()
+        .format(|buf, record| {
+            use std::io::Write;
+            writeln!(
+                buf,
+                "{}:{} {} [{}] - {}",
+                record.file().unwrap_or("unknown"),
+                record.line().unwrap_or(0),
+                chrono::Local::now().format("%Y-%m-%dT%H:%M:%S"),
+                record.level(),
+                record.args()
+            )
+        })
+        .filter_level(log::LevelFilter::Info)
+        .parse_default_env()
+        .init();
+
     let menu = Menu::new()
         .add_submenu(Submenu::new(
             "Prem App",

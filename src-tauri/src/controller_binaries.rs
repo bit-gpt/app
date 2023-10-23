@@ -86,7 +86,7 @@ pub async fn start_service(
             )
         })?
         .as_str();
-    println!("serve_command: {}", serve_command);
+    log::info!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
     let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
     if !binary_path.exists() {
@@ -190,9 +190,7 @@ pub async fn get_services(
             Ok(service) => {
                 services.push(service);
             }
-            Err(err) => {
-                eprintln!("Update service error: {:?}", err);
-            }
+            Err(err) => log::error!("Update service error: {:?}", err),
         }
     }
 
@@ -263,10 +261,10 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
                         break;
                     }
                 } else {
-                    println!("Content-Length header not found.");
+                    log::error!("Content-Length header not found.");
                 }
             } else {
-                println!("Request failed with status code: {}", response.status());
+                log::error!("Request failed with status code: {}", response.status());
             }
         }
     }
@@ -324,7 +322,7 @@ pub async fn get_system_stats() -> Result<HashMap<String, String>> {
 
 #[tauri::command(async)]
 pub async fn get_service_stats(service_id: String) -> Result<HashMap<String, String>> {
-    println!("service_id: {}", service_id);
+    log::info!("service_id: {}", service_id);
     Ok(HashMap::new())
 }
 
