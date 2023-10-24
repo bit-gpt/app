@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from "react";
+import Spinner from "shared/components/Spinner";
 import {
   swarmSupported,
   runSwarmMode,
@@ -10,8 +11,14 @@ import {
 
 import PrimaryButton from "../../../shared/components/PrimaryButton";
 
+export enum Swarm {
+  Creating = "creating",
+  Active = "active",
+  Inactive = "inactive",
+}
+
 const SwarmMode = () => {
-  const [swarmMode, setSwarmMode] = useState(false);
+  const [swarmMode, setSwarmMode] = useState(Swarm.Inactive);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
   const [numBlocks, setNumBlocks] = useState(3);
   const [modelOptions, setModelOptions] = useState<string[]>([]);
@@ -20,7 +27,9 @@ const SwarmMode = () => {
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const isRunning = await checkSwarmModeRunning();
-      setSwarmMode(isRunning);
+      if (isRunning) {
+        setSwarmMode(Swarm.Active);
+      }
     }, 500);
 
     console.log("intervalId", intervalId);
@@ -37,8 +46,9 @@ const SwarmMode = () => {
   const onStart = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
+      setSwarmMode(Swarm.Creating);
       await runSwarmMode(numBlocks, model, "premAI");
-      setSwarmMode(true);
+      setSwarmMode(Swarm.Active);
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +57,7 @@ const SwarmMode = () => {
   const onStop = async () => {
     try {
       await stopSwarmMode();
-      setSwarmMode(false);
+      setSwarmMode(Swarm.Inactive);
     } catch (error) {
       console.error(error);
     }
@@ -72,11 +82,11 @@ const SwarmMode = () => {
     <div className="flex items-end justify-between mr-[45px]">
       <h2 className="text-grey-300 text-lg mt-10 mb-4">Prem Network</h2>
 
-      {swarmMode ? (
+      {swarmMode === Swarm.Active ? (
         <>
           <PrimaryButton onClick={onStop}>Stop</PrimaryButton>
         </>
-      ) : (
+      ) : swarmMode === Swarm.Inactive ? (
         <>
           <form className="flex items-center space-x-4 bg-gray-900 p-4 rounded-lg shadow-md">
             <input
@@ -122,6 +132,10 @@ const SwarmMode = () => {
             </PrimaryButton>
           </form>
         </>
+      ) : (
+        <div className="flex justify-center mb-5">
+          <Spinner className="h-10 w-10" />
+        </div>
       )}
     </div>
   ) : null;

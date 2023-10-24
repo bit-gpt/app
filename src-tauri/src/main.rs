@@ -213,6 +213,23 @@ fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, publ
 }
 
 fn get_swarm_processes() -> String {
+    // Check if create_env.sh is running
+    let output = Command::new("/usr/bin/pgrep")
+        .args(&["-f", "create_env.sh|conda.exe"])
+        .output()
+        .map_err(|e| {
+            println!("🙈 Failed to execute command: {}", e);
+            e
+        });
+
+    let output_value = output.unwrap().stdout;
+
+    // If create_env.sh is running, return an empty string
+    if !output_value.is_empty() {
+        return "".to_string();
+    }
+
+    // If create_env.sh is not running, get the processes from petals
     let output = Command::new("/usr/bin/pgrep")
         .args(&["-f", "https://github.com/bigscience-workshop/petals|petals.cli.run_server|multiprocessing.resource_tracker|from multiprocessing.spawn"])
         .output()
@@ -222,8 +239,9 @@ fn get_swarm_processes() -> String {
         });
 
     let output_value = output.unwrap().stdout;
-    return output_value;
+    output_value
 }
+
 
 #[tauri::command]
 fn stop_swarm_mode() {
