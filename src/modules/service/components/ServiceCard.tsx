@@ -39,10 +39,9 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
       onClick={(e) => {
         if (isGreyCard && isDesktopEnv()) {
           e.preventDefault();
-          toast.info(
-            "This service is not supported on your system. Please use the web interface.",
-            { toastId: "not-supported" },
-          );
+          toast.info("This model is only available on Prem Server installation.", {
+            toastId: "not-supported",
+          });
         }
       }}
       to={redirectLink}
