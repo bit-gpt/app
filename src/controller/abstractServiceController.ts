@@ -1,4 +1,5 @@
 import type { Service } from "../modules/service/types";
+import type { Interface } from "../shared/helpers/interfaces";
 
 import type { DownloadArgs } from "./serviceController";
 
@@ -20,6 +21,7 @@ abstract class AbstractServiceController {
   abstract getServiceStats(serviceId: string): Promise<Record<string, string>>;
   abstract getSystemStats(): Promise<Record<string, string>>;
   abstract getGPUStats(): Promise<Record<string, string>>;
+  abstract getInterfaces(): Promise<Interface[]>;
 }
 
 export default AbstractServiceController;

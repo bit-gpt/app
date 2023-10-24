@@ -1,6 +1,8 @@
 import { invoke } from "@tauri-apps/api/tauri";
 
 import type { ServiceBinary } from "../modules/service/types";
+import type { Interface } from "../shared/helpers/interfaces";
+import interfaces from "../shared/helpers/interfaces";
 
 import AbstractServiceController from "./abstractServiceController";
 
@@ -69,6 +71,10 @@ class BinariesController extends AbstractServiceController {
 
   async getSystemStats(): Promise<Record<string, string>> {
     return await invoke<Record<string, string>>("get_system_stats");
+  }
+
+  async getInterfaces(): Promise<Interface[]> {
+    return interfaces;
   }
 }
 

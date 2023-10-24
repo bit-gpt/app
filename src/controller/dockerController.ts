@@ -1,6 +1,7 @@
 import downloadServiceStream from "../modules/service/api/downloadServiceStream";
 import type { ServiceDocker } from "../modules/service/types";
 import api from "../shared/api/v1";
+import type { Interface } from "../shared/helpers/interfaces";
 import useSettingStore from "../shared/store/setting";
 
 import AbstractServiceController from "./abstractServiceController";
@@ -81,6 +82,11 @@ class DockerController extends AbstractServiceController {
 
   async getGPUStats(): Promise<Record<string, string>> {
     const response = await api().get("v1/gpu-stats-all");
+    return response.data;
+  }
+
+  async getInterfaces(): Promise<Interface[]> {
+    const response = await api().get("v1/interfaces");
     return response.data;
   }
 }

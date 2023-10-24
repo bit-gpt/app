@@ -1,4 +1,5 @@
 import type { Service } from "../modules/service/types";
+import type { Interface } from "../shared/helpers/interfaces";
 import useSettingStore from "../shared/store/setting";
 
 import BinariesController from "./binariesController";
@@ -30,6 +31,7 @@ interface IServiceController {
   getServiceStats(serviceId: string, serviceType: Service["serviceType"]): Promise<any>;
   getSystemStats(serviceType: Service["serviceType"]): Promise<any>;
   getGPUStats(serviceType: Service["serviceType"]): Promise<any>;
+  getInterfaces(serviceType: Service["serviceType"]): Promise<Interface[]>;
 }
 
 class ServiceController implements IServiceController {
@@ -184,6 +186,17 @@ class ServiceController implements IServiceController {
       return await this.binariesController.getGPUStats();
     } else {
       return {};
+    }
+  }
+
+  async getInterfaces(serviceType: Service["serviceType"]): Promise<Interface[]> {
+    // We check the env (browser or desktop) to determine serviceType
+    if (serviceType === "docker") {
+      return await this.dockerController.getInterfaces();
+    } else if (serviceType === "binary") {
+      return await this.binariesController.getInterfaces();
+    } else {
+      return [];
     }
   }
 }
