@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getServiceStatus, isDesktopEnv } from "shared/helpers/utils";
 import { SERVICE_KEY } from "shared/hooks/useGetService";
 import { SERVICES_KEY } from "shared/hooks/useGetServices";
@@ -34,10 +35,16 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
 
   return (
     <Link
-      className={clsx(className, {
-        "disabled--card": isGreyCard,
-        "pointer-events-none": isGreyCard && isDesktopEnv(),
-      })}
+      className={clsx(className, { "disabled--card": isGreyCard })}
+      onClick={(e) => {
+        if (isGreyCard && isDesktopEnv()) {
+          e.preventDefault();
+          toast.info(
+            "This service is not supported on your system. Please use the web interface.",
+            { toastId: "not-supported" },
+          );
+        }
+      }}
       to={redirectLink}
     >
       <div className="flex items-start flex-wrap w-full relative justify-between">
