@@ -24,21 +24,32 @@ function App() {
 
         // Download progress
         if (isDesktopEnv()) {
-          type Payload = { downloaded: number; total: number; path: string; service_id: string };
-          const files: Record<string, Payload> = {};
+          type FilePayload = {
+            downloadedFileSize: number;
+            totalFileSize: number;
+            path: string;
+            serviceId: string;
+          };
+          // serviceId -> {filePath: FilePayload}
+          const files: Record<string, Record<string, FilePayload>> = {};
           await appWindow.listen(
             "progress_bar_download_update",
-            ({ event, payload }: { event: any; payload: Payload }) => {
-              files[payload.path] = payload;
-              const totalDownloaded = Object.values(files).reduce(
-                (acc, file) => acc + file.downloaded,
+            ({ event, payload }: { event: any; payload: FilePayload }) => {
+              // save last file payload
+              files[payload.serviceId] = { ...files[payload.serviceId], [payload.path]: payload };
+              // calculate progress
+              const downloadedFilesSize = Object.values(files[payload.serviceId]).reduce(
+                (acc, file) => acc + file.downloadedFileSize,
                 0,
               );
-              const totalTotal = Object.values(files).reduce((acc, file) => acc + file.total, 0);
-              const progress = Math.floor((totalDownloaded / totalTotal) * 100);
+              const totalFilesSize = Object.values(files[payload.serviceId]).reduce(
+                (acc, file) => acc + file.totalFileSize,
+                0,
+              );
+              const progress = Math.floor((downloadedFilesSize / totalFilesSize) * 100);
               useSettingStore
                 .getState()
-                .setServiceDownloadProgress(payload.service_id, "binary", progress);
+                .setServiceDownloadProgress(payload.serviceId, "binary", progress);
             },
           );
         }
