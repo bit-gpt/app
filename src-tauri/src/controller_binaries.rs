@@ -89,7 +89,7 @@ pub async fn start_service(
         .as_str();
     log::info!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
-    
+
     // Combine the service_dir and binary name to get the correct binary path
     let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
     log::info!("binary_path: {:?}", binary_path);
@@ -97,17 +97,21 @@ pub async fn start_service(
         Err(format!("invalid binary for `{service_id}`"))?
     }
     // Extract the arguments with different delimiters
-    let args: Vec<String> = serve_command_vec[1..].iter()
-    .map(|arg| {
-        // Check if the argument contains '='
-        if arg.contains('=') {
-            arg.to_string()
-        } else {
-            // If the argument doesn't contain '=', it should be treated as a separate argument
-            arg.split(' ').map(String::from).collect::<Vec<String>>().join(" ")
-        }
-    })
-    .collect();
+    let args: Vec<String> = serve_command_vec[1..]
+        .iter()
+        .map(|arg| {
+            // Check if the argument contains '='
+            if arg.contains('=') {
+                arg.to_string()
+            } else {
+                // If the argument doesn't contain '=', it should be treated as a separate argument
+                arg.split(' ')
+                    .map(String::from)
+                    .collect::<Vec<String>>()
+                    .join(" ")
+            }
+        })
+        .collect();
     log::info!("args: {:?}", args);
     let child = Command::new(&binary_path)
         .current_dir(service_dir)
@@ -307,7 +311,10 @@ pub async fn is_supported() -> Result<bool> {
 }
 
 pub fn get_base_url(service: &Service) -> Result<String> {
-    let base_url = format!("http://localhost:{:?}", service.default_external_port);
+    let base_url = format!(
+        "http://localhost:{:?}",
+        service.default_external_port.unwrap_or_default()
+    );
     Ok(base_url)
 }
 
