@@ -150,7 +150,6 @@ impl<R: Runtime> Downloader<R> {
             log::warn!("File already downloading: {}", output_path.as_ref());
             return Ok(());
         } else {
-            log::info!("//Downloading file: {}", output_path.as_ref());
             downloading_files_guard.push(output_path.as_ref().to_string());
         }
         drop(downloading_files_guard);
