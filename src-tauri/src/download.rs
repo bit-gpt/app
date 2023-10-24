@@ -21,9 +21,12 @@ pub struct Downloader<R: Runtime> {
 #[derive(Clone, Serialize)]
 struct ProgressPayload {
     path: String,
+    #[serde(rename = "serviceId")]
     service_id: String,
-    downloaded: u64,
-    total: u64,
+    #[serde(rename = "downloadedFileSize")]
+    downloaded_file_size: u64,
+    #[serde(rename = "totalFileSize")]
+    total_file_size: u64,
 }
 
 impl<R: Runtime> Downloader<R> {
@@ -80,8 +83,8 @@ impl<R: Runtime> Downloader<R> {
                         ProgressPayload {
                             path: output_path.clone(),
                             service_id: self.service_id.clone(),
-                            downloaded: 0,
-                            total: total_file_size,
+                            downloaded_file_size: 0,
+                            total_file_size,
                         },
                     )
                     .with_context(|| "Failed to emit event")?;
@@ -186,7 +189,7 @@ impl<R: Runtime> Downloader<R> {
             .with_context(|| format!("Failed to create file at: {}", output_path.as_ref()))?;
 
         // Download the file chunk by chunk.
-        let mut downloaded_size = size_on_disk;
+        let mut downloaded_file_size = size_on_disk;
         let mut stream = res.bytes_stream();
         let mut percent = 0;
         while let Some(item) = stream.next().await {
@@ -197,13 +200,13 @@ impl<R: Runtime> Downloader<R> {
             };
             let chunk_size = chunk.len() as u64;
 
-            downloaded_size += chunk_size;
+            downloaded_file_size += chunk_size;
             // Write the chunk to disk.
             file.write_all_buf(&mut chunk).await.with_context(|| {
                 format!("Failed to write to destination {}", output_path.as_ref())
             })?;
 
-            let p = downloaded_size * 100 / total_file_size;
+            let p = downloaded_file_size * 100 / total_file_size;
             if p > percent {
                 percent = p;
                 // Emit progress to JS
@@ -211,7 +214,7 @@ impl<R: Runtime> Downloader<R> {
                     "downloaded {}%: ({}):  {} bytes / {} bytes",
                     percent,
                     output_path.as_ref(),
-                    downloaded_size,
+                    downloaded_file_size,
                     total_file_size,
                 );
                 self.window
@@ -220,8 +223,8 @@ impl<R: Runtime> Downloader<R> {
                         ProgressPayload {
                             path: output_path.as_ref().to_string(),
                             service_id: self.service_id.clone(),
-                            downloaded: downloaded_size,
-                            total: total_file_size,
+                            downloaded_file_size,
+                            total_file_size,
                         },
                     )
                     .with_context(|| "Failed to emit event")?;
