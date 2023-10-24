@@ -61,7 +61,7 @@ pub async fn start_service(
     let log_path = PathBuf::from(&service_dir).join(format!("{}.log", service_id));
 
     // Use synchronous std::fs::File for log file creation
-    let log_file = std::fs::OpenOptions::new()
+    let _log_file = std::fs::OpenOptions::new()
         .create(true)
         .append(true)
         .open(&log_path)
@@ -96,12 +96,6 @@ pub async fn start_service(
     if !binary_path.exists() {
         Err(format!("invalid binary for `{service_id}`"))?
     }
-    // // print serve_command_vec as a string to stdout for debugging: # FIXME:
-    // println!("TESTING");
-    // println!("serve_command_vec: {:?}", serve_command_vec);
-    // let service_dir = service_dir.parent().unwrap().parent().unwrap().to_path_buf(); #TODO: remove
-    println!("service_dir: {:?}", service_dir);
-    println!("binary_path: {:?}", binary_path);
     // Extract the arguments with different delimiters
     let args: Vec<String> = serve_command_vec[1..].iter()
     .map(|arg| {
