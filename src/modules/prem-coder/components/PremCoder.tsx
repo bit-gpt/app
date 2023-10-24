@@ -51,7 +51,7 @@ const PremCoder = () => {
                     https://plugins.jetbrains.com/plugin/22379-tabby
                   </span>
                 </p>
-                <p className="text-white mt-5">Tabby API endpoint: http://localhost:8080</p>
+                <p className="text-white mt-5">{`Tabby API endpoint: http://localhost:${service?.defaultExternalPort}`}</p>
               </div>
             </div>
           </div>

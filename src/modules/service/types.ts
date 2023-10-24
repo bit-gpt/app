@@ -15,6 +15,7 @@ export type ServiceBase = {
   baseUrl: string;
   beta: boolean;
   comingSoon: boolean;
+  defaultExternalPort: number;
   defaultPort: number;
   description: string;
   documentation: string;
