@@ -48,10 +48,7 @@ export type Service = {
   petals: boolean;
   comingSoon: boolean;
   promptTemplate: string;
-  invokeMethod: {
-    header: string;
-    baseUrl: string;
-  };
+  baseUrl: string;
 };
 
 export type SearchFilterProps = {

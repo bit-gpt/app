@@ -18,6 +18,7 @@ const Domains = () => {
       setDomains(dnsInfo.data.map((dnsInfo: { domain: any }) => dnsInfo.domain));
     })();
   }, []);
+
   return (
     <>
       <div className="flex items-baseline mt-10 mb-4">
