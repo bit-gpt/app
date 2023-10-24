@@ -6,6 +6,7 @@ use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
 use std::collections::HashMap;
 use std::path::PathBuf;
+use std::process::Stdio;
 use sys_info::mem_info;
 
 use futures::future;
@@ -60,7 +61,7 @@ pub async fn start_service(
     let log_path = PathBuf::from(&service_dir).join(format!("{}.log", service_id));
 
     // Use synchronous std::fs::File for log file creation
-    let log_file = std::fs::OpenOptions::new()
+    let _log_file = std::fs::OpenOptions::new()
         .create(true)
         .append(true)
         .open(&log_path)
@@ -88,23 +89,31 @@ pub async fn start_service(
         .as_str();
     log::info!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
+    
+    // Combine the service_dir and binary name to get the correct binary path
     let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
+    log::info!("binary_path: {:?}", binary_path);
     if !binary_path.exists() {
         Err(format!("invalid binary for `{service_id}`"))?
     }
-
+    // Extract the arguments with different delimiters
+    let args: Vec<String> = serve_command_vec[1..].iter()
+    .map(|arg| {
+        // Check if the argument contains '='
+        if arg.contains('=') {
+            arg.to_string()
+        } else {
+            // If the argument doesn't contain '=', it should be treated as a separate argument
+            arg.split(' ').map(String::from).collect::<Vec<String>>().join(" ")
+        }
+    })
+    .collect();
+    log::info!("args: {:?}", args);
     let child = Command::new(&binary_path)
-        .args(vec![
-            serve_command_vec[1],
-            format!("{}={}", serve_command_vec[2], service_dir.display()).as_str(),
-            format!("{}={}", serve_command_vec[4], serve_command_vec[5]).as_str(),
-        ])
-        .stdout(std::process::Stdio::from(
-            log_file
-                .try_clone()
-                .with_context(|| "Failed to clone log file handle")?,
-        ))
-        .stderr(std::process::Stdio::from(log_file))
+        .current_dir(service_dir)
+        .args(args)
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
     let mut running_services_guard = state.running_services.lock().await;
