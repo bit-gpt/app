@@ -76,7 +76,7 @@ class DockerController extends AbstractServiceController {
 
   async getService(serviceId: string): Promise<ServiceDocker> {
     try {
-      const response = (await api().get(`v1/service/${serviceId}`)) ?? ({} as ServiceDocker);
+      const response = (await api().get(`v1/services/${serviceId}`)) ?? ({} as ServiceDocker);
       return response.data;
     } catch (e) {
       console.error(e);
