@@ -27,6 +27,8 @@ pub struct Service {
     beta: Option<bool>,
     #[serde(rename = "comingSoon")]
     coming_soon: Option<bool>,
+    #[serde(rename = "defaultExternalPort")]
+    default_external_port: Option<u32>,
     #[serde(rename = "defaultPort")]
     default_port: Option<u32>,
     description: Option<String>,
@@ -55,6 +57,8 @@ pub struct Service {
     #[serde(rename = "serveCommand")]
     serve_command: Option<String>,
     // Dynamic state
+    #[serde(rename = "baseUrl")]
+    base_url: Option<String>,
     downloaded: Option<bool>,
     #[serde(rename = "enoughMemory")]
     enough_memory: Option<bool>,
