@@ -1,10 +1,10 @@
 use crate::errors::{Context, Result};
 use std::collections::HashMap;
 
-use crate::utils;
+use crate::{utils, SharedState};
 use futures::StreamExt;
 use serde::Serialize;
-use tauri::{Runtime, Window};
+use tauri::{Manager, Runtime, Window};
 use tokio::fs;
 use tokio::fs::OpenOptions;
 use tokio::io::AsyncWriteExt;
@@ -139,6 +139,27 @@ impl<R: Runtime> Downloader<R> {
         total_file_size: u64,
         size_on_disk: u64,
     ) -> Result<()> {
+        let mut downloading_files_guard = self
+            .window
+            .state::<SharedState>()
+            .downloading_files
+            .lock()
+            .await;
+
+        if downloading_files_guard.contains(&output_path.as_ref().to_string()) {
+            log::warn!("File already downloading: {}", output_path.as_ref());
+            return Ok(());
+        } else {
+            self.window
+                .app_handle()
+                .state::<SharedState>()
+                .downloading_files
+                .lock()
+                .await
+                .push(output_path.as_ref().to_string());
+        }
+        // TODO: Do we need to drop(downloading_files_guard);
+
         // Make GET request with range header
         log::info!("Downloading: {}", url.as_ref());
         log::info!("bytes={}-", size_on_disk);
@@ -230,6 +251,7 @@ impl<R: Runtime> Downloader<R> {
                     .with_context(|| "Failed to emit event")?;
             }
         }
+        downloading_files_guard.retain(|x| x != output_path.as_ref());
         Ok(())
     }
 

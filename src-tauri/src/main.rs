@@ -16,6 +16,7 @@ use tokio::{process::Child, sync::Mutex};
 
 #[derive(Debug, Default)]
 pub struct SharedState {
+    downloading_files: Mutex<Vec<String>>,
     running_services: Mutex<HashMap<String, Child>>,
     // Properties from public service registry and additional service state
     services: Mutex<HashMap<String, Service>>,
