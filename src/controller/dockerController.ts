@@ -7,38 +7,19 @@ import AbstractServiceController from "./abstractServiceController";
 
 class DockerController extends AbstractServiceController {
   async start(serviceId: string): Promise<void> {
-    console.log(`Starting service ${serviceId}`);
-    try {
-      await api().post(`v1/run-service/`, { id: serviceId });
-    } catch (e) {
-      console.log(e);
-    }
+    await api().post(`v1/run-service/`, { id: serviceId });
   }
 
   async restart(serviceId: string): Promise<void> {
-    console.log(`Restarting service ${serviceId}`);
-    try {
-      await api().get(`v1/restart-service/${serviceId}`);
-    } catch (e) {
-      console.log(e);
-    }
+    await api().get(`v1/restart-service/${serviceId}`);
   }
 
   async stop(serviceId: string): Promise<void> {
-    console.log(`Stopping service ${serviceId}`);
-    try {
-      await api().get(`v1/stop-service/${serviceId}`);
-    } catch (e) {
-      console.log(e);
-    }
+    await api().get(`v1/stop-service/${serviceId}`);
   }
 
   async delete(serviceId: string): Promise<void> {
-    try {
-      await api().get(`v1/remove-service/${serviceId}`);
-    } catch (e) {
-      console.error(`Failed to delete service ${serviceId}`);
-    }
+    await api().get(`v1/remove-service/${serviceId}`);
   }
 
   async download({
@@ -75,23 +56,13 @@ class DockerController extends AbstractServiceController {
   }
 
   async getService(serviceId: string): Promise<ServiceDocker> {
-    try {
-      const response = (await api().get(`v1/services/${serviceId}`)) ?? ({} as ServiceDocker);
-      return response.data;
-    } catch (e) {
-      console.error(e);
-      return {} as ServiceDocker;
-    }
+    const response = await api().get(`v1/services/${serviceId}`);
+    return response.data;
   }
 
   async getServices(): Promise<ServiceDocker[]> {
-    try {
-      const response = (await api().get("v1/services")) ?? [];
-      return response.data;
-    } catch (e) {
-      console.error(e);
-      return [];
-    }
+    const response = await api().get("v1/services");
+    return response.data;
   }
 
   async getLogs(serviceId: string): Promise<string> {
@@ -99,33 +70,18 @@ class DockerController extends AbstractServiceController {
   }
 
   async getServiceStats(serviceId: string): Promise<Record<string, string>> {
-    try {
-      const response = await api().get(`v1/stats/${serviceId}`);
-      return response.data;
-    } catch (e) {
-      console.error(e);
-      return {};
-    }
+    const response = await api().get(`v1/stats/${serviceId}`);
+    return response.data;
   }
 
   async getSystemStats(): Promise<Record<string, string>> {
-    try {
-      const response = await api().get("v1/stats-all");
-      return response.data;
-    } catch (e) {
-      console.error(e);
-      return {};
-    }
+    const response = await api().get("v1/stats-all");
+    return response.data;
   }
 
   async getGPUStats(): Promise<Record<string, string>> {
-    try {
-      const response = await api().get("v1/gpu-stats-all");
-      return response.data;
-    } catch (e) {
-      console.error(e);
-      return {};
-    }
+    const response = await api().get("v1/gpu-stats-all");
+    return response.data;
   }
 }
 

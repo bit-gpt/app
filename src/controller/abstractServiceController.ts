@@ -14,8 +14,8 @@ abstract class AbstractServiceController {
     weightsFiles,
     afterSuccess,
   }: DownloadArgs): void;
-  abstract getService(serviceId: string): Promise<Service | undefined>;
-  abstract getServices(): Promise<Service[] | undefined>;
+  abstract getService(serviceId: string): Promise<Service>;
+  abstract getServices(): Promise<Service[]>;
   abstract getLogs(serviceId: string): Promise<string>;
   abstract getServiceStats(serviceId: string): Promise<Record<string, string>>;
   abstract getSystemStats(): Promise<Record<string, string>>;

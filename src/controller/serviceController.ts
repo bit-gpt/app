@@ -119,9 +119,9 @@ class ServiceController implements IServiceController {
     // If serviceType is not provided, we assume it's docker
     serviceType = serviceType ? serviceType : "docker";
     if (serviceType === "docker") {
-      return (await this.dockerController.getService(serviceId)) ?? ({} as Service);
+      return await this.dockerController.getService(serviceId);
     } else if (serviceType === "binary") {
-      return (await this.binariesController.getService(serviceId)) ?? ({} as Service);
+      return await this.binariesController.getService(serviceId);
     } else {
       return {} as Service;
     }
@@ -130,9 +130,9 @@ class ServiceController implements IServiceController {
   async getServices(serviceType: Service["serviceType"]): Promise<Service[]> {
     // To get all services at startup we check the env (browser or desktop) to determine serviceType
     if (serviceType === "docker") {
-      return (await this.dockerController.getServices()) ?? [];
+      return await this.dockerController.getServices();
     } else if (serviceType === "binary") {
-      return (await this.binariesController.getServices()) ?? [];
+      return await this.binariesController.getServices();
     } else {
       return [];
     }
