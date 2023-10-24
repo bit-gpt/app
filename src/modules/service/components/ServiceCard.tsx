@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { getServiceStatus } from "shared/helpers/utils";
+import { getServiceStatus, isDesktopEnv } from "shared/helpers/utils";
 import { SERVICE_KEY } from "shared/hooks/useGetService";
 import { SERVICES_KEY } from "shared/hooks/useGetServices";
 import useInterfaces from "shared/hooks/useInterfaces";
@@ -33,7 +33,13 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
       : `/services/${serviceId}/${service.serviceType ?? "docker"}/detail`;
 
   return (
-    <Link className={clsx(className, isGreyCard && "disabled--card")} to={redirectLink}>
+    <Link
+      className={clsx(className, {
+        "disabled--card": isGreyCard,
+        "pointer-events-none": isGreyCard && isDesktopEnv(),
+      })}
+      to={redirectLink}
+    >
       <div className="flex items-start flex-wrap w-full relative justify-between">
         <div className="service-card__logo">
           <img src={icon} alt={title} />
