@@ -9,7 +9,12 @@ import PremAudioBox from "./PremAudioBox";
 import PremAudioLeftSidebar from "./PremAudioLeftSidebar";
 import PremImageRightSidebar from "./PremAudioRightSidebar";
 
-const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioContainerProps) => {
+const PremAudioContainer = ({
+  serviceName,
+  serviceId,
+  serviceType,
+  historyId,
+}: PremAudioContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
@@ -34,7 +39,7 @@ const PremAudioContainer = ({ serviceName, serviceId, historyId }: PremAudioCont
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
               />
-              <PremAudioBox serviceId={serviceId} historyId={historyId} />
+              <PremAudioBox serviceId={serviceId} serviceType={serviceType} historyId={historyId} />
             </div>
           </div>
         </div>
