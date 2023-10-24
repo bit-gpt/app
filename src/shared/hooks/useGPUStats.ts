@@ -8,7 +8,6 @@ const useGPUStats = () => {
   const controller = ServiceController.getInstance();
   // Here we check the env to determine if we should use the binary or docker service
   // and fetch the services accordingly
-  // TODO: Is it ok?
   let serviceType: Service["serviceType"];
   if (isDesktopEnv()) {
     serviceType = "binary";
