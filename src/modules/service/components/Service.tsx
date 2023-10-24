@@ -42,9 +42,9 @@ const Service = () => {
       if (!isServicesLoading) {
         for (const serviceId in progresses) {
           const service = services?.filter((s) => s.id === serviceId)[0];
-          console.log(`Resume download for ${serviceId}`);
           const isDownloading = downloadingServices.includes(serviceId);
           if (service && !isDownloading && Object.keys(service ?? {}).length) {
+            console.log(`Resume download for ${serviceId}`);
             download({
               serviceId,
               binariesUrl: isServiceBinary(service) ? service.binariesUrl : undefined,
