@@ -109,7 +109,12 @@ impl<R: Runtime> Downloader<R> {
             // If so, check file length to know where to restart the download from.
             size_on_disk = fs::metadata(output_path)
                 .await
-                .with_context(|| format!("Failed to get metadata for {}", output_path))?
+                .with_context(|| {
+                    format!(
+                        "get_size_on_disk Failed to get metadata for {}",
+                        output_path
+                    )
+                })?
                 .len();
         }
         // Make Head request to get file size
@@ -148,6 +153,7 @@ impl<R: Runtime> Downloader<R> {
             log::info!("//Downloading file: {}", output_path.as_ref());
             downloading_files_guard.push(output_path.as_ref().to_string());
         }
+        drop(downloading_files_guard);
 
         // Make GET request with range header
         log::info!("Downloading: {}", url.as_ref());
@@ -240,6 +246,8 @@ impl<R: Runtime> Downloader<R> {
                     .with_context(|| "Failed to emit event")?;
             }
         }
+
+        let mut downloading_files_guard = state.downloading_files.lock().await;
         downloading_files_guard.retain(|x| x != output_path.as_ref());
         Ok(())
     }
@@ -247,7 +255,12 @@ impl<R: Runtime> Downloader<R> {
     async fn set_execute_permission(&self, binary_path: impl AsRef<str>) -> Result<()> {
         use std::os::unix::fs::PermissionsExt;
         let mut permissions = std::fs::metadata(binary_path.as_ref())
-            .with_context(|| format!("Failed to get metadata for {}", binary_path.as_ref()))?
+            .with_context(|| {
+                format!(
+                    "set_execute_permission Failed to get metadata for {}",
+                    binary_path.as_ref()
+                )
+            })?
             .permissions();
         permissions.set_mode(0o755);
         std::fs::set_permissions(binary_path.as_ref(), permissions)
