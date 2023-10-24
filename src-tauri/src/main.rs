@@ -193,7 +193,7 @@ fn create_environment(handle: tauri::AppHandle) -> String {
 }
 
 
-#[tauri::command]
+#[tauri::command(async)]
 fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String){
     let python: String = create_environment(handle);
     println!("🚀 Starting the Swarm...");
