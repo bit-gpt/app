@@ -169,7 +169,7 @@ pub async fn get_services(
     let services_guard = state.services.lock().await;
 
     for service in services_guard.values() {
-        // Filter out services that don't have version "1"
+        // Update services only if version is 1
         if let Some(version) = &service.version {
             if version == "1" {
                 let state_ref = &state;
@@ -181,6 +181,8 @@ pub async fn get_services(
                 };
                 update_futures.push(update_future);
             }
+        } else {
+            services.push(service.clone())
         }
     }
 
@@ -194,7 +196,6 @@ pub async fn get_services(
             Err(err) => log::error!("Update service error: {:?}", err),
         }
     }
-
     Ok(services)
 }
 
@@ -296,6 +297,11 @@ pub async fn is_supported() -> Result<bool> {
     Ok(true)
 }
 
+pub fn get_base_url(service: &Service) -> Result<String> {
+    let base_url = format!("http://localhost:{:?}", service.default_external_port);
+    Ok(base_url)
+}
+
 pub async fn update_service_with_dynamic_state(
     service: &mut Service,
     state: &State<'_, SharedState>,
@@ -307,12 +313,14 @@ pub async fn update_service_with_dynamic_state(
     let has_enough_storage = has_enough_storage().await?;
     let is_supported = is_supported().await?;
     let is_service_running = is_service_running(&service.id.as_ref().unwrap(), &state).await?;
+    let base_url = get_base_url(service)?;
     service.downloaded = Some(is_service_downloaded);
     service.enough_memory = Some(has_enough_free_memory);
     service.enough_system_memory = Some(has_enough_total_memory);
     service.enough_storage = Some(has_enough_storage);
     service.supported = Some(is_supported);
     service.running = Some(is_service_running);
+    service.base_url = Some(base_url);
     Ok(service.clone())
 }
 
