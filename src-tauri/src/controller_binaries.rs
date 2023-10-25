@@ -61,6 +61,7 @@ pub async fn start_service(
     let log_path = PathBuf::from(&service_dir).join(format!("{}.log", service_id));
 
     // Use synchronous std::fs::File for log file creation
+    // TODO: ensure it's used before shipping to production
     let _log_file = std::fs::OpenOptions::new()
         .create(true)
         .append(true)
@@ -88,31 +89,28 @@ pub async fn start_service(
         })?
         .as_str();
     log::info!("serve_command: {}", serve_command);
-    let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
-
     // Combine the service_dir and binary name to get the correct binary path
-    let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
+    let binary_path = state
+        .services
+        .lock()
+        .await
+        .get(&service_id)
+        .map(|s| s.binary_path.as_ref())
+        .flatten()
+        .with_context(|| {
+            format!(
+                "Failed to get binary_path for service({}), likely service binary download incomplete",
+                service_id
+            )
+        })?
+        .to_path_buf();
     log::info!("binary_path: {:?}", binary_path);
     if !binary_path.exists() {
         Err(format!("invalid binary for `{service_id}`"))?
     }
     // Extract the arguments with different delimiters
-    let args: Vec<String> = serve_command_vec[1..]
-        .iter()
-        .map(|arg| {
-            // Check if the argument contains '='
-            if arg.contains('=') {
-                arg.to_string()
-            } else {
-                // If the argument doesn't contain '=', it should be treated as a separate argument
-                arg.split(' ')
-                    .map(String::from)
-                    .collect::<Vec<String>>()
-                    .join(" ")
-            }
-        })
-        .collect();
-    log::info!("args: {:?}", args);
+    log::info!("args: {:?}", serve_command);
+    let args = serve_command.split_whitespace().skip(1);
     let child = Command::new(&binary_path)
         .current_dir(service_dir)
         .args(args)

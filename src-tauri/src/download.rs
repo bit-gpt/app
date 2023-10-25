@@ -48,7 +48,7 @@ impl<R: Runtime> Downloader<R> {
         }
     }
 
-    pub async fn download_files(&self) -> Result<()> {
+    pub async fn download_files(&self, state: tauri::State<'_, SharedState>) -> Result<()> {
         let binary_url = utils::get_binary_url(&self.binaries_url)
             .with_context(|| "Failed to get the binary url.")?;
         let binary_name = binary_url
@@ -93,6 +93,13 @@ impl<R: Runtime> Downloader<R> {
         }
         let res = futures::future::join_all(handlers).await;
         self.set_execute_permission(&binary_path).await?;
+        // insert downloaded binary_path to service
+        state
+            .services
+            .lock()
+            .await
+            .get_mut(&self.service_id)
+            .map(|s| s.binary_path.insert(binary_path.into()));
         res.into_iter().collect()
     }
 

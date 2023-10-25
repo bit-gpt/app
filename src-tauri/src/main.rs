@@ -7,7 +7,7 @@ mod errors;
 mod utils;
 
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{collections::HashMap, path::PathBuf};
 use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -69,6 +69,7 @@ pub struct Service {
     enough_storage: Option<bool>,
     running: Option<bool>,
     supported: Option<bool>,
+    binary_path: Option<PathBuf>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -106,6 +107,8 @@ fn main() {
         .filter_level(log::LevelFilter::Info)
         .parse_default_env()
         .init();
+
+    log::info!("Starting application.");
 
     let menu = Menu::new()
         .add_submenu(Submenu::new(
