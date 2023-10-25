@@ -21,6 +21,7 @@ pub async fn download_service<R: Runtime>(
     service_id: &str,
     app_handle: AppHandle,
     window: Window<R>,
+    state: State<'_, SharedState>,
 ) -> Result<()> {
     let service_dir = app_handle
         .path_resolver()
@@ -41,7 +42,7 @@ pub async fn download_service<R: Runtime>(
         service_dir,
         window,
     )
-    .download_files()
+    .download_files(state)
     .await?;
     Ok(())
 }
