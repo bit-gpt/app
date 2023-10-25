@@ -34,8 +34,6 @@ const Service = () => {
     return apps?.filter((app) => filter.get(app.id) as boolean);
   }, [apps, filter]);
 
-  const isDevMode = isDeveloperMode();
-
   // Resume service download if in progress
   useEffect(() => {
     (async () => {
@@ -90,7 +88,7 @@ const Service = () => {
               <div className="text-white opacity-70">No services found</div>
             )}
             {isServicesLoading && <div className="text-center text-[#8C8C8C]">Loading...</div>}
-            {isDevMode && <CustomServiceCard />}
+            {isDeveloperMode() && <CustomServiceCard />}
           </div>
         </div>
       );
@@ -100,7 +98,6 @@ const Service = () => {
     filteredApps?.length,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(progresses),
-    isDevMode,
     isServicesLoading,
   ]);
 

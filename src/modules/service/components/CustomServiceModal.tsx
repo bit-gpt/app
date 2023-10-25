@@ -10,7 +10,6 @@ import PrimaryButton from "shared/components/PrimaryButton";
 import addService from "../api/addService";
 import type { CustomServiceModalProps, Service } from "../types";
 
-// TODO: should we have two different modals for docker and binary?
 const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => {
   const [code, setCode] = useState(
     `{
@@ -20,22 +19,20 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
       "interfaces": [
         "string"
       ],
-      "dockerImages": {},
-      "defaultPort": 0,
       "defaultExternalPort": 0,
-      "runningPort": 0,
-      "volumePath": "string",
-      "volumeName": "string",
-      "envVariables": [
+      "promptTemplate": "string",
+      "serviceType": "binary",
+      "version": "string",
+      "serveCommand": "string";
+      "weightsDirectoryUrl": "string",
+      "weightsFiles": [
         "string"
       ],
-      "promptTemplate": "string",
-      "serviceType": "string",
-      "version": "string",
-      "weightsUrl": "string";
-      "serveCommand": "string";
-      "huggingFaceId": "string";
-      "modelFiles": "string[]";
+      "binariesUrl": {
+        "aarch64-apple-darwin": "string" | null,
+        "x86_64-apple-darwin": "string" | null,
+        "universal-apple-darwin": "string" | null
+      },
     }`,
   );
 
