@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Modal from "react-modal";
 
 import AWS from "../../../../assets/images/aws-route53.svg";
@@ -19,10 +20,26 @@ const AddDomainModal = ({
   setIsAddDomainModalOpen,
   setIsManualDomainModalOpen,
 }: AddDomainModalProps) => {
-  const Card = ({ img, text, id }: { img: string; text: string; id: string }) => (
+  const DomainCard = ({
+    img,
+    text,
+    id,
+    disabled = false,
+  }: {
+    img: string;
+    text: string;
+    id: string;
+    disabled?: boolean;
+  }) => (
     <button
       id={id}
-      className="flex flex-col align-center rounded-lg border-2 border-[#37373a] bg-charlestongreen w-1/3 max-sm:w-2/3 p-4"
+      className={clsx(
+        "flex align-center rounded-lg border-2 border-[#37373a] bg-charlestongreen w-1/3 max-sm:w-2/3 p-4",
+        {
+          "justify-between cursor-not-allowed": disabled,
+          "justify-center": !disabled,
+        },
+      )}
       onClick={(ev) => {
         const button = (ev.target as Element).closest("button");
         if (button?.id === "domain-manual") {
@@ -31,8 +48,11 @@ const AddDomainModal = ({
         }
       }}
     >
-      <img className="h-[50px] mb-6" src={img} alt={text} />
-      <div className="flex justify-center">{text}</div>
+      <div className="flex flex-col justify-center">
+        <img className="h-[50px] mb-6" src={img} alt={text} />
+        <div>{text}</div>
+      </div>
+      {disabled ? <div className="ml-2 text-grey-400 font-bold">Coming soon</div> : null}
     </button>
   );
 
@@ -48,9 +68,9 @@ const AddDomainModal = ({
         <div className="hr" />
         <div className="flex flex-col h-full pb-6 max-md:justify-around">
           <div className="flex gap-4 max-sm:flex-col max-sm:items-center">
-            <Card id="go-daddy" img={GoDaddy} text="Go Daddy" />
-            <Card id="amazon" img={Cloudflare} text="Cloudflare" />
-            <Card id="aws" img={AWS} text="AWS Route 53" />
+            <DomainCard id="go-daddy" img={GoDaddy} text="Go Daddy" disabled={true} />
+            <DomainCard id="amazon" img={Cloudflare} text="Cloudflare" disabled={true} />
+            <DomainCard id="aws" img={AWS} text="AWS Route 53" disabled={true} />
           </div>
           <div className="my-6 flex justify-between items-center">
             <div className="border-t-2 border-light w-[47%]"></div>
@@ -58,7 +78,7 @@ const AddDomainModal = ({
             <div className="border-t-2 border-light w-[47%]"></div>
           </div>
           <div className="flex justify-center">
-            <Card id="domain-manual" img={DomainManual} text="Enter Domain" />
+            <DomainCard id="domain-manual" img={DomainManual} text="Enter Domain" />
           </div>
         </div>
       </div>
