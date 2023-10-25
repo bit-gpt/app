@@ -12,10 +12,8 @@ Prem provides a unified environment to develop AI applications and deploy AI mod
 
 ## 🚀 Getting started
 
-- Install Prem on your MacOS - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
-  - 8GB+ RAM required to be allocated to your Docker engine.
-  - If you installed Docker Desktop for Mac for the first time, from the Whale 🐳 icon in the task bar, go to `Settings` -> `Resources` and increase it to more than 8GB.
 - Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
+- Install Prem on your MacOS for local development - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
 - Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
 
 ## 📄 Usage
@@ -28,30 +26,11 @@ https://github.com/premAI-io/prem-app/assets/29598954/e2c4f9d9-636d-4bbb-ae62-e6
 
 ## Install on Linux
 
-Install everything needed to run Prem on Ubuntu/Debian server
+Install everything needed to run Prem on Ubuntu/Debian server.
 
 ```bash
 wget -q https://get.prem.ninja/install.sh -O install.sh; sudo bash ./install.sh
 ```
-------
-
-If you encounter issues or you want to build the Prem App docker image inside your Linux server
-
-### CPU
-```bash
-git clone https://github.com/premAI-io/prem-app.git
-cd ./prem-app
-docker-compose up -d
-```
-
-### GPU (NVIDIA)
-```bash
-git clone https://github.com/premAI-io/prem-app.git
-cd ./prem-app
-docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
-```
-
-And you will have the UI at `http://{localhost|server_ip}:8000`.
 
 ## Product Roadmap
 
