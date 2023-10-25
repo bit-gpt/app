@@ -40,9 +40,9 @@ install_miniconda() {
 
         # Download and install Miniconda based on OS and architecture
         if [ "$(uname -s)" == "Darwin" ]; then
-            /usr/local/bin/wget -nv "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$arch.sh" -O "$miniconda_path/miniconda_installer.sh"
+            wget -nv "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$arch.sh" -O "$miniconda_path/miniconda_installer.sh"
         elif [ "$(uname -s)" == "Linux" ]; then
-            /usr/local/bin/wget -nv "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$arch.sh" -O "$miniconda_path/miniconda_installer.sh"
+            wget -nv "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$arch.sh" -O "$miniconda_path/miniconda_installer.sh"
         fi
 
         bash "$miniconda_path/miniconda_installer.sh" -b -u -p "$miniconda_path"

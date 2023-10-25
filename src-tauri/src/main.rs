@@ -264,6 +264,7 @@ fn stop_swarm_mode() {
 }
 
 fn main() {
+    fix_path_env::fix();
     // Sentry
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",

@@ -34,6 +34,10 @@
     features = ["process"]
     version = "1.33"
 
+  [dependencies.fix-path-env]
+    git = "https://github.com/tauri-apps/fix-path-env-rs"
+    branch = "dev"
+
 [features]
   custom-protocol = ["tauri/custom-protocol"]
 
