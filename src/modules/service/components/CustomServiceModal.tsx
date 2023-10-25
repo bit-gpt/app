@@ -1,4 +1,3 @@
-import { useMutation } from "@tanstack/react-query";
 import { highlight, languages } from "prismjs";
 import { useState } from "react";
 import Modal from "react-modal";
