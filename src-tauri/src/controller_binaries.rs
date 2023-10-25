@@ -68,11 +68,12 @@ pub async fn start_service(
         .with_context(|| format!("Failed to open log file `{}`", log_path.display()))?;
 
     // Check if service is already running
-    let services = state.running_services.lock().await;
-    if services.contains_key(&service_id) {
-        Err(format!("Service with `{service_id}` doesn't exist"))?
+    let running_services_guard = state.running_services.lock().await;
+    if running_services_guard.contains_key(&service_id) {
+        Err(format!("Service with `{service_id}` already exist"))?
+        // TODO: it doesn't return here ?
     }
-    drop(services); // Drop the lock before we proceed
+    drop(running_services_guard);
 
     let registry_lock = state.services.lock().await;
     let serve_command = registry_lock
@@ -127,9 +128,16 @@ pub async fn start_service(
 
 #[tauri::command(async)]
 pub async fn stop_service(service_id: String, state: State<'_, SharedState>) -> Result<()> {
-    let mut services = state.running_services.lock().await;
-    if let Some(mut child) = services.remove(&service_id) {
-        child.kill().await.map_err(|e| e.to_string())?;
+    let mut running_services_guard = state.running_services.lock().await;
+    if let Some(mut child) = running_services_guard.remove(&service_id) {
+        match child.kill().await {
+            Ok(_) => {
+                log::info!("Child process killed: {}", service_id);
+            }
+            Err(e) => {
+                log::error!("Failed to kill child process: {}", e);
+            }
+        }
     }
     let mut registry_lock = state.services.lock().await;
     if let Some(service) = registry_lock.get_mut(&service_id) {
