@@ -7,7 +7,7 @@ if test ! -x "$conda_prefix/bin/mamba"; then
   echo "Conda not found"
   os="$(uname)"
   case "$os" in
-    MacOSX|Linux)
+    Darwin|Linux)
       ;;
     *)
       echo >&2 "Unsupported operating system: $os"
