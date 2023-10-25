@@ -9,92 +9,70 @@ jobs:
       fail-fast: false
     runs-on: macos-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Rust setup
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install missing Rust target for universal Mac build
-        if: matrix.platform == 'macos-latest'
-        run: rustup target add aarch64-apple-darwin
-
-      - name: Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: "./src-tauri -> target"
-
-      - name: Sync node version and setup cache
-        uses: actions/setup-node@v3
-        with:
-          node-version: "lts/*"
-          cache: "npm"
-
-      - name: Install frontend dependencies
-        run: npm install
-
-      - name: tag
-        id: next_tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-      - name: version
-        id: next_version
-        run: |
-          tag=${{ steps.next_tag.outputs.tag }}
-          echo "version=${tag:1}" >> $GITHUB_OUTPUT
-
-      - name: Update with latest main branch
-        run: |
-          git config --local user.email "$(git log --format='%ae' HEAD^!)"
-          git config --local user.name "$(git log --format='%an' HEAD^!)"
-          git config pull.rebase true
-          git stash  
-          git fetch origin main
-          git pull origin main
-          git stash pop || true  
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: ^1.20.1
-        id: go
-
-      - name: Install dasel
-        run: |
-          go install github.com/tomwright/dasel/cmd/dasel@latest
-
-      - name: Increment version
-        run: |
-          dasel put string -f package.json ".version" "${{ steps.next_version.outputs.version }}"
-          dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ steps.next_version.outputs.version }}"
-          dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ steps.next_version.outputs.version }}"
-
-      - name: Build the app
-        uses: tauri-apps/tauri-action@dev
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        with:
-          tagName: ${{ steps.next_tag.outputs.tag }}
-          releaseName: "PremAI App ${{ steps.next_tag.outputs.tag }}"
-          releaseBody: "See the assets to download and install this version."
-          releaseDraft: false
-          includeDebug: true
-          updaterJsonKeepUniversal: true
-          args: '--target universal-apple-darwin'
-
-      # Commit package.json, tauri.conf.json and Cargo.toml to master
-      - name: Commit & Push
-        run: |
-          git add .
-          git commit -m "${{ steps.next_tag.outputs.tag }}"
-          git push origin HEAD:main
+    - uses: actions/checkout@v4
+    - name: Rust setup
+      uses: dtolnay/rust-toolchain@stable
+    - name: Install missing Rust target for universal Mac build
+      if: startsWith(matrix.platform, 'macos')
+      run: rustup target add aarch64-apple-darwin
+    - uses: swatinem/rust-cache@v2
+      with:
+        workspaces: "./src-tauri -> target"
+    - uses: actions/setup-node@v3
+      with:
+        node-version: "lts/*"
+        cache: npm
+    - run: npm install
+    - name: metadata
+      id: metadata
+      run: |
+        echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+    - name: Update with latest main branch
+      run: |
+        git config --local user.email "$(git log --format='%ae' HEAD^!)"
+        git config --local user.name "$(git log --format='%an' HEAD^!)"
+        git config pull.rebase true
+        git stash
+        git fetch origin main
+        git pull origin main
+        git stash pop || true
+    - uses: actions/setup-go@v4
+      with: {go-version: ^1.20.1}
+      id: go
+    - name: Install dasel
+      run: 'go install github.com/tomwright/dasel/cmd/dasel@latest'
+    - name: Increment version
+      run: |
+        dasel put string -f package.json ".version" "${{ steps.metadata.outputs.version }}"
+        dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ steps.metadata.outputs.version }}"
+        dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ steps.metadata.outputs.version }}"
+    - name: Build the app
+      uses: tauri-apps/tauri-action@dev
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+        ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+        APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+      with:
+        tagName: ${{ steps.metadata.outputs.tag }}
+        releaseName: "PremAI App ${{ steps.metadata.outputs.tag }}"
+        releaseBody: "See the assets to download and install this version."
+        releaseDraft: false
+        includeDebug: true
+        updaterJsonKeepUniversal: true
+        args: '--target universal-apple-darwin'
+    - name: Commit & Push
+      if: github.event_name == 'push'
+      run: |
+        # Commit package.json, tauri.conf.json, Cargo.toml
+        git add .
+        git commit -m "${{ steps.metadata.outputs.tag }}"
+        git push origin HEAD:main
   push-docker-image:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
