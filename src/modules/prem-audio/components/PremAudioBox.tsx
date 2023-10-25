@@ -11,10 +11,11 @@ import type { PremAudioContainerProps } from "../types";
 import PremAudioTab from "./PremAudioTab";
 import PremRecordTab from "./PremRecordTab";
 
-const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>) => {
+const PremAudioBox = ({ serviceId, serviceType, historyId }: Partial<PremAudioContainerProps>) => {
   const navigate = useNavigate();
   const { isLoading, onSubmit, file, setFile, currentHistory } = usePremAudio(
     serviceId!,
+    serviceType!,
     historyId,
   );
   const [activeTab, setActiveTab] = useState(AUDIO_TAB);
@@ -26,7 +27,7 @@ const PremAudioBox = ({ serviceId, historyId }: Partial<PremAudioContainerProps>
 
   const onClear = () => {
     setFile(null);
-    navigate(`/prem-audio/${serviceId}`);
+    navigate(`/prem-audio/${serviceId}/${serviceType}`);
   };
 
   const handleTabChange = (tab: string) => {

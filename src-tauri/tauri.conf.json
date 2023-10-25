@@ -34,7 +34,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "prem.tauri.dev",
+      "identifier": "io.premai.prem-app",
       "targets": "all"
     },
     "security": {

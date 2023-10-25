@@ -29,20 +29,13 @@ const useSettingStore = create<SettingStore>()(
   devtools(
     persist(
       (set) => ({
-        backendUrl: getBackendUrl(),
+        _hasHydrated: false,
+        backendUrl: "",
         isIP: false,
         setIsIP: (isIP) => set(() => ({ isIP }), false, "setIsIP"),
         serviceDownloadsInProgress: {},
+        downloadingServices: [],
         setBackendUrl: (backendUrl) => set(() => ({ backendUrl }), false, "setBackendUrl"),
-        addServiceDownloadInProgress: (serviceId: string) => {
-          set(
-            (state) => ({
-              serviceDownloadsInProgress: { ...state.serviceDownloadsInProgress, [serviceId]: 0 },
-            }),
-            false,
-            "addServiceDownloadInProgress",
-          );
-        },
         removeServiceDownloadInProgress: (serviceId: string) => {
           set(
             (state) => {
@@ -53,22 +46,52 @@ const useSettingStore = create<SettingStore>()(
             "removeServiceDownloadInProgress",
           );
         },
-        setServiceDownloadProgress: (serviceId: string, percentage: number) => {
+        setServiceDownloadProgress: (serviceId: string, serviceType: string, progress: number) => {
           set(
             (state) => ({
               serviceDownloadsInProgress: {
                 ...state.serviceDownloadsInProgress,
-                [serviceId]: percentage,
+                [serviceId]: { progress, serviceType },
               },
             }),
             false,
             "setServiceDownloadProgress",
           );
         },
+        addServiceAsDownloading: (serviceId: string) => {
+          set(
+            (state) => ({
+              downloadingServices: [...state.downloadingServices, serviceId],
+            }),
+            false,
+            "addServiceAsDownloading",
+          );
+        },
+        removeServiceAsDownloading: (serviceId: string) => {
+          set(
+            (state) => ({
+              downloadingServices: state.downloadingServices.filter((id) => id !== serviceId),
+            }),
+            false,
+            "removeServiceAsDownloading",
+          );
+        },
+        removeAllServiceAsDownloading: () => {
+          set(
+            () => ({
+              downloadingServices: [],
+            }),
+            false,
+            "removeAllServiceAsDownloading",
+          );
+        },
       }),
       {
         name: "setting",
         storage: createJSONStorage(() => storage),
+        onRehydrateStorage: () => () => {
+          useSettingStore.setState({ _hasHydrated: true });
+        },
       },
     ),
     { name: "store", store: "setting" },

@@ -1,54 +1,64 @@
 import type { PropsWithChildren } from "react";
 
-export type CheckeBoxProps = {
-  label: string;
-  checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-export type DropdownProps = {
-  open: boolean;
-  close: () => void;
-  apps: App[];
-  search: Map<string, boolean>;
-  onChange: (appId: string, status: boolean) => void;
-};
-
 export type ModelInfo = {
-  inferenceTime: string;
-  maxLength: number;
+  inferenceTime?: string;
+  maxLength?: number;
   memoryRequirements: number;
-  tokenLimit: number;
-  weightsName: string;
-  weightsSize: number;
-  streaming: boolean;
+  tokenLimit?: number;
+  weightsName?: string;
+  weightsSize?: number;
+  streaming?: boolean;
 };
 
-export type Service = {
+export type ServiceBase = {
+  // static registry manifest
+  baseUrl: string;
+  beta: boolean;
+  comingSoon: boolean;
+  defaultExternalPort: number;
   defaultPort: number;
   description: string;
-  dockerImage: string;
-  dockerImageSize: number;
   documentation: string;
-  downloaded: boolean;
-  enoughMemory: boolean;
-  enoughSystemMemory: boolean;
   icon: string;
   id: string;
   interfaces: string[];
   modelInfo: ModelInfo;
   name: string;
   needsUpdate: boolean;
+  promptTemplate?: string;
+  runningPort?: number;
+  serviceType: "docker" | "binary" | "process";
+  version?: string;
+  // Dynamic state
+  downloaded: boolean;
+  enoughMemory: boolean;
+  enoughSystemMemory: boolean;
   running: boolean;
-  runningPort: number;
   supported: boolean;
-  volumeName: string | null;
-  volumePath: string | null;
-  beta: boolean;
-  comingSoon: boolean;
-  promptTemplate: string;
-  baseUrl: string;
 };
+
+export type ServiceDocker = ServiceBase & {
+  serviceType: "docker";
+  dockerImage: string;
+  dockerImageSize: number;
+  volumeName?: string;
+  volumePath?: string;
+};
+
+export type ServiceBinary = ServiceBase & {
+  serviceType: "binary";
+  serveCommand: string;
+  modelFiles: string[];
+  weightsDirectoryUrl: string;
+  weightsFiles: string[];
+  binariesUrl: {
+    "aarch64-apple-darwin"?: string;
+    "x86_64-apple-darwin"?: string;
+    "universal-apple-darwin"?: string;
+  };
+};
+
+export type Service = ServiceDocker | ServiceBinary;
 
 export type SearchFilterProps = {
   apps: App[];
@@ -87,13 +97,15 @@ export type DownloadMessage = {
 };
 
 export type ServiceStateProps = {
-  serviceId: string;
+  service: Service;
   refetch: () => void;
+  progress?: number;
   isDetailView?: boolean;
   onOpenClick?: () => void;
 };
 
 export type ServiceStatus =
+  | "docker_only"
   | "running"
   | "stopped"
   | "not_supported"
@@ -110,17 +122,21 @@ export type ServiceCardProps = {
 
 export type ServiceActionsProps = PropsWithChildren<{
   status: ServiceStatus;
-  serviceId: string;
+  service: Service;
   refetch: () => void;
   isDetailView?: boolean;
   interfaces: App[];
   needsUpdate: boolean;
   memoryRequirements: number;
+  closeWarningModal?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  isWarningModalOpen?: boolean;
 }>;
 
 export type WarningServiceStateProps = {
   status: ServiceStatus;
   memoryRequirements: number;
+  isWarningModalOpen: boolean;
+  closeWarningModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export type ServiceStats = {

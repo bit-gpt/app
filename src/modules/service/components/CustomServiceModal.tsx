@@ -1,4 +1,3 @@
-import { useMutation } from "@tanstack/react-query";
 import { highlight, languages } from "prismjs";
 import { useState } from "react";
 import Modal from "react-modal";
@@ -7,8 +6,8 @@ import { toast } from "react-toastify";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 
-import addService from "../api/addService";
-import type { CustomServiceModalProps, Service } from "../types";
+import useAddService from "../../../shared/hooks/useAddService";
+import type { CustomServiceModalProps } from "../types";
 
 const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => {
   const [code, setCode] = useState(
@@ -19,20 +18,24 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
       "interfaces": [
         "string"
       ],
-      "dockerImages": {},
-      "defaultPort": 0,
       "defaultExternalPort": 0,
-      "runningPort": 0,
-      "volumePath": "string",
-      "volumeName": "string",
-      "envVariables": [
+      "promptTemplate": "string",
+      "serviceType": "binary",
+      "version": "string",
+      "serveCommand": "string";
+      "weightsDirectoryUrl": "string",
+      "weightsFiles": [
         "string"
       ],
-      "promptTemplate": "string"
+      "binariesUrl": {
+        "aarch64-apple-darwin": "string" | null,
+        "x86_64-apple-darwin": "string" | null,
+        "universal-apple-darwin": "string" | null
+      },
     }`,
   );
 
-  const { mutate, isLoading } = useMutation((request: Service) => addService(request));
+  const { mutate: addService, isLoading } = useAddService();
 
   const onCancel = () => {
     closeModal();
@@ -41,7 +44,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
   const onOk = () => {
     try {
       const service = JSON.parse(code);
-      mutate(service, {
+      addService(service, {
         onSuccess: () => {
           closeModal();
           toast.success("Service added successfully");

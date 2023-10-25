@@ -1,21 +1,30 @@
-import startService from "modules/service/api/startService";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
-import useService from "shared/hooks/useService";
+import useGetService from "shared/hooks/useGetService";
+
+import ServiceController from "../../../controller/serviceController";
+import type { Service } from "../../service/types";
 
 import PremChatContainer from "./PremChatContainer";
 
 function PremChat() {
-  const { chatId, serviceId } = useParams();
+  const { chatId, serviceId, serviceType } = useParams<{
+    chatId: string;
+    serviceId: string;
+    serviceType: Service["serviceType"];
+  }>();
 
-  const { data: response, isLoading } = useService(serviceId!, false);
-  const service = response?.data;
+  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!);
 
   useEffect(() => {
-    if (service && !service?.running) {
-      startService(serviceId!);
-    }
+    (async () => {
+      if (service && !service?.running) {
+        const controller = ServiceController.getInstance();
+        await controller.start(serviceId!, service.serviceType);
+        await refetch();
+      }
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
 
@@ -24,7 +33,12 @@ function PremChat() {
   }
 
   return (
-    <PremChatContainer chatId={chatId} serviceName={service?.name ?? ""} serviceId={serviceId!} />
+    <PremChatContainer
+      chatId={chatId}
+      serviceName={service?.name ?? ""}
+      serviceId={serviceId!}
+      serviceType={serviceType!}
+    />
   );
 }
 

@@ -4,17 +4,21 @@ import { useNavigate } from "react-router-dom";
 import PrimaryButton from "shared/components/PrimaryButton";
 import type { PremUpscalerHistory } from "shared/types";
 
+import type { Service } from "../../service/types";
+
 const PremUpscalerImageBox = ({
   serviceId,
+  serviceType,
   history,
 }: {
   serviceId: string;
+  serviceType: Service["serviceType"];
   history: PremUpscalerHistory;
 }) => {
   const navigate = useNavigate();
 
   const redirecToIndex = () => {
-    navigate(`/prem-upscaler/${serviceId}`);
+    navigate(`/prem-upscaler/${serviceId}/${serviceType}`);
   };
 
   return (

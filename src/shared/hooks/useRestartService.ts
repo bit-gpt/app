@@ -1,8 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import restartService from "modules/service/api/restartService";
 
-const useStartService = () => {
-  return useMutation((id: string) => restartService(id));
+import ServiceController from "../../controller/serviceController";
+
+const useRestartService = () => {
+  const controller = ServiceController.getInstance();
+  return useMutation(({ serviceId, serviceType }: { serviceId: string; serviceType: string }) =>
+    controller.restart(serviceId, serviceType),
+  );
 };
 
-export default useStartService;
+export default useRestartService;

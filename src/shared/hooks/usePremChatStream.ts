@@ -7,19 +7,23 @@ import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
+import type { Service } from "../../modules/service/types";
 import usePremChatStore from "../store/prem-chat";
 
-import useService from "./useService";
+import useGetService from "./useGetService";
 
-const usePremChatStream = (serviceId: string, chatId: string | null): PremChatResponse => {
+const usePremChatStream = (
+  serviceId: string,
+  serviceType: Service["serviceType"],
+  chatId: string | null,
+): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
   const [isLoading, setLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const navigate = useNavigate();
   const [pending, setPending] = useState<string | null>();
-  const { data: response } = useService(serviceId, false);
-  const service = response?.data;
+  const { data: service } = useGetService(serviceId, serviceType);
   const abortController = useRef<AbortController>();
 
   const {
@@ -56,7 +60,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
   );
 
   useEffect(() => {
-    setChatServiceUrl(`${service?.baseUrl}/v1/chat/completions`);
+    setChatServiceUrl(`${service?.baseUrl ?? ""}/v1/chat/completions`);
     if (!promptTemplate) {
       setPromptTemplate(service?.promptTemplate ?? "");
     }
@@ -167,7 +171,7 @@ const usePremChatStream = (serviceId: string, chatId: string | null): PremChatRe
           messages: [...tempConversation],
           timestamp: Date.now(),
         });
-        navigate(`/prem-chat/${serviceId}/${newChatId}`);
+        navigate(`/prem-chat/${serviceId}/${serviceType}/${newChatId}`);
       } else {
         updateHistoryMessages(chatId, [...messages, ...tempConversation]);
       }

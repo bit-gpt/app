@@ -1,37 +1,14 @@
-import { invoke } from "@tauri-apps/api/tauri";
-import type { Option, Service, ServiceStatus } from "modules/service/types";
+import type {
+  Option,
+  Service,
+  ServiceBinary,
+  ServiceDocker,
+  ServiceStatus,
+} from "modules/service/types";
 import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
-import api from "../api/v1";
-
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
-
-export const checkIsDockerRunning = async () => {
-  const check = await invoke("is_docker_running");
-  return Boolean(check);
-};
-
-export const checkIsContainerRunning = async () => {
-  const check = await invoke("is_container_running");
-  return Boolean(check);
-};
-
-export const checkIsServerRunning = async () => {
-  try {
-    const response = await api().get(`v1`);
-    return response.data && response.status === 200;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-};
-
-export const runDockerContainer = async () => {
-  const containerRunning = await checkIsContainerRunning();
-  if (containerRunning) return;
-  await invoke("run_container");
-};
 
 export const isIP = (host: string): boolean => {
   if (host.includes("localhost")) return true;
@@ -54,15 +31,19 @@ export const isIP = (host: string): boolean => {
 };
 
 export const isBrowserEnv = () => {
-  return (
-    (window as any).VITE_DESTINATION === "browser" || import.meta.env.VITE_DESTINATION === "browser"
-  );
+  return !("__TAURI__" in window);
 };
 
 export const isDesktopEnv = () => {
-  return (
-    (window as any).VITE_DESTINATION === "desktop" || import.meta.env.VITE_DESTINATION === "desktop"
-  );
+  return "__TAURI__" in window;
+};
+
+export const isServiceBinary = (service: Service): service is ServiceBinary => {
+  return service && service.serviceType === "binary";
+};
+
+export const isServiceDocker = (service: Service): service is ServiceDocker => {
+  return service && service.serviceType === "docker";
 };
 
 export const isPackaged = () => {
@@ -150,7 +131,9 @@ export const serviceSearchStyle = {
 };
 
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (service.comingSoon) {
+  if ((!service.serviceType || service.serviceType === "docker") && isDesktopEnv()) {
+    return "docker_only";
+  } else if (service.comingSoon) {
     return "coming_soon";
   } else if (!service.supported) {
     return "not_supported";
@@ -166,6 +149,16 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
   return "stopped";
 };
 
+export const checkIfAccessible = (status: ServiceStatus): boolean => {
+  return ![
+    "docker_only",
+    "not_supported",
+    "not_enough_memory",
+    "not_enough_system_memory",
+    "coming_soon",
+  ].includes(status);
+};
+
 export const formatInfo = (value: any): ServiceInfoValue => {
   if (value === null) {
     return "-";
@@ -178,15 +171,12 @@ export const formatInfo = (value: any): ServiceInfoValue => {
   return value;
 };
 
-export const DISPLAY_WELCOME_SCREEN_KEY = "display_welcome_screen";
-
-export const SYSTEM_MEMORY_LIMIT = 8;
-
 export const CHAT_ID = "chat";
 export const DIFFUSER_ID = "diffuser";
 export const AUDIO_TO_TEXT_ID = "audio-to-text";
 export const TEXT_TO_AUDIO_ID = "text-to-audio";
 export const UPSCALER_ID = "upscaler";
+export const CODER_ID = "coder";
 
 export const isDeveloperMode = () => {
   return (window as any).VITE_DEVELOPER_MODE === "1" || import.meta.env.VITE_DEVELOPER_MODE === "1";

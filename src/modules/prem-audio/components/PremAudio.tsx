@@ -1,15 +1,19 @@
 import { useParams } from "react-router-dom";
 import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
-import useService from "shared/hooks/useService";
+import useGetService from "shared/hooks/useGetService";
+
+import type { Service } from "../../service/types";
 
 import PremAudioContainer from "./PremAudioContainer";
 
 const PremAudio = () => {
-  const { historyId, serviceId } = useParams();
+  const { historyId, serviceId, serviceType } = useParams<{
+    historyId: string;
+    serviceId: Service["id"];
+    serviceType: Service["serviceType"];
+  }>();
 
-  const { data: response, isLoading } = useService(serviceId!, false);
-
-  const service = response?.data;
+  const { data: service, isLoading } = useGetService(serviceId!, serviceType!);
 
   if (isLoading) {
     return <PlayGroundSpinner />;
@@ -20,6 +24,7 @@ const PremAudio = () => {
       serviceName={service?.name ?? ""}
       historyId={historyId}
       serviceId={serviceId!}
+      serviceType={serviceType!}
     />
   );
 };

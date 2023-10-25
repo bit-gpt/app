@@ -8,14 +8,19 @@ import usePremTextAudioStore from "shared/store/prem-text-audio";
 import { v4 as uuid } from "uuid";
 import { shallow } from "zustand/shallow";
 
-import useService from "./useService";
+import type { Service } from "../../modules/service/types";
 
-const usePremTextAudio = (serviceId: string, historyId: string | undefined): PremTextAudioHook => {
+import useGetService from "./useGetService";
+
+const usePremTextAudio = (
+  serviceId: string,
+  serviceType: Service["serviceType"],
+  historyId: string | undefined,
+): PremTextAudioHook => {
   const [prompt, setPrompt] = useState<string>("");
   const navigate = useNavigate();
 
-  const { data: response } = useService(serviceId, false);
-  const service = response?.data;
+  const { data: service } = useGetService(serviceId, serviceType);
 
   const { addHistory, history, deleteHistory } = usePremTextAudioStore(
     (state) => ({
@@ -42,7 +47,7 @@ const usePremTextAudio = (serviceId: string, historyId: string | undefined): Pre
           timestamp: new Date().toISOString(),
           fileUrl: `${service!.baseUrl}/files/${file}`,
         });
-        navigate(`/prem-text-audio/${serviceId}/${id}`);
+        navigate(`/prem-text-audio/${serviceId}/${serviceType}/${id}`);
       },
       onError: () => {
         toast.error("Something went wrong while generating the transcriptions");

@@ -1,36 +1,28 @@
-import downloadServiceStream from "modules/service/api/downloadServiceStream";
+import { useMutation } from "@tanstack/react-query";
 
-import useSettingStore from "../store/setting";
+import type { DownloadArgs } from "../../controller/serviceController";
+import ServiceController from "../../controller/serviceController";
 
 const useDownloadServiceStream = () => {
-  const setServiceDownloadProgress = useSettingStore((state) => state.setServiceDownloadProgress);
-  const removeServiceDownloadInProgress = useSettingStore(
-    (state) => state.removeServiceDownloadInProgress,
-  );
-  const serviceDownloadsInProgress = useSettingStore((state) => state.serviceDownloadsInProgress);
-
-  const download = async (serviceId: string, afterSuccess?: () => void) => {
-    await downloadServiceStream(
+  const controller = ServiceController.getInstance();
+  return useMutation(
+    ({
       serviceId,
-      (error) => {
-        console.log("ERROR serviceId:", serviceId);
-        console.error(error);
-        removeServiceDownloadInProgress(serviceId);
-      },
-      (message) => {
-        console.log(`${serviceId}: ${message.status} - ${message.percentage}`);
-        if ("percentage" in message) {
-          setServiceDownloadProgress(serviceId, message.percentage);
-        }
-      },
-      () => {
-        console.log(`${serviceId} download completed`);
-        afterSuccess?.();
-      },
-    );
-  };
-
-  return { progresses: serviceDownloadsInProgress, download };
+      binariesUrl,
+      weightsDirectoryUrl,
+      weightsFiles,
+      serviceType,
+      afterSuccess,
+    }: DownloadArgs & { serviceType: string }) =>
+      controller.download({
+        serviceId,
+        binariesUrl,
+        weightsDirectoryUrl,
+        weightsFiles,
+        serviceType,
+        afterSuccess,
+      }),
+  );
 };
 
 export default useDownloadServiceStream;
