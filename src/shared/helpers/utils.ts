@@ -131,7 +131,9 @@ export const serviceSearchStyle = {
 };
 
 export const getServiceStatus = (service: Service): ServiceStatus => {
-  if (service.comingSoon) {
+  if ((!service.serviceType || service.serviceType === "docker") && isDesktopEnv()) {
+    return "docker_only";
+  } else if (service.comingSoon) {
     return "coming_soon";
   } else if (!service.supported) {
     return "not_supported";
@@ -145,6 +147,16 @@ export const getServiceStatus = (service: Service): ServiceStatus => {
     return "running";
   }
   return "stopped";
+};
+
+export const checkIfAccessible = (status: ServiceStatus): boolean => {
+  return ![
+    "docker_only",
+    "not_supported",
+    "not_enough_memory",
+    "not_enough_system_memory",
+    "coming_soon",
+  ].includes(status);
 };
 
 export const formatInfo = (value: any): ServiceInfoValue => {

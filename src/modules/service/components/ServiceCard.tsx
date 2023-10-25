@@ -2,12 +2,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { getServiceStatus, isDesktopEnv } from "shared/helpers/utils";
+import { checkIfAccessible, getServiceStatus } from "shared/helpers/utils";
 import { SERVICE_KEY } from "shared/hooks/useGetService";
 import { SERVICES_KEY } from "shared/hooks/useGetServices";
 import useInterfaces from "shared/hooks/useInterfaces";
 
+import useWarningModal from "../hooks/useWarningModal";
 import type { ServiceCardProps } from "../types";
 
 import Beta from "./Beta";
@@ -20,6 +20,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
   const status = getServiceStatus(service);
   const title = service.name;
   const { data: interfaces } = useInterfaces();
+  const { openWarningModal, closeWarningModal, isWarningModalOpen } = useWarningModal();
 
   const refetch = useCallback(() => {
     queryClient.refetchQueries([SERVICES_KEY]);
@@ -27,7 +28,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isGreyCard = ["not_supported", "not_enough_system_memory", "coming_soon"].includes(status);
+  const isAccessible = checkIfAccessible(status);
   const redirectLink =
     status === "coming_soon"
       ? "/"
@@ -35,15 +36,8 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
 
   return (
     <Link
-      className={clsx(className, { "disabled--card": isGreyCard })}
-      onClick={(e) => {
-        if (isGreyCard && isDesktopEnv()) {
-          e.preventDefault();
-          toast.info("This model is only available on Prem Server installation.", {
-            toastId: "not-supported",
-          });
-        }
-      }}
+      className={clsx(className, { "disabled--card": !isAccessible })}
+      onClick={(e) => !isAccessible && openWarningModal(e)}
       to={redirectLink}
     >
       <div className="flex items-start flex-wrap w-full relative justify-between">
@@ -57,6 +51,8 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
           interfaces={interfaces?.filter((app) => service.interfaces?.includes(app.id)) ?? []}
           needsUpdate={service.needsUpdate}
           memoryRequirements={service.modelInfo?.memoryRequirements}
+          closeWarningModal={closeWarningModal}
+          isWarningModalOpen={isWarningModalOpen}
         />
       </div>
       <h3>

@@ -105,6 +105,7 @@ export type ServiceStateProps = {
 };
 
 export type ServiceStatus =
+  | "docker_only"
   | "running"
   | "stopped"
   | "not_supported"
@@ -127,11 +128,15 @@ export type ServiceActionsProps = PropsWithChildren<{
   interfaces: App[];
   needsUpdate: boolean;
   memoryRequirements: number;
+  closeWarningModal?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  isWarningModalOpen?: boolean;
 }>;
 
 export type WarningServiceStateProps = {
   status: ServiceStatus;
   memoryRequirements: number;
+  isWarningModalOpen: boolean;
+  closeWarningModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export type ServiceStats = {

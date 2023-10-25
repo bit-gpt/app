@@ -9,6 +9,7 @@ import Spinner from "shared/components/Spinner";
 import {
   AUDIO_TO_TEXT_ID,
   CHAT_ID,
+  checkIfAccessible,
   CODER_ID,
   DIFFUSER_ID,
   isServiceBinary,
@@ -38,6 +39,8 @@ const ServiceActions = ({
   interfaces,
   needsUpdate,
   memoryRequirements,
+  closeWarningModal,
+  isWarningModalOpen,
 }: ServiceActionsProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setBodyLocked] = useLockedBody(false, "root");
@@ -134,12 +137,7 @@ const ServiceActions = ({
 
   const memoryInGib = round(memoryRequirements / 1024, 2);
 
-  const isInAccessible = [
-    "not_supported",
-    "not_enough_memory",
-    "not_enough_system_memory",
-    "coming_soon",
-  ].includes(status);
+  const isAccessible = checkIfAccessible(status);
 
   if (isStopServiceLoading) {
     return (
@@ -191,9 +189,16 @@ const ServiceActions = ({
           />
         )}
 
-        {isInAccessible && <WarningServiceState status={status} memoryRequirements={memoryInGib} />}
+        {!isAccessible && (
+          <WarningServiceState
+            status={status}
+            memoryRequirements={memoryInGib}
+            closeWarningModal={closeWarningModal!}
+            isWarningModalOpen={isWarningModalOpen!}
+          />
+        )}
 
-        {isDetailView && !isInAccessible && status !== "not_downloaded" && (
+        {isDetailView && isAccessible && status !== "not_downloaded" && (
           <>
             <button
               ref={dropdownRef}
