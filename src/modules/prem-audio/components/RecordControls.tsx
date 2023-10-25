@@ -17,7 +17,7 @@ const RecordControls = ({
           onClick={startRecording}
         >
           <p className="pr-4  flex items-center gap-2">
-            <div className="mt-[2px]">◉</div>
+            <span className="mt-[2px]">◉</span>
             Start Recording
           </p>
         </PrimaryButton>

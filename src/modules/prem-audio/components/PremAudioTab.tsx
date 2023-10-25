@@ -1,3 +1,5 @@
+import type { Event, UnlistenFn, TauriEvent } from "@tauri-apps/api/event";
+import { listen } from "@tauri-apps/api/event";
 import uploadIcon from "assets/images/upload.svg";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -22,6 +24,20 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
       "audio/*": [".mp3", ".wav"],
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      let unlisten: UnlistenFn;
+      try {
+        unlisten = await listen("tauri://file-drop", (event: Event<TauriEvent>) => {
+          onDrop(event.payload as any);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      return () => unlisten();
+    })();
+  }, [onDrop]);
 
   useEffect(() => {
     if (file) {
