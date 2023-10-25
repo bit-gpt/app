@@ -1,7 +1,5 @@
-# Define the Miniconda installation path
-miniconda_path=${PREM_APPDIR:-.}
+#!/usr/bin/env bash
+prem_appdir="${PREM_APPDIR:-.}"
+conda_prefix="$prem_appdir/miniconda"
 
-# Check if Miniconda is installed
-if [ -d "$miniconda_path" ]; then
-    rm -rf "$miniconda_path"
-fi
+test ! -d "$conda_prefix" || rm -rf "$conda_prefix"
