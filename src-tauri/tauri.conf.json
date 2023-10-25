@@ -22,10 +22,7 @@
         "exit": true
       },
       "shell": {
-        "all": true,
-        "execute": true,
-        "sidecar": true,
-        "open": true
+        "all": true
       }
     },
     "bundle": {

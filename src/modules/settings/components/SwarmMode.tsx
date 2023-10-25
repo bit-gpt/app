@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { Tooltip } from "react-tooltip";
 import Spinner from "shared/components/Spinner";
 import {
   swarmSupported,
@@ -7,9 +8,12 @@ import {
   checkSwarmModeRunning,
   stopSwarmMode,
   petalsModels,
+  userName,
 } from "shared/helpers/utils";
 
 import PrimaryButton from "../../../shared/components/PrimaryButton";
+
+import SwarmModeModal from "./SwarmModeModal";
 
 export enum Swarm {
   Creating = "creating",
@@ -23,6 +27,7 @@ const SwarmMode = () => {
   const [numBlocks, setNumBlocks] = useState(3);
   const [modelOptions, setModelOptions] = useState<string[]>([]);
   const [model, setModel] = useState<string>("");
+  const [open, setIsOpen] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -47,7 +52,9 @@ const SwarmMode = () => {
     try {
       e.preventDefault();
       setSwarmMode(Swarm.Creating);
-      await runSwarmMode(numBlocks, model, "premAI");
+      const user = await userName();
+      await runSwarmMode(numBlocks, model, user + "@premAI");
+      setIsOpen(true);
       setSwarmMode(Swarm.Active);
     } catch (error) {
       console.error(error);
@@ -78,6 +85,10 @@ const SwarmMode = () => {
     fetchData();
   }, []);
 
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return isSwarmSupported ? (
     <div className="flex items-end justify-between mr-[45px]">
       <h2 className="text-grey-300 text-lg mt-10 mb-4">Prem Network</h2>
@@ -90,6 +101,7 @@ const SwarmMode = () => {
         <>
           <form className="flex items-center space-x-4 bg-gray-900 p-4 rounded-lg shadow-md">
             <input
+              id="num_blocks"
               className="form-control mr-1 w-36 text-center"
               type="number"
               min="1"
@@ -98,8 +110,11 @@ const SwarmMode = () => {
                 setNumBlocks(Number(e.target.value));
               }}
             />
+            <Tooltip anchorSelect="#num_blocks" place="top" className="tooltip">
+              {<div>Number of Transformer blocks to serve</div>}
+            </Tooltip>
 
-            <div className="relative">
+            <div className="relative" id="model">
               <select
                 className="form-control block appearance-none w-full pr-8"
                 value={model}
@@ -124,6 +139,10 @@ const SwarmMode = () => {
               </div>
             </div>
 
+            <Tooltip anchorSelect="#model" place="top" className="tooltip">
+              {<div>Model you intend to contribute to</div>}
+            </Tooltip>
+
             <PrimaryButton
               className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 active:bg-indigo-700 transition duration-150 ease-in-out"
               onClick={onStart}
@@ -137,6 +156,14 @@ const SwarmMode = () => {
           <Spinner className="h-10 w-10" />
         </div>
       )}
+
+      <SwarmModeModal
+        description="Congratulations, you are now part of the Swarm. Check it out here: https://explorer.prem.ninja"
+        title="Swarm Contributor"
+        isOpen={open}
+        onOk={closeModal}
+        onCancel={() => void 0}
+      />
     </div>
   ) : null;
 };

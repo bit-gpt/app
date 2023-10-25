@@ -100,6 +100,7 @@ struct ModelInfo {
 fn is_swarm_supported() -> bool {
     match env::consts::OS {
         "macos" => true,
+        "linux" => true,
         _ => false
     }
 }
@@ -177,19 +178,21 @@ fn create_environment(handle: tauri::AppHandle) -> String {
         .to_str()
         .expect("🙈 Failed to convert petals path to str");
 
+    let python = format!("{app_data_dir}/miniconda/envs/prem_app/bin/python");
+
     // Set env variables
     let mut env = HashMap::new();
     env.insert("PREM_APPDIR".to_string(), app_data_dir.to_string());
-    env.insert("PREM_PYTHON".to_string(), "prem-env".to_string());
-    env.insert("REQUIREMENTS".to_string(), format!("{petals_path}/requirements.txt"));
+    env.insert("PREM_PYTHON".to_string(), python.clone());
 
     // Run the bash script
-    let _ = Command::new("sh")
+    let output = Command::new("sh")
         .args([format!("{petals_path}/create_env.sh")])
         .envs(env)
         .output()
         .expect("🙈 Failed to create env");
-    format!("{app_data_dir}/envs/prem-env/bin/python3").to_string()
+    println!("{:?}", output.stderr);
+    python
 }
 
 
@@ -264,7 +267,6 @@ fn stop_swarm_mode() {
 }
 
 fn main() {
-    fix_path_env::fix();
     // Sentry
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
