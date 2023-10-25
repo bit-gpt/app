@@ -6,7 +6,6 @@ use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
 use std::collections::HashMap;
 use std::path::PathBuf;
-use std::process::Stdio;
 use sys_info::mem_info;
 
 use futures::future;
@@ -61,7 +60,7 @@ pub async fn start_service(
     let log_path = PathBuf::from(&service_dir).join(format!("{}.log", service_id));
 
     // Use synchronous std::fs::File for log file creation
-    let _log_file = std::fs::OpenOptions::new()
+    let log_file = std::fs::OpenOptions::new()
         .create(true)
         .append(true)
         .open(&log_path)
@@ -117,8 +116,12 @@ pub async fn start_service(
     let child = Command::new(&binary_path)
         .current_dir(service_dir)
         .args(args)
-        .stdout(Stdio::inherit())
-        .stderr(Stdio::inherit())
+        .stdout(std::process::Stdio::from(
+            log_file
+                .try_clone()
+                .with_context(|| "Failed to clone log file handle")?,
+        ))
+        .stderr(std::process::Stdio::from(log_file))
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
     let mut running_services_guard = state.running_services.lock().await;
