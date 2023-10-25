@@ -352,14 +352,19 @@ pub async fn update_service_with_dynamic_state(
 pub async fn get_system_stats() -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
 }
-
 #[tauri::command(async)]
 pub async fn get_service_stats(service_id: String) -> Result<HashMap<String, String>> {
     log::info!("service_id: {}", service_id);
     Ok(HashMap::new())
 }
-
 #[tauri::command(async)]
 pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
+}
+
+#[tauri::command(async)]
+pub async fn add_service() -> Result<()> {
+    //let mut services_guard = state.services.lock().await;
+    //services_guard.insert(service.id.clone().unwrap(), service.clone());
+    Ok(())
 }

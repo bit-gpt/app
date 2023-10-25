@@ -22,6 +22,7 @@ abstract class AbstractServiceController {
   abstract getSystemStats(): Promise<Record<string, string>>;
   abstract getGPUStats(): Promise<Record<string, string>>;
   abstract getInterfaces(): Promise<Interface[]>;
+  abstract addService(service: Service): Promise<void>;
 }
 
 export default AbstractServiceController;

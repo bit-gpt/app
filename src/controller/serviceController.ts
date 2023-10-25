@@ -32,6 +32,7 @@ interface IServiceController {
   getSystemStats(serviceType: Service["serviceType"]): Promise<any>;
   getGPUStats(serviceType: Service["serviceType"]): Promise<any>;
   getInterfaces(serviceType: Service["serviceType"]): Promise<Interface[]>;
+  addService(service: Service, serviceType: Service["serviceType"]): Promise<void>;
 }
 
 class ServiceController implements IServiceController {
@@ -52,7 +53,7 @@ class ServiceController implements IServiceController {
 
   async start(serviceId: string, serviceType: Service["serviceType"]): Promise<void> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       await this.dockerController.start(serviceId);
     } else if (serviceType === "binary") {
@@ -62,7 +63,7 @@ class ServiceController implements IServiceController {
 
   async stop(serviceId: string, serviceType: string): Promise<void> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       await this.dockerController.stop(serviceId);
     } else if (serviceType === "binary") {
@@ -72,7 +73,7 @@ class ServiceController implements IServiceController {
 
   async restart(serviceId: string, serviceType: string): Promise<void> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       await this.dockerController.restart(serviceId);
     } else if (serviceType === "binary") {
@@ -82,7 +83,7 @@ class ServiceController implements IServiceController {
 
   async delete(serviceId: string, serviceType: string): Promise<void> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       await this.dockerController.delete(serviceId);
     } else if (serviceType === "binary") {
@@ -119,7 +120,7 @@ class ServiceController implements IServiceController {
 
   async getService(serviceId: string, serviceType: string): Promise<Service> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       return await this.dockerController.getService(serviceId);
     } else if (serviceType === "binary") {
@@ -142,7 +143,7 @@ class ServiceController implements IServiceController {
 
   async getLogs(serviceId: string, serviceType: Service["serviceType"]): Promise<string> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       return await this.dockerController.getLogs(serviceId);
     } else if (serviceType === "binary") {
@@ -157,7 +158,7 @@ class ServiceController implements IServiceController {
     serviceType: Service["serviceType"],
   ): Promise<Record<string, string>> {
     // If serviceType is not provided, we assume it's docker
-    serviceType = serviceType ? serviceType : "docker";
+    serviceType = serviceType ?? "docker";
     if (serviceType === "docker") {
       return await this.dockerController.getServiceStats(serviceId);
     } else if (serviceType === "binary") {
@@ -197,6 +198,15 @@ class ServiceController implements IServiceController {
       return await this.binariesController.getInterfaces();
     } else {
       return [];
+    }
+  }
+
+  async addService(service: Service, serviceType: Service["serviceType"]): Promise<void> {
+    serviceType = serviceType ?? "docker";
+    if (serviceType === "docker") {
+      await this.dockerController.addService(service);
+    } else if (serviceType === "binary") {
+      await this.binariesController.addService(service);
     }
   }
 }

@@ -1,5 +1,5 @@
 import downloadServiceStream from "../modules/service/api/downloadServiceStream";
-import type { ServiceDocker } from "../modules/service/types";
+import type { Service, ServiceDocker } from "../modules/service/types";
 import api from "../shared/api/v1";
 import type { Interface } from "../shared/helpers/interfaces";
 import useSettingStore from "../shared/store/setting";
@@ -88,6 +88,10 @@ class DockerController extends AbstractServiceController {
   async getInterfaces(): Promise<Interface[]> {
     const response = await api().get("v1/interfaces");
     return response.data;
+  }
+
+  async addService(service: Service): Promise<void> {
+    await api().post("v1/services/", service);
   }
 }
 

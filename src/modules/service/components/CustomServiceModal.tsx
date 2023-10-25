@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 
-import addService from "../api/addService";
-import type { CustomServiceModalProps, Service } from "../types";
+import useAddService from "../../../shared/hooks/useAddService";
+import type { CustomServiceModalProps } from "../types";
 
 const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => {
   const [code, setCode] = useState(
@@ -36,7 +36,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
     }`,
   );
 
-  const { mutate, isLoading } = useMutation((request: Service) => addService(request));
+  const { mutate: addService, isLoading } = useAddService();
 
   const onCancel = () => {
     closeModal();
@@ -45,7 +45,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
   const onOk = () => {
     try {
       const service = JSON.parse(code);
-      mutate(service, {
+      addService(service, {
         onSuccess: () => {
           closeModal();
           toast.success("Service added successfully");

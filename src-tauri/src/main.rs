@@ -164,6 +164,7 @@ fn main() {
             controller_binaries::get_system_stats,
             controller_binaries::get_service_stats,
             controller_binaries::get_gpu_stats,
+            controller_binaries::add_service,
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
