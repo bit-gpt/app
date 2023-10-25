@@ -3,7 +3,6 @@ prem_appdir="${PREM_APPDIR:-.}"
 requirements="${REQUIREMENTS:-requirements.txt}"
 conda_prefix="$prem_appdir/miniconda"
 
-# install conda if not found
 install_conda() {
   arch="$(uname -m)"
   os="$(uname -s)"
@@ -34,22 +33,24 @@ install_conda() {
       ;;
   esac
 
-  if test ! -d "$conda_prefix"; then
-    mkdir -p "$conda_prefix"
-    # download installer
-    case "$(uname -s)" in
-      Darwin)
-        wget -nv "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$arch.sh" -O "$prem_appdir/conda_install.sh"
-        ;;
-      Linux)
-        wget -nv "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$arch.sh" -O "$prem_appdir/conda_install.sh"
-        ;;
-    esac
-    # install
-    sh "$prem_appdir/conda_install.sh" -b -u -p "$conda_prefix"
-  else
-    echo "Using existing Conda in '$conda_prefix'"
-  fi
+  mkdir -p "$conda_prefix"
+  os="$(uname -s)"
+  case "$os" in
+    Darwin)
+      os_slug="MacOSX"
+      ;;
+    Linux)
+      os_slug="Linux"
+      ;;
+    *)
+      echo >&2 "Unsupported operating system: $os"
+      exit 1
+      ;;
+  esac
+  echo "Downloading Conda installer for $os_slug-$arch"
+  curl -fsSL "https://repo.anaconda.com/miniconda/Miniconda3-latest-$os_slug-$arch.sh" --output "$prem_appdir/conda_install.sh"
+  echo "Installing Conda at '$conda_prefix'"
+  sh "$prem_appdir/conda_install.sh" -b -u -p "$conda_prefix"
 }
 
 # install conda if not found
