@@ -296,6 +296,7 @@ fn kill_container() {
 }
 
 fn main() {
+    fix_path_env::fix();
     let menu = Menu::new()
         .add_submenu(Submenu::new(
             "Prem App",
