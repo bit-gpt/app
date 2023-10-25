@@ -6,17 +6,16 @@
     version = "1.5"
 
 [dependencies]
-  serde_json = "1.0"
-  futures = { version = "0.3.28", default-features = false }
-  thiserror = "1.0.49"
-  sys-info = "0.9.1"
+  chrono = "0.4.31"
   log = "0.4.20"
   pretty_env_logger = "0.5.0"
-  chrono = "0.4.31"
+  serde_json = "1.0"
+  sys-info = "0.9.1"
+  thiserror = "1.0.49"
 
-  [dependencies.tokio]
-    features = ["process"]
-    version = "1.33"
+  [dependencies.futures]
+    default-features = false
+    version = "0.3.28"
 
   [dependencies.reqwest]
     features = ["json", "blocking"]
@@ -30,6 +29,10 @@
     features = ["updater", "system-tray", "process-exit", "dialog-all", "path-all", "shell-all"]
     version = "1.5"
 
+  [dependencies.tokio]
+    features = ["process"]
+    version = "1.33"
+
 [features]
   custom-protocol = ["tauri/custom-protocol"]
 
@@ -40,4 +43,4 @@
   license = ""
   name = "prem-app"
   repository = ""
-  version = "0.0.32"
+  version = "0.1.0"
