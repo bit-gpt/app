@@ -12,8 +12,8 @@ Prem provides a unified environment to develop AI applications and deploy AI mod
 
 ## 🚀 Getting started
 
-- Install Prem on your Linux server (Ubuntu, Debian) - [Installer script](#install-on-linux)
-- Install Prem on your MacOS for local development - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
+- Install Prem on your Linux server for **Production** (Ubuntu, Debian) - [Installer script](#install-on-linux)
+- Install Prem on your MacOS or Linux for **local development** - [Dowload the latest Prem Desktop App](https://github.com/premAI-io/prem-app/releases)
 - Try out on the live demo instance - [app.prem.ninja](https://app.prem.ninja)
 
 ## 📄 Usage
