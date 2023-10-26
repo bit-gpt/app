@@ -6,10 +6,12 @@ use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
 use std::collections::HashMap;
 use std::path::PathBuf;
+use std::time::Duration;
 use sys_info::mem_info;
 
 use futures::future;
 use tauri::{AppHandle, Runtime, State, Window};
+use tokio::time::interval;
 use tokio::{fs, process::Command};
 
 #[tauri::command(async)]
@@ -70,12 +72,11 @@ pub async fn start_service(
     let running_services_guard = state.running_services.lock().await;
     if running_services_guard.contains_key(&service_id) {
         Err(format!("Service with `{service_id}` already exist"))?
-        // TODO: it doesn't return here ?
     }
     drop(running_services_guard);
 
-    let registry_lock = state.services.lock().await;
-    let serve_command = registry_lock
+    let services_guard = state.services.lock().await;
+    let serve_command = services_guard
         .get(&service_id)
         .with_context(|| format!("service_id {} doesn't exist in registry", service_id))?
         .serve_command
@@ -124,8 +125,35 @@ pub async fn start_service(
         .stderr(std::process::Stdio::from(log_file))
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
-    let mut running_services_guard = state.running_services.lock().await;
-    running_services_guard.insert(service_id, child);
+
+    // Check if the service is running calling /v1 endpoint every 500ms
+    let interval_duration = Duration::from_millis(500);
+    let mut interval = interval(interval_duration);
+    loop {
+        interval.tick().await;
+        let base_url = get_base_url(&services_guard[&service_id])?;
+        let url = format!("{}/v1", base_url);
+        let client = reqwest::Client::new();
+        let res = client.get(&url).send().await;
+        match res {
+            Ok(response) => {
+                // If /v1 is not implemented by the service, it will return 400 Bad Request, consider it as success
+                if response.status().is_success()
+                    || response.status() == reqwest::StatusCode::BAD_REQUEST
+                {
+                    let mut running_services_guard = state.running_services.lock().await;
+                    running_services_guard.insert(service_id.clone(), child);
+                    log::info!("Service started: {}", service_id);
+                    break;
+                } else {
+                    log::error!("Service failed to start: {}", service_id);
+                }
+            }
+            Err(e) => {
+                log::error!("Failed to send request: {}", e);
+            }
+        }
+    }
     Ok(())
 }
 

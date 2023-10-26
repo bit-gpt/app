@@ -21,7 +21,7 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
     onDrop,
     multiple: false,
     accept: {
-      "audio/*": [".mp3", ".wav"],
+      "audio/*": [".wav"],
     },
   });
 
@@ -60,7 +60,7 @@ const PremAudioTab = ({ file, setFile }: PremAudioRecordTabsProps) => {
       >
         <input type="file" {...getInputProps()} />
         <PrimaryButton className="px-4 flex items-center !py-2 !h-[38px] !text-sm">
-          <p className="pr-4 ">Upload wav or mp3</p>
+          <p className="pr-4 ">Upload wav</p>
           <div className="pl-4 btn-primary--addon">
             <img src={uploadIcon} alt="msg" width={14} height={14} />
           </div>

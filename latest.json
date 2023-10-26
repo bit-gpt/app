@@ -1,11 +1,11 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "notes": "See the assets to download and install this version.",
-  "pub_date": "2023-10-26T00:47:08.470Z",
+  "pub_date": "2023-10-26T17:02:17.290Z",
   "platforms": {
     "linux-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjhIVnZONCtyd1czaFdRRE1aaFZEMmNNZ2tJR0lQQ0dZQlhabFZ3eU84S2wwams4MDAxWkZQNVdOQ0VOOUJSbUpzb1dZN3JSV0dWbTJ3aHdmRGhLSWcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk4MjgwNzc0CWZpbGU6cHJlbV8wLjEuMV9hbWQ2NC5BcHBJbWFnZS50YXIuZ3oKTnhlU0RvTENwNUd5TVhlMDQzN0prWGtzV1h6d2dqSFJvY3NST1dTclRnTjVWSytwcm9SNjJnanBvZFFMQmJUMzBiR1pac2FkYXYxanpyUkp3UkZiQ0E9PQo=",
-      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.1.1/prem_0.1.1_amd64.AppImage.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNnhxSDVuUGVZQ3diN0owNUd1YWd0UldlVmRTWjJsNWFWVHZMbFNxNDE1M2k2Qnd5aEMyNUJJZFlqbFc5VEdQaDlKMzFRejlMc2ZhM25Eb2ozbTJtWXdRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk4MzM5MjA0CWZpbGU6cHJlbV8wLjEuMl9hbWQ2NC5BcHBJbWFnZS50YXIuZ3oKWkt6RE5sc3F3Y0dSS1dGdGx2dzR6N3JrVzdkODliQ1l5QVkyTnJSbzZpdkNLSE1Xa08zeXNQaVNTTkpleWk1dkQvdHdLV2wvVmxaalovZHRqSXR3REE9PQo=",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.1.2/prem_0.1.2_amd64.AppImage.tar.gz"
     }
   }
 }
