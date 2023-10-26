@@ -13,7 +13,7 @@ import type { ServiceCardProps } from "../types";
 import Beta from "./Beta";
 import ServiceActions from "./ServiceActions";
 
-const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
+const ServiceCard = ({ className, service }: ServiceCardProps) => {
   const queryClient = useQueryClient();
 
   const serviceId = service.id;
@@ -42,7 +42,7 @@ const ServiceCard = ({ className, icon, service }: ServiceCardProps) => {
     >
       <div className="flex items-start flex-wrap w-full relative justify-between">
         <div className="service-card__logo">
-          <img src={icon} alt={title} />
+          <img src={service.icon} alt={title} />
         </div>
         <ServiceActions
           refetch={refetch}

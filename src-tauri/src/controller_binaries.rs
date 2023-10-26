@@ -366,8 +366,8 @@ pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
 }
 
 #[tauri::command(async)]
-pub async fn add_service() -> Result<()> {
-    //let mut services_guard = state.services.lock().await;
-    //services_guard.insert(service.id.clone().unwrap(), service.clone());
+pub async fn add_service(service: Service, state: State<'_, SharedState>) -> Result<()> {
+    let mut services_guard = state.services.lock().await;
+    services_guard.insert(service.id.clone().unwrap(), service.clone());
     Ok(())
 }
