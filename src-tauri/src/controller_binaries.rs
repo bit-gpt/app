@@ -134,19 +134,24 @@ pub async fn start_service(
         let base_url = get_base_url(&services_guard[&service_id])?;
         let url = format!("{}/v1", base_url);
         let client = reqwest::Client::new();
-        let response = client
-            .get(&url)
-            .send()
-            .await
-            .map_err(|e| format!("Failed GET request: {} with error: {}", url, e))?;
-        // If /v1 is not implemented by the service, it will return 400 Bad Request, consider it as success
-        if response.status().is_success() || response.status() == reqwest::StatusCode::BAD_REQUEST {
-            let mut running_services_guard = state.running_services.lock().await;
-            running_services_guard.insert(service_id.clone(), child);
-            log::info!("Service started: {}", service_id);
-            break;
-        } else {
-            log::error!("Service failed to start: {}", service_id);
+        let res = client.get(&url).send().await;
+        match res {
+            Ok(response) => {
+                // If /v1 is not implemented by the service, it will return 400 Bad Request, consider it as success
+                if response.status().is_success()
+                    || response.status() == reqwest::StatusCode::BAD_REQUEST
+                {
+                    let mut running_services_guard = state.running_services.lock().await;
+                    running_services_guard.insert(service_id.clone(), child);
+                    log::info!("Service started: {}", service_id);
+                    break;
+                } else {
+                    log::error!("Service failed to start: {}", service_id);
+                }
+            }
+            Err(e) => {
+                log::error!("Failed to send request: {}", e);
+            }
         }
     }
     Ok(())

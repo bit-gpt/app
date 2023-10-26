@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
 import useGetService from "shared/hooks/useGetService";
@@ -15,10 +14,6 @@ function PremChat() {
   }>();
 
   const { data: service, isLoading } = useGetService(serviceId!, serviceType!);
-
-  useEffect(() => {
-    console.log("RUNNING", service?.name, service?.running);
-  }, [service?.name, service?.running]);
 
   if (isLoading) {
     return <PlayGroundSpinner />;
