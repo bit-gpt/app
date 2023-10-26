@@ -35,6 +35,12 @@ export type NavLinkItemProps = {
   target?: "_blank";
 };
 
+export enum Swarm {
+  Creating = "creating",
+  Active = "active",
+  Inactive = "inactive",
+}
+
 export type WarningModalProps = {
   onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onOk: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -87,6 +93,8 @@ export type SettingStore = {
   addServiceAsDownloading: (serviceId: string) => void;
   removeServiceAsDownloading: (serviceId: string) => void;
   removeAllServiceAsDownloading: () => void;
+  swarmMode: Swarm;
+  setSwarmMode: (mode: Swarm) => void;
 };
 
 export type HeaderProps = {
