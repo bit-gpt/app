@@ -5,7 +5,7 @@ import type { ImageGeneration } from "../types";
 
 const generateImage = async (service: Service, data: ImageGeneration) => {
   const headers = { "Content-Type": "application/json" };
-  return axios.post(`${service.baseUrl}/v1/images/generation`, data, { headers });
+  return axios.post(`${service.baseUrl}/v1/images/generations`, data, { headers });
 };
 
 export default generateImage;
