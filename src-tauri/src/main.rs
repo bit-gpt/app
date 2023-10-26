@@ -9,7 +9,7 @@ mod utils;
 use reqwest::get;
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::{collections::HashMap, thread, str};
+use std::{env, collections::HashMap, str};
 use tauri::{
     AboutMetadata, api::process::Command as Command, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
     Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -91,7 +91,7 @@ struct ModelInfo {
 }
 
 #[derive(Deserialize)]
-struct ModelInfo {
+struct PetalsModelInfo {
     name: String,
     state: String,
 }
@@ -130,7 +130,7 @@ async fn get_petals_models() -> Result<Vec<String>, String> {
             .unwrap_or(&vec![])
             .iter()
             .filter_map(|model_report| {
-                let model_info: Result<ModelInfo, _> =
+                let model_info: Result<PetalsModelInfo, _> =
                     serde_json::from_value(model_report.clone());
                 match model_info {
                     Ok(model_info) if model_info.state == "healthy" => Some(model_info.name),
@@ -186,12 +186,11 @@ fn create_environment(handle: tauri::AppHandle) -> String {
     env.insert("PREM_PYTHON".to_string(), python.clone());
 
     // Run the bash script
-    let output = Command::new("sh")
+    let _ = Command::new("sh")
         .args([format!("{petals_path}/create_env.sh")])
         .envs(env)
         .output()
         .expect("🙈 Failed to create env");
-    println!("{:?}", output.stderr);
     python
 }
 
