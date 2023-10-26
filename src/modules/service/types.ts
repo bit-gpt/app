@@ -116,7 +116,6 @@ export type ServiceStatus =
 
 export type ServiceCardProps = {
   className: string;
-  icon: string;
   service: Service;
 };
 

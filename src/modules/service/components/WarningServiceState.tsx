@@ -13,7 +13,6 @@ const WarningServiceState = ({
   isWarningModalOpen,
 }: WarningServiceStateProps) => {
   const getServiceWarningDescription = (status: ServiceStatus) => {
-    console.log("status", status);
     switch (status) {
       case "docker_only":
         return "This model is only available on Prem Server installation";

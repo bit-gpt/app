@@ -7,6 +7,7 @@ import OutlineCircleButton from "shared/components/OutlineCircleButton";
 import PrimaryButton from "shared/components/PrimaryButton";
 
 import useAddService from "../../../shared/hooks/useAddService";
+import useGetServices from "../../../shared/hooks/useGetServices";
 import type { CustomServiceModalProps } from "../types";
 
 const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => {
@@ -36,6 +37,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
   );
 
   const { mutate: addService, isLoading } = useAddService();
+  const { refetch } = useGetServices();
 
   const onCancel = () => {
     closeModal();
@@ -44,15 +46,19 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
   const onOk = () => {
     try {
       const service = JSON.parse(code);
-      addService(service, {
-        onSuccess: () => {
-          closeModal();
-          toast.success("Service added successfully");
+      addService(
+        { service },
+        {
+          onSuccess: async () => {
+            closeModal();
+            toast.success("Service added successfully");
+            await refetch();
+          },
+          onError: () => {
+            toast.error("Error adding service");
+          },
         },
-        onError: () => {
-          toast.error("Error adding service");
-        },
-      });
+      );
     } catch (e) {
       toast.error("Invalid JSON");
       return;

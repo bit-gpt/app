@@ -83,7 +83,6 @@ const Service = () => {
               .map((service, index) => (
                 <ServiceCard
                   key={`${service.id}_${index}`}
-                  icon={service.icon}
                   className={clsx("service-card flex-wrap", {
                     "services-running": service.running,
                   })}

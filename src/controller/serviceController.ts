@@ -201,11 +201,10 @@ class ServiceController implements IServiceController {
     }
   }
 
-  async addService(service: Service, serviceType: Service["serviceType"]): Promise<void> {
-    serviceType = serviceType ?? "docker";
-    if (serviceType === "docker") {
+  async addService(service: Service): Promise<void> {
+    if (service.serviceType === "docker") {
       await this.dockerController.addService(service);
-    } else if (serviceType === "binary") {
+    } else if (service.serviceType === "binary") {
       await this.binariesController.addService(service);
     }
   }
