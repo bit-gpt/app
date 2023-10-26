@@ -95,9 +95,11 @@ const SwarmMode = () => {
         </>
       ) : swarmMode === Swarm.Inactive ? (
         <>
-          <form className="flex items-center space-x-4 bg-gray-900 p-4 rounded-lg shadow-md">
+          <form className="flex items-center space-x-4 bg-gray-900 p-4">
+            <span id="num_blocks" className="text-grey-200 opacity-70 mr-1">
+              Blocks
+            </span>
             <input
-              id="num_blocks"
               className="form-control mr-1 w-36 text-center"
               type="number"
               min="1"
@@ -106,11 +108,14 @@ const SwarmMode = () => {
                 setNumBlocks(Number(e.target.value));
               }}
             />
-            <Tooltip anchorSelect="#num_blocks" place="top" className="tooltip">
+            <Tooltip anchorSelect="#num_blocks" place="bottom" className="tooltip">
               {<div>Number of Transformer blocks to serve</div>}
             </Tooltip>
 
-            <div className="relative" id="model">
+            <span id="model" className="text-grey-200 opacity-70 mr-1">
+              Model
+            </span>
+            <div className="relative">
               <select
                 className="form-control block appearance-none w-full pr-8"
                 value={model}
@@ -135,7 +140,7 @@ const SwarmMode = () => {
               </div>
             </div>
 
-            <Tooltip anchorSelect="#model" place="top" className="tooltip">
+            <Tooltip anchorSelect="#model" place="bottom" className="tooltip">
               {<div>Model you intend to contribute to</div>}
             </Tooltip>
 
