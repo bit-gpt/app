@@ -85,6 +85,16 @@ const SwarmMode = () => {
     setIsOpen(false);
   };
 
+  const description = (
+    <span>
+      Congratulations, you are now part of the Swarm. Check it out{" "}
+      <a href="https://explorer.prem.ninja" target="_blank" rel="noopener noreferrer">
+        here
+      </a>
+      !
+    </span>
+  );
+
   return isSwarmSupported ? (
     <div className="flex items-end justify-between mr-[45px]">
       <h2 className="text-grey-300 text-lg mt-10 mb-4">Prem Network</h2>
@@ -162,11 +172,10 @@ const SwarmMode = () => {
       )}
 
       <SwarmModeModal
-        description="Congratulations, you are now part of the Swarm. Check it out here: https://explorer.prem.ninja"
+        description={description}
         title="Swarm Contributor"
         isOpen={open}
         onOk={closeModal}
-        onCancel={() => void 0}
       />
     </div>
   ) : null;

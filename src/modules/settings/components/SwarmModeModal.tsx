@@ -1,15 +1,14 @@
 import Modal from "react-modal";
 import PrimaryButton from "shared/components/PrimaryButton";
-import type { WarningModalProps } from "shared/types";
+import type { ModalProps } from "shared/types";
 
 const SwarmModeModal = ({
-  onCancel,
   onOk,
   okButtonText = "Ok",
   isOpen,
   title = "Warning",
   description,
-}: WarningModalProps) => {
+}: ModalProps) => {
   return (
     <Modal className="warning-modal" isOpen={isOpen}>
       <div className="warning-modal__content gradient-border w-[550px]">

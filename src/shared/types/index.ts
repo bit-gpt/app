@@ -52,6 +52,15 @@ export type WarningModalProps = {
   isOpen: boolean;
 };
 
+export type ModalProps = {
+  onOk: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  okButtonText?: string;
+  icon?: React.ReactNode;
+  title?: string;
+  description: React.ReactNode;
+  isOpen: boolean;
+};
+
 export type PremChatStore = {
   history: PremChatHistory[];
   clearHistory: () => void;
