@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import Spinner from "shared/components/Spinner";
 import {
