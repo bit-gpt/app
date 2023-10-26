@@ -6,6 +6,7 @@ mod download;
 mod errors;
 mod utils;
 
+use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use tauri::{
@@ -89,6 +90,20 @@ struct ModelInfo {
 }
 
 fn main() {
+    // Sentry
+    let client = sentry::init((
+        "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
+        sentry::ClientOptions {
+            release: sentry::release_name!(),
+            debug: true,
+            ..Default::default()
+        },
+    ));
+
+    // Everything before here runs in both app and crash reporter processes
+    let _guard = sentry_tauri::minidump::init(&client);
+    // Everything after here runs in only the app process
+
     // initialize logger
     pretty_env_logger::formatted_timed_builder()
         .format(|buf, record| {
@@ -151,6 +166,7 @@ fn main() {
     let state = SharedState::default();
     #[allow(unused_mut)]
     let mut app = tauri::Builder::default()
+        .plugin(sentry_tauri::plugin())
         .manage(state)
         .invoke_handler(tauri::generate_handler![
             controller_binaries::start_service,
