@@ -2,7 +2,12 @@ import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import AppContainer from "shared/components/AppContainer";
-import { isDeveloperMode, isServiceBinary } from "shared/helpers/utils";
+import {
+  checkIfAccessible,
+  getServiceStatus,
+  isDeveloperMode,
+  isServiceBinary,
+} from "shared/helpers/utils";
 import useInterfaces from "shared/hooks/useInterfaces";
 
 import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
@@ -73,16 +78,18 @@ const Service = () => {
             {app.name}
           </h3>
           <div className="flex gap-[22px] flex-wrap ">
-            {filteredServices.map((service, index) => (
-              <ServiceCard
-                key={`${service.id}_${index}`}
-                icon={service.icon}
-                className={clsx("service-card flex-wrap", {
-                  "services-running": service.running,
-                })}
-                service={service}
-              />
-            ))}
+            {filteredServices
+              .sort((a, b) => (checkIfAccessible(getServiceStatus(a)) ? -1 : 1))
+              .map((service, index) => (
+                <ServiceCard
+                  key={`${service.id}_${index}`}
+                  icon={service.icon}
+                  className={clsx("service-card flex-wrap", {
+                    "services-running": service.running,
+                  })}
+                  service={service}
+                />
+              ))}
 
             {!isServicesLoading && filteredServices.length === 0 && (
               <div className="text-white opacity-70">No services found</div>
