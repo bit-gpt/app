@@ -153,7 +153,10 @@ const SwarmMode = () => {
           </form>
         </>
       ) : (
-        <div className="flex justify-center mb-5">
+        <div className="flex items-center space-x-4 p-4">
+          <span className="text-grey-200 opacity-70 mr-1">
+            Configuring the Swarm Environment...
+          </span>
           <Spinner className="h-10 w-10" />
         </div>
       )}
