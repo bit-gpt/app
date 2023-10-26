@@ -18,19 +18,18 @@ import PrimaryButton from "../../../shared/components/PrimaryButton";
 import SwarmModeModal from "./SwarmModeModal";
 
 const SwarmMode = () => {
-  const swarmMode = useSettingStore.getState().swarmMode;
+  const swarmMode = useSettingStore((state) => state.swarmMode);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
   const [numBlocks, setNumBlocks] = useState(3);
   const [modelOptions, setModelOptions] = useState<string[]>([]);
   const [model, setModel] = useState<string>("");
   const [open, setIsOpen] = useState(false);
-  console.log("Swarm Mode", swarmMode)
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
       const isRunning = await checkSwarmModeRunning();
       if (isRunning) {
-        // useSettingStore.getState().setSwarmMode(Swarm.Active);
+        useSettingStore.getState().setSwarmMode(Swarm.Active);
       }
     }, 500);
 
@@ -39,7 +38,7 @@ const SwarmMode = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [swarmMode]);
+  }, []);
 
   useEffect(() => {
     swarmSupported().then(setIsSwarmSupported);
@@ -47,13 +46,12 @@ const SwarmMode = () => {
 
   const onStart = async (e: React.FormEvent) => {
     try {
-      console.log("Swarm Mode On Start 1", swarmMode);
       e.preventDefault();
-      // useSettingStore.getState().setSwarmMode(Swarm.Creating);
+      useSettingStore.getState().setSwarmMode(Swarm.Creating);
       const user = await userName();
       await runSwarmMode(numBlocks, model, user + "@premAI");
       setIsOpen(true);
-      // useSettingStore.getState().setSwarmMode(Swarm.Active);
+      useSettingStore.getState().setSwarmMode(Swarm.Active);
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +60,7 @@ const SwarmMode = () => {
   const onStop = async () => {
     try {
       await stopSwarmMode();
-      // useSettingStore.getState().setSwarmMode(Swarm.Inactive);
+      useSettingStore.getState().setSwarmMode(Swarm.Inactive);
     } catch (error) {
       console.error(error);
     }

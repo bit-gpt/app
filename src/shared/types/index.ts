@@ -36,9 +36,9 @@ export type NavLinkItemProps = {
 };
 
 export enum Swarm {
+  Inactive = "inactive",
   Creating = "creating",
   Active = "active",
-  Inactive = "inactive",
 }
 
 export type WarningModalProps = {
