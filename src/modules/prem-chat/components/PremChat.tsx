@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import PlayGroundSpinner from "shared/components/PlayGroundSpinner";
 import useGetService from "shared/hooks/useGetService";
 
-import ServiceController from "../../../controller/serviceController";
 import type { Service } from "../../service/types";
 
 import PremChatContainer from "./PremChatContainer";
@@ -15,18 +14,11 @@ function PremChat() {
     serviceType: Service["serviceType"];
   }>();
 
-  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!);
+  const { data: service, isLoading } = useGetService(serviceId!, serviceType!);
 
   useEffect(() => {
-    (async () => {
-      if (service && !service?.running) {
-        const controller = ServiceController.getInstance();
-        await controller.start(serviceId!, service.serviceType);
-        await refetch();
-      }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [service]);
+    console.log("RUNNING", service?.name, service?.running);
+  }, [service?.name, service?.running]);
 
   if (isLoading) {
     return <PlayGroundSpinner />;
