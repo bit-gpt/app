@@ -1,6 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use crate::swarm::create_environment;
 use crate::download::Downloader;
 use crate::errors::{Context, Result};
 use crate::{Service, SharedState};
@@ -8,7 +9,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
 use sys_info::mem_info;
-
+use std::process::Stdio;
 use futures::future;
 use tauri::{AppHandle, Runtime, State, Window};
 use tokio::time::interval;
@@ -49,6 +50,7 @@ pub async fn download_service<R: Runtime>(
 
 #[tauri::command(async)]
 pub async fn start_service(
+    handle: tauri::AppHandle,
     service_id: String,
     state: State<'_, SharedState>,
     app_handle: AppHandle,
@@ -88,6 +90,11 @@ pub async fn start_service(
             )
         })?
         .as_str();
+    let is_petals_model = services_guard
+        .get(&service_id)
+        .with_context(|| format!("service_id {} doesn't exist in registry", service_id))?
+        .petals
+        .unwrap_or_default();
     log::info!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
 
@@ -114,15 +121,27 @@ pub async fn start_service(
         })
         .collect();
     log::info!("args: {:?}", args);
+    
+    let mut env_vars: HashMap<String, String> = HashMap::new();
+    if is_petals_model {
+        println!("PETALS MODEL"); //TODO: remove
+        (_, env_vars) = create_environment(handle);
+    }else {
+        println!("NOT PETALS MODEL"); //TODO: remove
+    }
+
     let child = Command::new(&binary_path)
         .current_dir(service_dir)
         .args(args)
-        .stdout(std::process::Stdio::from(
-            log_file
-                .try_clone()
-                .with_context(|| "Failed to clone log file handle")?,
-        ))
-        .stderr(std::process::Stdio::from(log_file))
+        .envs(env_vars)
+        // .stdout(std::process::Stdio::from(
+        //     log_file
+        //         .try_clone()
+        //         .with_context(|| "Failed to clone log file handle")?,
+        // ))
+        // .stderr(std::process::Stdio::from(log_file))
+        .stdout(Stdio::inherit()) // TODO: remove later
+        .stderr(Stdio::inherit()) // TODO: remove later
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
 

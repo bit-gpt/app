@@ -74,7 +74,7 @@ pub fn is_swarm_mode_running() -> bool {
     return false;
 }
 
-pub fn create_environment(handle: tauri::AppHandle) -> String {
+pub fn create_environment(handle: tauri::AppHandle) -> (String, HashMap<String, String>) {
     // Get the application data directory
     let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
     let app_data_dir = app_data_dir
@@ -101,16 +101,16 @@ pub fn create_environment(handle: tauri::AppHandle) -> String {
     // Run the bash script
     let _ = Command::new("sh")
         .args([format!("{petals_path}/create_env.sh")])
-        .envs(env)
+        .envs(env.clone())
         .output()
         .expect("🙈 Failed to create env");
-    python
+    (python, env)
 }
 
 
 #[tauri::command(async)]
 pub fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String){
-    let python: String = create_environment(handle);
+    let (python, _) = create_environment(handle);
     println!("🚀 Starting the Swarm...");
 
     let _ = Command::new(&python)

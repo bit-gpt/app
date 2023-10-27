@@ -50,6 +50,7 @@ pub struct Service {
     running_port: Option<u32>,
     #[serde(rename = "serviceType")]
     service_type: Option<String>,
+    petals: Option<bool>,
     version: Option<String>,
     #[serde(rename = "weightsDirectoryUrl")]
     weights_directory_url: Option<String>,
@@ -223,7 +224,8 @@ fn main() {
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
                 utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
+                    // "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
+                    "https://raw.githubusercontent.com/biswaroop1547/prem-registry/dev/manifests.json", // TODO: remove
                     &app.state::<SharedState>(),
                 )
                 .await
