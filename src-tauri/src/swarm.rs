@@ -105,7 +105,7 @@ pub fn create_environment(handle: tauri::AppHandle) -> (String, HashMap<String, 
         .output()
         .expect("🙈 Failed to create env");
     (python, env)
-
+}
 
 #[tauri::command(async)]
 pub fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String){
