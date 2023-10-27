@@ -13,7 +13,6 @@ export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
 
 export const petalsModels = async (): Promise<string[]> => {
   const models = await invoke("get_petals_models");
-  console.log(models);
   return models as string[];
 };
 
