@@ -130,7 +130,7 @@ pub fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, 
 pub fn get_swarm_processes() -> String {
     // Check if create_env.sh is running
     let output = Command::new("/usr/bin/pgrep")
-        .args(&["-f", "create_env.sh|conda.exe"])
+        .args(&["-f", "create_env.sh|(mamba|conda).*create.*prem_app"])
         .output()
         .map_err(|e| {
             println!("🙈 Failed to execute command: {}", e);
