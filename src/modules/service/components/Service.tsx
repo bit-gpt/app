@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
 import AppContainer from "shared/components/AppContainer";
 import {
   checkIfAccessible,
