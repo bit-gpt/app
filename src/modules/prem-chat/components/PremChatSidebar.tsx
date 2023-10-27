@@ -99,7 +99,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                   key={item.id}
                   className={clsx({ "bg-grey-900": chatId === item.id })}
                 >
-                  <Link to={`/prem-chat/${serviceId}/${item.id}`}>
+                  <Link to={`/prem-chat/${serviceId}/${serviceType}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
                     <span className="text-white">{item.title}</span>
                   </Link>
