@@ -6,29 +6,19 @@ import Select from "react-select";
 import { serviceSearchStyle } from "shared/helpers/utils";
 
 import api from "../../../shared/api/v1";
-import type { App, Option, SearchFilterProps } from "../types";
+import type { Option, SearchFilterProps } from "../types";
 
 import MultiValueRemove from "./MultiValueRemove";
 
-const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
+const SearchFilter = ({ apps, onFilterChange }: SearchFilterProps) => {
   const [search, setSearch] = useState(new Map());
   const [icons, setIcons] = useState<Record<string, string>>({});
-  const [tags, setTags] = useState<App[]>([]);
 
   useEffect(() => {
     (async () => {
-      const tagsVar = apps.concat({
-        id: "available-services",
-        name: "Available",
-        playground: false,
-        documentation: "",
-        icon: "https://raw.githubusercontent.com/astrit/css.gg/master/icons/svg/smile-mouth-open.svg",
-      });
-      setTags(tagsVar);
-
       try {
         const updatedIcons: Record<string, string> = {};
-        const requests = tagsVar.map(async (app) => {
+        const requests = apps.map(async (app) => {
           const response = await api().get(app.icon.replace(/^\/+/, ""));
           if (response.status === 200) {
             const parser = new DOMParser();
@@ -50,9 +40,9 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   }, []);
 
   useEffect(() => {
-    const newSearch = new Map(tags.map((app) => [app.id, app.id === appId]));
+    const newSearch = new Map(apps.map((app) => [app.id, false]));
     setSearch(newSearch);
-  }, [appId, tags]);
+  }, [apps]);
 
   useEffect(() => {
     onFilterChange(search);
@@ -65,7 +55,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   };
 
   const onSelectChange = (newValue: MultiValue<Option>) => {
-    const newSearch = new Map<string, boolean>(tags.map((app) => [app.id, false]));
+    const newSearch = new Map<string, boolean>(apps.map((app) => [app.id, false]));
     newValue.forEach((option: Option) => {
       newSearch.set(option.value, true);
     });
@@ -73,23 +63,23 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   };
 
   const options = useMemo(() => {
-    return tags.map((app) => ({
+    return apps.map((app) => ({
       value: app.id,
       label: app.name,
     }));
-  }, [tags]);
+  }, [apps]);
 
   const selectedApps = useMemo(() => {
-    return tags
+    return apps
       .filter((app) => search.get(app.id) as boolean)
       .map((app) => ({ value: app.id, label: app.name }));
-  }, [tags, search]);
+  }, [apps, search]);
 
   if (search.size === 0) return null;
 
   return (
-    <div>
-      <div className="relative search-filter">
+    <div className="flex flex-col items-center">
+      <div className="relative search-filter w-full">
         <img
           src={searchLogo}
           alt="search"
@@ -112,8 +102,8 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
           }}
         />
       </div>
-      <div className="flex md:justify-center flex-wrap lg:gap-6 gap-4 mt-5">
-        {tags.map((app) => (
+      <div className="flex justify-center flex-wrap gap-y-5 gap-x-6 lg:gap-x-7 mt-5 md:w-4/5">
+        {apps.map((app) => (
           <div
             className={clsx("text-white", {
               "bg-[#F4A597] rounded": search.get(app.id),

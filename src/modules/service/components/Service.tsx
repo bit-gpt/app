@@ -13,31 +13,41 @@ import useInterfaces from "shared/hooks/useInterfaces";
 import useDownloadServiceStream from "../../../shared/hooks/useDownloadServiceStream";
 import useGetServices from "../../../shared/hooks/useGetServices";
 import useSettingStore from "../../../shared/store/setting";
+import type { App } from "../types";
 
 import CustomServiceCard from "./CustomServiceCard";
 import SearchFilter from "./SearchFilter";
 import ServiceCard from "./ServiceCard";
 
-// TODO: appId is not a url param anymore
 const Service = () => {
-  const { appId } = useParams();
-
   const {
     data: services,
     isLoading: isServicesLoading,
     refetch: refetchServices,
   } = useGetServices();
   const { data: apps } = useInterfaces();
+  const [appsAugmented, setAppsAugmented] = useState<App[]>([]);
   const progresses = useSettingStore((state) => state.serviceDownloadsInProgress);
   const { mutate: download } = useDownloadServiceStream();
   const downloadingServices = useSettingStore.getState().downloadingServices;
   const [filter, setFilter] = useState(new Map<string, boolean>());
 
+  useEffect(() => {
+    const _apps = apps?.concat({
+      id: "available",
+      name: "Available",
+      playground: false,
+      documentation: "",
+      icon: "https://raw.githubusercontent.com/astrit/css.gg/master/icons/svg/smile-mouth-open.svg",
+    });
+    setAppsAugmented(_apps ?? []);
+  }, [apps]);
+
   const filteredApps = useMemo(() => {
-    if (filter.size === 0) return apps;
-    if (![...filter.values()].includes(true)) return apps;
-    return apps?.filter((app) => filter.get(app.id) as boolean);
-  }, [apps, filter]);
+    if (filter.size === 0) return appsAugmented;
+    if (![...filter.values()].includes(true)) return appsAugmented;
+    return appsAugmented?.filter((app) => filter.get(app.id) as boolean);
+  }, [appsAugmented, filter]);
 
   // Resume service download if in progress
   useEffect(() => {
@@ -71,7 +81,13 @@ const Service = () => {
   const ServicesComponents = useMemo(() => {
     return filteredApps?.map((app) => {
       const filteredServices =
-        services?.filter((service) => service?.interfaces?.includes(app.id)) ?? [];
+        services?.filter((service) => {
+          if (app.id === "available") {
+            return checkIfAccessible(getServiceStatus(service));
+          } else {
+            return service?.interfaces?.includes(app.id);
+          }
+        }) ?? [];
       return (
         <div key={app.id} className="mt-10">
           <h3 className="text-grey-300 font-bold text-sm md:text-xl flex md:mb-5 mb-[13px]">
@@ -112,8 +128,8 @@ const Service = () => {
       <div className="mask-heading mb-5 md:-mx-6 xl:-mx-10">
         <h2 className="md:!mt-10 max-md:!mt-4">Dashboard</h2>
       </div>
-      {apps && apps.length > 0 && (
-        <SearchFilter onFilterChange={setFilter} appId={appId as string} apps={apps} />
+      {appsAugmented && appsAugmented.length > 0 && (
+        <SearchFilter onFilterChange={setFilter} apps={appsAugmented} />
       )}
       {ServicesComponents}
     </AppContainer>
