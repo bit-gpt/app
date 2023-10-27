@@ -87,7 +87,9 @@ const SwarmMode = () => {
 
   const description = (
     <span>
-      Congratulations, you are now part of the Swarm. <br /><br /> In less than an hour you will be visible on the public peer-to-peer network <br /> Check it out at {" "}
+      Congratulations, you are now part of the Swarm. <br />
+      <br /> In less than an hour you will be visible on the public peer-to-peer network <br />{" "}
+      Check it out at{" "}
       <a href="https://network.premai.io" target="_blank" rel="noopener noreferrer">
         <b>network.premai.io</b>
       </a>
@@ -162,12 +164,12 @@ const SwarmMode = () => {
           </form>
         </>
       ) : (
-          <div className="flex items-center space-x-4 p-4">
-            <span className="text-grey-200 opacity-70 m-1">
-              Please do not close the app we are configuring the Swarm Environment...
-            </span>
-            <Spinner className="h-10 w-10" />
-          </div>
+        <div className="flex items-center space-x-4 p-4">
+          <span className="text-grey-200 opacity-70 m-1">
+            Please do not close the app we are configuring the Swarm Environment...
+          </span>
+          <Spinner className="h-10 w-10" />
+        </div>
       )}
 
       <SwarmModeModal
