@@ -105,7 +105,6 @@ pub fn create_environment(handle: tauri::AppHandle) -> (String, HashMap<String, 
         .output()
         .expect("🙈 Failed to create env");
     (python, env)
-}
 
 
 #[tauri::command(async)]
