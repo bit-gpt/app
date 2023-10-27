@@ -10,7 +10,7 @@ import type { Option, SearchFilterProps } from "../types";
 
 import MultiValueRemove from "./MultiValueRemove";
 
-const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
+const SearchFilter = ({ apps, onFilterChange }: SearchFilterProps) => {
   const [search, setSearch] = useState(new Map());
   const [icons, setIcons] = useState<Record<string, string>>({});
 
@@ -40,9 +40,9 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   }, []);
 
   useEffect(() => {
-    const newSearch = new Map(apps.map((app) => [app.id, app.id === appId]));
+    const newSearch = new Map(apps.map((app) => [app.id, false]));
     setSearch(newSearch);
-  }, [appId, apps]);
+  }, [apps]);
 
   useEffect(() => {
     onFilterChange(search);
@@ -78,8 +78,8 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
   if (search.size === 0) return null;
 
   return (
-    <div>
-      <div className="relative search-filter">
+    <div className="flex flex-col items-center">
+      <div className="relative search-filter w-full">
         <img
           src={searchLogo}
           alt="search"
@@ -102,7 +102,7 @@ const SearchFilter = ({ apps, onFilterChange, appId }: SearchFilterProps) => {
           }}
         />
       </div>
-      <div className="flex md:justify-center flex-wrap lg:gap-6 gap-4 mt-5">
+      <div className="flex justify-center flex-wrap gap-y-5 gap-x-6 lg:gap-x-7 mt-5 md:w-4/5">
         {apps.map((app) => (
           <div
             className={clsx("text-white", {
