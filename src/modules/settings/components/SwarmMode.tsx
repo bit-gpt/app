@@ -4,6 +4,7 @@ import { Tooltip } from "react-tooltip";
 import Spinner from "shared/components/Spinner";
 import {
   swarmSupported,
+  createEnvironment,
   runSwarmMode,
   checkSwarmModeRunning,
   stopSwarmMode,
@@ -49,6 +50,7 @@ const SwarmMode = () => {
     try {
       e.preventDefault();
       useSettingStore.getState().setSwarmMode(Swarm.Creating);
+      await createEnvironment();
       const user = await userName();
       const publicName = user + "@premAI";
       await runSwarmMode(numBlocks, model, publicName);

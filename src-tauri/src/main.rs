@@ -207,7 +207,8 @@ fn main() {
             swarm::is_swarm_supported,
             swarm::get_username,
             swarm::get_petals_models,
-            swarm::run_swarm_mode,
+            swarm::create_environment,
+            swarm::run_swarm,
             swarm::stop_swarm_mode,
             swarm::is_swarm_mode_running
         ])

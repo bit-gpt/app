@@ -70,7 +70,33 @@ pub fn is_swarm_mode_running() -> bool {
     return false;
 }
 
-pub fn create_environment(handle: tauri::AppHandle) -> String {
+#[tauri::command(async)]
+pub fn create_environment(handle: tauri::AppHandle) {
+    println!("🐍 Creating the environment...");
+    let petals_path = get_petals_path(handle);
+
+    let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
+    let app_data_dir = app_data_dir.join(".config/prem");
+    let app_data_dir = app_data_dir
+        .to_str()
+        .expect("🙈 Failed to convert app data dir path to str");
+
+    let python = format!("{app_data_dir}/miniconda/envs/prem_app/bin/python");
+
+    let mut env = HashMap::new();
+    env.insert("PREM_APPDIR".to_string(), app_data_dir.to_string());
+    env.insert("PREM_PYTHON".to_string(), python.clone());
+
+    let _ = Command::new("sh")
+        .args([format!("{petals_path}/create_env.sh")])
+        .envs(env.clone())
+        .output()
+        .expect("🙈 Failed to create env");
+}
+
+#[tauri::command(async)]
+pub fn run_swarm(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String) {
+    let petals_path = get_petals_path(handle);
     // Get the application data directory
     let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
     let app_data_dir = app_data_dir.join(".config/prem");
@@ -78,6 +104,26 @@ pub fn create_environment(handle: tauri::AppHandle) -> String {
         .to_str()
         .expect("🙈 Failed to convert app data dir path to str");
 
+    let python = format!("{app_data_dir}/miniconda/envs/prem_app/bin/python");
+
+    let mut env = HashMap::new();
+    env.insert("PREM_APPDIR".to_string(), app_data_dir.to_string());
+    env.insert("PREM_PYTHON".to_string(), python.clone());
+
+    println!("🚀 Starting the Swarm...");
+    let _ = Command::new("sh")
+        .args([
+            format!("{petals_path}/run_swarm.sh").as_str(),
+            &num_blocks.to_string(),
+            &public_name,
+            &model,
+        ])
+        .envs(env.clone())
+        .spawn()
+        .expect("🙈 Failed to run swarm");
+}
+
+fn get_petals_path(handle: tauri::AppHandle) -> String {
     // Get create env path
     let binding = handle
         .path_resolver()
@@ -86,45 +132,7 @@ pub fn create_environment(handle: tauri::AppHandle) -> String {
     let petals_path = binding
         .to_str()
         .expect("🙈 Failed to convert petals path to str");
-
-    let python = format!("{app_data_dir}/miniconda/envs/prem_app/bin/python");
-
-    // Set env variables
-    let mut env = HashMap::new();
-    env.insert("PREM_APPDIR".to_string(), app_data_dir.to_string());
-    env.insert("PREM_PYTHON".to_string(), python.clone());
-
-    // Run the bash script
-    let _ = Command::new("sh")
-        .args([format!("{petals_path}/create_env.sh")])
-        .envs(env)
-        .output()
-        .expect("🙈 Failed to create env");
-    python
-}
-
-#[tauri::command(async)]
-pub fn run_swarm_mode(
-    handle: tauri::AppHandle,
-    num_blocks: i32,
-    model: String,
-    public_name: String,
-) {
-    let python: String = create_environment(handle);
-    println!("🚀 Starting the Swarm...");
-
-    let _ = Command::new(&python)
-        .args(&[
-            "-m",
-            "petals.cli.run_server",
-            "--num_blocks",
-            &num_blocks.to_string(),
-            "--public_name",
-            &public_name,
-            &model,
-        ])
-        .spawn()
-        .expect("🙈 Failed to run swarm");
+    petals_path.to_string()
 }
 
 pub fn get_swarm_processes() -> String {
@@ -144,9 +152,19 @@ pub fn get_swarm_processes() -> String {
         return "".to_string();
     }
 
+    let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
+    let app_data_dir = app_data_dir.join(".config/prem");
+    let app_data_dir = app_data_dir
+        .to_str()
+        .expect("🙈 Failed to convert app data dir path to str");
+
+    let prem_app_env = format!("{app_data_dir}/miniconda/envs/prem_app");
+
+    let regex = format!("https://github.com/bigscience-workshop/petals|{prem_app_env}.*(petals.cli.run_server|multiprocessing.resource_tracker|from multiprocessing.spawn)");
+
     // If create_env.sh is not running, get the processes from petals
     let output = Command::new("/usr/bin/pgrep")
-        .args(&["-f", "https://github.com/bigscience-workshop/petals|petals.cli.run_server|multiprocessing.resource_tracker|from multiprocessing.spawn"])
+        .args(&["-f", &regex])
         .output()
         .map_err(|e| {
             println!("🙈 Failed to execute command: {}", e);

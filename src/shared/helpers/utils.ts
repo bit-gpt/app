@@ -70,12 +70,16 @@ export const stopSwarmMode = async () => {
   await invoke("stop_swarm_mode");
 };
 
+export const createEnvironment = async () => {
+  await invoke("create_environment");
+};
+
 export const runSwarmMode = async (numBlocks: number, model: string, publicName: string) => {
   const isSwarmMode = await checkSwarmModeRunning();
   if (isSwarmMode) {
     return;
   }
-  await invoke("run_swarm_mode", { numBlocks, model, publicName });
+  await invoke("run_swarm", { numBlocks, model, publicName });
 };
 
 export const isPackaged = () => {
