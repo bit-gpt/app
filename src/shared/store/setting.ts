@@ -1,6 +1,7 @@
 import storage from "shared/helpers/custom-storage";
 import { isIP, isPackaged, isProxyEnabled } from "shared/helpers/utils";
 import type { SettingStore } from "shared/types";
+import { Swarm } from "shared/types";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -85,6 +86,8 @@ const useSettingStore = create<SettingStore>()(
             "removeAllServiceAsDownloading",
           );
         },
+        swarmMode: Swarm.Inactive,
+        setSwarmMode: (swarmMode: Swarm) => set(() => ({ swarmMode }), false, "setSwarmMode"),
       }),
       {
         name: "setting",

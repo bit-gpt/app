@@ -11,6 +11,7 @@ import useWarningModal from "../hooks/useWarningModal";
 import type { ServiceCardProps } from "../types";
 
 import Beta from "./Beta";
+import Petals from "./Petals";
 import ServiceActions from "./ServiceActions";
 
 const ServiceCard = ({ className, service }: ServiceCardProps) => {
@@ -58,6 +59,7 @@ const ServiceCard = ({ className, service }: ServiceCardProps) => {
       <h3>
         {title}
         {service.beta && <Beta className="md:-top-2 top-[-5px]" />}
+        {service.petals && <Petals className="md:-top-2 top-[-5px]" />}
       </h3>
     </Link>
   );

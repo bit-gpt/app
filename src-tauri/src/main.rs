@@ -4,14 +4,15 @@
 mod controller_binaries;
 mod download;
 mod errors;
+mod swarm;
 mod utils;
 
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::{env, collections::HashMap, str};
 use tauri::{
-    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
-    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
+    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
+    Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 use tokio::{process::Child, sync::Mutex};
 
@@ -181,6 +182,12 @@ fn main() {
             controller_binaries::get_service_stats,
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
+            swarm::is_swarm_supported,
+            swarm::get_username,
+            swarm::get_petals_models,
+            swarm::run_swarm_mode,
+            swarm::stop_swarm_mode,
+            swarm::is_swarm_mode_running
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
