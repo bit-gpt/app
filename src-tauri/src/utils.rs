@@ -1,19 +1,25 @@
-use crate::errors::Result;
-use crate::{Service, SharedState};
+use crate::errors::{Context, Result};
+use crate::{err, Service, SharedState};
 use reqwest::get;
 use std::collections::HashMap;
 use tauri::State;
 
 pub async fn fetch_services_manifests(url: &str, state: &State<'_, SharedState>) -> Result<()> {
-    let response = get(url).await.expect("Failed to fetch registry");
-    let services = response.json::<Vec<Service>>().await.unwrap();
+    let response = get(url)
+        .await
+        .with_context(|| format!("Couldn't fetch the manifest from {url:?}"))?;
+    let services = response
+        .json::<Vec<Service>>()
+        .await
+        .with_context(|| "Failed to parse response to list of services")?;
     let mut services_guard = state.services.lock().await;
-    let service_ids = services_guard.keys().cloned().collect::<Vec<String>>();
-    for service in services {
-        if !service_ids.contains(&service.id.clone().unwrap()) {
-            services_guard.insert(service.id.clone().unwrap(), service);
-        }
-    }
+    // TODO: discuss why do we need global ids, why not use uuids and generate them on each load
+    *services_guard = services
+        .into_iter()
+        // removes services without id
+        .filter_map(|x| Some((x.id.clone()?, x)))
+        // removes duplicate services
+        .collect();
     Ok(())
 }
 
@@ -26,21 +32,19 @@ pub fn is_x86_64() -> bool {
 }
 
 pub fn get_binary_url(binaries_url: &HashMap<String, Option<String>>) -> Result<String> {
-    let mut binary_url = "".to_string();
     if is_aarch64() {
-        binary_url = binaries_url
+        binaries_url
             .get("aarch64-apple-darwin")
-            .unwrap()
+            .with_context(|| "No binary available for platform")?
             .clone()
-            .unwrap()
+            .with_context(|| "No binary available for platform")
     } else if is_x86_64() {
-        binary_url = binaries_url
+        binaries_url
             .get("x86_64-apple-darwin")
-            .unwrap()
+            .with_context(|| "No binary available for platform")?
             .clone()
-            .unwrap()
+            .with_context(|| "No binary available for platform")
     } else {
-        Err("Unsupported architecture").unwrap()
+        err!("Unsupported architecture")
     }
-    Ok(binary_url)
 }

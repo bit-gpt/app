@@ -9,12 +9,13 @@ mod utils;
 
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::{env, collections::HashMap, str};
+use std::{collections::HashMap, env, str};
 use tauri::{
-    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
-    Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
+    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
+    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
-use tokio::{process::Child, sync::Mutex};
+use tokio::process::Child;
+use tokio::sync::Mutex;
 
 #[derive(Debug, Default)]
 pub struct SharedState {
@@ -73,6 +74,22 @@ pub struct Service {
     supported: Option<bool>,
 }
 
+impl Service {
+    fn get_id(&self) -> errors::Result<String> {
+        use errors::Context;
+        self.id
+            .clone()
+            .with_context(|| format!("Service doesn't contain a valid id\n{:#?}", self))
+    }
+    // ref to String is used as it's more generally coerce-able
+    fn get_id_ref(&self) -> errors::Result<&String> {
+        use errors::Context;
+        self.id
+            .as_ref()
+            .with_context(|| format!("Service doesn't contain a valid id\n{:#?}", self))
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone)]
 struct ModelInfo {
     #[serde(rename = "inferenceTime")]
@@ -91,12 +108,11 @@ struct ModelInfo {
 }
 
 fn main() {
-    // Sentry
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
         sentry::ClientOptions {
             release: sentry::release_name!(),
-            debug: true,
+            debug: false, // this outputs dsn to stdout on sentry init
             ..Default::default()
         },
     ));
@@ -105,8 +121,11 @@ fn main() {
     let _guard = sentry_tauri::minidump::init(&client);
     // Everything after here runs in only the app process
 
+    // TODO: consider directly pushing logs to sentry (sentry-sdk provides
+    // log integration) for release builds
+
     // initialize logger
-    pretty_env_logger::formatted_timed_builder()
+    pretty_env_logger::formatted_builder()
         .format(|buf, record| {
             use std::io::Write;
             writeln!(
@@ -165,8 +184,7 @@ fn main() {
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
     let state = SharedState::default();
-    #[allow(unused_mut)]
-    let mut app = tauri::Builder::default()
+    tauri::Builder::default()
         .plugin(sentry_tauri::plugin())
         .manage(state)
         .invoke_handler(tauri::generate_handler![
@@ -205,7 +223,7 @@ fn main() {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "hide" => {
                     let window = app.get_window("main").unwrap();
-                    window.hide().unwrap();
+                    logerr!(window.hide());
                 }
                 "quit" => {
                     controller_binaries::stop_all_services(app.state());
@@ -213,8 +231,8 @@ fn main() {
                 }
                 "show" => {
                     let window = app.get_window("main").unwrap();
-                    window.set_focus().unwrap();
-                    window.show().unwrap();
+                    logerr!(window.set_focus());
+                    logerr!(window.show());
                 }
                 _ => {}
             },
@@ -232,20 +250,25 @@ fn main() {
             Ok(())
         })
         .build(tauri::generate_context!())
-        .expect("error while running tauri application");
-
-    app.run(|app_handle, e| match e {
-        // Triggered when a window is trying to close
-        RunEvent::WindowEvent { label, event, .. } => {
-            match event {
-                WindowEvent::CloseRequested { api, .. } => {
-                    app_handle.get_window(&label).unwrap().hide().unwrap();
-                    // use the exposed close api, and prevent the event loop to close
-                    api.prevent_close();
+        .expect("Error while building tauri application")
+        .run(|app_handle, e| match e {
+            // Triggered when a window is trying to close
+            RunEvent::WindowEvent { label, event, .. } => {
+                match event {
+                    WindowEvent::CloseRequested { api, .. } => {
+                        logsome!(
+                            app_handle.get_window(&label).map(|e| logerr!(
+                                e.hide(),
+                                "Failed to hide window with label({label:?})"
+                            )),
+                            "Failed to get app window with label({label:?})"
+                        );
+                        // use the exposed close api, and prevent the event loop to close
+                        api.prevent_close();
+                    }
+                    _ => {}
                 }
-                _ => {}
             }
-        }
-        _ => {}
-    })
+            _ => {}
+        });
 }

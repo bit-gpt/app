@@ -1,7 +1,7 @@
 use crate::errors::{Context, Result};
 use std::collections::HashMap;
 
-use crate::{utils, SharedState};
+use crate::{err, utils, SharedState};
 use futures::StreamExt;
 use serde::Serialize;
 use tauri::{Manager, Runtime, Window};
@@ -175,11 +175,7 @@ impl<R: Runtime> Downloader<R> {
 
         // Check the status for errors.
         if !res.status().is_success() {
-            Err(format!(
-                "GET Request: ({}): ({})",
-                res.status(),
-                url.as_ref()
-            ))?
+            err!("GET Request: ({}): ({})", res.status(), url.as_ref());
         }
 
         // Prepare the destination directories
@@ -211,7 +207,7 @@ impl<R: Runtime> Downloader<R> {
             // Retrieve chunk.
             let mut chunk = match item {
                 Ok(chunk) => chunk,
-                Err(e) => Err(format!("Error while downloading: {:?}", e))?,
+                Err(e) => err!("Error while downloading: {e:?}"),
             };
             let chunk_size = chunk.len() as u64;
 

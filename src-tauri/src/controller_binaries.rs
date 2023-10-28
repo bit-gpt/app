@@ -1,18 +1,27 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use crate::download::Downloader;
-use crate::errors::{Context, Result};
-use crate::{Service, SharedState};
+use crate::{
+    download::Downloader,
+    err,
+    errors::{Context, Result},
+    logerr, Service, SharedState,
+};
+
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
-use sys_info::mem_info;
 
 use futures::future;
+
+use sys_info::mem_info;
+use sysinfo::{Pid, ProcessExt, ProcessRefreshKind, RefreshKind, SystemExt};
+
 use tauri::{AppHandle, Runtime, State, Window};
+
+use tokio::fs;
+use tokio::process::Command;
 use tokio::time::interval;
-use tokio::{fs, process::Command};
 
 #[tauri::command(async)]
 pub async fn download_service<R: Runtime>(
@@ -71,7 +80,7 @@ pub async fn start_service(
     // Check if service is already running
     let running_services_guard = state.running_services.lock().await;
     if running_services_guard.contains_key(&service_id) {
-        Err(format!("Service with `{service_id}` already exist"))?
+        err!("Service with `{service_id}` already exist")
     }
     drop(running_services_guard);
 
@@ -95,7 +104,7 @@ pub async fn start_service(
     let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
     log::info!("binary_path: {:?}", binary_path);
     if !binary_path.exists() {
-        Err(format!("invalid binary for `{service_id}`"))?
+        err!("invalid binary for `{service_id}`")
     }
     // Extract the arguments with different delimiters
     let args: Vec<String> = serve_command_vec[1..]
@@ -160,15 +169,29 @@ pub async fn start_service(
 #[tauri::command(async)]
 pub async fn stop_service(service_id: String, state: State<'_, SharedState>) -> Result<()> {
     let mut running_services_guard = state.running_services.lock().await;
-    if let Some(mut child) = running_services_guard.remove(&service_id) {
-        match child.kill().await {
-            Ok(_) => {
-                log::info!("Child process killed: {}", service_id);
-            }
-            Err(e) => {
-                log::error!("Failed to kill child process: {}", e);
-            }
-        }
+    let Some(child) = running_services_guard.remove(&service_id) else {
+        err!("Service not running")
+    };
+    // kill the process gracefully using SIGTERM/SIGINT
+    let Some(pid) = child.id() else {
+        err!("Service couldn't be stopped: {}", service_id)
+    };
+    let system = sysinfo::System::new_with_specifics(
+        RefreshKind::new().with_processes(ProcessRefreshKind::new()),
+    );
+    let process = system
+        .process(Pid::from(pid as usize))
+        .with_context(|| format!("Process pid({}) invalid", pid))?;
+    log::info!(
+        "terminating service: process_name({}) process_id({})",
+        process.name(),
+        process.pid()
+    );
+    if !process
+        .kill_with(sysinfo::Signal::Term)
+        .with_context(|| format!("Couldn't send terminate signal to process(pid: {}).", pid))?
+    {
+        err!("Failed to kill the process");
     }
     let mut registry_lock = state.services.lock().await;
     if let Some(service) = registry_lock.get_mut(&service_id) {
@@ -181,7 +204,7 @@ pub fn stop_all_services(state: tauri::State<'_, SharedState>) {
     tauri::async_runtime::block_on(async move {
         let services = state.running_services.lock().await;
         for service_id in services.keys() {
-            _ = stop_service(service_id.clone(), state.clone()).await;
+            logerr!(stop_service(service_id.clone(), state.clone()).await);
         }
     })
 }
@@ -279,9 +302,9 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
     let service_dir = app_handle
         .path_resolver()
         .app_data_dir()
-        .expect("failed to resolve app data dir")
+        .with_context(|| "Failed to resolve app data dir")?
         .join("models")
-        .join(&service.id.as_ref().unwrap());
+        .join(service.get_id_ref()?);
     let mut downloaded = true;
     for file in &service.weights_files.clone().unwrap() {
         let file_path = service_dir.join(file);
@@ -304,11 +327,19 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
                 .head(url)
                 .send()
                 .await
-                .map_err(|_| format!("Failed HEAD request: {}", url))
-                .unwrap();
+                .map_err(|_| format!("Failed HEAD request: {}", url))?;
             if response.status().is_success() {
                 if let Some(remote_file_size) = response.headers().get("Content-Length") {
-                    let parsed_size = remote_file_size.to_str().unwrap().parse::<u64>().unwrap();
+                    let parsed_size = remote_file_size
+                        .to_str()
+                        .with_context(|| "Header value remote_file_size not utf-8")?
+                        .parse::<u64>()
+                        .with_context(|| {
+                            format!(
+                                "Failed to parse header-value({:?}) as u64",
+                                remote_file_size.to_str()
+                            )
+                        })?;
                     // println!("Content-Length: {:?}", parsed_size);
                     if file_size_on_disk != parsed_size {
                         downloaded = false;
@@ -367,7 +398,7 @@ pub async fn update_service_with_dynamic_state(
     let has_enough_total_memory = has_enough_total_memory(service).await?;
     let has_enough_storage = has_enough_storage().await?;
     let is_supported = is_supported().await?;
-    let is_service_running = is_service_running(&service.id.as_ref().unwrap(), &state).await?;
+    let is_service_running = is_service_running(service.get_id_ref()?, &state).await?;
     let base_url = get_base_url(service)?;
     service.downloaded = Some(is_service_downloaded);
     service.enough_memory = Some(has_enough_free_memory);
@@ -383,9 +414,9 @@ pub async fn update_service_with_dynamic_state(
 pub async fn get_system_stats() -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
 }
+
 #[tauri::command(async)]
 pub async fn get_service_stats(service_id: String) -> Result<HashMap<String, String>> {
-    log::info!("service_id: {}", service_id);
     Ok(HashMap::new())
 }
 #[tauri::command(async)]
@@ -396,6 +427,6 @@ pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
 #[tauri::command(async)]
 pub async fn add_service(service: Service, state: State<'_, SharedState>) -> Result<()> {
     let mut services_guard = state.services.lock().await;
-    services_guard.insert(service.id.clone().unwrap(), service.clone());
+    services_guard.insert(service.get_id()?, service);
     Ok(())
 }
