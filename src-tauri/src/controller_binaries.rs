@@ -8,9 +8,9 @@ use crate::{
     logerr, Service, SharedState,
 };
 
-use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
+use std::{collections::HashMap, sync::Arc};
 
 use futures::future;
 
@@ -19,9 +19,9 @@ use sysinfo::{Pid, ProcessExt, ProcessRefreshKind, RefreshKind, SystemExt};
 
 use tauri::{AppHandle, Runtime, State, Window};
 
-use tokio::fs;
-use tokio::process::Command;
+use tokio::process::{Child, Command};
 use tokio::time::interval;
+use tokio::{fs, sync::Mutex};
 
 #[tauri::command(async)]
 pub async fn download_service<R: Runtime>(
@@ -59,7 +59,7 @@ pub async fn download_service<R: Runtime>(
 #[tauri::command(async)]
 pub async fn start_service(
     service_id: String,
-    state: State<'_, SharedState>,
+    state: State<'_, Arc<SharedState>>,
     app_handle: AppHandle,
 ) -> Result<()> {
     let service_dir = app_handle
@@ -167,9 +167,19 @@ pub async fn start_service(
 }
 
 #[tauri::command(async)]
-pub async fn stop_service(service_id: String, state: State<'_, SharedState>) -> Result<()> {
-    let mut running_services_guard = state.running_services.lock().await;
-    let Some(child) = running_services_guard.remove(&service_id) else {
+pub async fn stop_service(service_id: String, state: State<'_, Arc<SharedState>>) -> Result<()> {
+    let running_services = &state.running_services;
+    let services = &state.services;
+    _stop_service(service_id.as_str(), running_services, services).await
+}
+
+pub async fn _stop_service(
+    service_id: &str,
+    running_services: &Mutex<HashMap<String, Child>>,
+    services: &Mutex<HashMap<String, Service>>,
+) -> Result<()> {
+    let mut running_services_guard = running_services.lock().await;
+    let Some(child) = running_services_guard.remove(service_id) else {
         err!("Service not running")
     };
     // kill the process gracefully using SIGTERM/SIGINT
@@ -193,18 +203,26 @@ pub async fn stop_service(service_id: String, state: State<'_, SharedState>) -> 
     {
         err!("Failed to kill the process");
     }
-    let mut registry_lock = state.services.lock().await;
-    if let Some(service) = registry_lock.get_mut(&service_id) {
+    let mut registry_lock = services.lock().await;
+    if let Some(service) = registry_lock.get_mut(service_id) {
         service.running = Some(false);
     }
     Ok(())
 }
 
-pub fn stop_all_services(state: tauri::State<'_, SharedState>) {
+pub fn stop_all_services(state: Arc<SharedState>) {
+    log::info!("Stopping all services");
     tauri::async_runtime::block_on(async move {
         let services = state.running_services.lock().await;
         for service_id in services.keys() {
-            logerr!(stop_service(service_id.clone(), state.clone()).await);
+            logerr!(
+                _stop_service(
+                    service_id.as_str(),
+                    &state.running_services,
+                    &state.services
+                )
+                .await
+            );
         }
     })
 }
@@ -236,7 +254,7 @@ pub async fn get_logs_for_service(service_id: String, app_handle: AppHandle) -> 
 
 #[tauri::command]
 pub async fn get_services(
-    state: State<'_, SharedState>,
+    state: State<'_, Arc<SharedState>>,
     app_handle: AppHandle,
 ) -> Result<Vec<Service>> {
     let mut services = Vec::new();
@@ -277,7 +295,7 @@ pub async fn get_services(
 #[tauri::command(async)]
 pub async fn get_service_by_id(
     service_id: String,
-    state: State<'_, SharedState>,
+    state: State<'_, Arc<SharedState>>,
     app_handle: AppHandle,
 ) -> Result<Service> {
     let services = state.services.lock().await;
@@ -288,12 +306,15 @@ pub async fn get_service_by_id(
 
 // Dynamic service state
 #[tauri::command(async)]
-pub async fn get_running_services(state: State<'_, SharedState>) -> Result<Vec<String>> {
+pub async fn get_running_services(state: State<'_, Arc<SharedState>>) -> Result<Vec<String>> {
     let services = state.running_services.lock().await;
     return Ok(services.keys().cloned().collect());
 }
 
-pub async fn is_service_running(service_id: &str, state: &State<'_, SharedState>) -> Result<bool> {
+pub async fn is_service_running(
+    service_id: &str,
+    state: &State<'_, Arc<SharedState>>,
+) -> Result<bool> {
     let running_services = state.running_services.lock().await;
     return Ok(running_services.contains_key(service_id));
 }
@@ -390,7 +411,7 @@ pub fn get_base_url(service: &Service) -> Result<String> {
 
 pub async fn update_service_with_dynamic_state(
     service: &mut Service,
-    state: &State<'_, SharedState>,
+    state: &State<'_, Arc<SharedState>>,
     app_handle: &AppHandle,
 ) -> Result<Service> {
     let is_service_downloaded = is_service_downloaded(service, &app_handle).await?;
@@ -425,7 +446,7 @@ pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
 }
 
 #[tauri::command(async)]
-pub async fn add_service(service: Service, state: State<'_, SharedState>) -> Result<()> {
+pub async fn add_service(service: Service, state: State<'_, Arc<SharedState>>) -> Result<()> {
     let mut services_guard = state.services.lock().await;
     services_guard.insert(service.get_id()?, service);
     Ok(())

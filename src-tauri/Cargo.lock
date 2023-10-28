@@ -538,6 +538,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ctrlc"
+version = "3.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "82e95fbd621905b854affdc67943b043a0fbb6ed7385fd5a25650d19a8a6cfdf"
+dependencies = [
+ "nix",
+ "windows-sys 0.48.0",
+]
+
+[[package]]
 name = "darling"
 version = "0.20.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2489,6 +2499,7 @@ name = "prem-app"
 version = "0.1.2"
 dependencies = [
  "chrono",
+ "ctrlc",
  "futures",
  "log",
  "pretty_env_logger",

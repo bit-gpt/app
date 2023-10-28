@@ -2,9 +2,9 @@ use crate::errors::{Context, Result};
 use crate::{err, Service, SharedState};
 use reqwest::get;
 use std::collections::HashMap;
-use tauri::State;
+use std::sync::Arc;
 
-pub async fn fetch_services_manifests(url: &str, state: &State<'_, SharedState>) -> Result<()> {
+pub async fn fetch_services_manifests(url: &str, state: Arc<SharedState>) -> Result<()> {
     let response = get(url)
         .await
         .with_context(|| format!("Couldn't fetch the manifest from {url:?}"))?;

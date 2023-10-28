@@ -7,8 +7,11 @@ mod errors;
 mod swarm;
 mod utils;
 
+use controller_binaries::stop_all_services;
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
+use std::ops::Deref;
+use std::sync::Arc;
 use std::{collections::HashMap, env, str};
 use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
@@ -183,10 +186,11 @@ fn main() {
 
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
-    let state = SharedState::default();
-    tauri::Builder::default()
+    let state = std::sync::Arc::new(SharedState::default());
+
+    let app = tauri::Builder::default()
         .plugin(sentry_tauri::plugin())
-        .manage(state)
+        .manage(state.clone())
         .invoke_handler(tauri::generate_handler![
             controller_binaries::start_service,
             controller_binaries::stop_service,
@@ -210,7 +214,9 @@ fn main() {
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
             "quit" => {
-                controller_binaries::stop_all_services(event.window().state());
+                controller_binaries::stop_all_services(
+                    event.window().state::<Arc<SharedState>>().deref().clone(),
+                );
                 event.window().close().unwrap();
             }
             "close" => {
@@ -222,15 +228,23 @@ fn main() {
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "hide" => {
-                    let window = app.get_window("main").unwrap();
+                    let Some(window) = app.get_window("main") else {
+                        log::error!("Couldn't get window from for label 'main'");
+                        return;
+                    };
                     logerr!(window.hide());
                 }
                 "quit" => {
-                    controller_binaries::stop_all_services(app.state());
+                    controller_binaries::stop_all_services(
+                        app.state::<Arc<SharedState>>().deref().clone(),
+                    );
                     app.exit(0);
                 }
                 "show" => {
-                    let window = app.get_window("main").unwrap();
+                    let Some(window) = app.get_window("main") else {
+                        log::error!("Couldn't get window from for label 'main'");
+                        return;
+                    };
                     logerr!(window.set_focus());
                     logerr!(window.show());
                 }
@@ -242,33 +256,56 @@ fn main() {
             tauri::async_runtime::block_on(async move {
                 utils::fetch_services_manifests(
                     "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
-                    &app.state::<SharedState>(),
+                    app.state::<Arc<SharedState>>().deref().clone(),
                 )
                 .await
                 .expect("Failed to fetch and save services manifests");
             });
             Ok(())
         })
-        .build(tauri::generate_context!())
-        .expect("Error while building tauri application")
-        .run(|app_handle, e| match e {
-            // Triggered when a window is trying to close
-            RunEvent::WindowEvent { label, event, .. } => {
-                match event {
-                    WindowEvent::CloseRequested { api, .. } => {
-                        logsome!(
-                            app_handle.get_window(&label).map(|e| logerr!(
-                                e.hide(),
-                                "Failed to hide window with label({label:?})"
-                            )),
-                            "Failed to get app window with label({label:?})"
-                        );
-                        // use the exposed close api, and prevent the event loop to close
-                        api.prevent_close();
-                    }
-                    _ => {}
-                }
+        .on_window_event(|ev| {
+            if matches!(ev.event(), WindowEvent::Destroyed) {
+                stop_all_services(ev.window().state::<Arc<SharedState>>().deref().clone());
             }
-            _ => {}
-        });
+        })
+        .build(tauri::generate_context!())
+        .expect("Error while building tauri application");
+
+    {
+        let app_handle = app.handle();
+        let s = state.clone();
+        std::panic::set_hook(Box::new(move |_| {
+            stop_all_services(s.clone());
+            app_handle.exit(-1);
+        }));
+
+        let app_handle = app.handle();
+        let s = state.clone();
+        ctrlc::set_handler(move || {
+            stop_all_services(s.clone());
+            app_handle.exit(-1);
+        })
+        .expect("Error setting Ctrl-C handler");
+    }
+
+    app.run(|app_handle, e| match e {
+        // Triggered when a window is trying to close
+        RunEvent::WindowEvent { label, event, .. } => {
+            match event {
+                WindowEvent::CloseRequested { api, .. } => {
+                    logsome!(
+                        app_handle.get_window(&label).map(|e| logerr!(
+                            e.hide(),
+                            "Failed to hide window with label({label:?})"
+                        )),
+                        "Failed to get app window with label({label:?})"
+                    );
+                    // use the exposed close api, and prevent the event loop to close
+                    api.prevent_close();
+                }
+                _ => {}
+            }
+        }
+        _ => {}
+    });
 }
