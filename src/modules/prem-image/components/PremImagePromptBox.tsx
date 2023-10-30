@@ -11,7 +11,7 @@ import type { PremImageResponse } from "../types";
 
 type PromptProps = Pick<
   PremImageResponse,
-  "prompt" | "setPrompt" | "negativePrompt" | "setNegativePrompt" | "isLoading" | "setFile" | "file"
+  "prompt" | "setPrompt" | "negativePrompt" | "setNegativePrompt" | "isPending" | "setFile" | "file"
 >;
 
 const PremImagePromptBox = ({
@@ -19,7 +19,7 @@ const PremImagePromptBox = ({
   setPrompt,
   negativePrompt,
   setNegativePrompt,
-  isLoading,
+  isPending,
   generateImages,
   file,
   setFile,
@@ -100,12 +100,12 @@ const PremImagePromptBox = ({
           <PrimaryButton
             className={clsx("!px-8 !py-2 !h-[38px] !text-sm", {
               "opacity-50": !prompt,
-              "animate-fill-effect": isLoading,
+              "animate-fill-effect": isPending,
             })}
             onClick={generateImages}
-            disabled={isLoading || !prompt}
+            disabled={isPending || !prompt}
           >
-            {isLoading ? `Generating ${n} Images` : `Generate Image`}
+            {isPending ? `Generating ${n} Images` : `Generate Image`}
           </PrimaryButton>
         </div>
       </div>

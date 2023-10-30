@@ -23,7 +23,7 @@ export type PremImageResponse = {
   onSubmit: () => void;
   prompt: string;
   setPrompt: (question: string) => void;
-  isLoading: boolean;
+  isPending: boolean;
   isError: boolean;
   currentHistory: PremImageHistory | undefined;
   n: number;

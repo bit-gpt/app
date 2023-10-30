@@ -14,7 +14,7 @@ const PremTextAudioBox = ({
   historyId,
 }: Partial<PremTextAudioContainerProps>) => {
   const navigate = useNavigate();
-  const { isLoading, onSubmit, prompt, setPrompt, currentHistory } = usePremTextAudio(
+  const { isPending, onSubmit, prompt, setPrompt, currentHistory } = usePremTextAudio(
     serviceId!,
     serviceType!,
     historyId,
@@ -62,11 +62,11 @@ const PremTextAudioBox = ({
             className={clsx(
               "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
-                "opacity-50": isLoading,
+                "opacity-50": isPending,
               },
             )}
             onClick={onClear}
-            disabled={isLoading}
+            disabled={isPending}
           >
             Clear
           </OutlineCircleButton>
@@ -75,11 +75,11 @@ const PremTextAudioBox = ({
               "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
                 "opacity-50": !prompt,
-                "animate-fill-effect": isLoading,
+                "animate-fill-effect": isPending,
               },
             )}
             onClick={generateAudio}
-            disabled={isLoading || !prompt}
+            disabled={isPending || !prompt}
           >
             Create
           </PrimaryButton>

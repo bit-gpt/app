@@ -47,28 +47,26 @@ const usePremImage = (
     seed,
   };
 
-  const { isLoading, isError, mutate } = useMutation(
-    () =>
+  const { isPending, isError, mutate } = useMutation({
+    mutationFn: () =>
       file ? generateImageViaBaseImage(service!, file, payload) : generateImage(service!, payload),
-    {
-      onSuccess: (response) => {
-        setFile(undefined);
-        const id = uuid();
-        addHistory({
-          id,
-          prompt,
-          images: (response.data.data || []).map(
-            (image: B64JsonResponse) => `data:image/png;base64, ${image.b64_json}`,
-          ),
-          timestamp: new Date().toISOString(),
-        });
-        navigate(`/prem-image/${serviceId}/${serviceType}/${id}`);
-      },
-      onError: () => {
-        toast.error("Something went wrong while generating the image");
-      },
+    onSuccess: (response) => {
+      setFile(undefined);
+      const id = uuid();
+      addHistory({
+        id,
+        prompt,
+        images: (response.data.data || []).map(
+          (image: B64JsonResponse) => `data:image/png;base64, ${image.b64_json}`,
+        ),
+        timestamp: new Date().toISOString(),
+      });
+      navigate(`/prem-image/${serviceId}/${serviceType}/${id}`);
     },
-  );
+    onError: () => {
+      toast.error("Something went wrong while generating the image");
+    },
+  });
 
   const currentHistory = history.find((_history) => _history.id === historyId);
 
@@ -80,7 +78,7 @@ const usePremImage = (
     currentHistory,
     prompt: prompt,
     setPrompt,
-    isLoading,
+    isPending,
     isError,
     onSubmit: mutate,
     n,

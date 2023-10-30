@@ -14,7 +14,7 @@ const useInterfaces = () => {
   } else {
     serviceType = "docker";
   }
-  return useQuery(["getApps"], () => controller.getInterfaces(serviceType));
+  return useQuery({ queryKey: ["getApps"], queryFn: () => controller.getInterfaces(serviceType) });
 };
 
 export default useInterfaces;

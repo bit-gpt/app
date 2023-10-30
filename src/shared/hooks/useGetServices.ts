@@ -17,7 +17,9 @@ const useGetServices = () => {
   } else {
     serviceType = "docker";
   }
-  return useQuery([SERVICES_KEY], () => controller.getServices(serviceType), {
+  return useQuery({
+    queryKey: [SERVICES_KEY],
+    queryFn: () => controller.getServices(serviceType),
     refetchInterval: SERVICE_CHECK_REFETCH_INTERVAL,
   });
 };
