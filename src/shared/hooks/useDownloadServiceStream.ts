@@ -5,8 +5,8 @@ import ServiceController from "../../controller/serviceController";
 
 const useDownloadServiceStream = () => {
   const controller = ServiceController.getInstance();
-  return useMutation(
-    ({
+  return useMutation({
+    mutationFn: ({
       serviceId,
       binariesUrl,
       weightsDirectoryUrl,
@@ -22,7 +22,7 @@ const useDownloadServiceStream = () => {
         serviceType,
         afterSuccess,
       }),
-  );
+  });
 };
 
 export default useDownloadServiceStream;

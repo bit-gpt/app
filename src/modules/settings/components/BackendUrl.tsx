@@ -12,7 +12,7 @@ import checkHealth from "../api/checkHealth";
 const BackendUrl = () => {
   const queryClient = useQueryClient();
 
-  const { mutate: checkHealthRequest, isLoading } = useMutation(checkHealth);
+  const { mutate: checkHealthRequest, isPending } = useMutation({ mutationFn: checkHealth });
 
   const backendUrlFromStore = useSettingStore((state) => state.backendUrl);
   const setBackendUrlToStore = useSettingStore((state) => state.setBackendUrl);
@@ -66,8 +66,8 @@ const BackendUrl = () => {
         </div>
       </div>
       <div className="text-right mt-[29px] mr-[45px]">
-        <PrimaryButton type="submit" disabled={isLoading}>
-          {isLoading ? "Updating..." : "Update"}
+        <PrimaryButton type="submit" disabled={isPending}>
+          {isPending ? "Updating..." : "Update"}
         </PrimaryButton>
       </div>
     </form>

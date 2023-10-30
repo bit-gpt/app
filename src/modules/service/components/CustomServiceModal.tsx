@@ -36,7 +36,7 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
     }`,
   );
 
-  const { mutate: addService, isLoading } = useAddService();
+  const { mutate: addService, isPending } = useAddService();
   const { refetch } = useGetServices();
 
   const onCancel = () => {
@@ -109,8 +109,8 @@ const CustomServiceModal = ({ isOpen, closeModal }: CustomServiceModalProps) => 
           >
             Cancel
           </OutlineCircleButton>
-          <PrimaryButton onClick={onOk} className="w-full" disabled={isLoading}>
-            {isLoading ? "Adding ..." : "OK"}
+          <PrimaryButton onClick={onOk} className="w-full" disabled={isPending}>
+            {isPending ? "Adding ..." : "OK"}
           </PrimaryButton>
         </div>
       </div>
