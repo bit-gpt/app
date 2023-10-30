@@ -20,4 +20,4 @@ jobs:
     - working-directory: ./src-tauri
       run: cargo check
     - working-directory: ./src-tauri
-      run: cargo fmt
+      run: cargo fmt --check
