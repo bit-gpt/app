@@ -41,6 +41,12 @@ export enum Swarm {
   Active = "active",
 }
 
+export type SwarmInfo = {
+  model: string;
+  publicName: string;
+  numBlocks: number;
+};
+
 export type WarningModalProps = {
   onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onOk: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -104,6 +110,8 @@ export type SettingStore = {
   removeAllServiceAsDownloading: () => void;
   swarmMode: Swarm;
   setSwarmMode: (mode: Swarm) => void;
+  swarmInfo: SwarmInfo | null;
+  setSwarmInfo: (swarmInfo: SwarmInfo | null) => void;
 };
 
 export type HeaderProps = {
