@@ -32,15 +32,21 @@ pub fn get_binary_url(binaries_url: &HashMap<String, Option<String>>) -> Result<
             .get("aarch64-apple-darwin")
             .unwrap()
             .clone()
-            .unwrap()
+            .unwrap_or_else(|| "Unsupported architecture".to_string())
     } else if is_x86_64() {
         binary_url = binaries_url
             .get("x86_64-apple-darwin")
             .unwrap()
             .clone()
+            .unwrap_or_else(|| "Unsupported architecture".to_string())
+    } 
+    if binary_url == "Unsupported architecture" {
+        binary_url = binaries_url
+            .get("universal-apple-darwin")
             .unwrap()
-    } else {
-        Err("Unsupported architecture").unwrap()
+            .clone()
+            .unwrap_or_else(|| Err("Unsupported architecture").unwrap())
+        
     }
     Ok(binary_url)
 }
