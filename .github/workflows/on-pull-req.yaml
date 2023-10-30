@@ -7,7 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
-    - run: npm install
-    - run: npm run prettier:check
-    - run: npm run build
+    - run: |
+        npm install
+        npm run prettier:check
+        npm run build
+        cd src-tauri
+        cargo check
+        cargo format
