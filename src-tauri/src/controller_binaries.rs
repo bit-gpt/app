@@ -173,7 +173,7 @@ pub async fn stop_service(service_id: String, state: State<'_, Arc<SharedState>>
     _stop_service(service_id.as_str(), running_services, services).await
 }
 
-pub async fn _stop_service(
+async fn _stop_service(
     service_id: &str,
     running_services: &Mutex<HashMap<String, Child>>,
     services: &Mutex<HashMap<String, Service>>,
