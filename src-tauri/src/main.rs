@@ -9,10 +9,10 @@ mod utils;
 
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::{env, collections::HashMap, str};
+use std::{collections::HashMap, env, str};
 use tauri::{
-    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent,
-    Submenu, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
+    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
+    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 use tokio::{process::Child, sync::Mutex};
 
