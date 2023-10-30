@@ -74,7 +74,6 @@ pub fn is_swarm_mode_running() -> bool {
 pub fn create_environment(handle: tauri::AppHandle) {
     println!("🐍 Creating the environment...");
     let petals_path = get_petals_path(handle);
-
     let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
     let app_data_dir = app_data_dir.join(".config/prem");
     let app_data_dir = app_data_dir
