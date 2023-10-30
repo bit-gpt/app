@@ -24,8 +24,8 @@ const ServiceCard = ({ className, service }: ServiceCardProps) => {
   const { openWarningModal, closeWarningModal, isWarningModalOpen } = useWarningModal();
 
   const refetch = useCallback(() => {
-    queryClient.refetchQueries([SERVICES_KEY]);
-    queryClient.invalidateQueries([SERVICE_KEY, serviceId]);
+    queryClient.refetchQueries({ queryKey: [SERVICES_KEY] });
+    queryClient.invalidateQueries({ queryKey: [SERVICE_KEY, serviceId] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

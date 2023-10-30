@@ -17,7 +17,7 @@ export type PremTextAudioHook = {
   currentHistory: PremTextAudioHistory | undefined;
   prompt: string;
   setPrompt: (prompt: string) => void;
-  isLoading: boolean;
+  isPending: boolean;
   isError: boolean;
   onSubmit: () => void;
   deleteHistory: (id: string) => void;

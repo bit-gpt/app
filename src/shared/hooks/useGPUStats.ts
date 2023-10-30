@@ -14,6 +14,9 @@ const useGPUStats = () => {
   } else {
     serviceType = "docker";
   }
-  return useQuery(["getGPUStats"], () => controller.getGPUStats(serviceType));
+  return useQuery({
+    queryKey: ["getGPUStats"],
+    queryFn: () => controller.getGPUStats(serviceType),
+  });
 };
 export default useGPUStats;

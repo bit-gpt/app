@@ -32,7 +32,7 @@ const ServiceDetail = () => {
 
   const refetchServices = useCallback(() => {
     refetch();
-    queryClient.refetchQueries([SERVICES_KEY]);
+    queryClient.refetchQueries({ queryKey: [SERVICES_KEY] });
   }, [queryClient, refetch]);
 
   const back = () => {
