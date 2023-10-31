@@ -3,8 +3,10 @@ import AppRouter from "AppRouter";
 import Onboarding from "modules/onboarding/components/Onboarding";
 import { useEffect } from "react";
 import Modal from "react-modal";
+import { ToastContainer } from "react-toastify";
 import { isIP, isBrowserEnv, isDesktopEnv } from "shared/helpers/utils";
 
+import Login from "./modules/onboarding/components/Login";
 import useSettingStore, { getBackendUrl } from "./shared/store/setting";
 
 Modal.setAppElement("#root");
@@ -57,11 +59,12 @@ function App() {
     })();
   }, [isSettingStoreHydrated]);
 
-  if (!isBrowser) {
-    return <Onboarding redirectTo={<AppRouter />} />;
-  }
-
-  return <AppRouter />;
+  return (
+    <>
+      {isBrowser ? <Login redirectTo={<AppRouter />} /> : <Onboarding redirectTo={<AppRouter />} />}
+      <ToastContainer position="top-right" />
+    </>
+  );
 }
 
 export default App;

@@ -112,6 +112,8 @@ export type SettingStore = {
   setSwarmMode: (mode: Swarm) => void;
   swarmInfo: SwarmInfo | null;
   setSwarmInfo: (swarmInfo: SwarmInfo | null) => void;
+  apiKey: string | null;
+  setApiKey: (apiKey: string) => void;
 };
 
 export type HeaderProps = {

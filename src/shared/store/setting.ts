@@ -91,6 +91,8 @@ const useSettingStore = create<SettingStore>()(
         swarmInfo: null,
         setSwarmInfo: (swarmInfo: SwarmInfo | null) =>
           set(() => ({ swarmInfo }), false, "setSwarmInfo"),
+        apiKey: null,
+        setApiKey: (apiKey: string) => set(() => ({ apiKey }), false, "setApiKey"),
       }),
       {
         name: "setting",
