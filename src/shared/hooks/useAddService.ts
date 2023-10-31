@@ -5,8 +5,8 @@ import type { Service } from "../../modules/service/types";
 
 const useAddService = () => {
   const controller = ServiceController.getInstance();
-  return useMutation(({ service }: { service: Service }) => {
-    return controller.addService(service);
+  return useMutation({
+    mutationFn: ({ service }: { service: Service }) => controller.addService(service),
   });
 };
 

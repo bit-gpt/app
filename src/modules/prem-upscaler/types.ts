@@ -15,7 +15,7 @@ export type PremUpscalerHook = {
   currentHistory: PremUpscalerHistory | undefined;
   file: File | null;
   setFile: (file: File | null) => void;
-  isLoading: boolean;
+  isPending: boolean;
   isError: boolean;
   onSubmit: () => void;
   deleteHistory: (id: string) => void;

@@ -15,6 +15,9 @@ const useSystemStats = () => {
   } else {
     serviceType = "docker";
   }
-  return useQuery(["getSystemStats"], () => controller.getSystemStats(serviceType));
+  return useQuery({
+    queryKey: ["getSystemStats"],
+    queryFn: () => controller.getSystemStats(serviceType),
+  });
 };
 export default useSystemStats;

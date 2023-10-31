@@ -45,8 +45,8 @@ const usePremUpscaler = (
     shallow,
   );
 
-  const { isLoading, isError, mutate } = useMutation(
-    () =>
+  const { isPending, isError, mutate } = useMutation({
+    mutationFn: () =>
       generateUpscalerImage(service!, {
         image: file!,
         prompt,
@@ -55,22 +55,20 @@ const usePremUpscaler = (
         guidance_scale,
         num_inference_steps,
       }),
-    {
-      onSuccess: (response) => {
-        const id = uuid();
-        addHistory({
-          id,
-          file: `data:image/png;base64, ${response.data?.data[0]?.b64_json || ""}`,
-          name: file?.name || "File.jpg",
-          timestamp: new Date().toISOString(),
-        });
-        navigate(`/prem-upscaler/${serviceId}/${serviceType}/${id}`);
-      },
-      onError: () => {
-        toast.error("Something went wrong while generating the upscaler image");
-      },
+    onSuccess: (response) => {
+      const id = uuid();
+      addHistory({
+        id,
+        file: `data:image/png;base64, ${response.data?.data[0]?.b64_json || ""}`,
+        name: file?.name || "File.jpg",
+        timestamp: new Date().toISOString(),
+      });
+      navigate(`/prem-upscaler/${serviceId}/${serviceType}/${id}`);
     },
-  );
+    onError: () => {
+      toast.error("Something went wrong while generating the upscaler image");
+    },
+  });
 
   const currentHistory = history.find((_history) => _history.id === historyId);
 
@@ -78,7 +76,7 @@ const usePremUpscaler = (
     currentHistory,
     file,
     setFile,
-    isLoading,
+    isPending,
     isError,
     onSubmit: mutate,
     deleteHistory,

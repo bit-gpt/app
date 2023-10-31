@@ -50,11 +50,11 @@ const ServiceActions = ({
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const { mutate: download } = useDownloadServiceStream();
   const progresses = useSettingStore((state) => state.serviceDownloadsInProgress);
-  const { mutate: stopService, isLoading: isStopServiceLoading } = useStopService();
+  const { mutate: stopService, isPending: isStopServicePending } = useStopService();
   const {
     mutate: restartService,
     mutateAsync: restartServiceAsync,
-    isLoading: isRestartServiceLoading,
+    isPending: isRestartServicePending,
   } = useRestartService();
   const dropdownRef = useRef(null);
   useOnClickOutside(dropdownRef, () => setDropdownOpen(false));
@@ -139,7 +139,7 @@ const ServiceActions = ({
 
   const isAccessible = checkIfAccessible(status);
 
-  if (isStopServiceLoading) {
+  if (isStopServicePending) {
     return (
       <div className="mt-2">
         <Spinner className="w-5 h-5" />
@@ -149,8 +149,8 @@ const ServiceActions = ({
 
   if (
     progresses[service.id]?.progress !== undefined ||
-    isStopServiceLoading ||
-    isRestartServiceLoading
+    isStopServicePending ||
+    isRestartServicePending
   ) {
     return (
       <div className="flex">

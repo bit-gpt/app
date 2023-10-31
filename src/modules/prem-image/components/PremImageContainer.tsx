@@ -32,7 +32,7 @@ const PremImageContainer = ({
   const navigate = useNavigate();
 
   const {
-    isLoading,
+    isPending,
     onSubmit,
     prompt,
     setPrompt,
@@ -84,7 +84,7 @@ const PremImageContainer = ({
                 setPrompt={setPrompt}
                 negativePrompt={negativePrompt}
                 setNegativePrompt={setNegativePrompt}
-                isLoading={isLoading}
+                isPending={isPending}
                 generateImages={generateImages}
                 setFile={setFile}
                 file={file}
@@ -133,7 +133,7 @@ const PremImageContainer = ({
         </div>
         <div>
           {rightSidebar && (
-            <PremImageRightSidebar isLoading={isLoading} setRightSidebar={setRightSidebar} />
+            <PremImageRightSidebar isLoading={isPending} setRightSidebar={setRightSidebar} />
           )}
         </div>
       </div>

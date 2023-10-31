@@ -64,7 +64,6 @@ export type Service = ServiceDocker | ServiceBinary;
 export type SearchFilterProps = {
   apps: App[];
   onFilterChange: (e: Map<string, boolean>) => void;
-  appId: string;
 };
 
 export type Option = {

@@ -7,7 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
+    # ubuntu-latest provides node & rust installed by default
+    # checkout the image for version specifics
+    # > https://github.com/actions/runner-images#available-images
     - run: npm install
     - run: npm run prettier:check
     - run: npm run build
+    - name: install dependencies for tauri
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+    - working-directory: ./src-tauri
+      run: cargo check
+    - working-directory: ./src-tauri
+      run: cargo fmt --check

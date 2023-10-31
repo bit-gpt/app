@@ -1,7 +1,7 @@
 use reqwest::get;
 use serde::Deserialize;
+use std::{collections::HashMap, env, str};
 use tauri::api::process::Command;
-use std::{env, collections::HashMap, str};
 
 #[derive(Deserialize)]
 struct PetalsModelInfo {
@@ -14,7 +14,7 @@ pub fn is_swarm_supported() -> bool {
     match env::consts::OS {
         "macos" => true,
         "linux" => true,
-        _ => false
+        _ => false,
     }
 }
 
@@ -23,9 +23,7 @@ pub fn get_username() -> String {
     let output = Command::new("whoami").output();
 
     match output {
-        Ok(output) => {
-            output.stdout.trim().to_string()
-        },
+        Ok(output) => output.stdout.trim().to_string(),
         Err(_) => "prem-app".to_string(),
     }
 }
@@ -58,8 +56,6 @@ pub async fn get_petals_models() -> Result<Vec<String>, String> {
     }
 }
 
-
-
 #[tauri::command]
 pub fn is_swarm_mode_running() -> bool {
     let output_value = get_swarm_processes();
@@ -77,14 +73,14 @@ pub fn is_swarm_mode_running() -> bool {
 pub fn create_environment(handle: tauri::AppHandle) -> (String, HashMap<String, String>) {
     // Get the application data directory
     let app_data_dir = tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
-    let app_data_dir = app_data_dir
-        .join(".config/prem");
+    let app_data_dir = app_data_dir.join(".config/prem");
     let app_data_dir = app_data_dir
         .to_str()
         .expect("🙈 Failed to convert app data dir path to str");
 
     // Get create env path
-    let binding = handle.path_resolver()
+    let binding = handle
+        .path_resolver()
         .resolve_resource("petals")
         .expect("🙈 Failed to find `create_env.sh`");
     let petals_path = binding
@@ -108,7 +104,12 @@ pub fn create_environment(handle: tauri::AppHandle) -> (String, HashMap<String, 
 }
 
 #[tauri::command(async)]
-pub fn run_swarm_mode(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String){
+pub fn run_swarm_mode(
+    handle: tauri::AppHandle,
+    num_blocks: i32,
+    model: String,
+    public_name: String,
+) {
     let (python, _) = create_environment(handle);
     println!("🚀 Starting the Swarm...");
 
@@ -155,7 +156,6 @@ pub fn get_swarm_processes() -> String {
     let output_value = output.unwrap().stdout;
     output_value
 }
-
 
 #[tauri::command]
 pub fn stop_swarm_mode() {

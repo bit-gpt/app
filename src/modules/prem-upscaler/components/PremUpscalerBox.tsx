@@ -16,7 +16,7 @@ const PremUpscalerBox = ({
 }: Partial<PremUpscalerContainerProps>) => {
   const navigate = useNavigate();
 
-  const { isLoading, onSubmit, file, setFile } = usePremUpscaler(
+  const { isPending, onSubmit, file, setFile } = usePremUpscaler(
     serviceId!,
     serviceType!,
     historyId,
@@ -50,7 +50,7 @@ const PremUpscalerBox = ({
   return (
     <div className="md:m-[50px] gap-10 m-[25px] prem-img-promptbox">
       <div className="max-w-[650px] mx-auto">
-        <div className={clsx("prem-audio-box bg-grey-700", { "pointer-events-none": isLoading })}>
+        <div className={clsx("prem-audio-box bg-grey-700", { "pointer-events-none": isPending })}>
           <p className="mb-[18px] text-grey-400">Pick an image to increase resolution</p>
           <div
             className="border-2 border-grey-400 rounded-lg h-[162px] flex justify-center items-center flex-col"
@@ -75,11 +75,11 @@ const PremUpscalerBox = ({
             className={clsx(
               "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
-                "opacity-50 pointer-events-none": isLoading,
+                "opacity-50 pointer-events-none": isPending,
               },
             )}
             onClick={onClear}
-            disabled={isLoading}
+            disabled={isPending}
           >
             Clear
           </OutlineCircleButton>
@@ -88,11 +88,11 @@ const PremUpscalerBox = ({
               "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center max-sm:!h-10",
               {
                 "opacity-50": !file,
-                "animate-fill-effect": isLoading,
+                "animate-fill-effect": isPending,
               },
             )}
             onClick={generateImages}
-            disabled={isLoading || !file}
+            disabled={isPending || !file}
           >
             Submit
           </PrimaryButton>
