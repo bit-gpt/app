@@ -9,7 +9,6 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
 use sys_info::mem_info;
-use std::process::Stdio;
 use futures::future;
 use tauri::{AppHandle, Runtime, State, Window};
 use tokio::time::interval;
@@ -124,24 +123,19 @@ pub async fn start_service(
     
     let mut env_vars: HashMap<String, String> = HashMap::new();
     if is_petals_model {
-        println!("PETALS MODEL"); //TODO: remove
         (_, env_vars) = create_environment(handle);
-    }else {
-        println!("NOT PETALS MODEL"); //TODO: remove
     }
 
     let child = Command::new(&binary_path)
         .current_dir(service_dir)
         .args(args)
         .envs(env_vars)
-        // .stdout(std::process::Stdio::from(
-        //     log_file
-        //         .try_clone()
-        //         .with_context(|| "Failed to clone log file handle")?,
-        // ))
-        // .stderr(std::process::Stdio::from(log_file))
-        .stdout(Stdio::inherit()) // TODO: remove later
-        .stderr(Stdio::inherit()) // TODO: remove later
+        .stdout(std::process::Stdio::from(
+            log_file
+                .try_clone()
+                .with_context(|| "Failed to clone log file handle")?,
+        ))
+        .stderr(std::process::Stdio::from(log_file))
         .spawn()
         .map_err(|e| format!("Failed to spawn child process: {}", e))?;
 

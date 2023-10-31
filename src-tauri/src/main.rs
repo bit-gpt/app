@@ -224,8 +224,7 @@ fn main() {
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
                 utils::fetch_services_manifests(
-                    // "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
-                    "https://raw.githubusercontent.com/biswaroop1547/prem-registry/dev/manifests.json", // TODO: remove
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
                     &app.state::<SharedState>(),
                 )
                 .await
