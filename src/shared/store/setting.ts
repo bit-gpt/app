@@ -86,6 +86,8 @@ const useSettingStore = create<SettingStore>()(
             "removeAllServiceAsDownloading",
           );
         },
+        newFeature: true,
+        setNewFeature: (newFeature: boolean) => set(() => ({ newFeature }), false, "setNewFeature"),
         swarmMode: Swarm.Inactive,
         setSwarmMode: (swarmMode: Swarm) => set(() => ({ swarmMode }), false, "setSwarmMode"),
         swarmInfo: null,
