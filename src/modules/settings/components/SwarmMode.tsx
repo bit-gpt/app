@@ -103,7 +103,9 @@ const SwarmMode = () => {
   return isSwarmSupported ? (
     <>
       <div className="flex flex-wrap justify-between md:mr-[45px] gap-4">
-        <h2 className="text-grey-300 text-lg backend-url">Prem Network</h2>
+        <h2 className="text-grey-300 text-lg backend-url">
+          Prem Network <span className="ml-2 text-primary text-xs">BETA</span>
+        </h2>
 
         {swarmMode === Swarm.Active ? (
           <>

@@ -31,6 +31,7 @@ module.exports = {
       },
       ok: "#2ED291",
       warning: "#F9B96D",
+      danger: "#C91432",
     },
     extend: {
       fontFamily: {

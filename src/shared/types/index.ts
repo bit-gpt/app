@@ -33,6 +33,7 @@ export type NavLinkItemProps = {
   label: string;
   to: string;
   target?: "_blank";
+  newFeature?: boolean;
 };
 
 export enum Swarm {
@@ -108,6 +109,8 @@ export type SettingStore = {
   addServiceAsDownloading: (serviceId: string) => void;
   removeServiceAsDownloading: (serviceId: string) => void;
   removeAllServiceAsDownloading: () => void;
+  newFeature: boolean;
+  setNewFeature: (newFeature: boolean) => void;
   swarmMode: Swarm;
   setSwarmMode: (mode: Swarm) => void;
   swarmInfo: SwarmInfo | null;
