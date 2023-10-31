@@ -1,15 +1,15 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use crate::swarm::create_environment;
 use crate::download::Downloader;
 use crate::errors::{Context, Result};
+use crate::swarm::create_environment;
 use crate::{Service, SharedState};
+use futures::future;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
 use sys_info::mem_info;
-use futures::future;
 use tauri::{AppHandle, Runtime, State, Window};
 use tokio::time::interval;
 use tokio::{fs, process::Command};
@@ -120,7 +120,7 @@ pub async fn start_service(
         })
         .collect();
     log::info!("args: {:?}", args);
-    
+
     let mut env_vars: HashMap<String, String> = HashMap::new();
     if is_petals_model {
         (_, env_vars) = create_environment(handle);
