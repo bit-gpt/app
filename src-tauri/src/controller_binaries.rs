@@ -178,14 +178,16 @@ async fn _stop_service(
     running_services: &Mutex<HashMap<String, Child>>,
     services: &Mutex<HashMap<String, Service>>,
 ) -> Result<()> {
+    log::info!("stopping service service_id = {service_id}");
     let mut running_services_guard = running_services.lock().await;
-    let Some(child) = running_services_guard.remove(service_id) else {
+    let Some(mut child) = running_services_guard.remove(service_id) else {
         err!("Service not running")
     };
     // kill the process gracefully using SIGTERM/SIGINT
     let Some(pid) = child.id() else {
         err!("Service couldn't be stopped: {}", service_id)
     };
+    log::info!("service pid = {pid}");
     let system = sysinfo::System::new_with_specifics(
         RefreshKind::new().with_processes(ProcessRefreshKind::new()),
     );
@@ -206,6 +208,10 @@ async fn _stop_service(
     let mut registry_lock = services.lock().await;
     if let Some(service) = registry_lock.get_mut(service_id) {
         service.running = Some(false);
+    }
+    // wait for process to properly exit
+    if let Ok(_exit_code) = child.wait().await {
+        log::info!("service stopped!");
     }
     Ok(())
 }
