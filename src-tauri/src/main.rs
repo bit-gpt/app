@@ -7,12 +7,12 @@ mod errors;
 mod swarm;
 mod utils;
 
-use controller_binaries::stop_all_services;
+use crate::controller_binaries::stop_all_services;
+
+use std::{collections::HashMap, env, ops::Deref, str, sync::Arc};
+
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::ops::Deref;
-use std::sync::Arc;
-use std::{collections::HashMap, env, str};
 use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,

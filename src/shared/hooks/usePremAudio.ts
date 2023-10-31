@@ -32,28 +32,26 @@ const usePremAudio = (
     shallow,
   );
 
-  const { isLoading, isError, mutate } = useMutation(
-    () =>
+  const { isPending, isError, mutate } = useMutation({
+    mutationFn: () =>
       generateTranscriptions(service!, {
         file: file!,
         model,
       }),
-    {
-      onSuccess: (response) => {
-        const id = uuid();
-        addHistory({
-          id,
-          file: file?.name || "",
-          transcriptions: response.data.text,
-          timestamp: new Date().toISOString(),
-        });
-        navigate(`/prem-audio/${serviceId}/${serviceType}/${id}`);
-      },
-      onError: () => {
-        toast.error("Something went wrong while generating the transcriptions");
-      },
+    onSuccess: (response) => {
+      const id = uuid();
+      addHistory({
+        id,
+        file: file?.name || "",
+        transcriptions: response.data.text,
+        timestamp: new Date().toISOString(),
+      });
+      navigate(`/prem-audio/${serviceId}/${serviceType}/${id}`);
     },
-  );
+    onError: () => {
+      toast.error("Something went wrong while generating the transcriptions");
+    },
+  });
 
   const currentHistory = history.find((_history) => _history.id === historyId);
 
@@ -61,7 +59,7 @@ const usePremAudio = (
     currentHistory,
     file,
     setFile,
-    isLoading,
+    isPending,
     isError,
     onSubmit: mutate,
     deleteHistory,

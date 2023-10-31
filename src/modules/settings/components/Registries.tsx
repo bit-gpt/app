@@ -14,10 +14,16 @@ import fetchRegistries from "../api/fetchRegistries";
 const Registries = () => {
   const [registryUrl, setRegistryUrl] = useState("");
 
-  const { isLoading, data: response, refetch } = useQuery(["registries"], fetchRegistries);
+  const {
+    isLoading,
+    data: response,
+    refetch,
+  } = useQuery({ queryKey: ["registries"], queryFn: fetchRegistries });
 
-  const { mutate: mutateAddRegistry, isLoading: isLoadingAddRegistry } = useMutation(addRegistry);
-  const { mutate: mutateDeleteRegistry } = useMutation(deleteRegistry);
+  const { mutate: mutateAddRegistry, isPending: isPendingAddRegistry } = useMutation({
+    mutationFn: addRegistry,
+  });
+  const { mutate: mutateDeleteRegistry } = useMutation({ mutationFn: deleteRegistry });
 
   const registries = response?.data || [];
 
@@ -100,8 +106,8 @@ const Registries = () => {
         </div>
       </div>
       <div className="text-right mt-[44px] mr-[45px]">
-        <PrimaryButton type="submit" disabled={isLoadingAddRegistry}>
-          {isLoadingAddRegistry ? "Updating..." : "Add Registry"}
+        <PrimaryButton type="submit" disabled={isPendingAddRegistry}>
+          {isPendingAddRegistry ? "Updating..." : "Add Registry"}
         </PrimaryButton>
       </div>
     </form>

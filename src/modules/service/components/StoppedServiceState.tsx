@@ -22,8 +22,8 @@ const StoppedServiceState = ({
   openDeleteModal,
   setOpenDeleteModal,
 }: ServiceStateProps & DeleteModalProps) => {
-  const { mutate: deleteMutate, isLoading: deleteLoading } = useDeleteService();
-  const { mutateAsync: startMutateAsync, isLoading: startLoading } = useStartService();
+  const { mutate: deleteMutate, isPending: isDeletePending } = useDeleteService();
+  const { mutateAsync: startMutateAsync, isPending: isStartPending } = useStartService();
 
   const onStart = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -60,7 +60,7 @@ const StoppedServiceState = ({
     //setBodyLocked(false);
   };
 
-  if (deleteLoading || startLoading) {
+  if (isDeletePending || isStartPending) {
     return (
       <div className="flex h-full items-center justify-center">
         <Spinner className="w-5 h-5" />
