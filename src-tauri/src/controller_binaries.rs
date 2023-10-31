@@ -210,7 +210,9 @@ async fn _stop_service(
         service.running = Some(false);
     }
     // wait for process to properly exit
-    if let Ok(_exit_code) = child.wait().await {
+    if let Ok(_exit_code) = child.try_wait() {
+        log::info!("service stopped!");
+    } else if let Ok(_exit_code) = child.wait().await {
         log::info!("service stopped!");
     }
     Ok(())
@@ -219,8 +221,14 @@ async fn _stop_service(
 pub fn stop_all_services(state: Arc<SharedState>) {
     log::info!("Stopping all services");
     tauri::async_runtime::block_on(async move {
-        let services = state.running_services.lock().await;
-        for service_id in services.keys() {
+        let keys = state
+            .running_services
+            .lock()
+            .await
+            .keys()
+            .cloned()
+            .collect::<Vec<String>>();
+        for service_id in keys {
             logerr!(
                 _stop_service(
                     service_id.as_str(),
@@ -230,7 +238,7 @@ pub fn stop_all_services(state: Arc<SharedState>) {
                 .await
             );
         }
-    })
+    });
 }
 
 #[tauri::command(async)]
