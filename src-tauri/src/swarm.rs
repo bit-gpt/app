@@ -1,6 +1,11 @@
 use reqwest::get;
 use serde::Deserialize;
-use std::{collections::HashMap, env, path::PathBuf, str};
+use std::{
+    collections::HashMap,
+    env,
+    path::{Path, PathBuf},
+    str,
+};
 use tauri::api::process::Command;
 
 #[derive(Deserialize)]
@@ -95,7 +100,7 @@ pub fn is_swarm_mode_running() -> bool {
 }
 
 #[tauri::command(async)]
-pub fn create_environment(handle: tauri::AppHandle) -> HashMap<String, String> {
+pub fn create_environment(handle: tauri::AppHandle) {
     println!("🐍 Creating the environment...");
     let petals_path = get_petals_path(handle);
     let config = Config::new();
@@ -106,10 +111,32 @@ pub fn create_environment(handle: tauri::AppHandle) -> HashMap<String, String> {
 
     let _ = Command::new("sh")
         .args([format!("{petals_path}/create_env.sh")])
-        .envs(env.clone())
+        .envs(env)
         .output()
         .expect("🙈 Failed to create env");
-    env
+}
+
+#[tauri::command(async)]
+pub fn has_environment() -> bool {
+    let config = Config::new();
+    let path = PathBuf::from(config.app_data_dir).join("miniconda");
+    path.as_path().exists()
+}
+
+#[tauri::command(async)]
+pub fn delete_environment(handle: tauri::AppHandle) {
+    println!("❌ Deleting the environment...");
+    let petals_path = get_petals_path(handle);
+    let config = Config::new();
+
+    let mut env = HashMap::new();
+    env.insert("PREM_APPDIR".to_string(), config.app_data_dir);
+
+    let _ = Command::new("sh")
+        .args([format!("{petals_path}/delete_env.sh")])
+        .envs(env.clone())
+        .output()
+        .expect("🙈 Failed to delete env");
 }
 
 #[tauri::command(async)]

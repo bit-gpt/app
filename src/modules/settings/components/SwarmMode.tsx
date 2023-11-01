@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
+import DeleteIconNew from "shared/components/DeleteIconNew";
 import Spinner from "shared/components/Spinner";
 import {
   swarmSupported,
   createEnvironment,
+  checkHasEnvironment,
+  deleteEnvironment,
   runSwarmMode,
   checkSwarmModeRunning,
   stopSwarmMode,
@@ -21,6 +24,7 @@ import SwarmModeModal from "./SwarmModeModal";
 const SwarmMode = () => {
   const swarmMode = useSettingStore((state) => state.swarmMode);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
+  const [hasEnvironment, setHasEnvironment] = useState(false);
   const [numBlocks, setNumBlocks] = useState(3);
   const [modelOptions, setModelOptions] = useState<string[]>([]);
   const [model, setModel] = useState<string>("");
@@ -73,6 +77,19 @@ const SwarmMode = () => {
   };
 
   useEffect(() => {
+    checkHasEnvironment().then(setHasEnvironment);
+  }, []);
+
+  const onDeleteClick = async () => {
+    try {
+      await deleteEnvironment();
+      setHasEnvironment(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     async function fetchData() {
       try {
         const options = await petalsModels();
@@ -115,6 +132,17 @@ const SwarmMode = () => {
           </>
         ) : swarmMode === Swarm.Inactive ? (
           <>
+            {hasEnvironment ? (
+              <div className="ml-auto text-right py-4">
+                <button id="delete" className="px-2" onClick={onDeleteClick}>
+                  <DeleteIconNew />
+                </button>
+
+                <Tooltip anchorSelect="#delete" place="left" className="tooltip">
+                  {<div>Delete Swarm environment</div>}
+                </Tooltip>
+              </div>
+            ) : null}
             <form className="flex flex-col w-full gap-y-2">
               <div className="flex flex-wrap items-center justify-between">
                 <span id="model" className="text-grey-200 opacity-70">
