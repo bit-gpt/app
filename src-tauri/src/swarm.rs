@@ -104,13 +104,11 @@ pub fn create_environment(handle: tauri::AppHandle) -> HashMap<String, String> {
     env.insert("PREM_APPDIR".to_string(), config.app_data_dir);
     env.insert("PREM_PYTHON".to_string(), config.python);
 
-    let output = Command::new("sh")
+    let _ = Command::new("sh")
         .args([format!("{petals_path}/create_env.sh")])
-        .env_clear()
         .envs(env.clone())
         .output()
         .expect("🙈 Failed to create env");
-    println!("{:?}", output.stderr);
     env
 }
 
@@ -130,7 +128,6 @@ pub fn run_swarm(handle: tauri::AppHandle, num_blocks: i32, model: String, publi
             &public_name,
             &model,
         ])
-        .env_clear()
         .envs(env)
         .spawn()
         .expect("🙈 Failed to run swarm");
