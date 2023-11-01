@@ -28,7 +28,13 @@ jobs:
       
       - name: View version 
         run: |
-          echo "Version: ${{ github.event.inputs.version }}"
+          echo "Tag: ${{ github.event.inputs.version }}"
+
+      - name: Version as Number 
+        id: next_version
+        run: |
+          tag=${{ github.event.inputs.version }}
+          echo "version=${tag:1}" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -84,9 +90,9 @@ jobs:
 
       - name: Increment version
         run: |
-          dasel put string -f package.json ".version" "${{ github.event.inputs.version }}"
-          dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ github.event.inputs.version }}"
-          dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ github.event.inputs.version }}"
+          dasel put string -f package.json ".version" "${{ steps.next_version.outputs.version }}"
+          dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ steps.next_version.outputs.version }}"
+          dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ steps.next_version.outputs.version }}"
 
       - name: Build the app
         uses: tauri-apps/tauri-action@dev
