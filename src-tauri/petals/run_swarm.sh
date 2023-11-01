@@ -7,7 +7,7 @@
 #   public_name: The public name to use.
 #   model: The model to use.
 
-prem_python="${PREM_PYTHON:-.}"
+prem_python="${PREM_PYTHON:-python}"
 requirements="$(dirname "$0")/requirements.txt"
 
 echo "Installing requirements"
