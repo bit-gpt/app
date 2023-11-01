@@ -145,7 +145,7 @@ const SwarmMode = () => {
                   <Spinner className="h-10 w-10" />
                 </div>
                 <Tooltip anchorSelect="#delete-progress" place="left" className="tooltip">
-                  {<div>Deleting Swarm Environment</div>}
+                  {<div>Deleting Prem Network environment</div>}
                 </Tooltip>
               </>
             ) : null}
@@ -214,7 +214,8 @@ const SwarmMode = () => {
         ) : (
           <div className="flex items-center space-x-4 p-4">
             <span className="text-grey-200 opacity-70 m-1">
-              Please do not close the app we are configuring the Swarm Environment...
+              Please do not close the app as we are configuring your environment for the Prem
+              Network...
             </span>
             <Spinner className="h-10 w-10" />
           </div>
