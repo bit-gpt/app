@@ -6,7 +6,6 @@ import Spinner from "shared/components/Spinner";
 import {
   swarmSupported,
   createEnvironment,
-  checkHasEnvironment,
   deleteEnvironment,
   runSwarmMode,
   checkSwarmModeRunning,
@@ -141,7 +140,14 @@ const SwarmMode = () => {
                 </Tooltip>
               </div>
             ) : hasEnvironment === EnvironmentDeletion.Progress ? (
-              <Spinner className="h-10 w-10" />
+              <>
+                <div id="delete-progress">
+                  <Spinner className="h-10 w-10" />
+                </div>
+                <Tooltip anchorSelect="#delete-progress" place="left" className="tooltip">
+                  {<div>Deleting Swarm Environment</div>}
+                </Tooltip>
+              </>
             ) : null}
             <form className="flex flex-col w-full gap-y-2">
               <div className="flex flex-wrap items-center justify-between">

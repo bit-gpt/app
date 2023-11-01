@@ -208,7 +208,6 @@ fn main() {
             swarm::get_username,
             swarm::get_petals_models,
             swarm::create_environment,
-            swarm::has_environment,
             swarm::delete_environment,
             swarm::run_swarm,
             swarm::stop_swarm_mode,

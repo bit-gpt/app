@@ -78,11 +78,6 @@ export const deleteEnvironment = async () => {
   await invoke("delete_environment");
 };
 
-export const checkHasEnvironment = async () => {
-  const check = await invoke("has_environment");
-  return Boolean(check);
-};
-
 export const runSwarmMode = async (numBlocks: number, model: string, publicName: string) => {
   const isSwarmMode = await checkSwarmModeRunning();
   if (isSwarmMode) {

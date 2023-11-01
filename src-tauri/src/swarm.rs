@@ -118,13 +118,6 @@ pub fn create_environment(handle: tauri::AppHandle) {
 }
 
 #[tauri::command(async)]
-pub fn has_environment() -> bool {
-    let config = Config::new();
-    let path = PathBuf::from(config.app_data_dir).join("miniconda");
-    path.as_path().exists()
-}
-
-#[tauri::command(async)]
 pub fn delete_environment(handle: tauri::AppHandle) {
     println!("❌ Deleting the environment...");
     let petals_path = get_petals_path(handle);
