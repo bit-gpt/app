@@ -1,14 +1,19 @@
-name: Release on user input
+name: 🚀 Tauri Dekstop App
 
 on:
   workflow_dispatch:
     inputs:
       branchName:
-        description: 'Branch Name'
+        description: 'Branch Name you are releasing from'
         required: true
       version:
-          description: 'New version'
+          description: 'Version tag for the Github Release and the .dmg for MacOS'
           required: true
+      release_as_draft:
+            description: 'Release as Draft'
+            required: false
+            default: true
+            type: boolean
 
 jobs:
   publish-tauri:
@@ -110,7 +115,7 @@ jobs:
           tagName: ${{ github.event.inputs.version }}
           releaseName: "PremAI App ${{ github.event.inputs.version }}"
           releaseBody: "See the assets to download and install this version."
-          releaseDraft: false
+          releaseDraft: ${{ github.event.inputs.release_as_draft }} 
           includeDebug: true
           updaterJsonKeepUniversal: true
           args: ${{matrix.platform == 'ubuntu-20.04' && '--target x86_64-unknown-linux-gnu' || '--target universal-apple-darwin'}}
