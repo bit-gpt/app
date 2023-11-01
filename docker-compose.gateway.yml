@@ -19,7 +19,7 @@ services:
 
   premd:
     container_name: premd
-    image: ghcr.io/premai-io/premd:7af3782b00f6176b34840f608327c051502511ce
+    image: ghcr.io/premai-io/premd:ee2a09c6a9601d999941e434fa781e1af6d0a416
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
