@@ -1,11 +1,6 @@
 use reqwest::get;
 use serde::Deserialize;
-use std::{
-    collections::HashMap,
-    env,
-    path::{Path, PathBuf},
-    str,
-};
+use std::{collections::HashMap, env, path::PathBuf, str};
 use tauri::api::process::Command;
 
 #[derive(Deserialize)]
@@ -38,7 +33,13 @@ impl Config {
             .expect("🙈 Failed to convert app data dir path to str")
             .to_string();
 
-        let python = format!("{}/miniconda/envs/prem_app/bin/python", app_data_dir);
+        let python = PathBuf::from(format!(
+            "{}/miniconda/envs/prem_app/bin/python",
+            app_data_dir
+        ))
+        .to_str()
+        .unwrap_or("python")
+        .to_string();
 
         Config {
             app_data_dir,
