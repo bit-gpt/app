@@ -21,6 +21,15 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+
+      - name: View branch name
+        run: |
+          echo "Branch name: ${{ github.event.inputs.branchName }}"
+      
+      - name: View version 
+        run: |
+          echo "Version: ${{ github.event.inputs.version }}"
+
       - name: Checkout code
         uses: actions/checkout@v3
 
