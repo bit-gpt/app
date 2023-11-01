@@ -10,7 +10,7 @@ on:
       tag_as_latest:
         description: 'Also tag as latest?'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 jobs:
