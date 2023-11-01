@@ -17,6 +17,7 @@ use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
+use tauri_plugin_store::StoreBuilder;
 use tokio::process::Child;
 use tokio::sync::Mutex;
 
@@ -26,6 +27,25 @@ pub struct SharedState {
     running_services: Mutex<HashMap<String, Child>>,
     // Properties from public service registry and additional service state
     services: Mutex<HashMap<String, Service>>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct Registry {
+    url: String,
+}
+
+impl Default for Registry {
+    fn default() -> Self {
+        Registry {
+            url: "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json"
+                .to_string(),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct Store {
+    registries: Vec<Registry>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -190,6 +210,7 @@ fn main() {
 
     let app = tauri::Builder::default()
         .plugin(sentry_tauri::plugin())
+        .plugin(tauri_plugin_store::Builder::default().build())
         .manage(state.clone())
         .invoke_handler(tauri::generate_handler![
             controller_binaries::start_service,
@@ -204,6 +225,10 @@ fn main() {
             controller_binaries::get_service_stats,
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
+            controller_binaries::add_registry,
+            controller_binaries::delete_registry,
+            controller_binaries::fetch_registries,
+            controller_binaries::reset_default_registry,
             swarm::is_swarm_supported,
             swarm::get_username,
             swarm::get_petals_models,
@@ -256,12 +281,40 @@ fn main() {
         })
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
-                utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json",
-                    app.state::<Arc<SharedState>>().deref().clone(),
-                )
-                .await
-                .expect("Failed to fetch and save services manifests");
+                //Create a store with default registry if doesn't exist
+                let store_path = app
+                    .path_resolver()
+                    .app_data_dir()
+                    .expect("failed to resolve app data dir")
+                    .join("store.json");
+                if !store_path.exists() {
+                    let mut registries: Vec<Registry> = Vec::new();
+                    registries.push(Registry::default());
+                    let mut default_store = HashMap::new();
+                    default_store.insert(
+                        "registries".to_string(),
+                        serde_json::to_value(registries).unwrap(),
+                    );
+                    let store = StoreBuilder::new(app.handle(), store_path.clone())
+                        .defaults(default_store)
+                        .build();
+                    store.save().expect("failed to save store");
+                    log::info!("Store created");
+                }
+                // Fetch all registries
+                let mut store = StoreBuilder::new(app.handle(), store_path.clone()).build();
+                store.load().expect("Failed to load store");
+                if let Some(registries) = store.get("registries").cloned() {
+                    match serde_json::from_value::<Vec<Registry>>(registries) {
+                        Ok(registries) => utils::fetch_all_services_manifests(
+                            &registries,
+                            &app.state::<Arc<SharedState>>().clone(),
+                        )
+                        .await
+                        .expect("failed to fetch services"),
+                        Err(e) => println!("Error unwrapping registries: {:?}", e),
+                    }
+                }
             });
             Ok(())
         })

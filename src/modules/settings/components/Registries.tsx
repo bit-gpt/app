@@ -1,79 +1,92 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import MinusArrow from "shared/components/MinusArrow";
-import PlusArrow from "shared/components/PlusArrow";
 import PrimaryButton from "shared/components/PrimaryButton";
 import Spinner from "shared/components/Spinner";
 
-import addRegistry from "../api/addRegistry";
-import deleteRegistry from "../api/deleteRegistry";
-import fetchRegistries from "../api/fetchRegistries";
+import useAddRegistry from "../../../shared/hooks/useAddRegistry";
+import useDeleteRegistry from "../../../shared/hooks/useDeleteRegistry";
+import useFetchRegistries from "../../../shared/hooks/useFetchRegistries";
+import useResetDefaultRegistry from "../../../shared/hooks/useResetDefaultRegistry";
 
 const Registries = () => {
   const [registryUrl, setRegistryUrl] = useState("");
-
+  const { mutate: addRegistry, isPending: isAddRegistryPending } = useAddRegistry();
+  const { mutate: deleteRegistry } = useDeleteRegistry();
+  const { mutateAsync: resetDefaultRegistry } = useResetDefaultRegistry();
   const {
-    isLoading,
-    data: response,
-    refetch,
-  } = useQuery({ queryKey: ["registries"], queryFn: fetchRegistries });
-
-  const { mutate: mutateAddRegistry, isPending: isPendingAddRegistry } = useMutation({
-    mutationFn: addRegistry,
-  });
-  const { mutate: mutateDeleteRegistry } = useMutation({ mutationFn: deleteRegistry });
-
-  const registries = response?.data || [];
+    data: registries,
+    refetch: refetchRegistries,
+    isLoading: isFetchRegistriesLoading,
+  } = useFetchRegistries();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    mutateAddRegistry(
+    addRegistry(
       { url: registryUrl },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           setRegistryUrl("");
-          refetch();
-          toast.success("Registry added successfully");
+          await refetchRegistries();
+          toast.success("Registry added successfully", { toastId: "add-registry-success" });
         },
-        onError: () => {
-          toast.error("Something went wrong while adding registry");
+        onError: (err) => {
+          console.error("err", err);
+          toast.error("Something went wrong while adding registry", {
+            toastId: "add-registry-error",
+          });
         },
       },
     );
   };
 
   const handleDelete = (url: string) => {
-    mutateDeleteRegistry(
+    deleteRegistry(
       { url },
       {
-        onSuccess: () => {
-          refetch();
-          toast.success("Registry deleted successfully");
+        onSuccess: async () => {
+          await refetchRegistries();
+          toast.success("Registry deleted successfully", { toastId: "delete-registry-success" });
         },
         onError: () => {
-          toast.error("Something went wrong while deleting registry");
+          toast.error("Something went wrong while deleting registry", {
+            toastId: "delete-registry-error",
+          });
         },
       },
     );
   };
 
+  const handleRegistryDefaultReset = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    try {
+      await resetDefaultRegistry();
+      await refetchRegistries();
+      toast.success("Registry reset successful", { toastId: "delete-reset-success" });
+    } catch (err) {
+      console.error("err", err);
+      toast.error("Something went wrong while resetting registry", {
+        toastId: "delete-reset-error",
+      });
+    }
+  };
+
   return (
     <form className="mt-10" onSubmit={onSubmit}>
-      <div className="flex">
-        <label className="text-grey-300 mr-2 backend-url md:text-lg mt-2">Registries</label>
-        <div className="flex w-full">
+      <div className="flex flex-wrap">
+        <h2 className="text-grey-300 w-1/3 md:text-lg mb-2">Registries</h2>
+        <div className="flex w-full md:w-2/3">
           <div className="text-right w-full">
-            {isLoading && (
+            {isFetchRegistriesLoading && (
               <div className="flex justify-center mb-5">
                 <Spinner className="h-10 w-10" />
               </div>
             )}
 
-            {registries.map((registry, index) => {
+            {registries?.map((registry, index) => {
               return (
-                <div key={index} className="flex">
+                <div key={`${registry.url}_${index}`} className="flex">
                   <input
                     className="form-control mb-4"
                     type="text"
@@ -83,7 +96,7 @@ const Registries = () => {
                   <button
                     className="w-8 ml-4"
                     type="button"
-                    onClick={() => handleDelete(registries[index].url)}
+                    onClick={() => handleDelete(registry.url)}
                   >
                     <MinusArrow />
                   </button>
@@ -98,16 +111,17 @@ const Registries = () => {
                 onChange={(e) => setRegistryUrl(e.target.value)}
                 required
               />
-              <button className="w-8 ml-4" type="button">
-                <PlusArrow />
-              </button>
+              <div className="w-8 ml-4" />
             </div>
           </div>
         </div>
       </div>
       <div className="text-right mt-[44px] mr-[45px]">
-        <PrimaryButton type="submit" disabled={isPendingAddRegistry}>
-          {isPendingAddRegistry ? "Updating..." : "Add Registry"}
+        <PrimaryButton onClick={handleRegistryDefaultReset} className="mr-2">
+          Reset
+        </PrimaryButton>
+        <PrimaryButton type="submit" disabled={isAddRegistryPending}>
+          {isAddRegistryPending ? "Updating..." : "Add Registry"}
         </PrimaryButton>
       </div>
     </form>

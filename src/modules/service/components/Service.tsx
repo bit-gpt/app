@@ -128,6 +128,7 @@ const Service = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(progresses),
     isServicesLoading,
+    services,
   ]);
 
   return (
