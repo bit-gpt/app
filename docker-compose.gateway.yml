@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   
-  premapp:
-    container_name: premapp
+  prem_app:
+    container_name: prem_app
     build: .
     environment:
       - VITE_DESTINATION=browser
@@ -10,9 +10,9 @@ services:
       - VITE_PROXY_ENABLED=true
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.premapp-http.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.premapp-http.entrypoints=web"
-      - "traefik.http.services.premapp.loadbalancer.server.port=8080"
+      - "traefik.http.routers.prem_app-http.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.prem_app-http.entrypoints=web"
+      - "traefik.http.services.prem_app.loadbalancer.server.port=8080"
     ports:
       - "8085:8080"
     restart: unless-stopped
@@ -107,7 +107,7 @@ services:
     user: root
     environment:
       LETSENCRYPT_PROD: false
-      SERVICES: premd,premapp
+      SERVICES: premd,prem_app
     restart: unless-stopped
 
 volumes:
