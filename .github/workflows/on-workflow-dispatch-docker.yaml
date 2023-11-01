@@ -41,11 +41,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build & push
         run: |
-          TAGS="ghcr.io/premai-io/prem-app:$VERSION_TAG"
-          if ${{ github.event.inputs.tag_as_latest }} == 'true'; then
-            TAGS="$TAGS,ghcr.io/premai-io/prem-app:latest"
-          fi
-          docker buildx build --push \
-            --file Dockerfile \
-            --tag $TAGS \
-            --platform linux/arm64,linux/amd64 .
+            docker buildx build --push \
+              --file Dockerfile \
+              --tag ghcr.io/premai-io/prem-app:$VERSION_TAG \
+              ${{ github.event.inputs.tag_as_latest == 'true' && '--tag ghcr.io/premai-io/prem-app:latest' || '' }} \
+              --platform linux/arm64,linux/amd64 .
+        shell: /usr/bin/bash -e {0}
+        env:
+          DOCKER_CLI_EXPERIMENTAL: enabled
+        
