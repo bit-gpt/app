@@ -1,4 +1,4 @@
-name: Release on user input
+name: 🚀 Dekstop App as Draft
 
 on:
   workflow_dispatch:
@@ -110,7 +110,7 @@ jobs:
           tagName: ${{ github.event.inputs.version }}
           releaseName: "PremAI App ${{ github.event.inputs.version }}"
           releaseBody: "See the assets to download and install this version."
-          releaseDraft: false
+          releaseDraft: true 
           includeDebug: true
           updaterJsonKeepUniversal: true
           args: ${{matrix.platform == 'ubuntu-20.04' && '--target x86_64-unknown-linux-gnu' || '--target universal-apple-darwin'}}

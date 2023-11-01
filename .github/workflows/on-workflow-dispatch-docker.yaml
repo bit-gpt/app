@@ -1,6 +1,6 @@
-name: On Push Server
+name: 🚀 Docker Image
 on:
-  push: {branches: [server]}
+  workflow_dispatch:
 jobs:
   push-docker-image:
     runs-on: ubuntu-latest
