@@ -1,4 +1,4 @@
-name: 🚀 Dekstop App as Draft
+name: 🚀 Tauri Dekstop App
 
 on:
   workflow_dispatch:
