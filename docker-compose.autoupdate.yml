@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 60 prem_app premd
+  prem_app:
+    image: ghcr.io/premai-io/prem-app:latest
+  premd:
+    image: ghcr.io/premai-io/premd:latest
