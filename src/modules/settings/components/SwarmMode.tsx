@@ -136,7 +136,7 @@ const SwarmMode = () => {
                 </button>
 
                 <Tooltip anchorSelect="#delete" place="left" className="tooltip">
-                  {<div>Delete Swarm Environment</div>}
+                  {<div>Reset to default</div>}
                 </Tooltip>
               </div>
             ) : hasEnvironment === EnvironmentDeletion.Progress ? (
