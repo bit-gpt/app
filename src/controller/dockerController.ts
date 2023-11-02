@@ -31,6 +31,7 @@ class DockerController extends AbstractServiceController {
     afterSuccess?: () => void;
   }): Promise<void> {
     console.log(`Downloading service ${serviceId}`);
+    useSettingStore.getState().setServiceDownloadProgress(serviceId, "docker", 0);
     await downloadServiceStream(
       serviceId,
       (error) => {
