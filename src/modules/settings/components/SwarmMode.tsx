@@ -1,9 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
+import DeleteIconNew from "shared/components/DeleteIconNew";
 import Spinner from "shared/components/Spinner";
 import {
   swarmSupported,
+  createEnvironment,
+  deleteEnvironment,
   runSwarmMode,
   checkSwarmModeRunning,
   stopSwarmMode,
@@ -11,7 +14,7 @@ import {
   userName,
 } from "shared/helpers/utils";
 import useSettingStore from "shared/store/setting";
-import { Swarm } from "shared/types";
+import { EnvironmentDeletion, Swarm } from "shared/types";
 
 import PrimaryButton from "../../../shared/components/PrimaryButton";
 
@@ -20,6 +23,7 @@ import SwarmModeModal from "./SwarmModeModal";
 const SwarmMode = () => {
   const swarmMode = useSettingStore((state) => state.swarmMode);
   const [isSwarmSupported, setIsSwarmSupported] = useState(false);
+  const hasEnvironment = useSettingStore((state) => state.environmentDeletion);
   const [numBlocks, setNumBlocks] = useState(3);
   const [modelOptions, setModelOptions] = useState<string[]>([]);
   const [model, setModel] = useState<string>("");
@@ -49,6 +53,8 @@ const SwarmMode = () => {
     try {
       e.preventDefault();
       useSettingStore.getState().setSwarmMode(Swarm.Creating);
+      await createEnvironment();
+      useSettingStore.getState().setEnvironmentDeletion(EnvironmentDeletion.Idle);
       const user = await userName();
       const publicName = user + "@premAI";
       await runSwarmMode(numBlocks, model, publicName);
@@ -65,6 +71,16 @@ const SwarmMode = () => {
       await stopSwarmMode();
       useSettingStore.getState().setSwarmMode(Swarm.Inactive);
       useSettingStore.getState().setSwarmInfo(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onDeleteClick = async () => {
+    try {
+      useSettingStore.getState().setEnvironmentDeletion(EnvironmentDeletion.Progress);
+      await deleteEnvironment();
+      useSettingStore.getState().setEnvironmentDeletion(EnvironmentDeletion.Completed);
     } catch (error) {
       console.error(error);
     }
@@ -113,6 +129,26 @@ const SwarmMode = () => {
           </>
         ) : swarmMode === Swarm.Inactive ? (
           <>
+            {hasEnvironment === EnvironmentDeletion.Idle ? (
+              <div className="ml-auto text-right py-4">
+                <button id="delete" className="px-2" onClick={onDeleteClick}>
+                  <DeleteIconNew />
+                </button>
+
+                <Tooltip anchorSelect="#delete" place="left" className="tooltip">
+                  {<div>Reset to default</div>}
+                </Tooltip>
+              </div>
+            ) : hasEnvironment === EnvironmentDeletion.Progress ? (
+              <>
+                <div id="delete-progress">
+                  <Spinner className="h-10 w-10" />
+                </div>
+                <Tooltip anchorSelect="#delete-progress" place="left" className="tooltip">
+                  {<div>Deleting Prem Network environment</div>}
+                </Tooltip>
+              </>
+            ) : null}
             <form className="flex flex-col w-full gap-y-2">
               <div className="flex flex-wrap items-center justify-between">
                 <span id="model" className="text-grey-200 opacity-70">
@@ -178,7 +214,8 @@ const SwarmMode = () => {
         ) : (
           <div className="flex items-center space-x-4 p-4">
             <span className="text-grey-200 opacity-70 m-1">
-              Please do not close the app we are configuring the Swarm Environment...
+              Please do not close the app as we are configuring your environment for the Prem
+              Network...
             </span>
             <Spinner className="h-10 w-10" />
           </div>

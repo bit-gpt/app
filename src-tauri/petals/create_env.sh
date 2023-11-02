@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 prem_appdir="${PREM_APPDIR:-.}"
-requirements="$(dirname "$0")/requirements.txt"
 conda_prefix="$prem_appdir/miniconda"
 
 if test ! -x "$conda_prefix/bin/mamba"; then
@@ -28,6 +27,3 @@ export PREM_PYTHON="$conda_prefix/envs/prem_app/bin/python"
 
 echo "Ensuring env 'prem_app' exists"
 test -x "$PREM_PYTHON" || "$conda_prefix/bin/mamba" create -y -n prem_app python=3.11
-
-echo "Installing requirements"
-"$PREM_PYTHON" -m pip install -r "$requirements"

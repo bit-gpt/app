@@ -42,6 +42,12 @@ export enum Swarm {
   Active = "active",
 }
 
+export enum EnvironmentDeletion {
+  Idle = "idle",
+  Progress = "progress",
+  Completed = "completed",
+}
+
 export type SwarmInfo = {
   model: string;
   publicName: string;
@@ -115,6 +121,9 @@ export type SettingStore = {
   setSwarmMode: (mode: Swarm) => void;
   swarmInfo: SwarmInfo | null;
   setSwarmInfo: (swarmInfo: SwarmInfo | null) => void;
+  environmentDeletion: EnvironmentDeletion | null;
+  setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) => void;
+  resetSwarm: () => void;
 };
 
 export type HeaderProps = {

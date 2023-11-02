@@ -1,7 +1,7 @@
 import storage from "shared/helpers/custom-storage";
 import { isIP, isPackaged, isProxyEnabled } from "shared/helpers/utils";
 import type { SettingStore, SwarmInfo } from "shared/types";
-import { Swarm } from "shared/types";
+import { EnvironmentDeletion, Swarm } from "shared/types";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -93,6 +93,19 @@ const useSettingStore = create<SettingStore>()(
         swarmInfo: null,
         setSwarmInfo: (swarmInfo: SwarmInfo | null) =>
           set(() => ({ swarmInfo }), false, "setSwarmInfo"),
+        environmentDeletion: EnvironmentDeletion.Completed,
+        setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) =>
+          set(() => ({ environmentDeletion }), false, "setEnvironmentDeletion"),
+        resetSwarm: () => {
+          set(
+            () => ({
+              swarmInfo: null,
+              swarmMode: Swarm.Inactive,
+            }),
+            false,
+            "resetSwarm",
+          );
+        },
       }),
       {
         name: "setting",
