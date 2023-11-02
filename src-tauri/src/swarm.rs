@@ -1,6 +1,13 @@
 use reqwest::get;
 use serde::Deserialize;
-use std::{collections::HashMap, env, path::PathBuf, str};
+use std::{
+    collections::HashMap,
+    env,
+    path::PathBuf,
+    str,
+    thread::{self, JoinHandle},
+    time::Duration,
+};
 use tauri::api::process::Command;
 
 #[derive(Deserialize)]
@@ -207,22 +214,49 @@ pub fn get_swarm_processes() -> String {
     output_value
 }
 
-#[tauri::command]
+#[tauri::command(async)]
 pub fn stop_swarm_mode() {
     println!("🛑 Stopping the Swarm...");
     let processes = get_swarm_processes().replace("\n", " ");
     println!("🛑 Stopping Processes: {}", processes);
-    let processes = processes.split(" ").collect::<Vec<&str>>();
+    let processes: Vec<u64> = processes
+        .split(" ")
+        .collect::<Vec<&str>>()
+        .into_iter()
+        .filter_map(|s| s.parse::<u64>().ok())
+        .collect();
 
     for process in processes {
-        println!("🛑 Stopping Process: {}", process);
         let _ = Command::new("kill")
-            .args(&[process.to_string()])
-            .output()
-            .map_err(|e| {
-                println!("🙈 Failed to execute command: {}", e);
-                e
-            });
+            .args(["-s", "SIGTERM", &process.to_string()])
+            .spawn()
+            .expect("🙈 Failed to execute kill command with SIGTERM");
+
+        let handle: JoinHandle<_> = thread::spawn(move || {
+            thread::sleep(Duration::from_millis(100));
+            match Command::new("ps")
+                .args(["-p", &process.to_string()])
+                .output()
+            {
+                Ok(output) => match output.status.code() {
+                    Some(0) => true,
+                    _ => false,
+                },
+                Err(e) => {
+                    eprintln!("Error executing ps command: {}", e);
+                    false
+                }
+            }
+        });
+        if handle.join().unwrap() {
+            let _ = Command::new("kill")
+                .args(["-s", "SIGKILL", &process.to_string()])
+                .output()
+                .expect("🙈 Failed to execute kill command with SIGKILL");
+            println!("🛑 Stopping Process with SIGKILL: {}", process);
+        } else {
+            println!("🛑 Stopping Process with SIGTERM: {}", process);
+        }
     }
     println!("🛑 Stopped all the Swarm Processes.");
 }
