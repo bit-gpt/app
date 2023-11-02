@@ -43,20 +43,20 @@ pub const fn is_unix() -> bool {
 pub fn get_binary_url(binaries_url: &HashMap<String, Option<String>>) -> Result<String> {
     if !is_unix() && !is_macos() {
         err!("Unsupported OS")
-    } else if is_aarch64() && is_macos() {
-        binaries_url
-            .get("aarch64-apple-darwin")
-            .with_msg(|| "No binary available for platform")?
-            .clone()
-            .with_msg(|| "Service not supported on your platform")
-    } else if is_x86_64() && is_macos() {
-        binaries_url
-            .get("x86_64-apple-darwin")
-            .with_msg(|| "No binary available for platform")?
-            .clone()
-            .with_msg(|| "Service not supported on your platform")
+    } else if is_macos() {
+        if is_x86_64() {
+            binaries_url.get("x86_64-apple-darwin")
+        } else if is_aarch64() {
+            binaries_url.get("aarch64-apple-darwin")
+        } else {
+            err!("Unsupported architecture")
+        }
+        .or_else(|| binaries_url.get("universal-apple-darwin"))
+        .msg("No binary available for platform")?
+        .clone()
+        .msg("Service not supported on your platform")
     } else {
-        err!("Unsupported architecture")
+        err!("Unsupported platform")
     }
 }
 

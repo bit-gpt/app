@@ -13,7 +13,7 @@ import PremRecordTab from "./PremRecordTab";
 
 const PremAudioBox = ({ serviceId, serviceType, historyId }: Partial<PremAudioContainerProps>) => {
   const navigate = useNavigate();
-  const { isLoading, onSubmit, file, setFile, currentHistory } = usePremAudio(
+  const { isPending, onSubmit, file, setFile, currentHistory } = usePremAudio(
     serviceId!,
     serviceType!,
     historyId,
@@ -59,11 +59,11 @@ const PremAudioBox = ({ serviceId, serviceType, historyId }: Partial<PremAudioCo
             className={clsx(
               "!rounded-md !h-[40px] text-white items-center flex border border-[#EC898A] !px-12 !text-sm max-sm:w-1/2 max-sm:justify-center",
               {
-                "opacity-50 pointer-events-none": isLoading,
+                "opacity-50 pointer-events-none": isPending,
               },
             )}
             onClick={onClear}
-            disabled={isLoading}
+            disabled={isPending}
           >
             Clear
           </OutlineCircleButton>
@@ -72,11 +72,11 @@ const PremAudioBox = ({ serviceId, serviceType, historyId }: Partial<PremAudioCo
               "!px-12 flex items-center !py-2 !h-[38px] !text-sm max-sm:w-1/2 max-sm:justify-center max-sm:!h-10",
               {
                 "opacity-50": !file,
-                "animate-fill-effect": isLoading,
+                "animate-fill-effect": isPending,
               },
             )}
             onClick={generateTranscriptions}
-            disabled={isLoading || !file}
+            disabled={isPending || !file}
           >
             Submit
           </PrimaryButton>

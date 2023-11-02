@@ -24,7 +24,8 @@ use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
-use tokio::{process::Child, sync::Mutex};
+use tokio::process::Child;
+use tokio::sync::Mutex;
 
 #[derive(Debug, Default)]
 pub struct SharedState {

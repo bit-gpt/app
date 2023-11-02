@@ -26,21 +26,20 @@ const ServiceDetail = () => {
     serviceType: Service["serviceType"];
   }>();
   const navigate = useNavigate();
-  const { data: service, isLoading, isFetching, refetch } = useGetService(serviceId!, serviceType!);
+  const { data: service, isLoading, refetch } = useGetService(serviceId!, serviceType!);
 
   const { data: interfaces } = useInterfaces();
 
   const refetchServices = useCallback(() => {
     refetch();
-    queryClient.refetchQueries([SERVICES_KEY]);
+    queryClient.refetchQueries({ queryKey: [SERVICES_KEY] });
   }, [queryClient, refetch]);
 
   const back = () => {
     navigate("/");
   };
 
-  if (isFetching || isLoading || !service || Object.keys(service ?? {}).length === 0)
-    return <ServiceLoading />;
+  if (isLoading || !service || Object.keys(service ?? {}).length === 0) return <ServiceLoading />;
 
   const status = getServiceStatus(service);
 

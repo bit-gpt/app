@@ -1,5 +1,7 @@
 import brandLogo from "assets/images/brand-logo.svg";
 
+import useSettingStore from "../store/setting";
+
 import DashboardIcon from "./DashboardIcon";
 import DocumentationIcon from "./DocumentationIcon";
 import NavLinkContainer from "./NavLinkContainer";
@@ -7,6 +9,8 @@ import NavLinkItem from "./NavLinkItem";
 import SettingIcon from "./SettingIcon";
 
 const DashboardSidebar = () => {
+  const newFeature = useSettingStore((state) => state.newFeature);
+
   return (
     <div className="sidebar-main sidebar-toggle">
       <div className="pt-10 flex-col px-2 flex md:h-screen sidebar max-md:px-4">
@@ -29,6 +33,7 @@ const DashboardSidebar = () => {
             to="/settings"
             label="Settings"
             icon={<SettingIcon className="svg-stroke" />}
+            newFeature={newFeature}
           />
         </NavLinkContainer>
       </div>

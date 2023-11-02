@@ -8,17 +8,19 @@ use crate::{
     logerr, utils, Service, SharedState,
 };
 
-use std::time::Duration;
-use std::{collections::HashMap, sync::Arc};
 use std::{
-    collections::HashSet,
+    collections::{HashMap, HashSet},
     path::{Path, PathBuf},
+    sync::Arc,
+    time::Duration,
 };
 
 use futures::{future, StreamExt};
 use sys_info::mem_info;
 use sysinfo::{Pid, ProcessExt, ProcessRefreshKind, RefreshKind, SystemExt};
+
 use tauri::{AppHandle, Runtime, State, Window};
+
 use tokio::process::{Child, Command};
 use tokio::time::interval;
 use tokio::{fs, sync::Mutex};
@@ -169,20 +171,23 @@ async fn _stop_service(
     running_services: &Mutex<HashMap<String, Child>>,
     services: &Mutex<HashMap<String, Service>>,
 ) -> Result<()> {
+    log::info!("stopping service service_id = {service_id}");
     let mut running_services_guard = running_services.lock().await;
-    let Some(child) = running_services_guard.remove(service_id) else {
+    let Some(mut child) = running_services_guard.remove(service_id) else {
         err!("Service not running")
     };
     // kill the process gracefully using SIGTERM/SIGINT
     let Some(pid) = child.id() else {
         err!("Service couldn't be stopped: {}", service_id)
     };
+    log::info!("service pid = {pid}");
     let system = sysinfo::System::new_with_specifics(
         RefreshKind::new().with_processes(ProcessRefreshKind::new()),
     );
     let process = system
         .process(Pid::from(pid as usize))
         .with_msg(|| format!("Process pid({}) invalid", pid))?;
+
     log::info!(
         "terminating service: process_name({}) process_id({})",
         process.name(),
@@ -198,14 +203,26 @@ async fn _stop_service(
     if let Some(service) = registry_lock.get_mut(service_id) {
         service.running = Some(false);
     }
+    // wait for process to properly exit
+    if let Ok(_exit_code) = child.try_wait() {
+        log::info!("service stopped!");
+    } else if let Ok(_exit_code) = child.wait().await {
+        log::info!("service stopped!");
+    }
     Ok(())
 }
 
 pub fn stop_all_services(state: Arc<SharedState>) {
     log::info!("Stopping all services");
     tauri::async_runtime::block_on(async move {
-        let services = state.running_services.lock().await;
-        for service_id in services.keys() {
+        let keys = state
+            .running_services
+            .lock()
+            .await
+            .keys()
+            .cloned()
+            .collect::<Vec<String>>();
+        for service_id in keys {
             logerr!(
                 _stop_service(
                     service_id.as_str(),
@@ -215,7 +232,7 @@ pub fn stop_all_services(state: Arc<SharedState>) {
                 .await
             );
         }
-    })
+    });
 }
 
 #[tauri::command(async)]
@@ -494,6 +511,7 @@ pub async fn get_system_stats() -> Result<HashMap<String, String>> {
 pub async fn get_service_stats(_service_id: String) -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
 }
+
 #[tauri::command(async)]
 pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
