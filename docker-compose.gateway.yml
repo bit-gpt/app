@@ -19,13 +19,12 @@ services:
 
   premd:
     container_name: premd
-    image: ghcr.io/premai-io/premd:7af3782b00f6176b34840f608327c051502511ce
+    image: ghcr.io/premai-io/premd:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json
       - PROXY_ENABLED=True
-      - DOCKER_NETWORK=prem-app_default
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.premd.rule=PathPrefix(`/premd`)"
