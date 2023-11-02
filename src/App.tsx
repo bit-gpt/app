@@ -21,6 +21,7 @@ function App() {
         useSettingStore.getState().setIsIP(hostIsIP);
         useSettingStore.getState().setBackendUrl(getBackendUrl());
         useSettingStore.getState().removeAllServiceAsDownloading();
+        useSettingStore.getState().resetSwarm();
 
         // Download progress
         if (isDesktopEnv()) {

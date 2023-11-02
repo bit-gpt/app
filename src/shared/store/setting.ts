@@ -96,6 +96,16 @@ const useSettingStore = create<SettingStore>()(
         environmentDeletion: EnvironmentDeletion.Completed,
         setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) =>
           set(() => ({ environmentDeletion }), false, "setEnvironmentDeletion"),
+        resetSwarm: () => {
+          set(
+            () => ({
+              swarmInfo: null,
+              swarmMode: Swarm.Inactive,
+            }),
+            false,
+            "resetSwarm",
+          );
+        },
       }),
       {
         name: "setting",

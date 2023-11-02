@@ -123,6 +123,7 @@ export type SettingStore = {
   setSwarmInfo: (swarmInfo: SwarmInfo | null) => void;
   environmentDeletion: EnvironmentDeletion | null;
   setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) => void;
+  resetSwarm: () => void;
 };
 
 export type HeaderProps = {
