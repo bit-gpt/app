@@ -1,6 +1,13 @@
 use reqwest::get;
 use serde::Deserialize;
-use std::{collections::HashMap, env, path::PathBuf, str};
+use std::{
+    collections::HashMap,
+    env,
+    path::PathBuf,
+    str,
+    thread::{self, JoinHandle},
+    time::Duration,
+};
 use tauri::api::process::Command;
 
 #[derive(Deserialize)]
@@ -88,13 +95,10 @@ pub async fn get_petals_models() -> Result<Vec<String>, String> {
 
 #[tauri::command]
 pub fn is_swarm_mode_running() -> bool {
-    let output_value = get_swarm_processes();
+    let processes = get_swarm_processes();
 
-    if !output_value.is_empty() {
-        println!(
-            "🏃‍♀️ Processeses running: {}",
-            output_value.replace("\n", " ")
-        );
+    if processes.len() > 0 {
+        println!("🏃‍♀️ Processeses running: {:?}", processes);
         return true;
     }
     return false;
@@ -165,7 +169,7 @@ fn get_petals_path(handle: tauri::AppHandle) -> String {
     petals_path.to_string()
 }
 
-pub fn get_swarm_processes() -> String {
+pub fn get_swarm_processes() -> Vec<u64> {
     // Check if create_env.sh is running
     let output = Command::new("/usr/bin/pgrep")
         .args(&["-f", "create_env.sh|(mamba|conda).*create.*prem_app"])
@@ -179,7 +183,7 @@ pub fn get_swarm_processes() -> String {
 
     // If create_env.sh is running, return an empty string
     if !output_value.is_empty() {
-        return "".to_string();
+        return vec![];
     }
 
     let config = Config::new();
@@ -204,25 +208,53 @@ pub fn get_swarm_processes() -> String {
         });
 
     let output_value = output.unwrap().stdout;
-    output_value
+    let processes: Vec<u64> = output_value
+        .replace("\n", " ")
+        .split(" ")
+        .collect::<Vec<&str>>()
+        .into_iter()
+        .filter_map(|s| s.parse::<u64>().ok())
+        .collect();
+    processes
 }
 
 #[tauri::command]
 pub fn stop_swarm_mode() {
     println!("🛑 Stopping the Swarm...");
-    let processes = get_swarm_processes().replace("\n", " ");
-    println!("🛑 Stopping Processes: {}", processes);
-    let processes = processes.split(" ").collect::<Vec<&str>>();
+    let processes = get_swarm_processes();
+    println!("🛑 Stopping Processes: {:?}", processes);
 
     for process in processes {
-        println!("🛑 Stopping Process: {}", process);
         let _ = Command::new("kill")
-            .args(&[process.to_string()])
-            .output()
-            .map_err(|e| {
-                println!("🙈 Failed to execute command: {}", e);
-                e
-            });
+            .args(["-s", "SIGTERM", &process.to_string()])
+            .spawn()
+            .expect("🙈 Failed to execute kill command with SIGTERM");
+
+        let handle: JoinHandle<_> = thread::spawn(move || {
+            thread::sleep(Duration::from_millis(50));
+            match Command::new("ps")
+                .args(["-p", &process.to_string()])
+                .output()
+            {
+                Ok(output) => match output.status.code() {
+                    Some(0) => true,
+                    _ => false,
+                },
+                Err(e) => {
+                    eprintln!("Error executing ps command: {}", e);
+                    false
+                }
+            }
+        });
+        if handle.join().unwrap() {
+            let _ = Command::new("kill")
+                .args(["-s", "SIGKILL", &process.to_string()])
+                .output()
+                .expect("🙈 Failed to execute kill command with SIGKILL");
+            println!("🛑 Stopping Process with SIGKILL: {}", process);
+        } else {
+            println!("🛑 Stopping Process with SIGTERM: {}", process);
+        }
     }
     println!("🛑 Stopped all the Swarm Processes.");
 }
