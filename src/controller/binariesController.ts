@@ -13,10 +13,7 @@ class BinariesController extends AbstractServiceController {
 
   async restart(serviceId: string): Promise<void> {
     await this.stop(serviceId);
-    const services: string[] = await invoke("get_running_services");
-    while (!services.includes(serviceId)) {
-      await this.start(serviceId);
-    }
+    await this.start(serviceId);
   }
 
   async stop(serviceId: string): Promise<void> {

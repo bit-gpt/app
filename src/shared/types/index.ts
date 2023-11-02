@@ -33,6 +33,7 @@ export type NavLinkItemProps = {
   label: string;
   to: string;
   target?: "_blank";
+  newFeature?: boolean;
 };
 
 export enum Swarm {
@@ -40,6 +41,18 @@ export enum Swarm {
   Creating = "creating",
   Active = "active",
 }
+
+export enum EnvironmentDeletion {
+  Idle = "idle",
+  Progress = "progress",
+  Completed = "completed",
+}
+
+export type SwarmInfo = {
+  model: string;
+  publicName: string;
+  numBlocks: number;
+};
 
 export type WarningModalProps = {
   onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -102,8 +115,15 @@ export type SettingStore = {
   addServiceAsDownloading: (serviceId: string) => void;
   removeServiceAsDownloading: (serviceId: string) => void;
   removeAllServiceAsDownloading: () => void;
+  newFeature: boolean;
+  setNewFeature: (newFeature: boolean) => void;
   swarmMode: Swarm;
   setSwarmMode: (mode: Swarm) => void;
+  swarmInfo: SwarmInfo | null;
+  setSwarmInfo: (swarmInfo: SwarmInfo | null) => void;
+  environmentDeletion: EnvironmentDeletion | null;
+  setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) => void;
+  resetSwarm: () => void;
 };
 
 export type HeaderProps = {

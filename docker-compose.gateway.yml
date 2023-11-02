@@ -1,0 +1,115 @@
+version: '3.7'
+services:
+  
+  premapp:
+    container_name: premapp
+    build: .
+    environment:
+      - VITE_DESTINATION=browser
+      - VITE_IS_PACKAGED=true
+      - VITE_PROXY_ENABLED=true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.premapp-http.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.premapp-http.entrypoints=web"
+      - "traefik.http.services.premapp.loadbalancer.server.port=8080"
+    ports:
+      - "8085:8080"
+    restart: unless-stopped
+
+  premd:
+    container_name: premd
+    image: ghcr.io/premai-io/premd:7af3782b00f6176b34840f608327c051502511ce
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PREM_REGISTRY_URL=https://raw.githubusercontent.com/premAI-io/prem-registry/main/manifests.json
+      - PROXY_ENABLED=True
+      - DOCKER_NETWORK=prem-app_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.premd.rule=PathPrefix(`/premd`)"
+      - "traefik.http.middlewares.premd-strip-prefix.stripprefix.prefixes=/premd"
+      - "traefik.http.routers.premd.middlewares=premd-strip-prefix"
+    ports:
+      - "8084:8000"
+    restart: unless-stopped
+
+  
+  
+  traefik:
+    container_name: traefik
+    image: traefik:v2.4
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--accesslog=true"
+      - "--ping"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-letsencrypt:/letsencrypt
+    depends_on:
+      - dnsd
+    restart: unless-stopped
+
+  dnsd:
+    container_name: dnsd
+    image: ghcr.io/premai-io/dnsd:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dnsd.rule=PathPrefix(`/dnsd`)"
+      - "traefik.http.middlewares.dnsd-strip-prefix.stripprefix.prefixes=/dnsd"
+      - "traefik.http.routers.dnsd.middlewares=dnsd-strip-prefix"
+    depends_on:
+      - dnsd-db-pg
+      - authd
+    environment:
+      PREM_GATEWAY_DNS_DB_USER: root
+      PREM_GATEWAY_DNS_DB_PASS: secret
+      PREM_GATEWAY_DNS_DB_NAME: dnsd-db
+      PREM_GATEWAY_DNS_DB_HOST: dnsd-db-pg
+    ports:
+      - "8082:8080"
+    restart: unless-stopped
+
+  dnsd-db-pg:
+    container_name: dnsd-db-pg
+    image: postgres:14.7
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: dnsd-db
+    volumes:
+      - dnsd-pg-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  authd:
+    container_name: authd
+    image: ghcr.io/premai-io/authd:latest
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
+  controllerd:
+    container_name: controllerd
+    image: ghcr.io/premai-io/controllerd:latest
+    ports:
+      - "8083:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: root
+    environment:
+      LETSENCRYPT_PROD: false
+      SERVICES: premd,premapp
+    restart: unless-stopped
+
+volumes:
+  dnsd-pg-data:
+  traefik-letsencrypt:

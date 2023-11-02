@@ -31,6 +31,7 @@ class DockerController extends AbstractServiceController {
     afterSuccess?: () => void;
   }): Promise<void> {
     console.log(`Downloading service ${serviceId}`);
+    useSettingStore.getState().setServiceDownloadProgress(serviceId, "docker", 0);
     await downloadServiceStream(
       serviceId,
       (error) => {
@@ -62,7 +63,7 @@ class DockerController extends AbstractServiceController {
   }
 
   async getServices(): Promise<ServiceDocker[]> {
-    const response = await api().get("v1/services");
+    const response = await api().get("v1/services/");
     return response.data;
   }
 
@@ -76,17 +77,17 @@ class DockerController extends AbstractServiceController {
   }
 
   async getSystemStats(): Promise<Record<string, string>> {
-    const response = await api().get("v1/stats-all");
+    const response = await api().get("v1/stats-all/");
     return response.data;
   }
 
   async getGPUStats(): Promise<Record<string, string>> {
-    const response = await api().get("v1/gpu-stats-all");
+    const response = await api().get("v1/gpu-stats-all/");
     return response.data;
   }
 
   async getInterfaces(): Promise<Interface[]> {
-    const response = await api().get("v1/interfaces");
+    const response = await api().get("v1/interfaces/");
     return response.data;
   }
 

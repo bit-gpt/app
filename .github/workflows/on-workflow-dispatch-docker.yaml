@@ -1,0 +1,52 @@
+name: 🚀 Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag for the Docker image (optional, will use latest Git tag if empty)'
+        required: false
+        type: string
+      tag_as_latest:
+        description: 'Also tag as latest?'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  push-docker-image:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
+    steps:
+      - uses: actions/checkout@v4
+      - name: Determine tag
+        id: tag
+        run: |
+          if [ -z "${{ github.event.inputs.version }}" ]; then
+            git fetch --all --tags
+            TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          else
+            TAG=${{ github.event.inputs.version }}
+          fi
+          echo "VERSION_TAG=$TAG" >> $GITHUB_ENV
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+        with:
+          install: true
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build & push
+        run: |
+            docker buildx build --push \
+              --file Dockerfile \
+              --tag ghcr.io/premai-io/prem-app:$VERSION_TAG \
+              ${{ github.event.inputs.tag_as_latest == 'true' && '--tag ghcr.io/premai-io/prem-app:latest' || '' }} \
+              --platform linux/arm64,linux/amd64 .
+        shell: /usr/bin/bash -e {0}
+        env:
+          DOCKER_CLI_EXPERIMENTAL: enabled
+        
