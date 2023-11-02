@@ -218,7 +218,7 @@ pub fn get_swarm_processes() -> Vec<u64> {
     processes
 }
 
-#[tauri::command(async)]
+#[tauri::command]
 pub fn stop_swarm_mode() {
     println!("🛑 Stopping the Swarm...");
     let processes = get_swarm_processes();
