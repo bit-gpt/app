@@ -95,13 +95,10 @@ pub async fn get_petals_models() -> Result<Vec<String>, String> {
 
 #[tauri::command]
 pub fn is_swarm_mode_running() -> bool {
-    let output_value = get_swarm_processes();
+    let processes = get_swarm_processes();
 
-    if !output_value.is_empty() {
-        println!(
-            "🏃‍♀️ Processeses running: {}",
-            output_value.replace("\n", " ")
-        );
+    if processes.len() > 0 {
+        println!("🏃‍♀️ Processeses running: {:?}", processes);
         return true;
     }
     return false;
@@ -172,7 +169,7 @@ fn get_petals_path(handle: tauri::AppHandle) -> String {
     petals_path.to_string()
 }
 
-pub fn get_swarm_processes() -> String {
+pub fn get_swarm_processes() -> Vec<u64> {
     // Check if create_env.sh is running
     let output = Command::new("/usr/bin/pgrep")
         .args(&["-f", "create_env.sh|(mamba|conda).*create.*prem_app"])
@@ -186,7 +183,7 @@ pub fn get_swarm_processes() -> String {
 
     // If create_env.sh is running, return an empty string
     if !output_value.is_empty() {
-        return "".to_string();
+        return vec![];
     }
 
     let config = Config::new();
@@ -211,20 +208,21 @@ pub fn get_swarm_processes() -> String {
         });
 
     let output_value = output.unwrap().stdout;
-    output_value
-}
-
-#[tauri::command(async)]
-pub fn stop_swarm_mode() {
-    println!("🛑 Stopping the Swarm...");
-    let processes = get_swarm_processes().replace("\n", " ");
-    println!("🛑 Stopping Processes: {}", processes);
-    let processes: Vec<u64> = processes
+    let processes: Vec<u64> = output_value
+        .replace("\n", " ")
         .split(" ")
         .collect::<Vec<&str>>()
         .into_iter()
         .filter_map(|s| s.parse::<u64>().ok())
         .collect();
+    processes
+}
+
+#[tauri::command(async)]
+pub fn stop_swarm_mode() {
+    println!("🛑 Stopping the Swarm...");
+    let processes = get_swarm_processes();
+    println!("🛑 Stopping Processes: {:?}", processes);
 
     for process in processes {
         let _ = Command::new("kill")
@@ -233,7 +231,7 @@ pub fn stop_swarm_mode() {
             .expect("🙈 Failed to execute kill command with SIGTERM");
 
         let handle: JoinHandle<_> = thread::spawn(move || {
-            thread::sleep(Duration::from_millis(100));
+            thread::sleep(Duration::from_millis(50));
             match Command::new("ps")
                 .args(["-p", &process.to_string()])
                 .output()
