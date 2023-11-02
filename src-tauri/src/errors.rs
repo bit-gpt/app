@@ -1,7 +1,12 @@
+use std::fmt::Display;
+
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("{0}")]
     Str(String),
+
+    #[error("{0} -> {1}")]
+    ErrorWithCtx(String, String),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -12,23 +17,43 @@ impl From<String> for Error {
     }
 }
 
-pub trait Context {
-    type S;
-    fn with_context<T: AsRef<str>, K: Fn() -> T>(self, s: K)
-        -> std::result::Result<Self::S, Error>;
+pub trait ToResult<T> {
+    fn msg(self, msg: impl AsRef<str>) -> Result<T>;
+    fn with_msg<K: AsRef<str>>(self, msg: impl Fn() -> K) -> Result<T>;
 }
 
-impl<T, E: std::error::Error> Context for std::result::Result<T, E> {
-    type S = T;
-    fn with_context<S: AsRef<str>, K: Fn() -> S>(self, s: K) -> std::result::Result<T, Error> {
-        self.map_err(|e| format!("{}\n:{}", s().as_ref(), e.to_string()).into())
+impl<T> ToResult<T> for Option<T> {
+    fn msg(self, msg: impl AsRef<str>) -> Result<T> {
+        match self {
+            Some(s) => Ok(s),
+            None => Err(Error::Str(msg.as_ref().to_string())),
+        }
+    }
+
+    fn with_msg<K: AsRef<str>>(self, msg: impl Fn() -> K) -> Result<T> {
+        match self {
+            Some(s) => Ok(s),
+            None => Err(Error::Str(msg().as_ref().to_string())),
+        }
     }
 }
 
-impl<T> Context for Option<T> {
-    type S = T;
-    fn with_context<S: AsRef<str>, K: Fn() -> S>(self, s: K) -> std::result::Result<T, Error> {
-        self.ok_or_else(|| s().as_ref().to_string().into())
+impl<T, E: Display> ToResult<T> for std::result::Result<T, E> {
+    fn msg(self, msg: impl AsRef<str>) -> Result<T> {
+        match self {
+            Ok(s) => Ok(s),
+            Err(e) => Err(Error::ErrorWithCtx(e.to_string(), msg.as_ref().to_string())),
+        }
+    }
+
+    fn with_msg<K: AsRef<str>>(self, msg: impl Fn() -> K) -> Result<T> {
+        match self {
+            Ok(s) => Ok(s),
+            Err(e) => Err(Error::ErrorWithCtx(
+                e.to_string(),
+                msg().as_ref().to_string(),
+            )),
+        }
     }
 }
 

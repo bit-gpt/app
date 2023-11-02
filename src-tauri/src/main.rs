@@ -7,22 +7,28 @@ mod errors;
 mod swarm;
 mod utils;
 
-use controller_binaries::stop_all_services;
+use crate::{controller_binaries::stop_all_services, errors::ToResult};
+
+use std::{
+    collections::{HashMap, HashSet},
+    env,
+    ops::Deref,
+    path::PathBuf,
+    str,
+    sync::Arc,
+};
+
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::ops::Deref;
-use std::sync::Arc;
-use std::{collections::HashMap, env, str};
 use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
-use tokio::process::Child;
-use tokio::sync::Mutex;
+use tokio::{process::Child, sync::Mutex};
 
 #[derive(Debug, Default)]
 pub struct SharedState {
-    downloading_files: Mutex<Vec<String>>,
+    downloading_files: Mutex<HashSet<PathBuf>>,
     running_services: Mutex<HashMap<String, Child>>,
     // Properties from public service registry and additional service state
     services: Mutex<HashMap<String, Service>>,
@@ -79,17 +85,15 @@ pub struct Service {
 
 impl Service {
     fn get_id(&self) -> errors::Result<String> {
-        use errors::Context;
         self.id
             .clone()
-            .with_context(|| format!("Service doesn't contain a valid id\n{:#?}", self))
+            .with_msg(|| format!("Service doesn't contain a valid id\n{:#?}", self))
     }
     // ref to String is used as it's more generally coerce-able
     fn get_id_ref(&self) -> errors::Result<&String> {
-        use errors::Context;
         self.id
             .as_ref()
-            .with_context(|| format!("Service doesn't contain a valid id\n{:#?}", self))
+            .with_msg(|| format!("Service doesn't contain a valid id\n{:#?}", self))
     }
 }
 
@@ -110,7 +114,8 @@ struct ModelInfo {
     streaming: Option<bool>,
 }
 
-fn main() {
+fn main() -> errors::Result<()> {
+    // Sentry
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
         sentry::ClientOptions {
@@ -124,6 +129,7 @@ fn main() {
     let _guard = sentry_tauri::minidump::init(&client);
     // Everything after here runs in only the app process
 
+    // console_subscriber::init();
     // TODO: consider directly pushing logs to sentry (sentry-sdk provides
     // log integration) for release builds
 
@@ -308,4 +314,6 @@ fn main() {
         }
         _ => {}
     });
+
+    Ok(())
 }

@@ -4,21 +4,21 @@
 use crate::{
     download::Downloader,
     err,
-    errors::{Context, Result},
-    logerr, Service, SharedState,
+    errors::{Result, ToResult},
+    logerr, utils, Service, SharedState,
 };
 
-use std::path::PathBuf;
 use std::time::Duration;
 use std::{collections::HashMap, sync::Arc};
+use std::{
+    collections::HashSet,
+    path::{Path, PathBuf},
+};
 
-use futures::future;
-
+use futures::{future, StreamExt};
 use sys_info::mem_info;
 use sysinfo::{Pid, ProcessExt, ProcessRefreshKind, RefreshKind, SystemExt};
-
 use tauri::{AppHandle, Runtime, State, Window};
-
 use tokio::process::{Child, Command};
 use tokio::time::interval;
 use tokio::{fs, sync::Mutex};
@@ -32,28 +32,24 @@ pub async fn download_service<R: Runtime>(
     app_handle: AppHandle,
     window: Window<R>,
 ) -> Result<()> {
-    let service_dir = app_handle
+    let folder = app_handle
         .path_resolver()
         .app_data_dir()
-        .expect("failed to resolve app data dir")
-        .join("models")
-        .join(&service_id);
-
-    let Some(service_dir) = service_dir.to_str() else {
-        Err("`service_dir` path contains non utf-8 sequence".to_string())?
-    };
+        .msg("Failed to get app_cache_dir")?;
+    let data_dir = folder
+        .to_str()
+        .msg("`service_dir` path contains non utf-8 sequence")?;
 
     Downloader::new(
         binaries_url,
         weights_directory_url,
         weights_files,
         service_id,
-        service_dir,
+        data_dir,
         window,
     )
     .download_files()
-    .await?;
-    Ok(())
+    .await
 }
 
 #[tauri::command(async)]
@@ -75,27 +71,22 @@ pub async fn start_service(
         .create(true)
         .append(true)
         .open(&log_path)
-        .with_context(|| format!("Failed to open log file `{}`", log_path.display()))?;
+        .with_msg(|| format!("Failed to open log file `{}`", log_path.display()))?;
 
     // Check if service is already running
     let running_services_guard = state.running_services.lock().await;
     if running_services_guard.contains_key(&service_id) {
-        err!("Service with `{service_id}` already exist")
+        err!("Service with service_id=`{service_id}` already exist")
     }
     drop(running_services_guard);
 
     let services_guard = state.services.lock().await;
     let serve_command = services_guard
         .get(&service_id)
-        .with_context(|| format!("service_id {} doesn't exist in registry", service_id))?
+        .with_msg(|| format!("service_id: {service_id} doesn't exist in registry"))?
         .serve_command
         .as_ref()
-        .with_context(|| {
-            format!(
-                "service_id {} doesn't contain a valid serve_command",
-                service_id
-            )
-        })?
+        .with_msg(|| format!("service_id: {service_id} doesn't contain a valid serve_command"))?
         .as_str();
     log::info!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
@@ -104,7 +95,7 @@ pub async fn start_service(
     let binary_path = PathBuf::from(&service_dir).join(&serve_command_vec[0]);
     log::info!("binary_path: {:?}", binary_path);
     if !binary_path.exists() {
-        err!("invalid binary for `{service_id}`")
+        err!("invalid binary for service_id=`{service_id}`")
     }
     // Extract the arguments with different delimiters
     let args: Vec<String> = serve_command_vec[1..]
@@ -129,7 +120,7 @@ pub async fn start_service(
         .stdout(std::process::Stdio::from(
             log_file
                 .try_clone()
-                .with_context(|| "Failed to clone log file handle")?,
+                .msg("Failed to clone log file handle")?,
         ))
         .stderr(std::process::Stdio::from(log_file))
         .spawn()
@@ -191,7 +182,7 @@ async fn _stop_service(
     );
     let process = system
         .process(Pid::from(pid as usize))
-        .with_context(|| format!("Process pid({}) invalid", pid))?;
+        .with_msg(|| format!("Process pid({}) invalid", pid))?;
     log::info!(
         "terminating service: process_name({}) process_id({})",
         process.name(),
@@ -199,7 +190,7 @@ async fn _stop_service(
     );
     if !process
         .kill_with(sysinfo::Signal::Term)
-        .with_context(|| format!("Couldn't send terminate signal to process(pid: {}).", pid))?
+        .with_msg(|| format!("Couldn't send terminate signal to process(pid: {}).", pid))?
     {
         err!("Failed to kill the process");
     }
@@ -232,11 +223,12 @@ pub async fn delete_service(service_id: String, app_handle: AppHandle) -> Result
     let dir = app_handle
         .path_resolver()
         .app_data_dir()
-        .expect("failed to resolve app data dir")
+        .msg("failed to resolve app data dir")?
         .join("models")
         .join(&service_id);
-    fs::remove_dir_all(dir).await.map_err(|e| e.to_string())?;
-    Ok(())
+    fs::remove_dir_all(dir)
+        .await
+        .msg("Failed to delete service directory")
 }
 
 #[tauri::command(async)]
@@ -244,7 +236,7 @@ pub async fn get_logs_for_service(service_id: String, app_handle: AppHandle) -> 
     let log_path = app_handle
         .path_resolver()
         .app_data_dir()
-        .with_context(|| "failed to get app data dir")?
+        .msg("Failed to get app data dir")?
         .join(format!("{}.log", service_id));
     let logs = tokio::fs::read_to_string(log_path)
         .await
@@ -323,7 +315,7 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
     let service_dir = app_handle
         .path_resolver()
         .app_data_dir()
-        .with_context(|| "Failed to resolve app data dir")?
+        .msg("Failed to resolve app data dir")?
         .join("models")
         .join(service.get_id_ref()?);
     let mut downloaded = true;
@@ -353,9 +345,9 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
                 if let Some(remote_file_size) = response.headers().get("Content-Length") {
                     let parsed_size = remote_file_size
                         .to_str()
-                        .with_context(|| "Header value remote_file_size not utf-8")?
+                        .msg("Header value remote_file_size not utf-8")?
                         .parse::<u64>()
-                        .with_context(|| {
+                        .with_msg(|| {
                             format!(
                                 "Failed to parse header-value({:?}) as u64",
                                 remote_file_size.to_str()
@@ -377,15 +369,77 @@ pub async fn is_service_downloaded(service: &Service, app_handle: &AppHandle) ->
     return Ok(downloaded);
 }
 
+/// matches local artifact fetch url with current service url
+#[tauri::command(async)]
+pub async fn is_service_binary_updated(
+    service_id: String,
+    state: tauri::State<'_, Arc<SharedState>>,
+    app_handle: AppHandle,
+) -> Result<bool> {
+    let binary_url = state
+        .services
+        .lock()
+        .await
+        .get(&service_id)
+        .and_then(|s| s.binaries_url.as_ref().map(|bu| utils::get_binary_url(bu)))
+        .transpose()?
+        .with_msg(|| format!("No Service found for service_id={service_id}"))?;
+
+    let app_data_dir = app_handle.path_resolver().app_data_dir().msg("")?;
+    is_updated(&service_id, &binary_url, &app_data_dir).await
+}
+
+/// Checks if the hash for the url exists in the set for the downloaded item
+///
+/// Note: we can make it more specific for each category if there are a huge number of binary
+/// and weight files but not required atm.
+async fn is_updated(service_id: &str, url: &str, app_data_dir: &Path) -> Result<bool> {
+    let checksums_json_path = app_data_dir.join("checksums.json");
+    if checksums_json_path.exists() {
+        let hashes = utils::read_checksum_json_with_key(&checksums_json_path, service_id).await?;
+        Ok(hashes.contains(&utils::hash_str(url)))
+    } else {
+        Ok(false)
+    }
+}
+
+#[tauri::command(async)]
+pub async fn is_service_weights_updated(
+    service_id: String,
+    state: tauri::State<'_, Arc<SharedState>>,
+    app_handle: AppHandle,
+) -> Result<bool> {
+    let (url, files) = state
+        .services
+        .lock()
+        .await
+        .get(&service_id)
+        .and_then(|s| Some((s.weights_directory_url.clone()?, s.weights_files.clone()?)))
+        .with_msg(|| format!("Service service_id={service_id} without valid weights"))?;
+
+    let app_data_dir = app_handle.path_resolver().app_data_dir().msg("")?;
+    let service_id = service_id.as_str();
+    let app_data_dir = app_data_dir.as_path();
+    let url = url.as_str();
+    let updated = futures::stream::iter(files)
+        .all(|file| async move {
+            is_updated(service_id, &format!("{}{}", url, file), app_data_dir)
+                .await
+                .unwrap_or_default()
+        })
+        .await;
+    Ok(updated)
+}
+
 pub async fn has_enough_free_memory(service: &Service) -> Result<bool> {
-    let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
+    let mem_info = mem_info().msg("Failed to get memory info")?;
     let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
     let has_enough_memory = mem_info.free >= memory_requirements as u64;
     Ok(has_enough_memory)
 }
 
 pub async fn has_enough_total_memory(service: &Service) -> Result<bool> {
-    let mem_info = mem_info().with_context(|| "Failed to get memory info")?;
+    let mem_info = mem_info().msg("Failed to get memory info")?;
     let memory_requirements = service.model_info.memory_requirements.unwrap_or(0);
     let has_enough_memory = mem_info.total >= memory_requirements as u64;
     Ok(has_enough_memory)
@@ -437,7 +491,7 @@ pub async fn get_system_stats() -> Result<HashMap<String, String>> {
 }
 
 #[tauri::command(async)]
-pub async fn get_service_stats(service_id: String) -> Result<HashMap<String, String>> {
+pub async fn get_service_stats(_service_id: String) -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
 }
 #[tauri::command(async)]

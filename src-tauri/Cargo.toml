@@ -12,6 +12,7 @@
   pretty_env_logger = "0.5.0"
   sentry-tauri = "0.2"
   serde_json = "1.0"
+  sha2 = "0.10.8"
   sys-info = "0.9.1"
   sysinfo = "0.29.10"
   thiserror = "1.0.49"
