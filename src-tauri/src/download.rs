@@ -1,5 +1,6 @@
 use crate::errors::{Context, Result};
 use std::collections::HashMap;
+use std::sync::Arc;
 
 use crate::{err, utils, SharedState};
 use futures::StreamExt;
@@ -144,7 +145,7 @@ impl<R: Runtime> Downloader<R> {
         total_file_size: u64,
         size_on_disk: u64,
     ) -> Result<()> {
-        let state = self.window.state::<SharedState>();
+        let state = self.window.state::<Arc<SharedState>>();
         let mut downloading_files_guard = state.downloading_files.lock().await;
         if downloading_files_guard.contains(&output_path.as_ref().to_string()) {
             log::warn!("File already downloading: {}", output_path.as_ref());
