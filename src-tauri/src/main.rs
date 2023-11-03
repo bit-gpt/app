@@ -54,6 +54,8 @@ pub struct Service {
     running_port: Option<u32>,
     #[serde(rename = "serviceType")]
     service_type: Option<String>,
+    #[serde(rename = "skipHealthCheck")]
+    skip_health_check: Option<bool>,
     version: Option<String>,
     #[serde(rename = "weightsDirectoryUrl")]
     weights_directory_url: Option<String>,
