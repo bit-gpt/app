@@ -3,7 +3,6 @@ import useGPUStats from "shared/hooks/useGPUStats";
 
 const GPUResources = () => {
   const { data } = useGPUStats();
-  console.log("data", data);
 
   return (
     <>
