@@ -137,8 +137,7 @@ pub async fn start_service(
 
     let skip_service_check = services_guard
         .get(&service_id)
-        .map(|service| service.skip_health_check)
-        .unwrap_or(Some(false))
+        .map(|service| service.skip_health_check.unwrap_or(false))
         .unwrap();
 
     if skip_service_check {
