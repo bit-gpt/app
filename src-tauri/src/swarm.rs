@@ -25,13 +25,13 @@ pub fn is_swarm_supported() -> bool {
     }
 }
 
-struct Config {
-    app_data_dir: String,
-    python: String,
+pub struct Config {
+    pub app_data_dir: String,
+    pub python: String,
 }
 
 impl Config {
-    fn new() -> Self {
+    pub fn new() -> Self {
         let mut app_data_dir =
             tauri::api::path::home_dir().expect("🙈 Failed to get app data directory");
         app_data_dir.push(".config/prem");

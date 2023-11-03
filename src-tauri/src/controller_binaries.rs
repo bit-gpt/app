@@ -3,6 +3,7 @@
 
 use crate::{
     download::Downloader,
+    swarm::{create_environment, Config},
     err,
     errors::{Context, Result},
     logerr, Service, SharedState,
@@ -130,9 +131,13 @@ pub async fn start_service(
         .collect();
     log::info!("args: {:?}", args);
 
-    let mut env_vars: HashMap<String, String> = HashMap::new();
+    let config = Config::new();
+    let mut env_vars = HashMap::new();
+    env_vars.insert("PREM_APPDIR".to_string(), config.app_data_dir);
+    env_vars.insert("PREM_PYTHON".to_string(), config.python);
+
     if is_petals_model {
-        (_, env_vars) = create_environment(handle);
+        create_environment(handle);
     }
 
     let child = Command::new(&binary_path)
