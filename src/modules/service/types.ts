@@ -81,12 +81,24 @@ export type Stats = {
   storage_percentage: number;
 };
 
+type GPUInfos = {
+  gpu_name: string;
+  total_memory: number;
+  used_memory: number;
+  free_memory: number;
+  utilised_memory: number;
+  load: number;
+};
+
 export type GPUStats = {
-  gpu_name: string | null;
   total_memory: number | null;
   used_memory: number | null;
-  memory_percentage: number | null;
+  free_memory: number | null;
+  average_utilised_memory: number | null;
+  average_load: number | null;
+  gpus: GPUInfos[];
 };
+
 export type Message = {
   message: string;
 };

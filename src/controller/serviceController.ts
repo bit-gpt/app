@@ -1,4 +1,4 @@
-import type { Service } from "../modules/service/types";
+import type { GPUStats, Service } from "../modules/service/types";
 import type { Interface } from "../shared/helpers/interfaces";
 import useSettingStore from "../shared/store/setting";
 
@@ -177,15 +177,14 @@ class ServiceController implements IServiceController {
       return {};
     }
   }
-
-  async getGPUStats(serviceType: Service["serviceType"]): Promise<Record<string, string>> {
+  async getGPUStats(serviceType: Service["serviceType"]): Promise<GPUStats> {
     // We check the env (browser or desktop) to determine serviceType
     if (serviceType === "docker") {
       return await this.dockerController.getGPUStats();
     } else if (serviceType === "binary") {
       return await this.binariesController.getGPUStats();
     } else {
-      return {};
+      return {} as GPUStats;
     }
   }
 

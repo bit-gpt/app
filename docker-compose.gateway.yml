@@ -5,7 +5,6 @@ services:
     container_name: premapp
     build: .
     environment:
-      - VITE_DESTINATION=browser
       - VITE_IS_PACKAGED=true
       - VITE_PROXY_ENABLED=true
     labels:
