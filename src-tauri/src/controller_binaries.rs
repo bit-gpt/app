@@ -3,10 +3,11 @@
 
 use crate::{
     download::Downloader,
-    swarm::{create_environment, Config},
     err,
     errors::{Context, Result},
-    logerr, Service, SharedState,
+    logerr,
+    swarm::{create_environment, Config},
+    Service, SharedState,
 };
 
 use std::path::PathBuf;
