@@ -248,8 +248,17 @@ fn main() {
         })
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
+                // Determine the URL based on whether the app is in debug or release mode
+                let url = if cfg!(debug_assertions) {
+                    // Debug mode URL
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json"
+                } else {
+                    // Release mode URL
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json"
+                };
+
                 utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json",
+                    url,
                     app.state::<Arc<SharedState>>().deref().clone(),
                 )
                 .await
