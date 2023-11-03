@@ -36,9 +36,16 @@ pub struct Registry {
 
 impl Default for Registry {
     fn default() -> Self {
+        // Determine the URL based on whether the app is in debug or release mode
+        let url = if cfg!(debug_assertions) {
+            // Debug mode URL
+            "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json"
+        } else {
+            // Release mode URL
+            "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json"
+        };
         Registry {
-            url: "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json"
-                .to_string(),
+            url: url.to_string(),
         }
     }
 }
