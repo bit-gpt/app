@@ -104,7 +104,6 @@ class ServiceController implements IServiceController {
     if (serviceType === "docker") {
       useSettingStore.getState().addServiceAsDownloading(serviceId);
       await this.dockerController.download({ serviceId, afterSuccess });
-      useSettingStore.getState().removeServiceAsDownloading(serviceId);
     } else if (serviceType === "binary") {
       useSettingStore.getState().addServiceAsDownloading(serviceId);
       await this.binariesController.download({
