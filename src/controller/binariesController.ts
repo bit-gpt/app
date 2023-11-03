@@ -24,6 +24,14 @@ class BinariesController extends AbstractServiceController {
     await invoke("delete_service", { serviceId });
   }
 
+  async is_offline(): Promise<void> {
+    await invoke("is_offline");
+  }
+
+  async reload_services_manifest(): Promise<void> {
+    await invoke("reload_services_manifest");
+  }
+
   async download({
     serviceId,
     binariesUrl,

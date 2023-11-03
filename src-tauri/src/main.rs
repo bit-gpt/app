@@ -110,6 +110,13 @@ struct ModelInfo {
     streaming: Option<bool>,
 }
 
+#[derive(Debug, Deserialize, Serialize, Clone, Default)]
+pub struct LiveStateInner {
+    pub is_online: bool,
+    pub url: String,
+}
+pub type LiveState = Arc<Mutex<LiveStateInner>>;
+
 fn main() {
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
@@ -191,6 +198,7 @@ fn main() {
     let app = tauri::Builder::default()
         .plugin(sentry_tauri::plugin())
         .manage(state.clone())
+        .manage(LiveState::default())
         .invoke_handler(tauri::generate_handler![
             controller_binaries::start_service,
             controller_binaries::stop_service,
@@ -256,12 +264,18 @@ fn main() {
         })
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
-                utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json",
-                    app.state::<Arc<SharedState>>().deref().clone(),
-                )
-                .await
-                .expect("Failed to fetch and save services manifests");
+                let live_state = app.state::<LiveState>();
+                let mut live_state = live_state.lock().await;
+                let url =
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json";
+                live_state.url = url.to_string();
+                let state = app.state::<Arc<SharedState>>().deref().clone();
+                let res = utils::fetch_services_manifests(&url, state).await;
+                if res.is_err() {
+                    // we are offline, or invalid manifest
+                    log::error!("possibly no internet: running in offline mode");
+                    live_state.is_online = false;
+                }
             });
             Ok(())
         })

@@ -5,12 +5,12 @@ use crate::{
     download::Downloader,
     err,
     errors::{Context, Result},
-    logerr, Service, SharedState,
+    logerr, utils, LiveState, Service, SharedState,
 };
 
-use std::path::PathBuf;
 use std::time::Duration;
 use std::{collections::HashMap, sync::Arc};
+use std::{ops::Deref, path::PathBuf};
 
 use futures::future;
 
@@ -464,4 +464,24 @@ pub async fn add_service(service: Service, state: State<'_, Arc<SharedState>>) -
     let mut services_guard = state.services.lock().await;
     services_guard.insert(service.get_id()?, service);
     Ok(())
+}
+
+#[tauri::command(async)]
+pub async fn is_offline(live_state: State<'_, LiveState>) -> Result<bool> {
+    Ok(!live_state.lock().await.is_online)
+}
+
+#[tauri::command(async)]
+pub async fn reload_services_manifest(
+    state: State<'_, Arc<SharedState>>,
+    live_state: State<'_, LiveState>,
+) -> Result<()> {
+    let mut live_state = live_state.lock().await;
+    let url = live_state.url.clone();
+    let res = utils::fetch_services_manifests(&url, state.deref().clone()).await;
+    // if loaded set is_online to true
+    if res.is_ok() {
+        live_state.is_online = true;
+    }
+    res
 }
