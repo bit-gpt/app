@@ -6,6 +6,7 @@ import DashboardIcon from "./DashboardIcon";
 import DocumentationIcon from "./DocumentationIcon";
 import NavLinkContainer from "./NavLinkContainer";
 import NavLinkItem from "./NavLinkItem";
+import NetworkIcon from "./NetworkIcon";
 import SettingIcon from "./SettingIcon";
 
 const DashboardSidebar = () => {
@@ -23,10 +24,17 @@ const DashboardSidebar = () => {
 
         <NavLinkContainer className="sidebar-last__row max-md:mb-5">
           <div className="border-timberwolf opacity-30 -mx-2 pt-[13px]"></div>
+
+          <NavLinkItem
+            target="_blank"
+            to="https://www.premai.io/prem-network"
+            label="Network"
+            icon={<NetworkIcon />}
+          />
           <NavLinkItem
             target="_blank"
             to="https://dev.premai.io/docs/intro"
-            label="Documentation"
+            label="Devs"
             icon={<DocumentationIcon />}
           />
           <NavLinkItem
