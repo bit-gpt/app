@@ -470,7 +470,7 @@ pub async fn get_system_stats() -> Result<HashMap<String, String>> {
 }
 
 #[tauri::command(async)]
-pub async fn get_service_stats(service_id: String) -> Result<HashMap<String, String>> {
+pub async fn get_service_stats(_service_id: String) -> Result<HashMap<String, String>> {
     Ok(HashMap::new())
 }
 #[tauri::command(async)]
