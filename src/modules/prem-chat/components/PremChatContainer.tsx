@@ -1,3 +1,4 @@
+import Send from "assets/images/send.svg";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import BotReply from "shared/components/BotReply";
@@ -5,10 +6,10 @@ import UserReply from "shared/components/UserReply";
 import usePremChatStream from "shared/hooks/usePremChatStream";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
 
+import useAutosizeTextArea from "../../../shared/hooks/useAutosizeTextarea";
 import type { Message, PremChatContainerProps } from "../types";
 
 import Header from "./Header";
-import InputBox from "./InputBox";
 import PremChatSidebar from "./PremChatSidebar";
 import RegenerateButton from "./RegenerateButton";
 import RightSidebar from "./RightSidebar";
@@ -23,7 +24,7 @@ const PremChatContainer = ({
   const [rightSidebar, setRightSidebar] = useState(false);
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const chatMessageListRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { height } = useWindowSize();
   const responsiveMatches = useMediaQuery("(min-width: 768px)");
 
@@ -40,6 +41,8 @@ const PremChatContainer = ({
     abort,
   } = usePremChatStream(serviceId, serviceType, chatId || null);
 
+  useAutosizeTextArea(textAreaRef.current, question);
+
   useEffect(() => {
     if (chatMessageListRef.current) {
       chatMessageListRef.current.scrollTop = chatMessageListRef.current.scrollHeight;
@@ -47,8 +50,8 @@ const PremChatContainer = ({
   }, [chatMessages]);
 
   useEffect(() => {
-    if (!isLoading && inputRef.current) {
-      inputRef.current.focus();
+    if (!isLoading && textAreaRef.current) {
+      textAreaRef.current.focus();
     }
   }, [isLoading]);
 
@@ -103,20 +106,28 @@ const PremChatContainer = ({
                       <RegenerateButton onRgenerateClick={onRegenerate} />
                     </div>
                   )}
-                  <form className="text-center" onSubmit={onSubmit}>
-                    <InputBox
-                      question={question}
-                      setQuestion={setQuestion}
-                      disabled={isLoading || !model}
-                      ref={inputRef}
-                      placeholder={
-                        isLoading
-                          ? "Fetching response..."
-                          : model
-                          ? `Type a message or type "/" to select a prompt`
-                          : "Please select a model to get started"
-                      }
-                    />
+                  <form onSubmit={onSubmit}>
+                    <div className="autosize-textarea-container">
+                      <textarea
+                        autoComplete="off"
+                        className="autosize-textarea"
+                        onChange={(e) => setQuestion(e.target.value)}
+                        placeholder={
+                          isLoading
+                            ? "Fetching response..."
+                            : model
+                            ? `Type a message or type "/" to select a prompt`
+                            : "Please select a model to get started"
+                        }
+                        ref={textAreaRef}
+                        rows={1}
+                        value={question}
+                        disabled={isLoading || !model}
+                      />
+                      <button>
+                        <img src={Send} alt="Send" />
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>
