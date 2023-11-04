@@ -5,7 +5,9 @@ use crate::{
     download::Downloader,
     err,
     errors::{Context, Result},
-    logerr, utils, Registry, Service, SharedState,
+    logerr, logerr,
+    swarm::{create_environment, Config},
+    utils, Registry, Service, Service, SharedState, SharedState,
 };
 
 use std::path::PathBuf;
@@ -59,6 +61,7 @@ pub async fn download_service<R: Runtime>(
 
 #[tauri::command(async)]
 pub async fn start_service(
+    handle: tauri::AppHandle,
     service_id: String,
     state: State<'_, Arc<SharedState>>,
     app_handle: AppHandle,
@@ -98,6 +101,11 @@ pub async fn start_service(
             )
         })?
         .as_str();
+    let is_petals_model = services_guard
+        .get(&service_id)
+        .with_context(|| format!("service_id {} doesn't exist in registry", service_id))?
+        .petals
+        .unwrap_or_default();
     log::info!("serve_command: {}", serve_command);
     let serve_command_vec: Vec<&str> = serve_command.split_whitespace().collect();
 
@@ -124,9 +132,20 @@ pub async fn start_service(
         })
         .collect();
     log::info!("args: {:?}", args);
+
+    let config = Config::new();
+    let mut env_vars = HashMap::new();
+    env_vars.insert("PREM_APPDIR".to_string(), config.app_data_dir);
+    env_vars.insert("PREM_PYTHON".to_string(), config.python);
+
+    if is_petals_model {
+        create_environment(handle);
+    }
+
     let child = Command::new(&binary_path)
         .current_dir(service_dir)
         .args(args)
+        .envs(env_vars)
         .stdout(std::process::Stdio::from(
             log_file
                 .try_clone()
