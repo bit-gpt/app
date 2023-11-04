@@ -5,9 +5,9 @@ use crate::{
     download::Downloader,
     err,
     errors::{Context, Result},
-    logerr, logerr,
+    logerr,
     swarm::{create_environment, Config},
-    utils, Registry, Service, Service, SharedState, SharedState,
+    utils, Registry, Service, SharedState,
 };
 
 use std::path::PathBuf;
