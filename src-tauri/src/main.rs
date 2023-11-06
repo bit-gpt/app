@@ -4,6 +4,7 @@
 mod controller_binaries;
 mod download;
 mod errors;
+mod swarm;
 mod utils;
 
 use crate::controller_binaries::stop_all_services;
@@ -12,7 +13,6 @@ use std::{collections::HashMap, env, ops::Deref, str, sync::Arc};
 
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-
 use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
@@ -54,6 +54,7 @@ pub struct Service {
     running_port: Option<u32>,
     #[serde(rename = "serviceType")]
     service_type: Option<String>,
+    petals: Option<bool>,
     version: Option<String>,
     #[serde(rename = "weightsDirectoryUrl")]
     weights_directory_url: Option<String>,
@@ -204,6 +205,14 @@ fn main() {
             controller_binaries::get_service_stats,
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
+            swarm::is_swarm_supported,
+            swarm::get_username,
+            swarm::get_petals_models,
+            swarm::create_environment,
+            swarm::delete_environment,
+            swarm::run_swarm,
+            swarm::stop_swarm_mode,
+            swarm::is_swarm_mode_running
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
@@ -248,8 +257,17 @@ fn main() {
         })
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
+                // Determine the URL based on whether the app is in debug or release mode
+                let url = if cfg!(debug_assertions) {
+                    // Debug mode URL
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json"
+                } else {
+                    // Release mode URL
+                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json"
+                };
+
                 utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json",
+                    url,
                     app.state::<Arc<SharedState>>().deref().clone(),
                 )
                 .await

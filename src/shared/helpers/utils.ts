@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api/tauri";
 import type {
   Option,
   Service,
@@ -9,6 +10,11 @@ import type { ServiceInfoValue } from "modules/service-detail/types";
 import type { ControlProps, CSSObjectWithLabel } from "react-select";
 
 export const SERVICE_CHECK_REFETCH_INTERVAL = 10000;
+
+export const petalsModels = async (): Promise<string[]> => {
+  const models = await invoke("get_petals_models");
+  return models as string[];
+};
 
 export const isIP = (host: string): boolean => {
   if (host.includes("localhost")) return true;
@@ -44,6 +50,40 @@ export const isServiceBinary = (service: Service): service is ServiceBinary => {
 
 export const isServiceDocker = (service: Service): service is ServiceDocker => {
   return service && service.serviceType === "docker";
+};
+
+export const swarmSupported = async () => {
+  const check = await invoke("is_swarm_supported");
+  return Boolean(check);
+};
+
+export const userName = async () => {
+  return await invoke("get_username");
+};
+
+export const checkSwarmModeRunning = async () => {
+  const check = await invoke("is_swarm_mode_running");
+  return Boolean(check);
+};
+
+export const stopSwarmMode = async () => {
+  await invoke("stop_swarm_mode");
+};
+
+export const createEnvironment = async () => {
+  await invoke("create_environment");
+};
+
+export const deleteEnvironment = async () => {
+  await invoke("delete_environment");
+};
+
+export const runSwarmMode = async (numBlocks: number, model: string, publicName: string) => {
+  const isSwarmMode = await checkSwarmModeRunning();
+  if (isSwarmMode) {
+    return;
+  }
+  await invoke("run_swarm", { numBlocks, model, publicName });
 };
 
 export const isPackaged = () => {

@@ -74,7 +74,7 @@ Let us know which Model / Feature you wanna see in Prem [here](https://feedback.
 - [Docker](https://docs.docker.com/engine/install/)
 - [Tauri](https://tauri.app/v1/guides/getting-started/prerequisites#installing)
 
-### Run the app with Tauri
+### Run the app with Tauri (Desktop App)
 
 > Make sure to remove any value in the `.env` file.
 
@@ -83,7 +83,7 @@ npm i
 npm run tauri dev
 ```
 
-### Run the app with React
+### Run the app with React (Browser App)
 
 ```bash
 # run the daemon

@@ -11,6 +11,10 @@ import useWarningModal from "../hooks/useWarningModal";
 import type { ServiceCardProps } from "../types";
 
 import Beta from "./Beta";
+import Docker from "./Docker";
+import Local from "./Local";
+import PeerToPeer from "./PeerToPeer";
+import PremNetwork from "./PremNetwork";
 import ServiceActions from "./ServiceActions";
 
 const ServiceCard = ({ className, service }: ServiceCardProps) => {
@@ -55,10 +59,23 @@ const ServiceCard = ({ className, service }: ServiceCardProps) => {
           isWarningModalOpen={isWarningModalOpen}
         />
       </div>
-      <h3>
-        {title}
-        {service.beta && <Beta className="md:-top-2 top-[-5px]" />}
-      </h3>
+      <div className="flex items-start flex-wrap w-full relative justify-between">
+        <h3>
+          {title}
+          {service.beta && <Beta className="md:-top-2 top-[-5px]" />}
+        </h3>
+        {service.petals ? (
+          <p>
+            <PeerToPeer className="md:top-1 right-1" />
+            <PremNetwork className="md:top-1 left-1" />
+          </p>
+        ) : (
+          <p>
+            <Local className="md:top-1 right-1" />
+            {status === "docker_only" && <Docker className="md:top-1 left-1" />}
+          </p>
+        )}
+      </div>
     </Link>
   );
 };

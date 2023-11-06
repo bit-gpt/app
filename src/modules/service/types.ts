@@ -27,6 +27,7 @@ export type ServiceBase = {
   needsUpdate: boolean;
   promptTemplate?: string;
   runningPort?: number;
+  petals?: boolean;
   serviceType: "docker" | "binary" | "process";
   version?: string;
   // Dynamic state
