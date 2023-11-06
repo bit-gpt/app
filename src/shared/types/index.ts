@@ -132,6 +132,7 @@ export type HeaderProps = {
   hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
   title: string;
+  isPetals?: boolean;
 };
 
 export type HamburgerMenuProps = {

@@ -9,7 +9,7 @@ import PetalsBanner from "../../../shared/components/PetalsBanner";
 
 const Header = forwardRef(
   (
-    { setRightSidebar, hamburgerMenuOpen, setHamburgerMenu, title }: HeaderProps,
+    { setRightSidebar, hamburgerMenuOpen, setHamburgerMenu, title, isPetals = false }: HeaderProps,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
     const [open, setIsOpen] = useState(false);
@@ -24,7 +24,7 @@ const Header = forwardRef(
 
     return (
       <>
-        <PetalsBanner />
+        {isPetals ? <PetalsBanner /> : null}
         <div
           className="md:border-b border-light w-full h-[77px] py-3 flex sticky bg-grey-900 z-[11] top-0"
           ref={ref}

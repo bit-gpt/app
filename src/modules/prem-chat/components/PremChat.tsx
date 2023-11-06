@@ -25,6 +25,7 @@ function PremChat() {
       serviceName={service?.name ?? ""}
       serviceId={serviceId!}
       serviceType={serviceType!}
+      isPetals={service?.petals ?? false}
     />
   );
 }

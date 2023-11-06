@@ -18,6 +18,7 @@ const PremChatContainer = ({
   serviceId,
   serviceType,
   serviceName,
+  isPetals,
 }: PremChatContainerProps) => {
   const model = serviceId;
   const [rightSidebar, setRightSidebar] = useState(false);
@@ -100,10 +101,16 @@ const PremChatContainer = ({
                 title={serviceName}
                 setRightSidebar={setRightSidebar}
                 rightSidebar={rightSidebar}
+                isPetals={isPetals}
               />
               <div
                 className="z-10 relative flex flex-col prem-chat-body scrollbar-none"
-                style={{ height: height - headerVisibleHeight - (responsiveMatches ? 215 : 120) }}
+                style={{
+                  height:
+                    height -
+                    headerVisibleHeight -
+                    (responsiveMatches ? (isPetals ? 215 : 160) : 120),
+                }}
               >
                 <div className="md:w-[65%] w-[90%] mx-auto md:mt-8">
                   {chatMessages.map((message: Message, index: number) => (
