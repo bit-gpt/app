@@ -82,6 +82,8 @@ pub struct Service {
     #[serde(rename = "serviceType")]
     service_type: Option<String>,
     petals: Option<bool>,
+    #[serde(rename = "skipHealthCheck")]
+    skip_health_check: Option<bool>,
     version: Option<String>,
     #[serde(rename = "weightsDirectoryUrl")]
     weights_directory_url: Option<String>,
