@@ -37,6 +37,9 @@ module.exports = {
       fontFamily: {
         sans: ["Pretendard", ...defaultTheme.fontFamily.sans],
       },
+      minHeight: {
+        14: "3.5rem",
+      },
     },
   },
 };

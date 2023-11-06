@@ -42,6 +42,17 @@ const Service = () => {
     setAppsAugmented(_apps ?? []);
   }, [apps]);
 
+  useEffect(() => {
+    const _apps = apps?.concat({
+      id: "available",
+      name: "Available",
+      playground: false,
+      documentation: "",
+      icon: "https://raw.githubusercontent.com/astrit/css.gg/master/icons/svg/smile-mouth-open.svg",
+    });
+    setAppsAugmented(_apps ?? []);
+  }, [apps]);
+
   const filteredApps = useMemo(() => {
     if (filters.size === 0) return appsAugmented;
     if (![...filters.values()].includes(true)) return appsAugmented;

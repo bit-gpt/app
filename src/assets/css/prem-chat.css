@@ -35,25 +35,37 @@
   @apply bg-transparent  cursor-pointer border border-grey-400 text-grey-200 w-full z-10 px-4 py-[6px] appearance-none;
 }
 
-.prem-chat-input input {
-  @apply bg-grey-700  text-white md:text-sm text-[13px] outline-none rounded-[29px] h-[57px] mt-[14px] py-2 md:pl-[33px] md:pr-16 pr-12 pl-4 w-full;
+.autosize-textarea {
+  @apply bg-grey-700 text-white leading-6 text-sm outline-none rounded-[29px] h-14 mt-[14px] py-2 md:pl-[33px] md:pr-16 pr-12 pl-4 w-full min-h-14 max-h-40;
 }
 
-.prem-chat-input input:-webkit-autofill,
-.prem-chat-input input:-webkit-autofill:hover,
-.prem-chat-input input:-webkit-autofill:active,
-.prem-chat-input input:-webkit-autofill:focus {
+.autosize-textarea:empty {
+  line-height: 38px;
+}
+
+.autosize-textarea::placeholder {
+  line-height: 38px;
+}
+
+.autosize-textarea:-webkit-autofill,
+.autosize-textarea:-webkit-autofill:hover,
+.autosize-textarea:-webkit-autofill:active,
+.autosize-textarea:-webkit-autofill:focus {
   -webkit-text-fill-color: #302f32;
   -webkit-box-shadow: 0 0 0 1000px #302f32 inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
-.prem-chat-input img {
+.autosize-textarea-container {
+  @apply relative;
+}
+
+.autosize-textarea-container img {
   @apply bg-primary-light p-2 w-[35px] h-[35px] rounded-full stroke-white;
 }
 
-.prem-chat-input button {
-  @apply absolute md:right-[21px] right-[12px] top-[25px];
+.autosize-textarea-container button {
+  @apply absolute md:right-[21px] right-[12px] bottom-4;
 }
 
 .prem-chat-bottom {
