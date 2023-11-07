@@ -1,19 +1,19 @@
 {
-  "version": "0.2.0-rc.0",
+  "version": "0.2.0-rc.1",
   "notes": "See the assets to download and install this version.",
-  "pub_date": "2023-11-06T09:12:24.149Z",
+  "pub_date": "2023-11-07T18:59:29.282Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjdTZjQzVDUxajBWSkh0QWhkNU9hL2J5RDJ2NzdabS9ucUNLZGlXeU9zZzlhTytldmtaaXk3OEdyWlJudmJHL2dsWE55ZmNzbGxPT0paM1ZEMEZZcFFjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk5MjYxNTgzCWZpbGU6UHJlbS5hcHAudGFyLmd6CkMxYlM4U1B1THNCY0VPS00rc2dCSS9pM002VDFhNG1KbFF5TWsxWEdyaFFxNEJTVlhzcDRsYUZzR2RRNGN4bmxRQWU2dWNxYVU2bjg1Z3pIcmR2MENBPT0K",
-      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.2.0-rc.0/Prem_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNnh6TXNhTi9rMGVDN3hERUpxWFdoN1pGTXpoNFNuclIza3FmUzVTTzQ4YWQwNjhvWGlzQzBlSVdmbmh2akJSbExaVG1vckJaWmlWSzg5VDllWTZEQ2d3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk5MzgzMzU1CWZpbGU6UHJlbS5hcHAudGFyLmd6CnArcldhdHcyNXdlWTJHWVEvRG5LeFIvMzUxSkNxU2pOV2RiV2hoS05uQ1JwaVE0azU0SjcxdWRuNFpleUlxOEhqdVhMcnNNbXZhNXZiZ2ZsNXl6NUNRPT0K",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.2.0-rc.1/Prem_universal.app.tar.gz"
     },
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjdTZjQzVDUxajBWSkh0QWhkNU9hL2J5RDJ2NzdabS9ucUNLZGlXeU9zZzlhTytldmtaaXk3OEdyWlJudmJHL2dsWE55ZmNzbGxPT0paM1ZEMEZZcFFjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk5MjYxNTgzCWZpbGU6UHJlbS5hcHAudGFyLmd6CkMxYlM4U1B1THNCY0VPS00rc2dCSS9pM002VDFhNG1KbFF5TWsxWEdyaFFxNEJTVlhzcDRsYUZzR2RRNGN4bmxRQWU2dWNxYVU2bjg1Z3pIcmR2MENBPT0K",
-      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.2.0-rc.0/Prem_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNnh6TXNhTi9rMGVDN3hERUpxWFdoN1pGTXpoNFNuclIza3FmUzVTTzQ4YWQwNjhvWGlzQzBlSVdmbmh2akJSbExaVG1vckJaWmlWSzg5VDllWTZEQ2d3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk5MzgzMzU1CWZpbGU6UHJlbS5hcHAudGFyLmd6CnArcldhdHcyNXdlWTJHWVEvRG5LeFIvMzUxSkNxU2pOV2RiV2hoS05uQ1JwaVE0azU0SjcxdWRuNFpleUlxOEhqdVhMcnNNbXZhNXZiZ2ZsNXl6NUNRPT0K",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.2.0-rc.1/Prem_universal.app.tar.gz"
     },
     "darwin-universal": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNjdTZjQzVDUxajBWSkh0QWhkNU9hL2J5RDJ2NzdabS9ucUNLZGlXeU9zZzlhTytldmtaaXk3OEdyWlJudmJHL2dsWE55ZmNzbGxPT0paM1ZEMEZZcFFjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk5MjYxNTgzCWZpbGU6UHJlbS5hcHAudGFyLmd6CkMxYlM4U1B1THNCY0VPS00rc2dCSS9pM002VDFhNG1KbFF5TWsxWEdyaFFxNEJTVlhzcDRsYUZzR2RRNGN4bmxRQWU2dWNxYVU2bjg1Z3pIcmR2MENBPT0K",
-      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.2.0-rc.0/Prem_universal.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTck91dEJzS1kvNnh6TXNhTi9rMGVDN3hERUpxWFdoN1pGTXpoNFNuclIza3FmUzVTTzQ4YWQwNjhvWGlzQzBlSVdmbmh2akJSbExaVG1vckJaWmlWSzg5VDllWTZEQ2d3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjk5MzgzMzU1CWZpbGU6UHJlbS5hcHAudGFyLmd6CnArcldhdHcyNXdlWTJHWVEvRG5LeFIvMzUxSkNxU2pOV2RiV2hoS05uQ1JwaVE0azU0SjcxdWRuNFpleUlxOEhqdVhMcnNNbXZhNXZiZ2ZsNXl6NUNRPT0K",
+      "url": "https://github.com/premAI-io/prem-app/releases/download/v0.2.0-rc.1/Prem_universal.app.tar.gz"
     }
   }
 }
