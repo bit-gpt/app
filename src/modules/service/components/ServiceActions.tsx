@@ -89,8 +89,10 @@ const ServiceActions = ({
           refetch();
           toast.success("Service stopped successfully");
         },
-        onError: () => {
+        onError: (error) => {
+          console.error(error);
           toast.error("Failed to stop service");
+          throw error;
         },
       },
     );
@@ -105,8 +107,10 @@ const ServiceActions = ({
           refetch();
           toast.success("Service restarted successfully");
         },
-        onError: () => {
+        onError: (error) => {
+          console.error(error);
           toast.error("Failed to restart service");
+          throw error;
         },
       },
     );
