@@ -35,7 +35,7 @@ async fn fetch_services_manifests(url: &str, state: &Arc<SharedState>) -> Result
         .with_context(|| "Failed to parse response to list of services")?;
     let mut services_guard = state.services.lock().await;
     for service in services {
-        if !services_guard.contains_key(&service.id.clone().unwrap_or_default()) {
+        if !service.get_id_ref().map(|id| services_guard.contains_key(id)).unwrap_or_default() {
             services_guard.insert(service.get_id()?, service);
         }
     }
