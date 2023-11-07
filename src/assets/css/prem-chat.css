@@ -7,26 +7,6 @@
   @apply bg-grey-800 flex-col px-4 flex h-screen w-[260px] max-md:absolute max-md:z-10 right-0 max-md:top-0;
 }
 
-.prem-chat-sidebar .sidebar {
-  @apply max-md:fixed max-md:z-[11] max-md:w-full max-md:p-5 max-md:top-0 max-md:bottom-0 max-md:overflow-hidden max-md:bg-grey-800;
-}
-
-.prem-chat-sidebar .sidebar li.active {
-  @apply max-md:bg-grey-900;
-}
-
-.prem-chat-sidebar .sidebar__logo {
-  @apply max-md:max-w-[100px] max-md:ml-3;
-}
-
-.prem-chat-sidebar .sidebar__search {
-  @apply max-md:h-[38px];
-}
-
-.prem-chat-sidebar .sidebar li a {
-  @apply max-md:text-[12px];
-}
-
 .prem-chat {
   @apply mt-8 border-2 border-grey-400 rounded-md;
 }
@@ -132,12 +112,4 @@
     15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
-}
-
-.prem-chat-sidebar .sidebar li a span {
-  @apply whitespace-nowrap w-[180px] text-ellipsis overflow-hidden;
-}
-
-.prem-chat-sidebar .sidebar li {
-  @apply max-md:px-2;
 }

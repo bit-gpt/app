@@ -9,7 +9,7 @@ import type { HamburgerMenuProps } from "shared/types";
 import { useMediaQuery } from "usehooks-ts";
 import { shallow } from "zustand/shallow";
 
-const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremAudioLeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const { serviceId, serviceType, historyId } = useParams();
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
@@ -29,7 +29,7 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   return (
-    <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+    <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
       {history.length === 0 && <NoPrompts text="No Audio" />}
       <div className="mt-10 overflow-y-auto custom-scroll">
         <ul className="md:flex-grow scrollbar-none w-full">

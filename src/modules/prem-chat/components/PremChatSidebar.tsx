@@ -19,7 +19,7 @@ import { shallow } from "zustand/shallow";
 import LeftSidebar from "../../../shared/components/LeftSidebar";
 import type { Service } from "../../service/types";
 
-const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremChatSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
   // TODO: shallow will only check for reference equality, not deep equality
   const { history, deleteHistory, clearHistory } = usePremChatStore(
     (state) => ({
@@ -70,7 +70,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   return (
     <>
-      <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+      <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
         <div className="flex md:mt-8 mt-6 mb-6 sidebar__search relative">
           <img
             src={searchIcon}

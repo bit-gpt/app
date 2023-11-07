@@ -136,6 +136,7 @@ export type HeaderProps = {
 };
 
 export type HamburgerMenuProps = {
+  hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
 };
 

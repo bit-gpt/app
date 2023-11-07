@@ -1,5 +1,4 @@
 import Send from "assets/images/send.svg";
-import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import BotReply from "shared/components/BotReply";
 import UserReply from "shared/components/UserReply";
@@ -85,13 +84,10 @@ const PremChatContainer = ({
   return (
     <section>
       <div className="md:flex w-full relative">
-        <div
-          className={clsx("flex flex-col prem-chat-sidebar md:relative", {
-            "max-md:hidden": hamburgerMenuOpen,
-          })}
-        >
-          <PremChatSidebar setHamburgerMenu={setHamburgerMenu} />
-        </div>
+        <PremChatSidebar
+          hamburgerMenuOpen={hamburgerMenuOpen}
+          setHamburgerMenu={setHamburgerMenu}
+        />
         <div className="flex flex-1 prem-chat-container">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div
