@@ -56,6 +56,7 @@ export type PremChatContainerProps = {
   serviceId: string;
   serviceType: Service["serviceType"];
   serviceName: string;
+  isPetals: boolean;
 };
 
 export interface ChatRightSidebarProps extends RightSidebarProps {

@@ -17,7 +17,7 @@ const LeftSidebar = ({ setHamburgerMenu, children }: LeftSidebarProps) => {
   };
 
   return (
-    <div className="md:pt-7 !bg-grey-800 pt-[22px] pb-[10px] flex-col px-2 flex md:h-screen sidebar md:!w-[259px]">
+    <div className="md:pt-7 !bg-grey-800 pt-[22px] pb-[10px] flex flex-col flex-1 px-2 sidebar md:!w-[259px]">
       <div className="flex max-md:flex-wrap md:gap-4">
         <button className="mx-2" onClick={onCloseClick}>
           <img src={leftArrow} alt="left-arrow" className="max-md:max-w-[15px]" />
