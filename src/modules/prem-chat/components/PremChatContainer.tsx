@@ -6,6 +6,7 @@ import UserReply from "shared/components/UserReply";
 import usePremChatStream from "shared/hooks/usePremChatStream";
 import { useMediaQuery, useWindowSize } from "usehooks-ts";
 
+import Spinner from "../../../shared/components/Spinner";
 import useAutosizeTextArea from "../../../shared/hooks/useAutosizeTextarea";
 import type { Message, PremChatContainerProps } from "../types";
 
@@ -151,7 +152,11 @@ const PremChatContainer = ({
                         disabled={isLoading || !model}
                       />
                       <button>
-                        <img src={Send} alt="Send" />
+                        {isLoading ? (
+                          <Spinner className="h-9 w-5" />
+                        ) : (
+                          <img src={Send} alt="send" />
+                        )}
                       </button>
                     </div>
                   </form>
