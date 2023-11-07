@@ -10,7 +10,7 @@ import { shallow } from "zustand/shallow";
 
 import LeftSidebar from "../../../shared/components/LeftSidebar";
 
-const PremUpscalerLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremUpscalerLeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const { serviceId, serviceType, historyId } = useParams();
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
@@ -30,7 +30,7 @@ const PremUpscalerLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   return (
-    <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+    <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
       {history.length === 0 && <NoPrompts text="No Images" />}
       <div className="mt-10 overflow-y-auto custom-scroll">
         <ul className="md:flex-grow scrollbar-none w-full">

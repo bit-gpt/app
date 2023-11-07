@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { useState } from "react";
 
 import type { PremTextAudioContainerProps } from "../types";
@@ -19,11 +18,10 @@ const PremTextAudioContainer = ({
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", { "max-md:hidden": hamburgerMenuOpen })}
-        >
-          <PremTextAudioLeftSidebar setHamburgerMenu={setHamburgerMenu} />
-        </div>
+        <PremTextAudioLeftSidebar
+          hamburgerMenuOpen={hamburgerMenuOpen}
+          setHamburgerMenu={setHamburgerMenu}
+        />
         <div className="flex flex-1">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">

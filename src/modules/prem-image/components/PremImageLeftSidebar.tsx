@@ -10,7 +10,7 @@ import { shallow } from "zustand/shallow";
 import LeftSidebar from "../../../shared/components/LeftSidebar";
 import type { HamburgerMenuProps } from "../../../shared/types";
 
-const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremImageLeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
   const { serviceId, historyId } = useParams();
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history } = usePremImageStore(
@@ -28,7 +28,7 @@ const PremImageLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   return (
-    <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+    <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
       {history.length === 0 && <NoPrompts text="No Image" />}
       <div className="prem-image-sidebar custom-scroll">
         <ul className="md:flex-grow scrollbar-none w-full">

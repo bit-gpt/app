@@ -9,7 +9,7 @@ import { shallow } from "zustand/shallow";
 
 import LeftSidebar from "../../../shared/components/LeftSidebar";
 
-const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremTextAudioLeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const { serviceId, serviceType, historyId } = useParams();
   const { history, deleteHistory } = usePremTextAudioStore(
@@ -28,7 +28,7 @@ const PremTextAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   return (
-    <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+    <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
       {history.length === 0 && <NoPrompts text="No Audio" />}
       <div className="mt-10 overflow-y-auto custom-scroll">
         <ul className="md:flex-grow scrollbar-none w-full">

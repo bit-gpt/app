@@ -1,0 +1,28 @@
+/* Playground sidebar */
+.left-sidebar {
+  @apply max-md:fixed max-md:z-[11] max-md:w-full md:w-[259px] max-md:p-5 max-md:top-0 max-md:bottom-0 max-md:overflow-hidden flex flex-col md:relative md:pt-7 bg-grey-800 pt-[22px] pb-[10px] px-2;
+}
+
+.left-sidebar li.active {
+  @apply max-md:bg-grey-900;
+}
+
+.left-sidebar__logo {
+  @apply max-md:max-w-[100px] max-md:ml-3;
+}
+
+.left-sidebar__search {
+  @apply max-md:h-[38px];
+}
+
+.left-sidebar li {
+  @apply max-md:px-2;
+}
+
+.left-sidebar li a {
+  @apply max-md:text-[12px];
+}
+
+.left-sidebar li a span {
+  @apply whitespace-nowrap w-[180px] text-ellipsis overflow-hidden;
+}
