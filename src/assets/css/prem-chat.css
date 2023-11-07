@@ -36,15 +36,7 @@
 }
 
 .autosize-textarea {
-  @apply bg-grey-700 text-white leading-6 text-sm outline-none rounded-[29px] h-14 py-2 md:pl-[33px] md:pr-16 pr-12 pl-4 w-full min-h-14 max-h-40;
-}
-
-.autosize-textarea:empty {
-  line-height: 38px;
-}
-
-.autosize-textarea::placeholder {
-  line-height: 38px;
+  @apply bg-grey-700 text-white text-sm outline-none rounded-[29px] h-14 py-4 md:pl-[33px] md:pr-16 pr-12 pl-6 w-full min-h-14 max-h-40;
 }
 
 .autosize-textarea:-webkit-autofill,
