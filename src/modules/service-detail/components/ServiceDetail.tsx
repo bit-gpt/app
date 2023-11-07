@@ -36,7 +36,7 @@ const ServiceDetail = () => {
   }, [queryClient, refetch]);
 
   const back = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   if (isLoading || !service || Object.keys(service ?? {}).length === 0) return <ServiceLoading />;

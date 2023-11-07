@@ -21,6 +21,7 @@ const StoppedServiceState = ({
   onOpenClick,
   openDeleteModal,
   setOpenDeleteModal,
+  isDetailView,
 }: ServiceStateProps & DeleteModalProps) => {
   const { mutate: deleteMutate, isPending: isDeletePending } = useDeleteService();
   const { mutateAsync: startMutateAsync, isPending: isStartPending } = useStartService();
@@ -70,12 +71,14 @@ const StoppedServiceState = ({
 
   return (
     <>
-      <PrimaryButton
-        className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
-        onClick={onStart}
-      >
-        Open
-      </PrimaryButton>
+      {isDetailView && (
+        <PrimaryButton
+          className="!rounded-[14px] !px-5 !py-0 !text-[10px] !h-[30px] flex items-center"
+          onClick={onStart}
+        >
+          Open
+        </PrimaryButton>
+      )}
       {openDeleteModal && (
         <WarningModal
           icon={<DeleteIcon />}

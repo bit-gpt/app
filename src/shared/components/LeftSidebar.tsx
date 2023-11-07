@@ -13,7 +13,7 @@ const LeftSidebar = ({ setHamburgerMenu, children }: LeftSidebarProps) => {
   const navigate = useNavigate();
 
   const onCloseClick = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   return (
