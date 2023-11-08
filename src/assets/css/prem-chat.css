@@ -7,26 +7,6 @@
   @apply bg-grey-800 flex-col px-4 flex h-screen w-[260px] max-md:absolute max-md:z-10 right-0 max-md:top-0;
 }
 
-.prem-chat-sidebar .sidebar {
-  @apply max-md:fixed max-md:z-[11] max-md:w-full max-md:p-5 max-md:top-0 max-md:bottom-0 max-md:overflow-hidden max-md:bg-grey-800;
-}
-
-.prem-chat-sidebar .sidebar li.active {
-  @apply max-md:bg-grey-900;
-}
-
-.prem-chat-sidebar .sidebar__logo {
-  @apply max-md:max-w-[100px] max-md:ml-3;
-}
-
-.prem-chat-sidebar .sidebar__search {
-  @apply max-md:h-[38px];
-}
-
-.prem-chat-sidebar .sidebar li a {
-  @apply max-md:text-[12px];
-}
-
 .prem-chat {
   @apply mt-8 border-2 border-grey-400 rounded-md;
 }
@@ -36,15 +16,7 @@
 }
 
 .autosize-textarea {
-  @apply bg-grey-700 text-white leading-6 text-sm outline-none rounded-[29px] h-14 py-2 md:pl-[33px] md:pr-16 pr-12 pl-4 w-full min-h-14 max-h-40;
-}
-
-.autosize-textarea:empty {
-  line-height: 38px;
-}
-
-.autosize-textarea::placeholder {
-  line-height: 38px;
+  @apply bg-grey-700 text-white text-sm outline-none rounded-[29px] h-14 py-4 md:pl-[33px] md:pr-16 pr-12 pl-6 w-full min-h-14 max-h-40;
 }
 
 .autosize-textarea:-webkit-autofill,
@@ -108,7 +80,7 @@
   @apply !text-white;
 }
 
-.bot-reply > p {
+.bot-reply .markdown-body {
   @apply p-4 w-full text-white;
   max-width: 660px;
   border-radius: 0 10px 10px 10px;
@@ -132,12 +104,4 @@
     15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
   border-radius: 10px 10px 0 10px;
   border-color: rgba(112, 124, 151, 0.25);
-}
-
-.prem-chat-sidebar .sidebar li a span {
-  @apply whitespace-nowrap w-[180px] text-ellipsis overflow-hidden;
-}
-
-.prem-chat-sidebar .sidebar li {
-  @apply max-md:px-2;
 }

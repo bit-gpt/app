@@ -212,13 +212,15 @@ const ServiceActions = ({
               <img src={cross} alt="cross" width={22} height={22} className="w-6 h-6" />
             </button>
             <ul className={clsx("dropdown-menu", { "dropdown-active": dropdownOpen })}>
-              <li>
-                <button onClick={onRestart}>Restart</button>
-              </li>
               {status === "running" && isDetailView && (
-                <li>
-                  <button onClick={onStop}>Stop</button>
-                </li>
+                <>
+                  <li>
+                    <button onClick={onRestart}>Restart</button>
+                  </li>
+                  <li>
+                    <button onClick={onStop}>Stop</button>
+                  </li>
+                </>
               )}
               {status === "stopped" && (
                 <li>
