@@ -6,7 +6,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 pub async fn fetch_all_services_manifests(
-    registries: &Vec<Registry>,
+    registries: &[Registry],
     state: &Arc<SharedState>,
 ) -> Result<()> {
     let mut handlers = vec![];
