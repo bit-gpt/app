@@ -119,14 +119,14 @@ const PremChatSidebar = ({
           <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] max-md:hidden"></div>
           {filteredHistory.length > 0 && (
             <li>
-              <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>
+              <Link to={`/prem-chat/${serviceId}/${serviceType}`} onClick={onClearClick}>
                 <img src={binRed} alt="bin" className="mr-3 max-w-[20px]" />
                 <span className="text-white">Clear Chat</span>
               </Link>
             </li>
           )}
           <li>
-            <Link to={`/prem-chat/${serviceId}`} onClick={openModal}>
+            <Link to={`/prem-chat/${serviceId}/${serviceType}`} onClick={openModal}>
               <img
                 src={exportData}
                 alt="exportData"
@@ -138,7 +138,7 @@ const PremChatSidebar = ({
             </Link>
           </li>
           <li>
-            <Link to={`/prem-chat/${serviceId}`} onClick={openModal}>
+            <Link to={`/prem-chat/${serviceId}/${serviceType}`} onClick={openModal}>
               <img
                 src={importData}
                 alt="importData"
