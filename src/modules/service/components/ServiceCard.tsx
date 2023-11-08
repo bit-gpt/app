@@ -59,7 +59,7 @@ const ServiceCard = ({ className, service }: ServiceCardProps) => {
           isWarningModalOpen={isWarningModalOpen}
         />
       </div>
-      <div className="flex items-start flex-wrap w-full relative justify-between">
+      <div>
         <h3>
           {title}
           {service.beta && <Beta className="md:-top-2 top-[-5px]" />}
