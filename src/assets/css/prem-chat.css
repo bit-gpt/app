@@ -97,8 +97,8 @@
   @apply flex items-end mb-[40px];
 }
 
-.user-reply p {
-  @apply bg-grey-100 border py-4 px-[22px] ml-auto max-w-[660px]  text-base text-grey-700;
+.user-reply pre {
+  @apply bg-grey-100 border py-4 px-[22px] ml-auto max-w-[660px] text-base text-grey-700 overflow-x-auto;
   box-shadow:
     10.4294px 10.4294px 26.0736px rgba(112, 124, 151, 0.05),
     15.6442px 15.6442px 36.5031px rgba(112, 124, 151, 0.05);
