@@ -15,7 +15,7 @@ import RegenerateButton from "./RegenerateButton";
 import RightSidebar from "./RightSidebar";
 
 const PremChatContainer = ({
-  chatId,
+  historyId,
   serviceId,
   serviceType,
   serviceName,
@@ -42,7 +42,7 @@ const PremChatContainer = ({
     resetPromptTemplate,
     resetChatServiceUrl,
     abort,
-  } = usePremChatStream(serviceId, serviceType, chatId || null);
+  } = usePremChatStream(serviceId, serviceType, historyId || null);
 
   const handleScroll = () => {
     if (headerRef.current) {
@@ -79,7 +79,7 @@ const PremChatContainer = ({
     return () => {
       abort();
     };
-  }, [abort, chatId]);
+  }, [abort, historyId]);
 
   return (
     <section>
@@ -87,6 +87,9 @@ const PremChatContainer = ({
         <PremChatSidebar
           hamburgerMenuOpen={hamburgerMenuOpen}
           setHamburgerMenu={setHamburgerMenu}
+          serviceId={serviceId}
+          serviceType={serviceType}
+          historyId={historyId ?? ""}
         />
         <div className="flex flex-1 prem-chat-container">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
@@ -127,7 +130,7 @@ const PremChatContainer = ({
               <div className="prem-chat-bottom border-transparent">
                 <div className="md:w-[55%] sm:w-[85%] w-[88%] mx-auto mt-4">
                   {chatMessages.length > 0 && !isLoading && !isError && (
-                    <RegenerateButton onRgenerateClick={onRegenerate} />
+                    <RegenerateButton onRegenerateClick={onRegenerate} />
                   )}
                   <form onSubmit={onSubmit}>
                     <div className="autosize-textarea-container">

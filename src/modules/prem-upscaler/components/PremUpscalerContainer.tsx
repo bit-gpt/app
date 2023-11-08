@@ -25,6 +25,9 @@ const PremUpscalerContainer = ({
         <PremUpscalerLeftSidebar
           hamburgerMenuOpen={hamburgerMenuOpen}
           setHamburgerMenu={setHamburgerMenu}
+          serviceId={serviceId}
+          serviceType={serviceType}
+          historyId={historyId ?? ""}
         />
         <div className="flex flex-1">
           <div className="bg-lines bg-grey-900 relative h-full w-full">

@@ -4,18 +4,27 @@ import { useNavigate } from "react-router-dom";
 import leftArrow from "../../assets/images/arrow.svg";
 import cross from "../../assets/images/cross.svg";
 import Logo from "../../assets/images/logo.svg";
+import type { Service } from "../../modules/service/types";
 
 interface LeftSidebarProps {
   hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
+  serviceId: string;
+  serviceType: Service["serviceType"];
   children?: React.ReactNode;
 }
 
-const LeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu, children }: LeftSidebarProps) => {
+const LeftSidebar = ({
+  hamburgerMenuOpen,
+  setHamburgerMenu,
+  serviceId,
+  serviceType,
+  children,
+}: LeftSidebarProps) => {
   const navigate = useNavigate();
 
   const onCloseClick = () => {
-    navigate(-1);
+    navigate(`/services/${serviceId}/${serviceType}/detail`);
   };
 
   return (
