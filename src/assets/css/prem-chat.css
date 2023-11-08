@@ -80,7 +80,7 @@
   @apply !text-white;
 }
 
-.bot-reply > p {
+.bot-reply .markdown-body {
   @apply p-4 w-full text-white;
   max-width: 660px;
   border-radius: 0 10px 10px 10px;
