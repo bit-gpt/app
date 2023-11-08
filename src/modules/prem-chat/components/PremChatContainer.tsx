@@ -81,6 +81,13 @@ const PremChatContainer = ({
     };
   }, [abort, historyId]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onSubmit(e);
+    }
+  };
+
   return (
     <section>
       <div className="md:flex w-full relative">
@@ -138,6 +145,7 @@ const PremChatContainer = ({
                         autoComplete="off"
                         className="autosize-textarea"
                         onChange={(e) => setQuestion(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         placeholder={
                           isLoading
                             ? "Fetching response..."
