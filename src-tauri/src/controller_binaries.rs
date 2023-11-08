@@ -527,7 +527,7 @@ pub async fn add_registry(
             Err(e) => println!("Error unwrapping registries: {:?}", e),
         }
     } else {
-        let new_registry = [&registry];
+        let new_registry = [registry];
         store
             .insert(
                 "registries".to_string(),
