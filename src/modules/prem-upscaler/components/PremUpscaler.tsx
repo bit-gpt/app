@@ -23,8 +23,8 @@ const PremUpscaler = () => {
     <PremUpscalerContainer
       serviceName={service?.name ?? ""}
       historyId={historyId}
-      serviceId={serviceId!}
-      serviceType={serviceType!}
+      serviceId={serviceId ?? ""}
+      serviceType={serviceType ?? "docker"}
     />
   );
 };

@@ -24,7 +24,12 @@ const PremCoder = () => {
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu} />
+        <LeftSidebar
+          hamburgerMenuOpen={hamburgerMenuOpen}
+          setHamburgerMenu={setHamburgerMenu}
+          serviceId={serviceId ?? ""}
+          serviceType={serviceType ?? "docker"}
+        />
         <div className="flex flex-1">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">

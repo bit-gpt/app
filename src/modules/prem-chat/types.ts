@@ -48,11 +48,11 @@ export type InputBoxProps = {
 };
 
 export type RegenerateButtonProps = {
-  onRgenerateClick: () => void;
+  onRegenerateClick: () => void;
 };
 
 export type PremChatContainerProps = {
-  chatId: string | undefined;
+  historyId?: string;
   serviceId: string;
   serviceType: Service["serviceType"];
   serviceName: string;

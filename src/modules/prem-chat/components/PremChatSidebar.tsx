@@ -9,7 +9,7 @@ import clsx from "clsx";
 import orderBy from "lodash/orderBy";
 import WarningModal from "modules/service/components/WarningModal";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NoPrompts from "shared/components/NoPrompts";
 import WarningIcon from "shared/components/WarningIcon";
 import usePremChatStore from "shared/store/prem-chat";
@@ -17,9 +17,14 @@ import type { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
 import LeftSidebar from "../../../shared/components/LeftSidebar";
-import type { Service } from "../../service/types";
 
-const PremChatSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
+const PremChatSidebar = ({
+  hamburgerMenuOpen,
+  setHamburgerMenu,
+  serviceId,
+  serviceType,
+  historyId,
+}: HamburgerMenuProps) => {
   // TODO: shallow will only check for reference equality, not deep equality
   const { history, deleteHistory, clearHistory } = usePremChatStore(
     (state) => ({
@@ -31,18 +36,12 @@ const PremChatSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuP
   );
 
   const [search, setSearch] = useState("");
-
-  const { chatId, serviceId, serviceType } = useParams<{
-    chatId: string;
-    serviceId: string;
-    serviceType: Service["serviceType"];
-  }>();
   const navigate = useNavigate();
   const [openWarningModal, setIsOpenWarningModal] = useState(false);
 
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
-    if (chatId === id) {
+    if (historyId === id) {
       navigate(`/prem-chat/${serviceId}/${serviceType}`);
     }
   };
@@ -70,7 +69,12 @@ const PremChatSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuP
 
   return (
     <>
-      <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
+      <LeftSidebar
+        hamburgerMenuOpen={hamburgerMenuOpen}
+        setHamburgerMenu={setHamburgerMenu}
+        serviceId={serviceId}
+        serviceType={serviceType}
+      >
         <div className="flex md:mt-8 mt-6 mb-6 sidebar__search relative">
           <img
             src={searchIcon}
@@ -97,7 +101,7 @@ const PremChatSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuP
                 <li
                   onClick={() => setHamburgerMenu(true)}
                   key={item.id}
-                  className={clsx({ "bg-grey-900": chatId === item.id })}
+                  className={clsx({ "bg-grey-900": historyId === item.id })}
                 >
                   <Link to={`/prem-chat/${serviceId}/${serviceType}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />

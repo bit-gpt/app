@@ -7,8 +7,8 @@ import type { Service } from "../../service/types";
 import PremChatContainer from "./PremChatContainer";
 
 function PremChat() {
-  const { chatId, serviceId, serviceType } = useParams<{
-    chatId: string;
+  const { historyId, serviceId, serviceType } = useParams<{
+    historyId: string;
     serviceId: string;
     serviceType: Service["serviceType"];
   }>();
@@ -21,7 +21,7 @@ function PremChat() {
 
   return (
     <PremChatContainer
-      chatId={chatId}
+      historyId={historyId}
       serviceName={service?.name ?? ""}
       serviceId={serviceId!}
       serviceType={serviceType!}

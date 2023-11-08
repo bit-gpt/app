@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { format, parseISO } from "date-fns";
 import { orderBy } from "lodash";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NoPrompts from "shared/components/NoPrompts";
 import usePremImageStore from "shared/store/prem-image";
 import { useMediaQuery } from "usehooks-ts";
@@ -10,8 +10,13 @@ import { shallow } from "zustand/shallow";
 import LeftSidebar from "../../../shared/components/LeftSidebar";
 import type { HamburgerMenuProps } from "../../../shared/types";
 
-const PremImageLeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: HamburgerMenuProps) => {
-  const { serviceId, historyId } = useParams();
+const PremImageLeftSidebar = ({
+  hamburgerMenuOpen,
+  setHamburgerMenu,
+  serviceId,
+  serviceType,
+  historyId,
+}: HamburgerMenuProps) => {
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history } = usePremImageStore(
     (state) => ({
@@ -28,7 +33,12 @@ const PremImageLeftSidebar = ({ hamburgerMenuOpen, setHamburgerMenu }: Hamburger
   };
 
   return (
-    <LeftSidebar hamburgerMenuOpen={hamburgerMenuOpen} setHamburgerMenu={setHamburgerMenu}>
+    <LeftSidebar
+      hamburgerMenuOpen={hamburgerMenuOpen}
+      setHamburgerMenu={setHamburgerMenu}
+      serviceId={serviceId}
+      serviceType={serviceType}
+    >
       {history.length === 0 && <NoPrompts text="No Image" />}
       <div className="prem-image-sidebar custom-scroll">
         <ul className="md:flex-grow scrollbar-none w-full">
