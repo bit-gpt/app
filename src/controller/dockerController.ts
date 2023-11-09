@@ -1,3 +1,5 @@
+import type { Registry } from "modules/settings/types";
+
 import downloadServiceStream from "../modules/service/api/downloadServiceStream";
 import type { Service, ServiceDocker } from "../modules/service/types";
 import api from "../shared/api/v1";
@@ -93,6 +95,22 @@ class DockerController extends AbstractServiceController {
 
   async addService(service: Service): Promise<void> {
     await api().post("v1/services/", service);
+  }
+
+  async addRegistry(registry: Registry): Promise<void> {
+    await api().post(`v1/registries/`, registry);
+  }
+
+  async deleteRegistry(registry: Registry): Promise<void> {
+    await api().delete(`v1/registries/?url=${registry.url}`);
+  }
+
+  async fetchRegistries(): Promise<Registry[]> {
+    return await api().get(`v1/registries/`);
+  }
+
+  async resetDefaultRegistry(): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 }
 
