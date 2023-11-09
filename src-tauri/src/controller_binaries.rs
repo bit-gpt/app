@@ -442,8 +442,13 @@ pub async fn has_enough_storage() -> Result<bool> {
 
 pub async fn is_supported(service: &Service) -> Result<bool> {
     // Check if there is a binary for the current platform
-    let binary_url = utils::get_binary_url(&service.binaries_url.unwrap_or_default())
-        .with_context(|| "Failed to get the binary url.");
+    let binary_url = match service.binaries_url.as_ref() {
+        Some(binaries_url) => utils::get_binary_url(&binaries_url),
+        None => err!(
+            "No binaries_url found for service: {}",
+            service.get_id_ref()?
+        ),
+    };
     Ok(binary_url.is_ok())
 }
 
