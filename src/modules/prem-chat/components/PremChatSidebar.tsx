@@ -9,7 +9,7 @@ import clsx from "clsx";
 import orderBy from "lodash/orderBy";
 import WarningModal from "modules/service/components/WarningModal";
 import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NoPrompts from "shared/components/NoPrompts";
 import WarningIcon from "shared/components/WarningIcon";
 import usePremChatStore from "shared/store/prem-chat";
@@ -17,9 +17,14 @@ import type { HamburgerMenuProps } from "shared/types";
 import { shallow } from "zustand/shallow";
 
 import LeftSidebar from "../../../shared/components/LeftSidebar";
-import type { Service } from "../../service/types";
 
-const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremChatSidebar = ({
+  hamburgerMenuOpen,
+  setHamburgerMenu,
+  serviceId,
+  serviceType,
+  historyId,
+}: HamburgerMenuProps) => {
   // TODO: shallow will only check for reference equality, not deep equality
   const { history, deleteHistory, clearHistory } = usePremChatStore(
     (state) => ({
@@ -31,18 +36,12 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   );
 
   const [search, setSearch] = useState("");
-
-  const { chatId, serviceId, serviceType } = useParams<{
-    chatId: string;
-    serviceId: string;
-    serviceType: Service["serviceType"];
-  }>();
   const navigate = useNavigate();
   const [openWarningModal, setIsOpenWarningModal] = useState(false);
 
   const onDeleteClick = (id: string) => {
     deleteHistory(id);
-    if (chatId === id) {
+    if (historyId === id) {
       navigate(`/prem-chat/${serviceId}/${serviceType}`);
     }
   };
@@ -70,7 +69,12 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
 
   return (
     <>
-      <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+      <LeftSidebar
+        hamburgerMenuOpen={hamburgerMenuOpen}
+        setHamburgerMenu={setHamburgerMenu}
+        serviceId={serviceId}
+        serviceType={serviceType}
+      >
         <div className="flex md:mt-8 mt-6 mb-6 sidebar__search relative">
           <img
             src={searchIcon}
@@ -97,7 +101,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
                 <li
                   onClick={() => setHamburgerMenu(true)}
                   key={item.id}
-                  className={clsx({ "bg-grey-900": chatId === item.id })}
+                  className={clsx({ "bg-grey-900": historyId === item.id })}
                 >
                   <Link to={`/prem-chat/${serviceId}/${serviceType}/${item.id}`}>
                     <img src={msg} alt="msg" width={18} height={18} className="mr-3" />
@@ -115,14 +119,14 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
           <div className="border-t border-timberwolf opacity-30 -mx-2 pt-[13px] max-md:hidden"></div>
           {filteredHistory.length > 0 && (
             <li>
-              <Link to={`/prem-chat/${serviceId}`} onClick={onClearClick}>
+              <Link to={`/prem-chat/${serviceId}/${serviceType}`} onClick={onClearClick}>
                 <img src={binRed} alt="bin" className="mr-3 max-w-[20px]" />
                 <span className="text-white">Clear Chat</span>
               </Link>
             </li>
           )}
           <li>
-            <Link to={`/prem-chat/${serviceId}`} onClick={openModal}>
+            <Link to={`/prem-chat/${serviceId}/${serviceType}`} onClick={openModal}>
               <img
                 src={exportData}
                 alt="exportData"
@@ -134,7 +138,7 @@ const PremChatSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
             </Link>
           </li>
           <li>
-            <Link to={`/prem-chat/${serviceId}`} onClick={openModal}>
+            <Link to={`/prem-chat/${serviceId}/${serviceType}`} onClick={openModal}>
               <img
                 src={importData}
                 alt="importData"

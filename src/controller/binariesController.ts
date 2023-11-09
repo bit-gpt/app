@@ -1,4 +1,5 @@
 import { invoke } from "@tauri-apps/api/tauri";
+import type { Registry } from "modules/settings/types";
 
 import type { GPUStats, Service, ServiceBinary } from "../modules/service/types";
 import type { Interface } from "../shared/helpers/interfaces";
@@ -76,6 +77,22 @@ class BinariesController extends AbstractServiceController {
 
   async addService(service: Service): Promise<void> {
     await invoke("add_service", { service });
+  }
+
+  async addRegistry(registry: Registry): Promise<void> {
+    await invoke("add_registry", { registry });
+  }
+
+  async deleteRegistry(registry: Registry): Promise<void> {
+    await invoke("delete_registry", { registry });
+  }
+
+  async fetchRegistries(): Promise<Registry[]> {
+    return await invoke("fetch_registries");
+  }
+
+  async resetDefaultRegistry(): Promise<void> {
+    return await invoke("reset_default_registry");
   }
 }
 

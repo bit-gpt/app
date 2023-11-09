@@ -64,11 +64,13 @@ const PremImageContainer = ({
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", { "max-md:hidden": hamburgerMenuOpen })}
-        >
-          <PremImageLeftSidebar setHamburgerMenu={setHamburgerMenu} />
-        </div>
+        <PremImageLeftSidebar
+          hamburgerMenuOpen={hamburgerMenuOpen}
+          setHamburgerMenu={setHamburgerMenu}
+          serviceId={serviceId}
+          serviceType={serviceType}
+          historyId={historyId ?? ""}
+        />
         <div className="flex flex-1">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">

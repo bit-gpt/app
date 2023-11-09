@@ -1,5 +1,7 @@
 import type { Message, PremChatHistory } from "modules/prem-chat/types";
 
+import type { Service } from "../../modules/service/types";
+
 export type BotReplyProps = {
   reply: string;
 };
@@ -132,10 +134,15 @@ export type HeaderProps = {
   hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
   title: string;
+  isPetals?: boolean;
 };
 
 export type HamburgerMenuProps = {
+  hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
+  serviceId: string;
+  serviceType: Service["serviceType"];
+  historyId: string;
 };
 
 export interface RightSidebarProps {

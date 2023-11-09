@@ -36,13 +36,8 @@ const SwarmMode = () => {
       if (isRunning) {
         useSettingStore.getState().setSwarmMode(Swarm.Active);
       }
-    }, 500);
-
-    console.log("intervalId", intervalId);
-
-    return () => {
-      clearInterval(intervalId);
-    };
+    }, 1500);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {

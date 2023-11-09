@@ -1,4 +1,5 @@
 import type { GPUStats, Service } from "../modules/service/types";
+import type { Registry } from "../modules/settings/types";
 import type { Interface } from "../shared/helpers/interfaces";
 
 import type { DownloadArgs } from "./serviceController";
@@ -23,6 +24,10 @@ abstract class AbstractServiceController {
   abstract getGPUStats(): Promise<GPUStats>;
   abstract getInterfaces(): Promise<Interface[]>;
   abstract addService(service: Service): Promise<void>;
+  abstract addRegistry(registry: Registry): Promise<void>;
+  abstract deleteRegistry(registry: Registry): Promise<void>;
+  abstract fetchRegistries(): Promise<Registry[]>;
+  abstract resetDefaultRegistry(): Promise<void>;
 }
 
 export default AbstractServiceController;

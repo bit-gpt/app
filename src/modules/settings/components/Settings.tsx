@@ -6,6 +6,8 @@ import AppContainer from "shared/components/AppContainer";
 import DashboardSidebar from "shared/components/DashboardSidebar";
 import { useLockedBody, useMediaQuery } from "usehooks-ts";
 
+import { isDesktopEnv } from "../../../shared/helpers/utils";
+
 import AdvancedSettings from "./AdvancedSettings";
 import GPUResources from "./GPUResources";
 import SwarmMode from "./SwarmMode";
@@ -50,9 +52,11 @@ const Settings = () => {
         <div className="lg:max-w-[80%] mx-auto settings">
           <AdvancedSettings />
         </div>
-        <div className="lg:max-w-[80%] mx-auto settings">
-          <SwarmMode />
-        </div>
+        {isDesktopEnv() ? (
+          <div className="lg:max-w-[80%] mx-auto settings">
+            <SwarmMode />
+          </div>
+        ) : null}
       </div>
     </AppContainer>
   );

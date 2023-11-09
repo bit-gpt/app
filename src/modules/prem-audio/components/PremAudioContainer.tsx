@@ -1,6 +1,4 @@
-import clsx from "clsx";
 import { useState } from "react";
-import { useMediaQuery } from "usehooks-ts";
 
 import type { PremAudioContainerProps } from "../types";
 
@@ -16,19 +14,18 @@ const PremAudioContainer = ({
   historyId,
 }: PremAudioContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
-  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
 
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", {
-            hidden: responsiveMatches && hamburgerMenuOpen,
-          })}
-        >
-          <PremAudioLeftSidebar setHamburgerMenu={setHamburgerMenu} />
-        </div>
+        <PremAudioLeftSidebar
+          hamburgerMenuOpen={hamburgerMenuOpen}
+          setHamburgerMenu={setHamburgerMenu}
+          serviceId={serviceId}
+          serviceType={serviceType}
+          historyId={historyId ?? ""}
+        />
         <div className="flex flex-1">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">

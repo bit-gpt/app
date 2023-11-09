@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { orderBy } from "lodash";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DeleteIcon from "shared/components/DeleteIcon";
 import LeftSidebar from "shared/components/LeftSidebar";
 import NoPrompts from "shared/components/NoPrompts";
@@ -9,9 +9,14 @@ import type { HamburgerMenuProps } from "shared/types";
 import { useMediaQuery } from "usehooks-ts";
 import { shallow } from "zustand/shallow";
 
-const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
+const PremAudioLeftSidebar = ({
+  hamburgerMenuOpen,
+  setHamburgerMenu,
+  serviceId,
+  serviceType,
+  historyId,
+}: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const { serviceId, serviceType, historyId } = useParams();
   const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const { history, deleteHistory } = usePremAudioStore(
     (state) => ({
@@ -29,7 +34,12 @@ const PremAudioLeftSidebar = ({ setHamburgerMenu }: HamburgerMenuProps) => {
   };
 
   return (
-    <LeftSidebar setHamburgerMenu={setHamburgerMenu}>
+    <LeftSidebar
+      hamburgerMenuOpen={hamburgerMenuOpen}
+      setHamburgerMenu={setHamburgerMenu}
+      serviceId={serviceId}
+      serviceType={serviceType}
+    >
       {history.length === 0 && <NoPrompts text="No Audio" />}
       <div className="mt-10 overflow-y-auto custom-scroll">
         <ul className="md:flex-grow scrollbar-none w-full">
