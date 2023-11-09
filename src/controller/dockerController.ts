@@ -106,7 +106,8 @@ class DockerController extends AbstractServiceController {
   }
 
   async fetchRegistries(): Promise<Registry[]> {
-    return await api().get(`v1/registries/`);
+    const response = await api().get(`v1/registries/`);
+    return response.data;
   }
 
   async resetDefaultRegistry(): Promise<void> {

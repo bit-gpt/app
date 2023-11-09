@@ -14,8 +14,8 @@ const Domains = () => {
 
   useEffect(() => {
     (async () => {
-      const dnsInfo = await apiDnsd().get("dns/existing");
-      setDomains(dnsInfo.data.map((dnsInfo: { domain: any }) => dnsInfo.domain));
+      const { data } = await apiDnsd().get("dns/existing");
+      setDomains(data?.map((dnsInfo: { domain: any }) => dnsInfo.domain) ?? []);
     })();
   }, []);
 
