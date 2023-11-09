@@ -82,10 +82,12 @@ const PremChatContainer = ({
   }, [abort, historyId]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onSubmit(e);
+    // Check for 'Enter' key without 'Shift'
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // Prevents new line from being added
+      onSubmit(e); // Calls your submit function
     }
+    // If 'Shift' + 'Enter' is pressed, let the default behavior occur, which is to add a new line
   };
 
   return (
