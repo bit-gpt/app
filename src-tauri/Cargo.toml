@@ -15,7 +15,6 @@
   sys-info = "0.9.1"
   sysinfo = "0.29.10"
   thiserror = "1.0.49"
-  tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 
   [dependencies.futures]
     default-features = false
@@ -33,6 +32,10 @@
     features = ["shell-all", "updater", "system-tray", "process-exit", "dialog-all", "path-all", "process-command-api"]
     version = "1.5"
 
+  [dependencies.tauri-plugin-store]
+    branch = "v1"
+    git = "https://github.com/tauri-apps/plugins-workspace"
+
   [dependencies.tokio]
     features = ["process"]
     version = "1.33"
@@ -47,4 +50,4 @@
   license = ""
   name = "prem-app"
   repository = ""
-  version = "0.2.0"
+  version = "0.2.1"
