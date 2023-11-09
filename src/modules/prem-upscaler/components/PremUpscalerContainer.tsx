@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import { useState } from "react";
 import usePremUpscaler from "shared/hooks/usePremUpscaler";
-import { useMediaQuery } from "usehooks-ts";
 
 import type { PremUpscalerContainerProps } from "../types";
 
@@ -18,20 +16,19 @@ const PremUpscalerContainer = ({
   historyId,
 }: PremUpscalerContainerProps) => {
   const [rightSidebar, setRightSidebar] = useState(false);
-  const responsiveMatches = useMediaQuery("(max-width: 767px)");
   const [hamburgerMenuOpen, setHamburgerMenu] = useState<boolean>(true);
   const { currentHistory } = usePremUpscaler(serviceId!, serviceType!, historyId);
 
   return (
     <section>
       <div className="md:flex md:h-screen w-full relative">
-        <div
-          className={clsx("prem-chat-sidebar md:relative", {
-            hidden: responsiveMatches && hamburgerMenuOpen,
-          })}
-        >
-          <PremUpscalerLeftSidebar setHamburgerMenu={setHamburgerMenu} />
-        </div>
+        <PremUpscalerLeftSidebar
+          hamburgerMenuOpen={hamburgerMenuOpen}
+          setHamburgerMenu={setHamburgerMenu}
+          serviceId={serviceId}
+          serviceType={serviceType}
+          historyId={historyId ?? ""}
+        />
         <div className="flex flex-1">
           <div className="bg-lines bg-grey-900 relative h-full w-full">
             <div className="main-content h-full z-10 overflow-y-auto custom-scroll relative prem-img-services min-h-screen">

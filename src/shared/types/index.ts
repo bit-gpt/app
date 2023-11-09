@@ -1,5 +1,7 @@
 import type { Message, PremChatHistory } from "modules/prem-chat/types";
 
+import type { Service } from "../../modules/service/types";
+
 export type BotReplyProps = {
   reply: string;
 };
@@ -33,12 +35,19 @@ export type NavLinkItemProps = {
   label: string;
   to: string;
   target?: "_blank";
+  newFeature?: boolean;
 };
 
 export enum Swarm {
   Inactive = "inactive",
   Creating = "creating",
   Active = "active",
+}
+
+export enum EnvironmentDeletion {
+  Idle = "idle",
+  Progress = "progress",
+  Completed = "completed",
 }
 
 export type SwarmInfo = {
@@ -108,10 +117,15 @@ export type SettingStore = {
   addServiceAsDownloading: (serviceId: string) => void;
   removeServiceAsDownloading: (serviceId: string) => void;
   removeAllServiceAsDownloading: () => void;
+  newFeature: boolean;
+  setNewFeature: (newFeature: boolean) => void;
   swarmMode: Swarm;
   setSwarmMode: (mode: Swarm) => void;
   swarmInfo: SwarmInfo | null;
   setSwarmInfo: (swarmInfo: SwarmInfo | null) => void;
+  environmentDeletion: EnvironmentDeletion | null;
+  setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) => void;
+  resetSwarm: () => void;
   apiKey: string | null;
   setApiKey: (apiKey: string) => void;
 };
@@ -122,10 +136,15 @@ export type HeaderProps = {
   hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
   title: string;
+  isPetals?: boolean;
 };
 
 export type HamburgerMenuProps = {
+  hamburgerMenuOpen: boolean;
   setHamburgerMenu: (value: boolean) => void;
+  serviceId: string;
+  serviceType: Service["serviceType"];
+  historyId: string;
 };
 
 export interface RightSidebarProps {

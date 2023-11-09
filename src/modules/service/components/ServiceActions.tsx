@@ -89,8 +89,10 @@ const ServiceActions = ({
           refetch();
           toast.success("Service stopped successfully");
         },
-        onError: () => {
+        onError: (error) => {
+          console.error(error);
           toast.error("Failed to stop service");
+          throw error;
         },
       },
     );
@@ -105,8 +107,10 @@ const ServiceActions = ({
           refetch();
           toast.success("Service restarted successfully");
         },
-        onError: () => {
+        onError: (error) => {
+          console.error(error);
           toast.error("Failed to restart service");
+          throw error;
         },
       },
     );
@@ -208,13 +212,15 @@ const ServiceActions = ({
               <img src={cross} alt="cross" width={22} height={22} className="w-6 h-6" />
             </button>
             <ul className={clsx("dropdown-menu", { "dropdown-active": dropdownOpen })}>
-              <li>
-                <button onClick={onRestart}>Restart</button>
-              </li>
               {status === "running" && isDetailView && (
-                <li>
-                  <button onClick={onStop}>Stop</button>
-                </li>
+                <>
+                  <li>
+                    <button onClick={onRestart}>Restart</button>
+                  </li>
+                  <li>
+                    <button onClick={onStop}>Stop</button>
+                  </li>
+                </>
               )}
               {status === "stopped" && (
                 <li>

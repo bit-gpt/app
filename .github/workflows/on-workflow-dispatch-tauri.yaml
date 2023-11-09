@@ -1,0 +1,132 @@
+name: 🚀 Tauri Dekstop App
+
+on:
+  workflow_dispatch:
+    inputs:
+      branchName:
+        description: 'Branch Name you are releasing from'
+        required: true
+      version:
+          description: 'Version tag for the Github Release and the .dmg for MacOS'
+          required: true
+      release_as_draft:
+            description: 'Release as Draft'
+            required: false
+            default: true
+            type: boolean
+
+jobs:
+  publish-tauri:
+    permissions: write-all
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+
+      - name: View branch name
+        run: |
+          echo "Branch name: ${{ github.event.inputs.branchName }}"
+      
+      - name: View version 
+        run: |
+          echo "Tag: ${{ github.event.inputs.version }}"
+
+      - name: Version as Number 
+        id: next_version
+        run: |
+          tag=${{ github.event.inputs.version }}
+          echo "version=${tag:1}" >> $GITHUB_OUTPUT
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install missing Rust target for universal Mac build
+        if: matrix.platform == 'macos-latest'
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install frontend dependencies
+        run: npm install
+
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.20.1
+        id: go
+
+      - name: Install dasel
+        run: |
+          go install github.com/tomwright/dasel/cmd/dasel@latest
+
+
+      - name: Update with latest branch
+        run: |
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+          git config pull.rebase true
+          git stash  
+          git fetch origin ${{ github.event.inputs.branchName }}
+          git pull origin ${{ github.event.inputs.branchName }}
+          git stash pop || true
+
+      - name: Increment version
+        run: |
+          dasel put string -f package.json ".version" "${{ steps.next_version.outputs.version }}"
+          dasel put string -f src-tauri/tauri.conf.json ".package.version" "${{ steps.next_version.outputs.version }}"
+          dasel put string -f src-tauri/Cargo.toml ".package.version" "${{ steps.next_version.outputs.version }}"
+
+      - name: Build the app
+        uses: tauri-apps/tauri-action@dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        with:
+          tagName: ${{ github.event.inputs.version }}
+          releaseName: "PremAI App ${{ github.event.inputs.version }}"
+          releaseBody: "See the assets to download and install this version."
+          releaseDraft: ${{ github.event.inputs.release_as_draft }} 
+          includeDebug: true
+          updaterJsonKeepUniversal: true
+          args: ${{matrix.platform == 'ubuntu-20.04' && '--target x86_64-unknown-linux-gnu' || '--target universal-apple-darwin'}}
+      
+
+      # Commit package.json, tauri.conf.json and Cargo.toml to master
+      - name: Commit & Push
+        continue-on-error: true
+        run: |
+          git add .
+          git commit -m "${{ github.event.inputs.version }}"
+          git push origin HEAD:${{ github.event.inputs.branchName }}
+          
+  

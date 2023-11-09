@@ -40,3 +40,34 @@ impl serde::Serialize for Error {
         serializer.serialize_str(self.to_string().as_ref())
     }
 }
+
+#[macro_export]
+macro_rules! err {
+    ($($t:tt)*) => {{
+        Err(format!($($t)*))?
+    }};
+}
+
+#[macro_export]
+macro_rules! logerr {
+    ($ar:expr $(,)+ $($t:tt)+) => {{
+        if let Err(e) = $ar {
+            log::error!("{e:?}");
+            log::error!($($t)*);
+        }
+    }};
+    ($ar:expr) => {{
+        if let Err(e) = $ar {
+            log::error!("{e:?}");
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! logsome {
+    ($ar:expr, $($t:tt)*) => {{
+        if ($ar).is_none() {
+            log::error!($($t)*);
+        }
+    }};
+}

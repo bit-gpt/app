@@ -7,14 +7,19 @@ mod errors;
 mod swarm;
 mod utils;
 
+use crate::controller_binaries::stop_all_services;
+
+use std::{collections::HashMap, env, ops::Deref, str, sync::Arc};
+
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
-use std::{collections::HashMap, env, str};
 use tauri::{
     AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
     SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
-use tokio::{process::Child, sync::Mutex};
+use tauri_plugin_store::StoreBuilder;
+use tokio::process::Child;
+use tokio::sync::Mutex;
 
 #[derive(Debug, Default)]
 pub struct SharedState {
@@ -22,6 +27,32 @@ pub struct SharedState {
     running_services: Mutex<HashMap<String, Child>>,
     // Properties from public service registry and additional service state
     services: Mutex<HashMap<String, Service>>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct Registry {
+    url: String,
+}
+
+impl Default for Registry {
+    fn default() -> Self {
+        // Determine the URL based on whether the app is in debug or release mode
+        let url = if cfg!(debug_assertions) {
+            // Debug mode URL
+            "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json"
+        } else {
+            // Release mode URL
+            "https://raw.githubusercontent.com/premAI-io/prem-registry/v1/manifests.json"
+        };
+        Registry {
+            url: url.to_string(),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct Store {
+    registries: Vec<Registry>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -50,6 +81,9 @@ pub struct Service {
     running_port: Option<u32>,
     #[serde(rename = "serviceType")]
     service_type: Option<String>,
+    petals: Option<bool>,
+    #[serde(rename = "skipHealthCheck")]
+    skip_health_check: Option<bool>,
     version: Option<String>,
     #[serde(rename = "weightsDirectoryUrl")]
     weights_directory_url: Option<String>,
@@ -73,6 +107,22 @@ pub struct Service {
     supported: Option<bool>,
 }
 
+impl Service {
+    fn get_id(&self) -> errors::Result<String> {
+        use errors::Context;
+        self.id
+            .clone()
+            .with_context(|| format!("Service doesn't contain a valid id\n{:#?}", self))
+    }
+    // ref to String is used as it's more generally coerce-able
+    fn get_id_ref(&self) -> errors::Result<&String> {
+        use errors::Context;
+        self.id
+            .as_ref()
+            .with_context(|| format!("Service doesn't contain a valid id\n{:#?}", self))
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone)]
 struct ModelInfo {
     #[serde(rename = "inferenceTime")]
@@ -91,12 +141,11 @@ struct ModelInfo {
 }
 
 fn main() {
-    // Sentry
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
         sentry::ClientOptions {
             release: sentry::release_name!(),
-            debug: true,
+            debug: false, // this outputs dsn to stdout on sentry init
             ..Default::default()
         },
     ));
@@ -105,8 +154,11 @@ fn main() {
     let _guard = sentry_tauri::minidump::init(&client);
     // Everything after here runs in only the app process
 
+    // TODO: consider directly pushing logs to sentry (sentry-sdk provides
+    // log integration) for release builds
+
     // initialize logger
-    pretty_env_logger::formatted_timed_builder()
+    pretty_env_logger::formatted_builder()
         .format(|buf, record| {
             use std::io::Write;
             writeln!(
@@ -164,11 +216,12 @@ fn main() {
 
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
-    let state = SharedState::default();
-    #[allow(unused_mut)]
-    let mut app = tauri::Builder::default()
+    let state = std::sync::Arc::new(SharedState::default());
+
+    let app = tauri::Builder::default()
         .plugin(sentry_tauri::plugin())
-        .manage(state)
+        .plugin(tauri_plugin_store::Builder::default().build())
+        .manage(state.clone())
         .invoke_handler(tauri::generate_handler![
             controller_binaries::start_service,
             controller_binaries::stop_service,
@@ -182,17 +235,25 @@ fn main() {
             controller_binaries::get_service_stats,
             controller_binaries::get_gpu_stats,
             controller_binaries::add_service,
+            controller_binaries::add_registry,
+            controller_binaries::delete_registry,
+            controller_binaries::fetch_registries,
+            controller_binaries::reset_default_registry,
             swarm::is_swarm_supported,
             swarm::get_username,
             swarm::get_petals_models,
-            swarm::run_swarm_mode,
+            swarm::create_environment,
+            swarm::delete_environment,
+            swarm::run_swarm,
             swarm::stop_swarm_mode,
             swarm::is_swarm_mode_running
         ])
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
             "quit" => {
-                controller_binaries::stop_all_services(event.window().state());
+                controller_binaries::stop_all_services(
+                    event.window().state::<Arc<SharedState>>().deref().clone(),
+                );
                 event.window().close().unwrap();
             }
             "close" => {
@@ -204,17 +265,25 @@ fn main() {
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "hide" => {
-                    let window = app.get_window("main").unwrap();
-                    window.hide().unwrap();
+                    let Some(window) = app.get_window("main") else {
+                        log::error!("Couldn't get window from for label 'main'");
+                        return;
+                    };
+                    logerr!(window.hide());
                 }
                 "quit" => {
-                    controller_binaries::stop_all_services(app.state());
+                    controller_binaries::stop_all_services(
+                        app.state::<Arc<SharedState>>().deref().clone(),
+                    );
                     app.exit(0);
                 }
                 "show" => {
-                    let window = app.get_window("main").unwrap();
-                    window.set_focus().unwrap();
-                    window.show().unwrap();
+                    let Some(window) = app.get_window("main") else {
+                        log::error!("Couldn't get window from for label 'main'");
+                        return;
+                    };
+                    logerr!(window.set_focus());
+                    logerr!(window.show());
                 }
                 _ => {}
             },
@@ -222,24 +291,80 @@ fn main() {
         })
         .setup(|app| {
             tauri::async_runtime::block_on(async move {
-                utils::fetch_services_manifests(
-                    "https://raw.githubusercontent.com/premAI-io/prem-registry/dev/manifests.json",
-                    &app.state::<SharedState>(),
-                )
-                .await
-                .expect("Failed to fetch and save services manifests");
+                //Create a store with default registry if doesn't exist
+                let store_path = app
+                    .path_resolver()
+                    .app_data_dir()
+                    .expect("failed to resolve app data dir")
+                    .join("store.json");
+                if !store_path.exists() {
+                    let mut registries: Vec<Registry> = Vec::new();
+                    registries.push(Registry::default());
+                    let mut default_store = HashMap::new();
+                    default_store.insert(
+                        "registries".to_string(),
+                        serde_json::to_value(registries).unwrap(),
+                    );
+                    let store = StoreBuilder::new(app.handle(), store_path.clone())
+                        .defaults(default_store)
+                        .build();
+                    store.save().expect("failed to save store");
+                    log::info!("Store created");
+                }
+                // Fetch all registries
+                let mut store = StoreBuilder::new(app.handle(), store_path.clone()).build();
+                store.load().expect("Failed to load store");
+                if let Some(registries) = store.get("registries").cloned() {
+                    match serde_json::from_value::<Vec<Registry>>(registries) {
+                        Ok(registries) => utils::fetch_all_services_manifests(
+                            &registries,
+                            &app.state::<Arc<SharedState>>().clone(),
+                        )
+                        .await
+                        .expect("failed to fetch services"),
+                        Err(e) => println!("Error unwrapping registries: {:?}", e),
+                    }
+                }
             });
             Ok(())
         })
+        .on_window_event(|ev| {
+            if matches!(ev.event(), WindowEvent::Destroyed) {
+                stop_all_services(ev.window().state::<Arc<SharedState>>().deref().clone());
+            }
+        })
         .build(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .expect("Error while building tauri application");
+
+    {
+        let app_handle = app.handle();
+        let s = state.clone();
+        std::panic::set_hook(Box::new(move |_| {
+            stop_all_services(s.clone());
+            app_handle.exit(-1);
+        }));
+
+        let app_handle = app.handle();
+        let s = state.clone();
+        ctrlc::set_handler(move || {
+            stop_all_services(s.clone());
+            app_handle.exit(-1);
+        })
+        .expect("Error setting Ctrl-C handler");
+    }
 
     app.run(|app_handle, e| match e {
         // Triggered when a window is trying to close
         RunEvent::WindowEvent { label, event, .. } => {
             match event {
                 WindowEvent::CloseRequested { api, .. } => {
-                    app_handle.get_window(&label).unwrap().hide().unwrap();
+                    logsome!(
+                        app_handle.get_window(&label).map(|e| logerr!(
+                            e.hide(),
+                            "Failed to hide window with label({label:?})"
+                        )),
+                        "Failed to get app window with label({label:?})"
+                    );
                     // use the exposed close api, and prevent the event loop to close
                     api.prevent_close();
                 }
@@ -247,5 +372,5 @@ fn main() {
             }
         }
         _ => {}
-    })
+    });
 }
