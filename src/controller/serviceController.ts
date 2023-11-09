@@ -31,7 +31,7 @@ interface IServiceController {
   getLogs(serviceId: string, serviceType: Service["serviceType"]): Promise<string>;
   getServiceStats(serviceId: string, serviceType: Service["serviceType"]): Promise<any>;
   getSystemStats(serviceType: Service["serviceType"]): Promise<any>;
-  getGPUStats(serviceType: Service["serviceType"]): Promise<any>;
+  getGPUStats(serviceType: Service["serviceType"]): Promise<GPUStats>;
   getInterfaces(serviceType: Service["serviceType"]): Promise<Interface[]>;
   addService(service: Service, serviceType: Service["serviceType"]): Promise<void>;
   addRegistry(registry: Registry, serviceType: Service["serviceType"]): Promise<void>;
