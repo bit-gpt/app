@@ -7,7 +7,7 @@ use crate::{
     errors::{Context, Result},
     logerr,
     swarm::{create_environment, Config},
-    Service, SharedState,
+    utils, Service, SharedState,
 };
 
 use std::path::PathBuf;
@@ -440,9 +440,11 @@ pub async fn has_enough_storage() -> Result<bool> {
     Ok(true)
 }
 
-pub async fn is_supported() -> Result<bool> {
-    // TODO: Not implemented yet
-    Ok(true)
+pub async fn is_supported(service: &Service) -> Result<bool> {
+    // Check if there is a binary for the current platform
+    let binary_url = utils::get_binary_url(&service.binaries_url.unwrap_or_default())
+        .with_context(|| "Failed to get the binary url.");
+    Ok(binary_url.is_ok())
 }
 
 pub fn get_base_url(service: &Service) -> Result<String> {
@@ -462,7 +464,7 @@ pub async fn update_service_with_dynamic_state(
     let has_enough_free_memory = has_enough_free_memory(service).await?;
     let has_enough_total_memory = has_enough_total_memory(service).await?;
     let has_enough_storage = has_enough_storage().await?;
-    let is_supported = is_supported().await?;
+    let is_supported = is_supported(service).await?;
     let is_service_running = is_service_running(service.get_id_ref()?, &state).await?;
     let base_url = get_base_url(service)?;
     service.downloaded = Some(is_service_downloaded);
