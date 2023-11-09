@@ -2,6 +2,6 @@ export type Health = {
   status: boolean;
 };
 
-export type Registries = {
+export type Registry = {
   url: string;
 };

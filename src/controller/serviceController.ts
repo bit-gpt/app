@@ -1,4 +1,5 @@
 import type { Service } from "../modules/service/types";
+import type { Registry } from "../modules/settings/types";
 import type { Interface } from "../shared/helpers/interfaces";
 import useSettingStore from "../shared/store/setting";
 
@@ -33,6 +34,10 @@ interface IServiceController {
   getGPUStats(serviceType: Service["serviceType"]): Promise<any>;
   getInterfaces(serviceType: Service["serviceType"]): Promise<Interface[]>;
   addService(service: Service, serviceType: Service["serviceType"]): Promise<void>;
+  addRegistry(registry: Registry, serviceType: Service["serviceType"]): Promise<void>;
+  deleteRegistry(registry: Registry, serviceType: Service["serviceType"]): Promise<void>;
+  fetchRegistries(serviceType: Service["serviceType"]): Promise<Registry[]>;
+  resetDefaultRegistry(serviceType: Service["serviceType"]): Promise<void>;
 }
 
 class ServiceController implements IServiceController {
@@ -205,6 +210,40 @@ class ServiceController implements IServiceController {
       await this.dockerController.addService(service);
     } else if (service.serviceType === "binary") {
       await this.binariesController.addService(service);
+    }
+  }
+
+  async addRegistry(registry: Registry, serviceType: Service["serviceType"]): Promise<void> {
+    if (serviceType === "docker") {
+      await this.dockerController.addRegistry(registry);
+    } else if (serviceType === "binary") {
+      await this.binariesController.addRegistry(registry);
+    }
+  }
+
+  async deleteRegistry(registry: Registry, serviceType: Service["serviceType"]): Promise<void> {
+    if (serviceType === "docker") {
+      await this.dockerController.deleteRegistry(registry);
+    } else if (serviceType === "binary") {
+      await this.binariesController.deleteRegistry(registry);
+    }
+  }
+
+  async fetchRegistries(serviceType: Service["serviceType"]): Promise<Registry[]> {
+    if (serviceType === "docker") {
+      return await this.dockerController.fetchRegistries();
+    } else if (serviceType === "binary") {
+      return await this.binariesController.fetchRegistries();
+    } else {
+      return [];
+    }
+  }
+
+  async resetDefaultRegistry(serviceType: Service["serviceType"]): Promise<void> {
+    if (serviceType === "docker") {
+      return await this.dockerController.resetDefaultRegistry();
+    } else if (serviceType === "binary") {
+      return await this.binariesController.resetDefaultRegistry();
     }
   }
 }

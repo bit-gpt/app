@@ -7,7 +7,7 @@ use crate::{
     errors::{Context, Result},
     logerr,
     swarm::{create_environment, Config},
-    Service, SharedState,
+    utils, Registry, Service, SharedState,
 };
 
 use std::path::PathBuf;
@@ -20,6 +20,7 @@ use sys_info::mem_info;
 use sysinfo::{Pid, ProcessExt, ProcessRefreshKind, RefreshKind, SystemExt};
 
 use tauri::{AppHandle, Runtime, State, Window};
+use tauri_plugin_store::StoreBuilder;
 
 use tokio::process::{Child, Command};
 use tokio::time::interval;
@@ -493,5 +494,145 @@ pub async fn get_gpu_stats() -> Result<HashMap<String, String>> {
 pub async fn add_service(service: Service, state: State<'_, Arc<SharedState>>) -> Result<()> {
     let mut services_guard = state.services.lock().await;
     services_guard.insert(service.get_id()?, service);
+    Ok(())
+}
+
+#[tauri::command(async)]
+pub async fn add_registry(
+    registry: Registry,
+    app_handle: AppHandle,
+    state: State<'_, Arc<SharedState>>,
+) -> Result<()> {
+    let store_path = app_handle
+        .path_resolver()
+        .app_data_dir()
+        .with_context(|| "Failed to resolve app data dir")?
+        .join("store.json");
+    let mut store = StoreBuilder::new(app_handle, store_path).build();
+    store.load().with_context(|| "Failed to load store")?;
+    if let Some(registries) = store.get("registries").cloned() {
+        match serde_json::from_value::<Vec<Registry>>(registries) {
+            Ok(mut registries) => {
+                registries.push(registry);
+                store
+                    .insert(
+                        "registries".to_string(),
+                        serde_json::to_value(&registries).unwrap(),
+                    )
+                    .with_context(|| "Failed to insert into store")?;
+                utils::fetch_all_services_manifests(&registries, &state)
+                    .await
+                    .expect("failed to fetch services")
+            }
+            Err(e) => println!("Error unwrapping registries: {:?}", e),
+        }
+    } else {
+        let new_registry = [registry];
+        store
+            .insert(
+                "registries".to_string(),
+                serde_json::to_value(&new_registry).unwrap(),
+            )
+            .with_context(|| "Failed to insert into store")?;
+        utils::fetch_all_services_manifests(&new_registry, &state)
+            .await
+            .expect("failed to fetch services")
+    }
+    store.save().expect("failed to save store");
+    Ok(())
+}
+
+#[tauri::command(async)]
+pub async fn delete_registry(
+    registry: Registry,
+    app_handle: AppHandle,
+    state: State<'_, Arc<SharedState>>,
+) -> Result<()> {
+    let store_path = app_handle
+        .path_resolver()
+        .app_data_dir()
+        .with_context(|| "Failed to resolve app data dir")?
+        .join("store.json");
+    let mut store = StoreBuilder::new(app_handle, store_path).build();
+    store.load().with_context(|| "Failed to load store")?;
+    if let Some(registries) = store.get("registries").cloned() {
+        let mut registries = serde_json::from_value::<Vec<Registry>>(registries)
+            .with_context(|| "Failed to deserialize")?;
+        registries.retain(|r| r.url != registry.url);
+        store
+            .insert(
+                "registries".to_string(),
+                serde_json::to_value(registries).with_context(|| "Failed to serialize")?,
+            )
+            .with_context(|| "Failed to insert into store")?;
+        store.save().with_context(|| "Failed to save store")?;
+
+        // Reset services state and refetch all registries
+        let mut services_guard = state.services.lock().await;
+        services_guard.clear();
+        drop(services_guard);
+        if let Some(registries) = store.get("registries").cloned() {
+            match serde_json::from_value::<Vec<Registry>>(registries) {
+                Ok(registries) => utils::fetch_all_services_manifests(&registries, &state)
+                    .await
+                    .with_context(|| "Failed to fetch services")?,
+                Err(e) => log::error!("Error unwrapping registries: {:?}", e),
+            }
+        } else {
+            println!("No registries found");
+        }
+    }
+    Ok(())
+}
+
+#[tauri::command(async)]
+pub async fn fetch_registries(app_handle: AppHandle) -> Result<Vec<Registry>> {
+    let store_path = app_handle
+        .path_resolver()
+        .app_data_dir()
+        .with_context(|| "Failed to resolve app data dir")?
+        .join("store.json");
+    let mut store = StoreBuilder::new(app_handle, store_path).build();
+    match store.load() {
+        Ok(_) => {
+            if let Some(registries) = store.get("registries").cloned() {
+                match serde_json::from_value::<Vec<Registry>>(registries) {
+                    Ok(registries) => Ok(registries),
+                    Err(e) => {
+                        log::error!("Error unwrapping registries: {:?}", e);
+                        Ok(Vec::new())
+                    }
+                }
+            } else {
+                log::error!("No registries found");
+                Ok(Vec::new())
+            }
+        }
+        Err(e) => {
+            log::error!("Error loading store: {:?}", e);
+            Ok(Vec::new())
+        }
+    }
+}
+
+#[tauri::command(async)]
+pub async fn reset_default_registry(
+    app_handle: AppHandle,
+    state: State<'_, Arc<SharedState>>,
+) -> Result<()> {
+    let store_path = app_handle
+        .path_resolver()
+        .app_data_dir()
+        .with_context(|| "Failed to resolve app data dir")?
+        .join("store.json");
+    let mut store = StoreBuilder::new(app_handle.clone(), store_path).build();
+    store.load().with_context(|| "Failed to load store")?;
+    store
+        .delete("registries")
+        .with_context(|| "Failed to delete registries")?;
+    store.save().with_context(|| "Failed to save store")?;
+    add_registry(Registry::default(), app_handle.clone(), state)
+        .await
+        .with_context(|| "Failed to add default registry")?;
     Ok(())
 }

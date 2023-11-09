@@ -1,10 +1,31 @@
 use crate::errors::{Context, Result};
-use crate::{err, Service, SharedState};
+use crate::{err, Registry, Service, SharedState};
+use futures::future;
 use reqwest::get;
 use std::collections::HashMap;
 use std::sync::Arc;
 
-pub async fn fetch_services_manifests(url: &str, state: Arc<SharedState>) -> Result<()> {
+pub async fn fetch_all_services_manifests(
+    registries: &[Registry],
+    state: &Arc<SharedState>,
+) -> Result<()> {
+    let mut handlers = vec![];
+    for registry in registries {
+        let handler = async move {
+            if let Err(err) = fetch_services_manifests(registry.url.as_str(), state).await {
+                println!(
+                    "Failed to fetch {} and save services manifests: {}",
+                    registry.url, err
+                );
+            }
+        };
+        handlers.push(handler);
+    }
+    future::join_all(handlers).await;
+    Ok(())
+}
+
+async fn fetch_services_manifests(url: &str, state: &Arc<SharedState>) -> Result<()> {
     let response = get(url)
         .await
         .with_context(|| format!("Couldn't fetch the manifest from {url:?}"))?;
@@ -13,13 +34,15 @@ pub async fn fetch_services_manifests(url: &str, state: Arc<SharedState>) -> Res
         .await
         .with_context(|| "Failed to parse response to list of services")?;
     let mut services_guard = state.services.lock().await;
-    // TODO: discuss why do we need global ids, why not use uuids and generate them on each load
-    *services_guard = services
-        .into_iter()
-        // removes services without id
-        .filter_map(|x| Some((x.id.clone()?, x)))
-        // removes duplicate services
-        .collect();
+    for service in services {
+        if !service
+            .get_id_ref()
+            .map(|id| services_guard.contains_key(id))
+            .unwrap_or_default()
+        {
+            services_guard.insert(service.get_id()?, service);
+        }
+    }
     Ok(())
 }
 
