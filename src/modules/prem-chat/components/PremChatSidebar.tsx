@@ -51,7 +51,7 @@ const PremChatSidebar = ({
   };
 
   const filteredHistory = history.filter((item) => {
-    return item.title.toLowerCase().includes(search.toLowerCase());
+    return item.model === serviceId && item.title.toLowerCase().includes(search.toLowerCase());
   });
 
   const closeModal = () => {
