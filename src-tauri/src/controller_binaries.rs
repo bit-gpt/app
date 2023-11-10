@@ -229,16 +229,26 @@ async fn _stop_service(
         process.name(),
         process.pid()
     );
+    
+    drop(running_services_guard);
+
     if !process
         .kill_with(sysinfo::Signal::Term)
         .with_context(|| format!("Couldn't send terminate signal to process(pid: {}).", pid))?
     {
-        err!("Failed to kill the process");
+        // If SIGTERM didn't work, send SIGKILL
+        if !process
+            .kill_with(sysinfo::Signal::Kill)
+            .with_context(|| format!("Couldn't send kill signal to process(pid: {}).", pid))?
+        {
+            err!("Failed to kill the process");
+        }
     }
     let mut registry_lock = services.lock().await;
     if let Some(service) = registry_lock.get_mut(service_id) {
         service.running = Some(false);
     }
+    drop(registry_lock);
     // wait for process to properly exit
     if let Ok(_exit_code) = child.try_wait() {
         log::info!("service stopped!");
