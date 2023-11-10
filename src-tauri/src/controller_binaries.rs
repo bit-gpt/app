@@ -229,7 +229,7 @@ async fn _stop_service(
         process.name(),
         process.pid()
     );
-    
+
     drop(running_services_guard);
 
     if !process
