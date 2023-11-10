@@ -13,7 +13,7 @@ const BotReply = ({ reply }: BotReplyProps) => {
       </span>
       <Markdown>{reply}</Markdown>
       <CopyToClipboard text={reply}>
-        <button className="ml-3 bg-white mt-auto rounded-[12px] h-[38px] min-w-[35px]">
+        <button className="ml-3 bg-white active:bg-grey-300 mt-auto rounded-[12px] h-[38px] min-w-[35px]">
           <img className="mx-auto" src={copy} alt="copy" width={16} height={16} />
         </button>
       </CopyToClipboard>
