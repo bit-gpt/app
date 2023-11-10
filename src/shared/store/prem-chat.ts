@@ -9,7 +9,10 @@ const usePremChatStore = create<PremChatStore>()(
     persist(
       (set) => ({
         history: [],
-        clearHistory: () => set(() => ({ history: [] })),
+        clearHistory: (serviceId: string) =>
+          set((state) => ({
+            history: state.history.filter((_history) => _history.model !== serviceId),
+          })),
         addHistory: (newHistory: PremChatHistory) =>
           set((state) => ({ history: [...state.history, newHistory] })),
         updateHistoryMessages: (id, messages) =>

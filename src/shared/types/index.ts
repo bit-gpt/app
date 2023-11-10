@@ -78,7 +78,7 @@ export type ModalProps = {
 
 export type PremChatStore = {
   history: PremChatHistory[];
-  clearHistory: () => void;
+  clearHistory: (serviceId: string) => void;
   addHistory: (newHistory: PremChatHistory) => void;
   updateHistoryMessages: (id: string, messages: Message[]) => void;
   deleteHistory: (id: string) => void;
