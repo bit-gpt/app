@@ -63,17 +63,17 @@ const ServiceActions = ({
     const isPlayground = interfaces.some((app) => app.playground);
     if (isPlayground) {
       if (interfaces.some((app) => app.id === CHAT_ID)) {
-        navigate(`/prem-chat/${service.id}/${service.serviceType}`);
+        navigate(`/prem-chat/${service.id}/${service.serviceType ?? "docker"}`);
       } else if (interfaces.some((app) => app.id === DIFFUSER_ID)) {
-        navigate(`/prem-image/${service.id}/${service.serviceType}`);
+        navigate(`/prem-image/${service.id}/${service.serviceType ?? "docker"}`);
       } else if (interfaces.some((app) => app.id === AUDIO_TO_TEXT_ID)) {
-        navigate(`/prem-audio/${service.id}/${service.serviceType}`);
+        navigate(`/prem-audio/${service.id}/${service.serviceType ?? "docker"}`);
       } else if (interfaces.some((app) => app.id === TEXT_TO_AUDIO_ID)) {
-        navigate(`/prem-text-audio/${service.id}/${service.serviceType}`);
+        navigate(`/prem-text-audio/${service.id}/${service.serviceType ?? "docker"}`);
       } else if (interfaces.some((app) => app.id === UPSCALER_ID)) {
-        navigate(`/prem-upscaler/${service.id}/${service.serviceType}`);
+        navigate(`/prem-upscaler/${service.id}/${service.serviceType ?? "docker"}`);
       } else if (interfaces.some((app) => app.id === CODER_ID)) {
-        navigate(`/prem-coder/${service.id}/${service.serviceType}`);
+        navigate(`/prem-coder/${service.id}/${service.serviceType ?? "docker"}`);
       }
       return;
     }

@@ -15,7 +15,7 @@ import useGetService from "./useGetService";
 const usePremChatStream = (
   serviceId: string,
   serviceType: Service["serviceType"],
-  chatId: string | null,
+  historyId: string | null,
 ): PremChatResponse => {
   const [question, setQuestion] = useState("");
   const [tempQuestion, setTempQuestion] = useState("");
@@ -67,7 +67,7 @@ const usePremChatStream = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [service]);
 
-  const messages = history.find((_history) => _history.id === chatId)?.messages || [];
+  const messages = history.find((_history) => _history.id === historyId)?.messages || [];
 
   const onSubmit = useCallback(
     (e: React.FormEvent) => {
@@ -143,8 +143,8 @@ const usePremChatStream = (
   const onRegenerate = useCallback(() => {
     const newMessages = [...messages];
     const lastConversation = newMessages.splice(-2);
-    if (chatId) {
-      updateHistoryMessages(chatId, newMessages);
+    if (historyId) {
+      updateHistoryMessages(historyId, newMessages);
       processQuestion(lastConversation[0].content);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -162,18 +162,18 @@ const usePremChatStream = (
     if (!isLoading && pending) {
       setTempQuestion("");
       setPending(undefined);
-      if (!chatId) {
-        const newChatId = uuid();
+      if (!historyId) {
+        const newHistoryId = uuid();
         addHistory({
-          id: newChatId,
+          id: newHistoryId,
           model: serviceId,
           title: tempConversation[0].content,
           messages: [...tempConversation],
           timestamp: Date.now(),
         });
-        navigate(`/prem-chat/${serviceId}/${serviceType}/${newChatId}`);
+        navigate(`/prem-chat/${serviceId}/${serviceType}/${newHistoryId}`);
       } else {
-        updateHistoryMessages(chatId, [...messages, ...tempConversation]);
+        updateHistoryMessages(historyId, [...messages, ...tempConversation]);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

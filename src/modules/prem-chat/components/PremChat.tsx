@@ -23,8 +23,8 @@ function PremChat() {
     <PremChatContainer
       historyId={historyId}
       serviceName={service?.name ?? ""}
-      serviceId={serviceId!}
-      serviceType={serviceType!}
+      serviceId={serviceId ?? ""}
+      serviceType={serviceType ?? "docker"}
       isPetals={service?.petals ?? false}
     />
   );
