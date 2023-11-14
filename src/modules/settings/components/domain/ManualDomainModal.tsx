@@ -18,9 +18,11 @@ const ManualDomainModal = ({
   setIsManualDomainModalOpen,
 }: ManualDomainModalProps) => {
   const [domainName, setDomainName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       await apiDnsd().post("dns", { domain: domainName });
       toast.success(
@@ -29,9 +31,13 @@ const ManualDomainModal = ({
     } catch (error) {
       if (error instanceof AxiosError && error.code === "ERR_NETWORK") {
         console.error("Cannot connect to dns service");
+        toast.error("Cannot connect to dns service", { toastId: "dns-service-error" });
       } else {
-        console.log("Response Data:", (error as any).response.data.error);
+        console.error("Response Data:", (error as any).response.data.error);
+        toast.error((error as any).response.data.error, { toastId: "dns-service-error" });
       }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -59,7 +65,7 @@ const ManualDomainModal = ({
             />
           </div>
           <div className="flex justify-end mt-6">
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
               Submit
             </button>
           </div>
