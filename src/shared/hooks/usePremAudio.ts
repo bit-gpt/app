@@ -22,9 +22,8 @@ const usePremAudio = (
 
   const { data: service } = useGetService(serviceId, serviceType);
 
-  const { addHistory, history, deleteHistory, model } = usePremAudioStore(
+  const { addHistory, history, deleteHistory } = usePremAudioStore(
     (state) => ({
-      model: state.model,
       addHistory: state.addHistory,
       history: state.history,
       deleteHistory: state.deleteHistory,
@@ -36,13 +35,14 @@ const usePremAudio = (
     mutationFn: () =>
       generateTranscriptions(service!, {
         file: file!,
-        model,
+        model: serviceId,
       }),
     onSuccess: (response) => {
       const id = uuid();
       addHistory({
         id,
         file: file?.name || "",
+        model: serviceId,
         transcriptions: response.data.text,
         timestamp: new Date().toISOString(),
       });
