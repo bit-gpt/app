@@ -14,7 +14,6 @@ import NoPrompts from "shared/components/NoPrompts";
 import WarningIcon from "shared/components/WarningIcon";
 import usePremChatStore from "shared/store/prem-chat";
 import type { HamburgerMenuProps } from "shared/types";
-import { shallow } from "zustand/shallow";
 
 import LeftSidebar from "../../../shared/components/LeftSidebar";
 
@@ -25,15 +24,9 @@ const PremChatSidebar = ({
   serviceType,
   historyId,
 }: HamburgerMenuProps) => {
-  // TODO: shallow will only check for reference equality, not deep equality
-  const { history, deleteHistory, clearHistory } = usePremChatStore(
-    (state) => ({
-      history: state.history,
-      deleteHistory: state.deleteHistory,
-      clearHistory: state.clearHistory,
-    }),
-    shallow,
-  );
+  const history = usePremChatStore((state) => state.history);
+  const deleteHistory = usePremChatStore((state) => state.deleteHistory);
+  const clearHistory = usePremChatStore((state) => state.clearHistory);
 
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -47,11 +40,11 @@ const PremChatSidebar = ({
   };
 
   const onClearClick = () => {
-    clearHistory();
+    clearHistory(serviceId);
   };
 
   const filteredHistory = history.filter((item) => {
-    return item.title.toLowerCase().includes(search.toLowerCase());
+    return item.model === serviceId && item.title.toLowerCase().includes(search.toLowerCase());
   });
 
   const closeModal = () => {
