@@ -8,7 +8,6 @@ const usePremAudioStore = create<PremAudioStore>()(
     persist(
       (set) => ({
         history: [],
-        model: "whisper-1",
         addHistory: (newHistory: PremAudioHistory) =>
           set((state) => ({ history: [...state.history, newHistory] })),
         deleteHistory: (id: string) =>
