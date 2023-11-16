@@ -9,13 +9,14 @@ mod utils;
 
 use crate::controller_binaries::stop_all_services;
 
+use std::time::Duration;
 use std::{collections::HashMap, env, ops::Deref, str, sync::Arc};
 
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
 use tauri::{
-    AboutMetadata, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu, SystemTray,
-    SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
+    AboutMetadata, AppHandle, CustomMenuItem, Manager, Menu, MenuItem, RunEvent, Submenu,
+    SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem, WindowEvent,
 };
 use tauri_plugin_store::StoreBuilder;
 use tokio::process::Child;
@@ -140,6 +141,11 @@ struct ModelInfo {
     streaming: Option<bool>,
 }
 
+#[derive(Debug, Deserialize, Serialize, Clone, Copy)]
+struct AppStatus {
+    is_online: bool,
+}
+
 fn main() {
     let client = sentry::init((
         "https://b98405fd0e4cc275b505645d293d23a5@o4506111848808448.ingest.sentry.io/4506111925223424",
@@ -174,6 +180,8 @@ fn main() {
         .filter_level(log::LevelFilter::Info)
         .parse_default_env()
         .init();
+
+    let (async_status_sender, async_status_receiver) = tokio::sync::mpsc::channel::<AppStatus>(100);
 
     let menu = Menu::new()
         .add_submenu(Submenu::new(
@@ -290,42 +298,10 @@ fn main() {
             _ => {}
         })
         .setup(|app| {
-            tauri::async_runtime::block_on(async move {
-                //Create a store with default registry if doesn't exist
-                let store_path = app
-                    .path_resolver()
-                    .app_data_dir()
-                    .expect("failed to resolve app data dir")
-                    .join("store.json");
-                if !store_path.exists() {
-                    let mut registries: Vec<Registry> = Vec::new();
-                    registries.push(Registry::default());
-                    let mut default_store = HashMap::new();
-                    default_store.insert(
-                        "registries".to_string(),
-                        serde_json::to_value(registries).unwrap(),
-                    );
-                    let store = StoreBuilder::new(app.handle(), store_path.clone())
-                        .defaults(default_store)
-                        .build();
-                    store.save().expect("failed to save store");
-                    log::info!("Store created");
-                }
-                // Fetch all registries
-                let mut store = StoreBuilder::new(app.handle(), store_path.clone()).build();
-                store.load().expect("Failed to load store");
-                if let Some(registries) = store.get("registries").cloned() {
-                    match serde_json::from_value::<Vec<Registry>>(registries) {
-                        Ok(registries) => utils::fetch_all_services_manifests(
-                            &registries,
-                            &app.state::<Arc<SharedState>>().clone(),
-                        )
-                        .await
-                        .expect("failed to fetch services"),
-                        Err(e) => println!("Error unwrapping registries: {:?}", e),
-                    }
-                }
-            });
+            tauri::async_runtime::block_on(setup_app_registries(app));
+            // this is long running
+            // and, raise events for any status ticks
+            // tauri::async_runtime::spawn(track_app_status(async_status_sender, app.handle()));
             Ok(())
         })
         .on_window_event(|ev| {
@@ -373,4 +349,65 @@ fn main() {
         }
         _ => {}
     });
+}
+
+/// At 60 second ticks update status for application (such as is online, is connected to specific port, etc.)
+async fn track_app_status(
+    async_status_sender: tauri::async_runtime::Sender<AppStatus>,
+    app_handle: AppHandle,
+) {
+    const PING_URL_COUNT: usize = 2;
+    const PING_URLS: [&str; PING_URL_COUNT] = ["", ""];
+    let mut k = 0;
+    loop {
+        // make a req every 60 seconds, to a different ping url to ensure we don't get the user rate limited
+        let is_online = reqwest::get(PING_URLS[k])
+            .await
+            .map(|res| res.status().is_success())
+            .unwrap_or_default();
+        k = (k + 1) % PING_URL_COUNT;
+        let app_status = AppStatus { is_online };
+        // we don't care if it fails we still continue tracking
+        _ = async_status_sender.send(app_status).await;
+        _ = app_handle.emit_all("app_status_update", app_status);
+        // sleep for 60 sec (async so won't block thread)
+        tokio::time::sleep(Duration::from_secs(60)).await;
+    }
+}
+
+async fn setup_app_registries(app: &mut tauri::App) {
+    //Create a store with default registry if doesn't exist
+    let store_path = app
+        .path_resolver()
+        .app_data_dir()
+        .expect("failed to resolve app data dir")
+        .join("store.json");
+    if !store_path.exists() {
+        let mut registries: Vec<Registry> = Vec::new();
+        registries.push(Registry::default());
+        let mut default_store = HashMap::new();
+        default_store.insert(
+            "registries".to_string(),
+            serde_json::to_value(registries).unwrap(),
+        );
+        let store = StoreBuilder::new(app.handle(), store_path.clone())
+            .defaults(default_store)
+            .build();
+        store.save().expect("failed to save store");
+        log::info!("Store created");
+    }
+    // Fetch all registries
+    let mut store = StoreBuilder::new(app.handle(), store_path.clone()).build();
+    store.load().expect("Failed to load store");
+    if let Some(registries) = store.get("registries").cloned() {
+        match serde_json::from_value::<Vec<Registry>>(registries) {
+            Ok(registries) => utils::fetch_all_services_manifests(
+                &registries,
+                &app.state::<Arc<SharedState>>().clone(),
+            )
+            .await
+            .expect("failed to fetch services"),
+            Err(e) => println!("Error unwrapping registries: {:?}", e),
+        }
+    }
 }
