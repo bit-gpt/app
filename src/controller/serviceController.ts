@@ -1,4 +1,4 @@
-import type { Service } from "../modules/service/types";
+import type { GPUStats, Service } from "../modules/service/types";
 import type { Registry } from "../modules/settings/types";
 import type { Interface } from "../shared/helpers/interfaces";
 import useSettingStore from "../shared/store/setting";
@@ -31,7 +31,7 @@ interface IServiceController {
   getLogs(serviceId: string, serviceType: Service["serviceType"]): Promise<string>;
   getServiceStats(serviceId: string, serviceType: Service["serviceType"]): Promise<any>;
   getSystemStats(serviceType: Service["serviceType"]): Promise<any>;
-  getGPUStats(serviceType: Service["serviceType"]): Promise<any>;
+  getGPUStats(serviceType: Service["serviceType"]): Promise<GPUStats>;
   getInterfaces(serviceType: Service["serviceType"]): Promise<Interface[]>;
   addService(service: Service, serviceType: Service["serviceType"]): Promise<void>;
   addRegistry(registry: Registry, serviceType: Service["serviceType"]): Promise<void>;
@@ -182,15 +182,14 @@ class ServiceController implements IServiceController {
       return {};
     }
   }
-
-  async getGPUStats(serviceType: Service["serviceType"]): Promise<Record<string, string>> {
+  async getGPUStats(serviceType: Service["serviceType"]): Promise<GPUStats> {
     // We check the env (browser or desktop) to determine serviceType
     if (serviceType === "docker") {
       return await this.dockerController.getGPUStats();
     } else if (serviceType === "binary") {
       return await this.binariesController.getGPUStats();
     } else {
-      return {};
+      return {} as GPUStats;
     }
   }
 

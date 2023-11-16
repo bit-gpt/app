@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import type { Registry } from "modules/settings/types";
 
-import type { Service, ServiceBinary } from "../modules/service/types";
+import type { GPUStats, Service, ServiceBinary } from "../modules/service/types";
 import type { Interface } from "../shared/helpers/interfaces";
 import interfaces from "../shared/helpers/interfaces";
 
@@ -59,8 +59,8 @@ class BinariesController extends AbstractServiceController {
     return await invoke<string>("get_logs_for_service", { serviceId });
   }
 
-  async getGPUStats(): Promise<Record<string, string>> {
-    return await invoke<Record<string, string>>("get_gpu_stats");
+  async getGPUStats(): Promise<GPUStats> {
+    return await invoke<GPUStats>("get_gpu_stats");
   }
 
   async getServiceStats(serviceId: string): Promise<Record<string, string>> {
