@@ -126,6 +126,8 @@ export type SettingStore = {
   environmentDeletion: EnvironmentDeletion | null;
   setEnvironmentDeletion: (environmentDeletion: EnvironmentDeletion) => void;
   resetSwarm: () => void;
+  apiKey: string | null;
+  setApiKey: (apiKey: string) => void;
 };
 
 export type HeaderProps = {

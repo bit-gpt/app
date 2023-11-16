@@ -8,7 +8,6 @@ import Service from "modules/service/components/Service";
 import ServiceDetail from "modules/service-detail/components/ServiceDetail";
 import Settings from "modules/settings/components/Settings";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import NotFound from "shared/components/NotFound";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -36,7 +35,6 @@ const AppRouter = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-      <ToastContainer position="top-right" />
     </>
   );
 };
