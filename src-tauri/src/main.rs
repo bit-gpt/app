@@ -11,6 +11,7 @@ use crate::controller_binaries::stop_all_services;
 
 use std::{collections::HashMap, env, ops::Deref, str, sync::Arc};
 
+use command_group::AsyncGroupChild;
 use sentry_tauri::sentry;
 use serde::{Deserialize, Serialize};
 use tauri::{
@@ -222,6 +223,7 @@ fn main() {
         .plugin(sentry_tauri::plugin())
         .plugin(tauri_plugin_store::Builder::default().build())
         .manage(state.clone())
+        .manage(Option::<Mutex<AsyncGroupChild>>::None)
         .invoke_handler(tauri::generate_handler![
             controller_binaries::start_service,
             controller_binaries::stop_service,

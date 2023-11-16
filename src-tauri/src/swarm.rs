@@ -1,3 +1,4 @@
+use command_group::AsyncGroupChild;
 use reqwest::get;
 use serde::Deserialize;
 use std::{
@@ -9,6 +10,7 @@ use std::{
     time::Duration,
 };
 use tauri::api::process::Command;
+use tokio::sync::Mutex;
 
 #[derive(Deserialize)]
 struct PetalsModelInfo {
@@ -138,15 +140,25 @@ pub fn delete_environment(handle: tauri::AppHandle) {
 }
 
 #[tauri::command(async)]
-pub fn run_swarm(handle: tauri::AppHandle, num_blocks: i32, model: String, public_name: String) {
+pub async fn run_swarm(
+    handle: tauri::AppHandle,
+    num_blocks: i32,
+    model: String,
+    public_name: String,
+    state: tauri::State<'_, Mutex<Option<AsyncGroupChild>>>,
+) -> crate::errors::Result<()> {
     let petals_path = get_petals_path(handle.clone());
     let config = Config::new();
 
     let mut env = HashMap::new();
     env.insert("PREM_PYTHON".to_string(), config.python);
 
+    use command_group::AsyncCommandGroup;
+    use tokio::process::Command;
+
     println!("🚀 Starting the Swarm...");
-    let _ = Command::new("sh")
+    // start the command as a (sub/child) process group
+    let group = Command::new("sh")
         .args([
             format!("{petals_path}/run_swarm.sh").as_str(),
             &num_blocks.to_string(),
@@ -154,8 +166,12 @@ pub fn run_swarm(handle: tauri::AppHandle, num_blocks: i32, model: String, publi
             &model,
         ])
         .envs(env)
-        .spawn()
+        .group_spawn()
         .expect("🙈 Failed to run swarm");
+
+    _ = state.lock().await.insert(group);
+
+    Ok(())
 }
 
 fn get_petals_path(handle: tauri::AppHandle) -> String {
@@ -218,8 +234,10 @@ pub fn get_swarm_processes() -> Vec<u64> {
     processes
 }
 
-#[tauri::command]
-pub fn stop_swarm_mode() {
+#[tauri::command(async)]
+pub async fn stop_swarm_mode(
+    state: tauri::State<'_, Mutex<Option<AsyncGroupChild>>>,
+) -> crate::errors::Result<()> {
     println!("🛑 Stopping the Swarm...");
     let processes = get_swarm_processes();
     println!("🛑 Stopping Processes: {:?}", processes);
@@ -256,5 +274,12 @@ pub fn stop_swarm_mode() {
             println!("🛑 Stopping Process with SIGTERM: {}", process);
         }
     }
+
+    // attempt to kill the process group, but don't wait for it unnecessarily
+    if let Some(group) = &mut *state.lock().await {
+        _ = group.start_kill();
+    }
+
     println!("🛑 Stopped all the Swarm Processes.");
+    Ok(())
 }
