@@ -29,7 +29,7 @@
 }
 
 .autosize-textarea-container {
-  @apply relative mt-4;
+  @apply relative mt-4 flex flex-row;
 }
 
 .autosize-textarea-container img {
@@ -37,7 +37,7 @@
 }
 
 .autosize-textarea-container button {
-  @apply absolute md:right-[21px] right-[12px] bottom-4;
+  @apply absolute md:right-[21px] right-[12px] bottom-[11px];
 }
 
 .prem-chat-bottom {
