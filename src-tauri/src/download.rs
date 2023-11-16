@@ -249,7 +249,6 @@ impl<R: Runtime> Downloader<R> {
     }
 
     async fn set_execute_permission(&self, binary_path: impl AsRef<str>) -> Result<()> {
-        use std::os::unix::fs::PermissionsExt;
         let mut permissions = std::fs::metadata(binary_path.as_ref())
             .with_context(|| {
                 format!(
@@ -258,7 +257,12 @@ impl<R: Runtime> Downloader<R> {
                 )
             })?
             .permissions();
-        permissions.set_mode(0o755);
+        // windows binaries is by default executable
+        #[cfg(target_family = "unix")]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            permissions.set_mode(0o755);
+        }
         std::fs::set_permissions(binary_path.as_ref(), permissions)
             .with_context(|| format!("Failed to set permissions for {}", binary_path.as_ref()))?;
         Ok(())
